@@ -1,0 +1,29 @@
+Creating a custom Enemy
+	- Make a custom class that extends Enemy
+	- Add a EnemyToken for your enemy to the EnemyToken enum class.
+	- create a loader for the enemy and make it extend the EnemyLoader. Implement the loadSprite() Method.
+	- Add a LoaderToken to the LoaderToken Enum class for your enemy.
+	- Change the createLoader() method of the LoaderFactory class so that your custom loader will be created by the LoaderFactory.
+	
+Triggers
+	- Every sprite can have a trigger. 
+	- If a sprite has a trigger (meaning the trigger != null) the trigger will be triggered when the player stands in the range of the trigger and presses the use button
+	- A trigger has a list of triggerables. A triggerable is a class that implements the Triggerable Interface.
+	- Implementing the triggerable interface will force the class to implement the onTrigger method.
+	- When a Trigger is triggered the trigger will call the onTrigger method of all its triggerables.
+
+Weapons
+	- There are 2 types of weapons: melee weapons and ranged Weapons.
+	Melee Weapons:
+		- melee weapons have a stamina cost. If the player has no stamina left it cannot use the weapon. 
+		- Melee weapons have a swingarea which determines in what area the weapon will hit the enemy.
+	Ranged weapons:
+		- In contrary to melee weapons, ranged weapons have no stamina cost.
+		- Ranged weapons however do have a list of ammo objects. On fire the first ammo object in the list will be fired and removed.
+		- If there are no ammo objects left in the list the weapon can not fire.
+		- Every subclass of RangedWeapon must implement the loadWeapon method. This method must fill the list of ammo objects with the type of ammo of that weapon.
+
+Items:
+	There are 2 types of Items. Normal Items and Stackable items.
+	Stackable Items have a number indicating how many of them are left. You can use the item as many times as the number.
+	Stackable items also only take 1 place in the inventory.

@@ -1,0 +1,96 @@
+guidearea
+x 130
+y 130
+width 240
+height 170
+
+guidance 1
+Welcome to the test chamber.
+I will be your guide. 
+endguidance
+
+guidance 250
+Lets learn the basics:
+You can see the structure of the map.
+But items and enemies will only be revealed when they are
+standing inside the radius of a lightsource...
+endguidance
+
+guidance 950
+The red circle in the left hand corner represents your health.
+The blue circle represents your stamina. More on that later.
+endguidance
+
+guidance 1400
+We need to find you a weapon.
+So go outside. I will show you the way..
+endguidance
+
+guidance 1650
+Use E to open doors.
+endguidance
+ttl 1900
+end
+
+guidearea
+x 400
+y 130
+width 30
+height 70
+ttl 200
+
+guidance 1
+Turn right.
+endguidance
+end
+
+
+guidearea
+x 400
+y 100
+width 100
+height 10
+
+guidance 1
+Go to the backside of the house...
+endguidance
+end
+
+
+guidearea
+x 100
+y 0
+width 50
+height 100
+guidance 1
+WAIT. Stop right here.
+There is something you need to know...
+endguidance
+
+guidance 300
+If your flashlight is turned on you will be easier 
+seen by infected. A normal human infected can't see 
+really far. But they can see a light from pretty far away.
+And I know there is a human infected standing in 
+the corner behind the house.
+endguidance
+
+guidance 800
+There is an ax behind the house.
+Sneak towards it and pick it up.
+Remember to turn off your flashlight.
+Use F to turn your flashlight on or off.
+endguidance
+end
+
+guidearea
+x 50
+y 200
+width 32
+height 32
+
+guidance 1
+O.k. now pick up the ax.
+Use G to open the pickup menu. The rest is self-explanatory.
+endguidance
+end
