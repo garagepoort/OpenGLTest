@@ -12,6 +12,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.PixelFormat;
 
 import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
@@ -94,7 +95,7 @@ public class GameLoop {
 		Display.setDisplayMode(new DisplayMode(800, 600));
 		Display.setResizable(true);
 		// Display.setFullscreen(false);
-		Display.create();
+		Display.create(new PixelFormat(0, 0, 1));
 	}
 
 	private void initOpenGL() {
