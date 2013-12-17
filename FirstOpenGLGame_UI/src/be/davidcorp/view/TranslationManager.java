@@ -1,7 +1,7 @@
 package be.davidcorp.view;
 
-import org.lwjgl.opengl.Display;
-
+import static be.davidcorp.view.game.GameLoop.HEIGHT;
+import static be.davidcorp.view.game.GameLoop.WIDTH;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.view.game.GameLoop;
@@ -25,7 +25,7 @@ public class TranslationManager {
 		}
 
 		if (playerFacade.getX() > gameFieldFacade.getWidthOfGamefield() - halfOfScreenWidth()) {
-			gameFieldXTranslation = -gameFieldFacade.getWidthOfGamefield() + Display.getWidth();
+			gameFieldXTranslation = -gameFieldFacade.getWidthOfGamefield() + GameLoop.WIDTH;
 			playerTranslationX = playerFacade.getX() - (gameFieldFacade.getWidthOfGamefield() - halfOfScreenWidth());
 		}
 		if (playerFacade.getY() < halfOfScreenHeight()) {
@@ -37,7 +37,7 @@ public class TranslationManager {
 		}
 
 		if (playerFacade.getY() > gameFieldFacade.getHeightOfGamefield() - halfOfScreenHeight()) {
-			gameFieldYTranslation = -gameFieldFacade.getHeightOfGamefield() + Display.getHeight();
+			gameFieldYTranslation = -gameFieldFacade.getHeightOfGamefield() + HEIGHT;
 			playerTranslationY = playerFacade.getY() - (gameFieldFacade.getHeightOfGamefield() - halfOfScreenHeight());
 		}
 	}
@@ -52,7 +52,7 @@ public class TranslationManager {
 	}
 	
 	public static void initializeRightTranslation() {
-		if (gameFieldXTranslation <= -gameFieldFacade.getWidthOfGamefield() + Display.getWidth() || playerTranslationX < 0) {
+		if (gameFieldXTranslation <= -gameFieldFacade.getWidthOfGamefield() + WIDTH || playerTranslationX < 0) {
 			playerTranslationX += playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
 		} else {
 			gameFieldXTranslation -= playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
@@ -60,7 +60,7 @@ public class TranslationManager {
 	}
 	
 	public static void initializeUpTranslation(){
-		if (gameFieldYTranslation <= -gameFieldFacade.getHeightOfGamefield() + Display.getHeight() || playerTranslationY < 0) {
+		if (gameFieldYTranslation <= -gameFieldFacade.getHeightOfGamefield() + HEIGHT || playerTranslationY < 0) {
 			playerTranslationY += playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
 		} else {
 			gameFieldYTranslation -= playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
@@ -92,10 +92,10 @@ public class TranslationManager {
 	}
 
 	private static float halfOfScreenHeight() {
-		return Display.getHeight()/2;
+		return GameLoop.HEIGHT/2;
 	}
 	
 	private static float halfOfScreenWidth() {
-		return Display.getWidth()/2;
+		return GameLoop.WIDTH/2;
 	}
 }

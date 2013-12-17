@@ -5,13 +5,13 @@ import static org.lwjgl.opengl.GL11.GL_PROJECTION;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
+import static org.lwjgl.opengl.GL11.glViewport;
 
 import java.io.IOException;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.PixelFormat;
 
 import be.davidcorp.applicationLayer.exception.MapperException;
@@ -30,9 +30,13 @@ public class GameLoop {
 	private LightManager lightManager;
 
 	private static int secondsMovedInGame;
+	public static int WIDTH;
+	public static int HEIGHT;
 
-	public GameLoop(GamePanel gamePanel) throws IOException {
+	public GameLoop(GamePanel gamePanel, int width, int height) throws IOException {
 		playGamePanel = gamePanel;
+		GameLoop.WIDTH = width;
+		GameLoop.HEIGHT = height;
 		gamefieldFacade = new GameFieldFacade();
 		lightManager = new LightManager();
 	}
@@ -92,16 +96,17 @@ public class GameLoop {
 	}
 
 	private void initializeDisplay() throws LWJGLException {
-		Display.setDisplayMode(new DisplayMode(800, 600));
-		Display.setResizable(true);
+//		Display.setDisplayMode(new DisplayMode(800, 600));
+		Display.setResizable(false);
 		// Display.setFullscreen(false);
 		Display.create(new PixelFormat(0, 0, 1));
 	}
 
 	private void initOpenGL() {
+		glViewport(0, 0, WIDTH, HEIGHT);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrtho(0, 800, 0, 600, 1, -1);
+		glOrtho(0, WIDTH, 0, HEIGHT, 1, -1);
 		glMatrixMode(GL_MODELVIEW);
 	}
 

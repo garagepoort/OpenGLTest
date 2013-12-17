@@ -1,6 +1,11 @@
 package GameCreator.createframes;
 
+import static java.awt.BorderLayout.CENTER;
+import static java.awt.BorderLayout.NORTH;
+import static java.awt.BorderLayout.WEST;
+
 import java.awt.BorderLayout;
+import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -17,6 +22,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
 
 import GameCreator.ErrorHandler;
 import GameCreator.GameCreatorPanel;
@@ -32,6 +38,8 @@ import be.davidcorp.view.game.GameLoop;
 @SuppressWarnings("serial")
 public class EditGameFrame extends JFrame implements MouseListener, Observer {
 
+	private static final int WIDTH = 800;
+	private static final int HEIGHT = 600;
 	private JPanel mainPanel;
 	private JPanel buttonPanel;
 	private JButton openGLFrameButton;
@@ -40,26 +48,31 @@ public class EditGameFrame extends JFrame implements MouseListener, Observer {
 	private GamefieldDTO field;
 	private JCheckBox shadowsCheckBox;
 	private SelectedSpritePanel selectedSpritePanel;
+	private JPanel openGLPanel;
 
 	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
 
-	public EditGameFrame(String fieldName, boolean loadingAnAlreadyExistingGamefield) {
+	public EditGameFrame(String fieldName,
+			boolean loadingAnAlreadyExistingGamefield) {
 		if (!loadingAnAlreadyExistingGamefield) {
 			createNewGamefield(fieldName);
 		}
 		field = gameFieldFacade.getGamefieldWithName(fieldName);
 
-		setSize(new Dimension(800, 600));
+		
+		setSize(new Dimension(1600, 800));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 
 		initComponents();
 		addComponents();
 		initHandlers();
+		
+		createDisplay(field);
 
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        splitPane.setLeftComponent(mainPanel);
-        splitPane.setRightComponent(new SpriteTreePanel());
+		splitPane.setLeftComponent(mainPanel);
+		splitPane.setRightComponent(new SpriteTreePanel());
 		getContentPane().add(splitPane);
 		revalidate();
 	}
@@ -74,6 +87,8 @@ public class EditGameFrame extends JFrame implements MouseListener, Observer {
 
 	private void initComponents() {
 		mainPanel = new JPanel();
+		openGLPanel = new JPanel();
+		openGLPanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		buttonPanel = new JPanel();
 
 		openGLFrameButton = new JButton("Show GamePanel");
@@ -90,8 +105,9 @@ public class EditGameFrame extends JFrame implements MouseListener, Observer {
 		buttonPanel.add(saveButton);
 		// buttonPanel.add(loadButton);
 		buttonPanel.add(shadowsCheckBox);
-		mainPanel.add(buttonPanel, BorderLayout.NORTH);
-		mainPanel.add(selectedSpritePanel.mainpanel, BorderLayout.WEST);
+		mainPanel.add(buttonPanel, NORTH);
+		mainPanel.add(selectedSpritePanel.mainpanel, WEST);
+		mainPanel.add(openGLPanel, CENTER);
 	}
 
 	private void initHandlers() {
@@ -114,15 +130,24 @@ public class EditGameFrame extends JFrame implements MouseListener, Observer {
 			public void run() {
 				try {
 					gameFieldFacade.initializeGameField(field);
-					
+
 					GameCreatorPanel gamePanel = new GameCreatorPanel();
 					gamePanel.addObserver(EditGameFrame.this);
-					GameLoop gameLoop = new GameLoop(gamePanel);
-					EditGameFrame.this.mainPanel.add(gameLoop.getCanvas());
+					GameLoop gameLoop = new GameLoop(gamePanel, WIDTH, HEIGHT);
+
+					Canvas canvas = new Canvas();
+					canvas.setFocusable(true);
+					canvas.setIgnoreRepaint(true);
+
+					Display.setParent(canvas);
+
+					canvas.setSize(WIDTH, HEIGHT);
+					openGLPanel.add(canvas);
 					gameLoop.start();
-					
+
 					openGLFrameButton.setEnabled(true);
-				} catch (IOException | LWJGLException | MapperException | ModelException e) {
+				} catch (IOException | LWJGLException | MapperException
+						| ModelException e) {
 					ErrorHandler.handleError(EditGameFrame.this, e);
 				}
 

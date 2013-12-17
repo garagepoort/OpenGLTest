@@ -2,6 +2,8 @@ package be.davidcorp.view.drawer;
 
 import static be.davidcorp.view.TranslationManager.getPlayerTranslationX;
 import static be.davidcorp.view.TranslationManager.getPlayerTranslationY;
+import static be.davidcorp.view.game.GameLoop.HEIGHT;
+import static be.davidcorp.view.game.GameLoop.WIDTH;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_CURRENT_BIT;
 import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
@@ -29,7 +31,6 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 import java.io.IOException;
 
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -45,8 +46,8 @@ public class PlayerDrawer {
 	private static LightManager lightManager = new LightManager();
 
 	public static void drawPlayer() throws IOException {
-		float x = Display.getWidth() / 2 + getPlayerTranslationX();
-		float y = Display.getHeight() / 2 + getPlayerTranslationY();
+		float x = WIDTH / 2 + getPlayerTranslationX();
+		float y = HEIGHT / 2 + getPlayerTranslationY();
 		
 		lookInRightDirection(x, y);
 
@@ -61,8 +62,8 @@ public class PlayerDrawer {
 	}
 
 	public static void drawPlayerFlaslight() {
-		float playerPositionX = Display.getWidth() / 2 + TranslationManager.getPlayerTranslationX();
-		float playerPositionY = Display.getHeight() / 2 + TranslationManager.getPlayerTranslationY();
+		float playerPositionX = WIDTH / 2 + TranslationManager.getPlayerTranslationX();
+		float playerPositionY = HEIGHT / 2 + TranslationManager.getPlayerTranslationY();
 
 		float x = playerPositionX + playerFacade.getWidth() / 2;
 		float y = playerPositionY + playerFacade.getHeight() / 2;

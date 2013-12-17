@@ -28,7 +28,7 @@ public class GameCreatorFrame extends JFrame implements MouseListener {
 	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
 
 	public GameCreatorFrame() {
-		setSize(new Dimension(800, 600));
+		setSize(new Dimension(1600, 800));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 

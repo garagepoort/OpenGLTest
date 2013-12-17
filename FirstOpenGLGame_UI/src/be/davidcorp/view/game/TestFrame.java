@@ -19,7 +19,7 @@ public class TestFrame extends JFrame{
 
 	public TestFrame() throws IOException, LWJGLException, MapperException{
 		new GameFacade().startApplication();
-		GameLoop gameLoop = new GameLoop(new PlayGamePanel());
+		GameLoop gameLoop = new GameLoop(new PlayGamePanel(),800, 600);
 		
 		Canvas canvas = new Canvas();
 		canvas.setFocusable(true);

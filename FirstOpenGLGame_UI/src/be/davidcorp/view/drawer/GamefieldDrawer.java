@@ -2,6 +2,8 @@ package be.davidcorp.view.drawer;
 
 import static be.davidcorp.view.TranslationManager.getGameFieldXTranslation;
 import static be.davidcorp.view.TranslationManager.getGameFieldYTranslation;
+import static be.davidcorp.view.game.GameLoop.HEIGHT;
+import static be.davidcorp.view.game.GameLoop.WIDTH;
 import static org.lwjgl.opengl.GL11.GL_CURRENT_BIT;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
@@ -18,7 +20,6 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.io.IOException;
 
-import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
@@ -65,9 +66,9 @@ public class GamefieldDrawer {
 			glBegin(GL_QUADS);
 			{
 				glVertex2f(0 - getGameFieldXTranslation(), 0 - getGameFieldYTranslation());
-				glVertex2f(Display.getWidth() - getGameFieldXTranslation(), 0 - getGameFieldYTranslation());
-				glVertex2f(Display.getWidth() - getGameFieldXTranslation(), Display.getHeight() - getGameFieldYTranslation());
-				glVertex2f(0 - getGameFieldXTranslation(), Display.getHeight() - getGameFieldYTranslation());
+				glVertex2f(WIDTH - getGameFieldXTranslation(), 0 - getGameFieldYTranslation());
+				glVertex2f(WIDTH - getGameFieldXTranslation(), HEIGHT - getGameFieldYTranslation());
+				glVertex2f(0 - getGameFieldXTranslation(), HEIGHT - getGameFieldYTranslation());
 			}
 			glEnd();
 			glPopAttrib();

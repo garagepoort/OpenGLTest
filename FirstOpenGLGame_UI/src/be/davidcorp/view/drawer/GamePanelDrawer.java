@@ -2,6 +2,8 @@ package be.davidcorp.view.drawer;
 
 import static be.davidcorp.view.TranslationManager.getGameFieldXTranslation;
 import static be.davidcorp.view.TranslationManager.getGameFieldYTranslation;
+import static be.davidcorp.view.game.GameLoop.HEIGHT;
+import static be.davidcorp.view.game.GameLoop.WIDTH;
 import static org.lwjgl.opengl.GL11.GL_ALWAYS;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
@@ -32,7 +34,6 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.io.IOException;
 
-import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
@@ -54,8 +55,8 @@ public class GamePanelDrawer {
 		// Clear The Screen And The Depth Buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-		float x = Display.getWidth() / 2 + TranslationManager.getPlayerTranslationX();
-		float y = Display.getHeight() / 2 + TranslationManager.getPlayerTranslationY();
+		float x = WIDTH / 2 + TranslationManager.getPlayerTranslationX();
+		float y = HEIGHT / 2 + TranslationManager.getPlayerTranslationY();
 
 		drawWorld();
 
