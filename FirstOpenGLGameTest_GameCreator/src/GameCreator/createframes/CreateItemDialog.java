@@ -1,13 +1,10 @@
 package GameCreator.createframes;
 
-import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,12 +20,10 @@ import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PotionFacade;
 import be.davidcorp.applicationLayer.facade.WeaponFacade;
 
-public class CreateItemFrame implements MouseListener {
+public class CreateItemDialog extends CreateDialog implements MouseListener {
 
-	private JFrame frame = new JFrame();
 	public ItemDTO itemDTO;
 
-	private JPanel mainPanel;
 	private JPanel labelFieldPanel;
 
 	private JTextField fieldX;
@@ -45,21 +40,16 @@ public class CreateItemFrame implements MouseListener {
 	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
 	private ItemType itemType;
 
-	public CreateItemFrame(ItemType itemType) {
+	public CreateItemDialog(ItemType itemType) {
+		super("Create Item", 400, 400);
 		this.itemType = itemType;
-		initComponents();
-		frame.getContentPane().add(mainPanel);
-		frame.setResizable(false);
-		frame.setSize(new Dimension(400, 300));
-		frame.setVisible(true);
 	}
 
-	private void initComponents() {
+	protected void initComponents() {
 
 		// Create and populate the panel.
 		labelFieldPanel = new JPanel(new SpringLayout());
-		mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		getMainPanel().setLayout(new BoxLayout(getMainPanel(), BoxLayout.Y_AXIS));
 
 
 		fieldX = new JTextField(10);
@@ -86,8 +76,8 @@ public class CreateItemFrame implements MouseListener {
 		createButton.addMouseListener(this);
 		colorPickerButton.addMouseListener(this);
 
-		mainPanel.add(labelFieldPanel);
-		mainPanel.add(createButton);
+		getMainPanel().add(labelFieldPanel);
+		getMainPanel().add(createButton);
 	}
 
 	@Override
@@ -108,13 +98,13 @@ public class CreateItemFrame implements MouseListener {
 						break;
 				}
 				if (itemDTO == null) {
-					JOptionPane.showMessageDialog(mainPanel, "You have to select an item.");
+					JOptionPane.showMessageDialog(getMainPanel(), "You have to select an item.");
 				} else {
 					gameFieldFacade.addGroundItemToWorld(itemDTO.getId());
-					frame.setVisible(false);
+					FrameFacade.closeCreateDialog(CreateItemDialog.this);
 				}
 			} catch (NumberFormatException | ModelException e) {
-				ErrorHandler.handleError(frame, e);
+				ErrorHandler.handleError(getMainPanel(), e);
 			}
 		}
 	}

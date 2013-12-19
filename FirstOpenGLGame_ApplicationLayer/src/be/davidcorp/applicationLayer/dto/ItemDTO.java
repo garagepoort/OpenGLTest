@@ -4,12 +4,11 @@ import be.davidcorp.applicationLayer.dto.mapper.ItemType;
 
 public class ItemDTO extends SpriteDTO{
 
-	public ItemType type;
+	private ItemType type;
 	private String infoTekst;
 
 	public ItemDTO(ItemType type) {
-		this.type = type;
-		// TODO Auto-generated constructor stub
+		this.type=type;
 	}
 
 	public String getInfoTekst() {
@@ -20,5 +19,8 @@ public class ItemDTO extends SpriteDTO{
 		this.infoTekst=infoText;
 	}
 
+	public ItemType getType() {
+		return type;
+	}
 	
 }

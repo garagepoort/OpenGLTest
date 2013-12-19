@@ -19,7 +19,7 @@ public class ConstructionSpriteDTO extends SpriteDTO{
 	public Segment s2;
 	public Segment s3;
 	public Segment s4;
-	public ConstructionType constructionSpriteType;
+	private ConstructionType constructionSpriteType;
 	
 	public ConstructionSpriteDTO(ConstructionType constructionType) {
 		this.constructionSpriteType = constructionType;
@@ -50,5 +50,8 @@ public class ConstructionSpriteDTO extends SpriteDTO{
 		ep7.segment = s3;
 		ep8.segment = s4;
 	}
-	
+
+	public ConstructionType getConstructionSpriteType() {
+		return constructionSpriteType;
+	}
 }

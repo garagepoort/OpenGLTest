@@ -98,7 +98,7 @@ public class GameLoop {
 	private void initializeDisplay() throws LWJGLException {
 //		Display.setDisplayMode(new DisplayMode(800, 600));
 		Display.setResizable(false);
-		// Display.setFullscreen(false);
+		 Display.setFullscreen(false);
 		Display.create(new PixelFormat(0, 0, 1));
 	}
 

@@ -1,18 +1,12 @@
 package GameCreator.createframes;
 
-import static GameCreator.createframes.FrameFacade.closeCreateWallFrame;
+import static GameCreator.createframes.FrameFacade.closeCreateDialog;
 
-import java.awt.Dialog;
-import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.util.Observable;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -26,12 +20,10 @@ import be.davidcorp.applicationLayer.exception.ModelException;
 import be.davidcorp.applicationLayer.facade.EnemyFacade;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 
-public class CreateEnemyFrame extends Observable implements MouseListener {
+public class CreateEnemyDialog extends CreateDialog implements MouseListener {
 
-	private JDialog dialog = new JDialog();
 	private EnemyType enemyType;
 
-	private JPanel mainPanel;
 	private JPanel labelFieldPanel;
 
 	private JTextField fieldX;
@@ -46,24 +38,16 @@ public class CreateEnemyFrame extends Observable implements MouseListener {
 	private EnemyFacade enemyFacade = new EnemyFacade();
 	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
 
-	public CreateEnemyFrame(EnemyType enemyType) {
+	public CreateEnemyDialog(EnemyType enemyType) {
+		super("Create new " + enemyType.toString().toLowerCase(), 400, 300);
 		this.enemyType = enemyType;
-		initComponents();
-		dialog.setTitle("Create new " + enemyType.toString().toLowerCase());
-		dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-		dialog.getContentPane().add(mainPanel);
-		dialog.setResizable(false);
-		dialog.setSize(new Dimension(400, 300));
-		dialog.setVisible(true);
-		dialog.addWindowListener(new NewWindowListener());
 	}
 
-	private void initComponents() {
+	protected void initComponents() {
 
 		// Create and populate the panel.
 		labelFieldPanel = new JPanel(new SpringLayout());
-		mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		getMainPanel().setLayout(new BoxLayout(getMainPanel(), BoxLayout.Y_AXIS));
 
 
 		fieldX = new JTextField(10);
@@ -90,8 +74,8 @@ public class CreateEnemyFrame extends Observable implements MouseListener {
 		createButton.addMouseListener(this);
 		colorPickerButton.addMouseListener(this);
 
-		mainPanel.add(labelFieldPanel);
-		mainPanel.add(createButton);
+		getMainPanel().add(labelFieldPanel);
+		getMainPanel().add(createButton);
 	}
 
 	@Override
@@ -99,11 +83,11 @@ public class CreateEnemyFrame extends Observable implements MouseListener {
 		if (event.getSource() == createButton) {
 			try {
 				gameFieldFacade.addEnemyToWorld(createEnemy().getId());
-				dialog.setVisible(false);
+				closeCreateDialog(CreateEnemyDialog.this);
 				setChanged();
 				notifyObservers();
 			} catch (ModelException e) {
-				ErrorHandler.handleError(dialog, e);
+				ErrorHandler.handleError(getMainPanel(), e);
 			}
 		}
 	}
@@ -139,36 +123,4 @@ public class CreateEnemyFrame extends Observable implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 	}
 	
-	private class NewWindowListener implements WindowListener {
-
-		@Override
-		public void windowClosing(WindowEvent e) {
-			closeCreateWallFrame();
-		}
-
-		@Override
-		public void windowActivated(WindowEvent e) {
-		}
-
-		@Override
-		public void windowClosed(WindowEvent e) {
-		}
-
-		@Override
-		public void windowDeactivated(WindowEvent e) {
-		}
-
-		@Override
-		public void windowDeiconified(WindowEvent e) {
-		}
-
-		@Override
-		public void windowIconified(WindowEvent e) {
-		}
-
-		@Override
-		public void windowOpened(WindowEvent e) {
-		}
-
-	}
 }

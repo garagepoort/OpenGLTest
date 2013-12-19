@@ -223,4 +223,7 @@ public class GamePanelDrawer {
 		GamefieldDrawer.drawGroundItems();
 	}
 
+	public void setShadowsOn(boolean shadowsOn) {
+		this.shadowsOn = shadowsOn;
+	}
 }

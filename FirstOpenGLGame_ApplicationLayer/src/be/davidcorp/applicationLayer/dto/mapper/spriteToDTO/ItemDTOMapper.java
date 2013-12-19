@@ -1,35 +1,60 @@
 package be.davidcorp.applicationLayer.dto.mapper.spriteToDTO;
 
+import static be.davidcorp.applicationLayer.dto.mapper.ItemType.HEALTHPOTION;
+import static be.davidcorp.applicationLayer.dto.mapper.ItemType.PISTOL;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.mapper.ItemType;
 import be.davidcorp.applicationLayer.exception.MapperException;
+import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.item.potion.HealthPotion;
 import be.davidcorp.domain.sprite.item.weapon.Pistol;
 
 public class ItemDTOMapper {
 
-	private static void mapItem(ItemDTO itemDTO, Item item) {
-		SpriteDTOMapper.mapSpriteToSpriteDTO(itemDTO, item);
-		itemDTO.setInfoText(item.getInfoText());
-	}
-
 	public static ItemDTO mapHealthPotionToItemDTO(HealthPotion healthPotion) {
 		ItemDTO itemDTO = new ItemDTO(ItemType.HEALTHPOTION);
-		mapItem(itemDTO, healthPotion);
+		mapItemToItemDTO(itemDTO, healthPotion);
 		return itemDTO;
 	}
-	
+
+	public static HealthPotion mapItemDTOToHealthPotion(ItemDTO itemDTO) throws MapperException {
+		if (itemDTO == null || itemDTO.getType() != HEALTHPOTION) {
+			throw new MapperException("Not the right type: " + itemDTO);
+		}
+		try {
+			HealthPotion healthPotion = new HealthPotion(0, 0);
+			mapItemDTOToItem(healthPotion, itemDTO);
+			return healthPotion;
+		} catch (SpriteException | IOException e) {
+			throw new MapperException(e);
+		}
+	}
+
 	public static ItemDTO mapPistolToItemDTO(Pistol pistol) {
 		ItemDTO itemDTO = new ItemDTO(ItemType.PISTOL);
-		mapItem(itemDTO, pistol);
+		mapItemToItemDTO(itemDTO, pistol);
 		return itemDTO;
 	}
-	
-	public static List<ItemDTO> doAutoMappingForItems(List<Item> items) throws MapperException{
+	public static Pistol mapItemDTOToPistol(ItemDTO itemDTO) throws MapperException {
+		if (itemDTO == null || itemDTO.getType() != PISTOL) {
+			throw new MapperException("Not the right type: " + itemDTO);
+		}
+		try {
+			Pistol pistol = new Pistol(0, 0, 0);
+			mapItemDTOToItem(pistol, itemDTO);
+			return pistol;
+		} catch (SpriteException | IOException e) {
+			throw new MapperException(e);
+		}
+	}
+
+	public static List<ItemDTO> doAutoMappingForItems(List<Item> items) throws MapperException {
 		ArrayList<ItemDTO> result = new ArrayList<ItemDTO>();
 		for (Item item : items) {
 			ItemDTO itemDTO = doAutoMappingForItem(item);
@@ -37,27 +62,43 @@ public class ItemDTOMapper {
 		}
 		return result;
 	}
-	
+
 	public static ItemDTO doAutoMappingForItem(Item item) throws MapperException {
-		ItemDTO itemDTO = null;
 		if (item instanceof HealthPotion) {
-			itemDTO = ItemDTOMapper.mapHealthPotionToItemDTO((HealthPotion) item);
+			return ItemDTOMapper.mapHealthPotionToItemDTO((HealthPotion) item);
 		}
 		if (item instanceof Pistol) {
-			itemDTO = ItemDTOMapper.mapPistolToItemDTO((Pistol) item);
+			return ItemDTOMapper.mapPistolToItemDTO((Pistol) item);
 		}
-		if(itemDTO == null){
-			throw new MapperException("No mapping found for "+ item.getClass().getCanonicalName());
-		}
-		return itemDTO;
+		throw new MapperException("No mapping found for " + item.getClass().getCanonicalName());
 	}
 
-//	public List<ItemDTO> mapSpritesToDTO(List<Item> sprites) {
-//		ArrayList<ItemDTO> dtos = new ArrayList<>();
-//		for(Item item : sprites){
-//			dtos.add(mapSpriteToDTO(item));
-//		}
-//		return dtos;
-//	}
+	public static Item doAutoMappingForItemDTO(ItemDTO itemDTO) throws MapperException {
+		if (itemDTO.getType() == HEALTHPOTION) {
+			return mapItemDTOToHealthPotion(itemDTO);
+		}
+		if (itemDTO.getType() == PISTOL) {
+			return mapItemDTOToHealthPotion(itemDTO);
+		}
+		throw new MapperException("No mapping found for type: " + itemDTO.getType());
+	}
+
+	private static void mapItemToItemDTO(ItemDTO itemDTO, Item item) {
+		SpriteDTOMapper.mapSpriteToSpriteDTO(itemDTO, item);
+		itemDTO.setInfoText(item.getInfoText());
+	}
+
+	private static void mapItemDTOToItem(Item item, ItemDTO itemDTO) throws MapperException {
+		SpriteDTOMapper.mapSpriteDTOToSprite(item, itemDTO);
+		item.setInfoText(itemDTO.getInfoTekst());
+	}
+
+	// public List<ItemDTO> mapSpritesToDTO(List<Item> sprites) {
+	// ArrayList<ItemDTO> dtos = new ArrayList<>();
+	// for(Item item : sprites){
+	// dtos.add(mapSpriteToDTO(item));
+	// }
+	// return dtos;
+	// }
 
 }

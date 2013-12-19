@@ -18,7 +18,7 @@ public class ConstructionSpriteDTOMapper {
 	}
 	
 	public static Wall mapConstructionSpriteDTOToWall(ConstructionSpriteDTO constructionSpriteDTO) throws MapperException{
-		if(constructionSpriteDTO.constructionSpriteType != ConstructionType.WALL){
+		if(constructionSpriteDTO.getConstructionSpriteType() != ConstructionType.WALL){
 			throw new MapperException("The type does not equal Wall");
 		}
 		Wall wall = new Wall();

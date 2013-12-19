@@ -1,6 +1,6 @@
 package GameCreator.panels;
 
-import static GameCreator.createframes.FrameFacade.openCreateWallFrame;
+import static GameCreator.createframes.FrameFacade.openCreateWallDialog;
 import static be.davidcorp.applicationLayer.dto.mapper.ConstructionType.WALL;
 
 import java.awt.event.MouseAdapter;
@@ -37,15 +37,9 @@ public class SpriteTreePanel extends JPanel implements TreeSelectionListener {
 	}
 
 	@Override
-	public void valueChanged(TreeSelectionEvent e) {
-
+	public void valueChanged(TreeSelectionEvent arg0) {
 	}
 
-	private void createNodes(DefaultMutableTreeNode top) {
-		addCategory("Enemies", EnemyType.values(), top);
-		addCategory("ConstructionSprites", ConstructionType.values(), top);
-		addCategory("Items", ItemType.values(), top);
-	}
 
 	@SuppressWarnings("rawtypes")
 	public DefaultMutableTreeNode addCategory(String categoryName, Enum[] values, DefaultMutableTreeNode top) {
@@ -78,18 +72,28 @@ public class SpriteTreePanel extends JPanel implements TreeSelectionListener {
 						if (value instanceof ConstructionType) {
 							ConstructionType constructionType = (ConstructionType) value;
 							if(constructionType == WALL){
-								openCreateWallFrame();
+								openCreateWallDialog();
 							}
 						}
 						if (value instanceof EnemyType) {
 							EnemyType enemyType = (EnemyType) value;
-							FrameFacade.openEnemyFrame(enemyType);
+							FrameFacade.openEnemyDialog(enemyType);
+						}
+						if (value instanceof ItemType) {
+							ItemType itemType = (ItemType) value;
+							FrameFacade.openItemDialog(itemType);
 						}
 						System.out.println(selRow + " - " + selPath.getLastPathComponent() + " - " + value);
 					}
 				}
 			}
 		}
-	};
+	}
+
+	private void createNodes(DefaultMutableTreeNode top) {
+		addCategory("Enemies", EnemyType.values(), top);
+		addCategory("ConstructionSprites", ConstructionType.values(), top);
+		addCategory("Items", ItemType.values(), top);
+	}
 
 }

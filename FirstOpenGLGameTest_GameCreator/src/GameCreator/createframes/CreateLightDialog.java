@@ -1,18 +1,16 @@
 package GameCreator.createframes;
 
+import static GameCreator.createframes.FrameFacade.closeCreateDialog;
 import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
 
-import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Observable;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -26,13 +24,11 @@ import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.LightFacade;
 import be.davidcorp.metric.Point;
 
-public class CreateLightFrame extends Observable implements MouseListener {
+public class CreateLightDialog extends CreateDialog implements MouseListener {
 
 	public LightDTO lightDTO;
 
-	private JPanel mainPanel;
 	private JPanel labelFieldPanel;
-	private JFrame frame = new JFrame();
 	private JTextField fieldX;
 	private JTextField fieldY;
 	private JTextField fieldRadius;
@@ -52,25 +48,20 @@ public class CreateLightFrame extends Observable implements MouseListener {
 	private LightFacade lightFacade = new LightFacade();
 	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
 
-	public CreateLightFrame() {
-		initComponents();
-		frame.getContentPane().add(mainPanel);
-		frame.setResizable(false);
-		frame.setSize(new Dimension(600, 600));
-		frame.setVisible(true);
+	public CreateLightDialog() {
+		super("Create light", 600, 600);
 	}
 
-	private void initComponents() {
+	protected void initComponents() {
 
 		// Create and populate the panel.
 		labelFieldPanel = new JPanel(new SpringLayout());
-		mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		getMainPanel().setLayout(new BoxLayout(getMainPanel(), BoxLayout.Y_AXIS));
 
 		lightOnList = new JComboBox<Boolean>(lightOnString);
 		lightOnList.setSelectedIndex(0);
 
-		mainPanel.add(lightOnList);
+		getMainPanel().add(lightOnList);
 		// enemyList.addActionListener(this);
 
 		fieldX = new JTextField(10);
@@ -102,9 +93,9 @@ public class CreateLightFrame extends Observable implements MouseListener {
 		createButton.addMouseListener(this);
 		colorPickerButton.addMouseListener(this);
 
-		mainPanel.add(labelFieldPanel);
-		mainPanel.add(colorChooser);
-		mainPanel.add(createButton);
+		getMainPanel().add(labelFieldPanel);
+		getMainPanel().add(colorChooser);
+		getMainPanel().add(createButton);
 	}
 
 	@Override
@@ -112,11 +103,14 @@ public class CreateLightFrame extends Observable implements MouseListener {
 		if (event.getSource() == createButton) {
 			try {
 				boolean lighton = (boolean) lightOnList.getSelectedItem();
+				
 				ColorDTO color = new ColorDTO(255, 0, 0);
 				color = new ColorDTO(colorChooser.getColor().getRed(), colorChooser.getColor().getGreen(), colorChooser.getColor().getBlue());
 				lightDTO = lightFacade.createLight(new Point(parseFloat(fieldX.getText()), parseFloat(fieldY.getText()), 0), color, parseInt(fieldRadius.getText()), lighton);
 				gameFieldFacade.addLightToWorld(lightDTO.getId());
-				frame.setVisible(false);
+				
+				closeCreateDialog(CreateLightDialog.this);
+				
 				setChanged();
 				notifyObservers();
 			} catch (NumberFormatException | ModelException e) {

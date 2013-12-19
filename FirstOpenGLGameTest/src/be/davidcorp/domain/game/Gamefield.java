@@ -1,9 +1,14 @@
 package be.davidcorp.domain.game;
 
+import static be.davidcorp.domain.game.GameFieldManager.getCurrentGameField;
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newHashMap;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import be.davidcorp.domain.exception.GameFieldException;
 import be.davidcorp.domain.exception.SpriteException;
@@ -25,27 +30,21 @@ public class Gamefield {
 	private Integer ID;
 	private String gamefieldName;
 
-	private ArrayList<Enemy> enemies = new ArrayList<>();
-	private ArrayList<Item> groundItems = new ArrayList<>();
-	private ArrayList<Ammo> worldAmmo = new ArrayList<>();
-	private ArrayList<ConstructionSprite> constructionSprites = new ArrayList<>();
-	private ArrayList<Light> lights = new ArrayList<Light>();
+	private Map<Integer, Enemy> enemies = newHashMap();
+	private Map<Integer, Item> groundItems = newHashMap();
+	private Map<Integer, Ammo> worldAmmo = newHashMap();
+	private Map<Integer, ConstructionSprite> constructionSprites = newHashMap();
+	private Map<Integer, Light> lights = newHashMap();
 
-	private ArrayList<Light> lightsToAdd = new ArrayList<Light>();
-	private ArrayList<Enemy> enemiesToAdd = new ArrayList<>();
-	private ArrayList<Item> groundItemsToAdd = new ArrayList<Item>();
-	private ArrayList<ConstructionSprite> constructionItemsToAdd = new ArrayList<>();
-	
+	private Map<Integer, Light> lightsToAdd = newHashMap();
+	private Map<Integer, Enemy> enemiesToAdd = newHashMap();
+	private Map<Integer, Item> groundItemsToAdd = newHashMap();
+	private Map<Integer, ConstructionSprite> constructionItemsToAdd = newHashMap();
+
 	private ArrayList<Sprite> spritesToRemove = new ArrayList<Sprite>();
-//	private ArrayList<GameFieldSwitch> switches = new ArrayList<>();
-
 	private Guide guide = new Guide();
 
-	public GameFieldSwitch activeSwitch;
-	
 	private boolean creationMode = false;
-//	private boolean pause = false;
-
 
 	private float x = 0;
 	private float y = 0;
@@ -61,18 +60,18 @@ public class Gamefield {
 		this.gamefieldName = name;
 		addSurroundingWalls();
 	}
-	
+
 	private void addSurroundingWalls() throws SpriteException {
-		constructionSprites.add(new Wall(0, 0, width, 10));
-		constructionSprites.add(new Wall(width, 0, 10, height));
-		constructionSprites.add(new Wall(0, height, width, 10));
-		constructionSprites.add(new Wall(0, 0, 10, height));
+		constructionSprites.put(-1, new Wall(0, 0, width, 10));
+		constructionSprites.put(-2, new Wall(width, 0, 10, height));
+		constructionSprites.put(-3, new Wall(0, height, width, 10));
+		constructionSprites.put(-4, new Wall(0, 0, 10, height));
 	}
 
 	public void update(int secondsMovedInGame) throws GameFieldException {
 		if (!PauseManager.isGamePaused()) {
 			if (!creationMode) {
-//				checkIfPlayerIsStandingOnSwitch();
+				// checkIfPlayerIsStandingOnSwitch();
 				updateAllTheSprites(secondsMovedInGame);
 				guide.checkCollisionWithGuideArea(PlayerManager.getCurrentPlayer(), secondsMovedInGame);
 			}
@@ -94,45 +93,50 @@ public class Gamefield {
 
 	private boolean spriteAgainstAnyConstructionItem(Sprite sprite) {
 		for (int i = 0; i < getConstructionItems().size(); i++) {
-			if (SpriteCollisionChecker.doesCollisionExist(getConstructionItems().get(i), sprite)) return true;
+			if (SpriteCollisionChecker.doesCollisionExist(getConstructionItems().get(i), sprite))
+				return true;
 		}
 		return false;
 	}
 
 	public boolean againstOrganicSprite(Sprite sprite) {
-		if (SpriteCollisionChecker.doesCollisionExist(sprite, PlayerManager.getCurrentPlayer())) return true;
+		if (SpriteCollisionChecker.doesCollisionExist(sprite, PlayerManager.getCurrentPlayer()))
+			return true;
 		for (int i = 0; i < getEnemiesInWorld().size(); i++) {
-			if(SpriteCollisionChecker.doesCollisionExist(getEnemiesInWorld().get(i), sprite)) return true;
+			if (SpriteCollisionChecker.doesCollisionExist(getEnemiesInWorld().get(i), sprite))
+				return true;
 		}
 		return false;
 	}
 
-	
 	// UPDATES
 	private void updateAllTheSprites(int secondsMovedInGame) throws GameFieldException {
-		updateSpriteList(enemies, secondsMovedInGame);
-		updateSpriteList(constructionSprites, secondsMovedInGame);
-		updateSpriteList(worldAmmo, secondsMovedInGame);
+		updateSpriteMap(enemies, secondsMovedInGame);
+		updateSpriteMap(constructionSprites, secondsMovedInGame);
+		updateSpriteMap(worldAmmo, secondsMovedInGame);
 	}
-	
-	private void updateSpriteList(ArrayList<? extends Sprite> sprites, int secondsMovedInGame) {
-		Iterator<? extends Sprite> iterator = (Iterator<? extends Sprite>) sprites.iterator();
+
+	@SuppressWarnings("rawtypes")
+	private void updateSpriteMap(Map<Integer, ? extends Sprite> sprites, int secondsMovedInGame) {
+		Iterator iterator = sprites.entrySet().iterator();
 		while (iterator.hasNext()) {
-			Sprite sprite = iterator.next();
+			Map.Entry pairs = (Map.Entry) iterator.next();
+			Sprite sprite = (Sprite) pairs.getValue();
 			if (sprite.isAlive()) {
 				sprite.updateSprite(secondsMovedInGame);
 			} else {
 				iterator.remove();
 			}
+
 		}
 	}
 
 	public void addSpritesToWorld() {
-		enemies.addAll(enemiesToAdd);
-		groundItems.addAll(groundItemsToAdd);
-		constructionSprites.addAll(constructionItemsToAdd);
-		lights.addAll(lightsToAdd);
-		
+		enemies.putAll(enemiesToAdd);
+		groundItems.putAll(groundItemsToAdd);
+		constructionSprites.putAll(constructionItemsToAdd);
+		lights.putAll(lightsToAdd);
+
 		enemiesToAdd.clear();
 		groundItemsToAdd.clear();
 		constructionItemsToAdd.clear();
@@ -140,60 +144,59 @@ public class Gamefield {
 	}
 
 	public void addEnemyToWorld(Enemy enemy) {
-		enemiesToAdd.add(enemy);
+		enemiesToAdd.put(enemy.getID(), enemy);
 	}
-	
-	public void addAmmoToWorld(Ammo a) {
-		worldAmmo.add(a);
+
+	public void addAmmoToWorld(Ammo ammo) {
+		worldAmmo.put(ammo.getID(), ammo);
 	}
-	
-	public void addLight(Light l) {
-		lightsToAdd.add(l);
+
+	public void addLight(Light light) {
+		lightsToAdd.put(light.getID(), light);
 	}
 
 	public void addConstructionItem(ConstructionSprite constructionSprite) {
-		constructionItemsToAdd.add(constructionSprite);
+		constructionItemsToAdd.put(constructionSprite.getID(), constructionSprite);
 	}
 
 	public void addGroundItem(Item groundItem) {
-		groundItemsToAdd.add(groundItem);
+		groundItemsToAdd.put(groundItem.getID(), groundItem);
 	}
 
 	private void removeSpritesFromWorld() {
-		enemies.removeAll(spritesToRemove);
-		groundItems.removeAll(spritesToRemove);
-		constructionSprites.removeAll(spritesToRemove);
-		worldAmmo.removeAll(spritesToRemove);
-		lights.removeAll(spritesToRemove);
+		for (Sprite sprite : spritesToRemove) {
+			enemies.remove(sprite.getID());
+			groundItems.remove(sprite.getID());
+			worldAmmo.remove(sprite.getID());
+			lights.remove(sprite.getID());
+		}
 		spritesToRemove.clear();
 	}
-	
-	public void removeSpriteFromWorld(Sprite sprite){
+
+	public void removeSpriteFromWorld(Sprite sprite) {
 		spritesToRemove.add(sprite);
 	}
 
-
 	public List<Ammo> getAmmoInWorld() {
-		return Collections.unmodifiableList(worldAmmo);
+		return Collections.unmodifiableList(newArrayList(worldAmmo.values()));
 	}
 
 	public List<Enemy> getEnemiesInWorld() {
-		return Collections.unmodifiableList(enemies);
+		return Collections.unmodifiableList(newArrayList(enemies.values()));
 	}
 
-
 	public List<Item> getGroundItems() {
-		return Collections.unmodifiableList(groundItems);
+		return Collections.unmodifiableList(newArrayList(groundItems.values()));
 	}
 
 	public List<ConstructionSprite> getConstructionItems() {
-		return constructionSprites;
+		return Collections.unmodifiableList(newArrayList(constructionSprites.values()));
 	}
 
 	public List<Light> getLightsFromWorld() {
-		return lights;
+		return Collections.unmodifiableList(newArrayList(lights.values()));
 	}
-	
+
 	public Guide getGuide() {
 		return guide;
 	}
@@ -210,30 +213,30 @@ public class Gamefield {
 	}
 
 	private void checkAllOnUseTriggers() {
-		for (ConstructionSprite constructionSprite : constructionSprites) {
+		for (ConstructionSprite constructionSprite : constructionSprites.values()) {
 			constructionSprite.checkTriggers(TriggerWhen.ONUSE, PlayerManager.getCurrentPlayer());
 		}
-		for (Light light : lights) {
+		for (Light light : lights.values()) {
 			light.checkTriggers(TriggerWhen.ONUSE, PlayerManager.getCurrentPlayer());
 		}
-		for (Enemy enemy : enemies) {
+		for (Enemy enemy : enemies.values()) {
 			enemy.checkTriggers(TriggerWhen.ONUSE, PlayerManager.getCurrentPlayer());
 		}
 	}
 
-//	private void checkIfPlayerIsStandingOnSwitch() {
-//		boolean hit = false;
-//		for (int i = 0; i < switches.size() && !hit; i++) {
-//			hit = SpriteCollisionChecker.doesCollisionExist(switches.get(i), player);
-//			if (hit) {
-//				activeSwitch = switches.get(i);
-//			}
-//		}
-//	}
+	// private void checkIfPlayerIsStandingOnSwitch() {
+	// boolean hit = false;
+	// for (int i = 0; i < switches.size() && !hit; i++) {
+	// hit = SpriteCollisionChecker.doesCollisionExist(switches.get(i), player);
+	// if (hit) {
+	// activeSwitch = switches.get(i);
+	// }
+	// }
+	// }
 
 	public ArrayList<Item> getItemsThatCanBePickedUpByPlayer() {
 		ArrayList<Item> items = new ArrayList<>();
-		for (Item i : groundItems) {
+		for (Item i : groundItems.values()) {
 			if (SpriteCollisionChecker.doesCollisionExist(i, PlayerManager.getCurrentPlayer())) {
 				items.add(i);
 			}
@@ -293,7 +296,6 @@ public class Gamefield {
 		this.height = height;
 	}
 
-
 	public String getTexture() {
 		if (textureBunch == null) {
 			return null;
@@ -318,30 +320,45 @@ public class Gamefield {
 
 	public List<Sprite> getSpritesCollidingWithPoint(Point point) {
 		List<Sprite> sprites = new ArrayList<Sprite>();
-		for (ConstructionSprite cs : GameFieldManager.getCurrentGameField().getConstructionItems()) {
-			if (SpriteCollisionChecker.doesSpriteCollideWithPoint(cs, point)) {
-				sprites.add(cs);
-			}
-		}
-		for (Item item : GameFieldManager.getCurrentGameField().getGroundItems()) {
-			if (SpriteCollisionChecker.doesSpriteCollideWithPoint(item, point)) {
-				sprites.add(item);
-			}
-		}
-		for (Enemy enemy : GameFieldManager.getCurrentGameField().getEnemiesInWorld()) {
-			if (SpriteCollisionChecker.doesSpriteCollideWithPoint(enemy, point)) {
-				sprites.add(enemy);
-			}
-		}
-		for (Light light : GameFieldManager.getCurrentGameField().getLightsFromWorld()) {
-			if (SpriteCollisionChecker.doesSpriteCollideWithPoint(light, point)) {
-				sprites.add(light);
-			}
-		}
+		sprites.addAll(findSpritesThatCollideWithPoint(point, getCurrentGameField().getConstructionItems()));
+		sprites.addAll(findSpritesThatCollideWithPoint(point, getCurrentGameField().getGroundItems()));
+		sprites.addAll(findSpritesThatCollideWithPoint(point, getCurrentGameField().getEnemiesInWorld()));
+		sprites.addAll(findSpritesThatCollideWithPoint(point, getCurrentGameField().getLightsFromWorld()));
 		return sprites;
 	}
 
-	public String toString(){
+	public String toString() {
 		return gamefieldName;
+	}
+
+	public void updateConstructionSprite(ConstructionSprite constructionSprite) throws GameFieldException {
+		if (!constructionSprites.containsKey(constructionSprite.getID())) {
+			throw new GameFieldException("The gamefield does not contain this sprite: " + constructionSprite);
+		}
+		constructionSprites.put(constructionSprite.getID(), constructionSprite);
+	}
+
+	public void updateGroundItem(Item item) throws GameFieldException {
+		if (!groundItems.containsKey(item.getID())) {
+			throw new GameFieldException("The gamefield does not contain this sprite: " + item);
+		}
+		groundItems.put(item.getID(), item);
+	}
+	
+	public void updateLight(Light light) throws GameFieldException {
+		if (!lights.containsKey(light.getID())) {
+			throw new GameFieldException("The gamefield does not contain this sprite: " + light);
+		}
+		lights.put(light.getID(), light);
+	}
+
+	private List<Sprite> findSpritesThatCollideWithPoint(Point point, List<? extends Sprite> sprites) {
+		List<Sprite> result = newArrayList();
+		for (Sprite cs : sprites) {
+			if (SpriteCollisionChecker.doesSpriteCollideWithPoint(cs, point)) {
+				result.add(cs);
+			}
+		}
+		return result;
 	}
 }

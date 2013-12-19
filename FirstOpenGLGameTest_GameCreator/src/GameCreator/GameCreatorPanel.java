@@ -40,6 +40,7 @@ public class GameCreatorPanel extends GamePanel{
 	@Override
 	public void render() throws IOException, MapperException {
 		super.render();
+		getGamePanelDrawer().setShadowsOn(false);
 		drawSelectedSprite();
 	}
 

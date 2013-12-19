@@ -1,16 +1,10 @@
 package GameCreator.createframes;
 
-import static GameCreator.createframes.FrameFacade.closeCreateWallFrame;
 import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
 
-import java.awt.Dialog;
-import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.util.Observable;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -30,10 +24,9 @@ import be.davidcorp.applicationLayer.exception.ModelException;
 import be.davidcorp.applicationLayer.facade.ConstructionSpriteFacade;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 
-public class CreateWallFrame extends Observable implements MouseListener {
+public class CreateWallDialog extends CreateDialog implements MouseListener {
 
 	private JDialog dialog = new JDialog();
-	private JPanel mainPanel;
 	private JPanel labelFieldPanel;
 
 	private JTextField fieldX;
@@ -52,27 +45,21 @@ public class CreateWallFrame extends Observable implements MouseListener {
 
 	private ColorPickerFrame colorPickerFrame = null;
 
-	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
+	private GameFieldFacade gameFieldFacade;
 	public ConstructionSpriteDTO constructionSpriteDTO;
 
-	public CreateWallFrame() {
-		initComponents();
-		dialog.setTitle("Create a new Wall");
-		dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-		dialog.getContentPane().add(mainPanel);
-		// addComponents();
-		dialog.setResizable(false);
-		dialog.setSize(new Dimension(400, 300));
-		dialog.setVisible(true);
-		dialog.addWindowListener(new NewWindowListener());
+	public CreateWallDialog() {
+		super("Create a new Wall", 400, 300);
 	}
 
-	private void initComponents() {
-
+	protected void initComponents() {
+		createButton = new JButton("create wall");
+		colorPickerButton = new JButton("pick color");
+		gameFieldFacade = new GameFieldFacade();
+		
 		// Create and populate the panel.
 		labelFieldPanel = new JPanel(new SpringLayout());
-		mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		getMainPanel().setLayout(new BoxLayout(getMainPanel(), BoxLayout.Y_AXIS));
 
 		fieldX = new JTextField(10);
 		fieldY = new JTextField(10);
@@ -115,8 +102,8 @@ public class CreateWallFrame extends Observable implements MouseListener {
 		createButton.addMouseListener(this);
 		colorPickerButton.addMouseListener(this);
 
-		mainPanel.add(labelFieldPanel);
-		mainPanel.add(createButton);
+		getMainPanel().add(labelFieldPanel);
+		getMainPanel().add(createButton);
 	}
 
 	@Override
@@ -128,8 +115,7 @@ public class CreateWallFrame extends Observable implements MouseListener {
 
 				constructionSpriteDTO = new ConstructionSpriteFacade().createWall(constructionSpriteDTO);
 				gameFieldFacade.addConstructionSpriteToWorld(constructionSpriteDTO.getId());
-
-				dialog.setVisible(false);
+				FrameFacade.closeCreateDialog(CreateWallDialog.this);
 				setChanged();
 				notifyObservers();
 			} else if (event.getSource() == colorPickerButton) {
@@ -178,36 +164,4 @@ public class CreateWallFrame extends Observable implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 	}
 
-	private class NewWindowListener implements WindowListener {
-
-		@Override
-		public void windowClosing(WindowEvent e) {
-			closeCreateWallFrame();
-		}
-
-		@Override
-		public void windowActivated(WindowEvent e) {
-		}
-
-		@Override
-		public void windowClosed(WindowEvent e) {
-		}
-
-		@Override
-		public void windowDeactivated(WindowEvent e) {
-		}
-
-		@Override
-		public void windowDeiconified(WindowEvent e) {
-		}
-
-		@Override
-		public void windowIconified(WindowEvent e) {
-		}
-
-		@Override
-		public void windowOpened(WindowEvent e) {
-		}
-
-	}
 }

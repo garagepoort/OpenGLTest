@@ -77,4 +77,8 @@ public class GamePanel extends Observable{
 	private void renderPanels() throws IOException, MapperException {
 		gamePanelDrawer.drawGamePanel(this);
 	}
+	
+	protected GamePanelDrawer getGamePanelDrawer() {
+		return gamePanelDrawer;
+	}
 }

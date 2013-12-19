@@ -223,18 +223,20 @@ public class GameFieldFacade {
 		try {
 			if (sprite instanceof ConstructionSpriteDTO) {
 				ConstructionSprite constructionSprite = ConstructionSpriteDTOMapper.mapConstructionSpriteDTOToWall((ConstructionSpriteDTO) sprite);
-				constructionSpriteRepository.updateSprite(constructionSprite);
+				getCurrentGameField().updateConstructionSprite(constructionSprite);
 			}
 			if (sprite instanceof ItemDTO) {
-				removeGroundItemFromWorld(sprite.getId());
+				Item item = ItemDTOMapper.doAutoMappingForItemDTO((ItemDTO) sprite);
+				getCurrentGameField().updateGroundItem(item);
 			}
 			if (sprite instanceof LightDTO) {
-				removeLightFromWorld(sprite.getId());
+				Light light = LightToLightDTOMapper.mapDTOToLight((LightDTO) sprite);
+				getCurrentGameField().updateLight(light);
 			}
 			if (sprite instanceof EnemyDTO) {
 				removeEnemyFromWorld(sprite.getId());
 			}
-		} catch (SpriteException | MapperException e) {
+		} catch (MapperException | GameFieldException e) {
 			throw new ModelException(e);
 		}
 	}
