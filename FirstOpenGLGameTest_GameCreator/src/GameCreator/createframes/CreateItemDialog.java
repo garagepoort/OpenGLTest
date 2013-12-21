@@ -19,6 +19,7 @@ import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PotionFacade;
 import be.davidcorp.applicationLayer.facade.WeaponFacade;
 
+@SuppressWarnings("serial")
 public class CreateItemDialog extends CreateDialog implements MouseListener {
 
 	public ItemDTO itemDTO;
@@ -31,8 +32,8 @@ public class CreateItemDialog extends CreateDialog implements MouseListener {
 	private JLabel xLabel;
 	private JLabel yLabel;
 
-	private JButton createButton = new JButton("create Item");
-	private JButton colorPickerButton = new JButton("pick color");
+	private JButton createButton;
+	private JButton colorPickerButton;
 
 	private WeaponFacade weaponFacade = new WeaponFacade();
 	private PotionFacade potionFacade = new PotionFacade();
@@ -41,16 +42,19 @@ public class CreateItemDialog extends CreateDialog implements MouseListener {
 
 	public CreateItemDialog(ItemType itemType) {
 		super("Create Item", 400, 400);
+		setName("CreateItemDialog");
+		addMouseListeners();
 		this.itemType = itemType;
 	}
-
+	
 	protected void initComponents() {
 
-		// Create and populate the panel.
-		labelFieldPanel = new JPanel(new SpringLayout());
 		getMainPanel().setLayout(new BoxLayout(getMainPanel(), BoxLayout.Y_AXIS));
-
-
+		
+		labelFieldPanel = new JPanel(new SpringLayout());
+		createButton = new JButton("create Item");
+		colorPickerButton = new JButton("pick color");
+		
 		fieldX = new JTextField(10);
 		fieldY = new JTextField(10);
 
@@ -66,17 +70,19 @@ public class CreateItemDialog extends CreateDialog implements MouseListener {
 		labelFieldPanel.add(yLabel);
 		labelFieldPanel.add(fieldY);
 
-		// mainPanel.add(createButton);
-
 		SpringUtilities.makeCompactGrid(labelFieldPanel, 2, 2, // rows, cols
 				6, 6, // initX, initY
 				6, 6); // xPad, yPad
 
-		createButton.addMouseListener(this);
-		colorPickerButton.addMouseListener(this);
 
 		getMainPanel().add(labelFieldPanel);
 		getMainPanel().add(createButton);
+	}
+
+
+	private void addMouseListeners() {
+		createButton.addMouseListener(this);
+		colorPickerButton.addMouseListener(this);
 	}
 
 	@Override
@@ -107,19 +113,19 @@ public class CreateItemDialog extends CreateDialog implements MouseListener {
 			}
 		}
 	}
-
+	
 	@Override
 	public void mouseEntered(MouseEvent e) {
 	}
-
+	
 	@Override
 	public void mouseExited(MouseEvent e) {
 	}
-
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
 	}
-
+	
 	@Override
 	public void mouseReleased(MouseEvent e) {
 	}

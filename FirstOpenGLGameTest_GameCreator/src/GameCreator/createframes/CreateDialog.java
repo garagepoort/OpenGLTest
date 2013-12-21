@@ -1,43 +1,36 @@
 package GameCreator.createframes;
 
-import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.Observable;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-public abstract class CreateDialog extends Observable {
+public abstract class CreateDialog extends JDialog{
 
-	private JDialog dialog;
+	private static final long serialVersionUID = 1L;
 	private JPanel mainPanel;
 	
 	public CreateDialog(String title, int width, int height){
-		dialog = new JDialog();
 		mainPanel = new JPanel();
 		
 		initComponents();
 		
-		dialog.setTitle(title);
-		dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-		dialog.getContentPane().add(mainPanel);
+		setTitle(title);
+//		setModalityType(ModalityType.APPLICATION_MODAL);
+		getContentPane().add(mainPanel);
 		// addComponents();
-		dialog.setResizable(false);
-		dialog.setSize(new Dimension(width, height));
-		dialog.setVisible(true);
-		dialog.addWindowListener(new NewWindowListener());
+		setResizable(false);
+		setSize(new Dimension(width, height));
+		setVisible(true);
+		addWindowListener(new NewWindowListener());
 	}
 	
 	public JPanel getMainPanel() {
 		return mainPanel;
 	}
 
-	public void setVisible(boolean visible) {
-		dialog.setVisible(visible);
-	}
-	
 	protected abstract void initComponents();
 	
 	private class NewWindowListener implements WindowListener {

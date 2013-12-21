@@ -23,6 +23,7 @@ import be.davidcorp.applicationLayer.dto.mapper.ConstructionType;
 import be.davidcorp.applicationLayer.facade.ConstructionSpriteFacade;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 
+@SuppressWarnings("serial")
 public class CreateWallDialog extends CreateDialog implements MouseListener {
 
 	private JDialog dialog = new JDialog();
@@ -49,6 +50,7 @@ public class CreateWallDialog extends CreateDialog implements MouseListener {
 
 	public CreateWallDialog() {
 		super("Create a new Wall", 400, 300);
+		setName("CreateWallDialog");
 	}
 
 	protected void initComponents() {
@@ -115,8 +117,6 @@ public class CreateWallDialog extends CreateDialog implements MouseListener {
 				constructionSpriteDTO = new ConstructionSpriteFacade().createWall(constructionSpriteDTO);
 				gameFieldFacade.addConstructionSpriteToWorld(constructionSpriteDTO.getId());
 				FrameFacade.closeCreateDialog(CreateWallDialog.this);
-				setChanged();
-				notifyObservers();
 			} else if (event.getSource() == colorPickerButton) {
 				colorPickerFrame = new ColorPickerFrame();
 			}

@@ -19,6 +19,7 @@ import be.davidcorp.applicationLayer.dto.mapper.EnemyType;
 import be.davidcorp.applicationLayer.facade.EnemyFacade;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 
+@SuppressWarnings("serial")
 public class CreateEnemyDialog extends CreateDialog implements MouseListener {
 
 	private EnemyType enemyType;
@@ -31,22 +32,24 @@ public class CreateEnemyDialog extends CreateDialog implements MouseListener {
 	private JLabel xLabel;
 	private JLabel yLabel;
 
-	private JButton createButton = new JButton("create Enemy");
-	private JButton colorPickerButton = new JButton("pick color");
+	private JButton createButton;
+	private JButton colorPickerButton;
 
 	private EnemyFacade enemyFacade = new EnemyFacade();
 	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
 
 	public CreateEnemyDialog(EnemyType enemyType) {
 		super("Create new " + enemyType.toString().toLowerCase(), 400, 300);
+		setName("CreateEnemyDialog");
 		this.enemyType = enemyType;
 	}
 
 	protected void initComponents() {
-
-		// Create and populate the panel.
-		labelFieldPanel = new JPanel(new SpringLayout());
 		getMainPanel().setLayout(new BoxLayout(getMainPanel(), BoxLayout.Y_AXIS));
+		
+		createButton = new JButton("create Enemy");
+		colorPickerButton = new JButton("pick color");
+		labelFieldPanel = new JPanel(new SpringLayout());
 
 
 		fieldX = new JTextField(10);
@@ -83,8 +86,6 @@ public class CreateEnemyDialog extends CreateDialog implements MouseListener {
 			try {
 				gameFieldFacade.addEnemyToWorld(createEnemy().getId());
 				closeCreateDialog(CreateEnemyDialog.this);
-				setChanged();
-				notifyObservers();
 			} catch (Exception e) {
 				ErrorHandler.handleError(getMainPanel(), e);
 			}

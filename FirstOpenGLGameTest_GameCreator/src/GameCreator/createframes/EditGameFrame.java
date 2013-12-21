@@ -47,6 +47,7 @@ public class EditGameFrame extends JFrame implements MouseListener, Observer {
 	private JPanel openGLPanel;
 
 	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
+	private SpriteTreePanel spriteTreePanel;
 
 	public EditGameFrame(String fieldName,
 			boolean loadingAnAlreadyExistingGamefield) {
@@ -68,7 +69,7 @@ public class EditGameFrame extends JFrame implements MouseListener, Observer {
 
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		splitPane.setLeftComponent(mainPanel);
-		splitPane.setRightComponent(new SpriteTreePanel());
+		splitPane.setRightComponent(spriteTreePanel);
 		getContentPane().add(splitPane);
 		revalidate();
 	}
@@ -93,6 +94,8 @@ public class EditGameFrame extends JFrame implements MouseListener, Observer {
 		shadowsCheckBox = new JCheckBox("Shadows on", true);
 		selectedSpritePanel = new SelectedSpritePanel(this);
 
+		spriteTreePanel = new SpriteTreePanel();
+		spriteTreePanel.setName("spriteTreePanel");
 	}
 
 	private void addComponents() {

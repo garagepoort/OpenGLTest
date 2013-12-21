@@ -23,6 +23,7 @@ import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.LightFacade;
 import be.davidcorp.metric.Point;
 
+@SuppressWarnings("serial")
 public class CreateLightDialog extends CreateDialog implements MouseListener {
 
 	public LightDTO lightDTO;
@@ -49,6 +50,7 @@ public class CreateLightDialog extends CreateDialog implements MouseListener {
 
 	public CreateLightDialog() {
 		super("Create light", 600, 600);
+		setName("CreateLightDialog");
 	}
 
 	protected void initComponents() {
@@ -109,9 +111,7 @@ public class CreateLightDialog extends CreateDialog implements MouseListener {
 				gameFieldFacade.addLightToWorld(lightDTO.getId());
 				
 				closeCreateDialog(CreateLightDialog.this);
-				
-				setChanged();
-				notifyObservers();
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

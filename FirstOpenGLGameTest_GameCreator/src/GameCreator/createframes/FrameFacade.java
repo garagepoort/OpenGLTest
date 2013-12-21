@@ -45,6 +45,27 @@ public class FrameFacade {
 		if(createDialog instanceof CreateEnemyDialog){
 			createWallDialog = null;
 		}
+		if(createDialog instanceof CreateItemDialog){
+			createItemDialog = null;
+		}
+	}
+
+	public static boolean isCreateWallDialogOpen(){
+		return createWallDialog != null;
+	}
+
+	public static boolean isCreateEnemyDialogOpen(){
+		return createEnemyDialog != null;
+	}
+	public static boolean isCreateItemDialogOpen(){
+		return createItemDialog != null;
+	}
+	public static boolean isCreateLightDialogOpen(){
+		return createLightDialog != null;
+	}
+	
+	public static boolean isCreateWeaponDialogOpen() {
+		return false;
 	}
 
 }
