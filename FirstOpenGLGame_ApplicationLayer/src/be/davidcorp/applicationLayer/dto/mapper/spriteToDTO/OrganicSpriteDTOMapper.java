@@ -61,16 +61,22 @@ public class OrganicSpriteDTOMapper {
 	}
 
 	public static EnemyDTO doAutoMappingForEnemy(Enemy enemy) throws MapperException {
-		EnemyDTO enemyDTO = null;
 		if(enemy instanceof Zombie){
-			enemyDTO = mapZombieToEnemyDTO((Zombie) enemy);
+			return mapZombieToEnemyDTO((Zombie) enemy);
 		}
 		if(enemy instanceof Spider){
-			enemyDTO = mapSpiderToEnemyDTO((Spider) enemy);
+			return mapSpiderToEnemyDTO((Spider) enemy);
 		}
-		if(enemyDTO == null){
-			throw new MapperException("No mapping found for enemy: " + enemy.getClass().getCanonicalName());
+		throw new MapperException("No mapping found for enemy: " + enemy.getClass().getCanonicalName());
+	}
+
+	public static Enemy doAutoMappingForEnemyDTO(EnemyDTO spriteDTO) throws MapperException {
+		if(spriteDTO.enemyType == EnemyType.SPIDER){
+			return mapEnemyDTOToSpider(spriteDTO);
 		}
-		return enemyDTO;
+		if(spriteDTO.enemyType == EnemyType.ZOMBIE){
+			return mapEnemyDTOToZombie(spriteDTO);
+		}
+		return null;
 	}
 }

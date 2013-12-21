@@ -352,6 +352,12 @@ public class Gamefield {
 		lights.put(light.getID(), light);
 	}
 
+	public void updateEnemy(Enemy enemy) throws GameFieldException {
+		if (!enemies.containsKey(enemy.getID())) {
+			throw new GameFieldException("The gamefield does not contain this sprite: " + enemy);
+		}
+		enemies.put(enemy.getID(), enemy);
+	}
 	private List<Sprite> findSpritesThatCollideWithPoint(Point point, List<? extends Sprite> sprites) {
 		List<Sprite> result = newArrayList();
 		for (Sprite cs : sprites) {
@@ -361,4 +367,5 @@ public class Gamefield {
 		}
 		return result;
 	}
+
 }

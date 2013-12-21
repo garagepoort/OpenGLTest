@@ -219,22 +219,23 @@ public class GameFieldFacade {
 		}
 	}
 
-	public void updateSpriteInGamefield(SpriteDTO sprite) throws ModelException {
+	public void updateSpriteInGamefield(SpriteDTO spriteDTO) throws ModelException {
 		try {
-			if (sprite instanceof ConstructionSpriteDTO) {
-				ConstructionSprite constructionSprite = ConstructionSpriteDTOMapper.mapConstructionSpriteDTOToWall((ConstructionSpriteDTO) sprite);
+			if (spriteDTO instanceof ConstructionSpriteDTO) {
+				ConstructionSprite constructionSprite = ConstructionSpriteDTOMapper.mapConstructionSpriteDTOToWall((ConstructionSpriteDTO) spriteDTO);
 				getCurrentGameField().updateConstructionSprite(constructionSprite);
 			}
-			if (sprite instanceof ItemDTO) {
-				Item item = ItemDTOMapper.doAutoMappingForItemDTO((ItemDTO) sprite);
+			if (spriteDTO instanceof ItemDTO) {
+				Item item = ItemDTOMapper.doAutoMappingForItemDTO((ItemDTO) spriteDTO);
 				getCurrentGameField().updateGroundItem(item);
 			}
-			if (sprite instanceof LightDTO) {
-				Light light = LightToLightDTOMapper.mapDTOToLight((LightDTO) sprite);
+			if (spriteDTO instanceof LightDTO) {
+				Light light = LightToLightDTOMapper.mapDTOToLight((LightDTO) spriteDTO);
 				getCurrentGameField().updateLight(light);
 			}
-			if (sprite instanceof EnemyDTO) {
-				removeEnemyFromWorld(sprite.getId());
+			if (spriteDTO instanceof EnemyDTO) {
+				Enemy enemy = OrganicSpriteDTOMapper.doAutoMappingForEnemyDTO((EnemyDTO) spriteDTO);
+				getCurrentGameField().updateEnemy(enemy);
 			}
 		} catch (MapperException | GameFieldException e) {
 			throw new ModelException(e);
