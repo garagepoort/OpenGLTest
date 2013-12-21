@@ -8,22 +8,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.construction.Wall;
 import be.davidcorp.loaderSaver.LoaderException;
 import be.davidcorp.loaderSaver.SpriteLoaderSaver;
-import be.davidcorp.loaderSaver.SpriteProperty;
 import be.davidcorp.loaderSaver.SpriteLoaderSaver.SpriteLoaderEvent;
+import be.davidcorp.loaderSaver.SpriteProperty;
 
 public class ConstructionSpriteRepository implements SpriteRepository<ConstructionSprite>{
 	
 	private static HashMap<Integer, ConstructionSprite> constructionSprites = new HashMap<Integer, ConstructionSprite>();
 
 	@Override
-	public void loadSprites(String type, ArrayList<String> spriteStrings) throws LoaderException {
+	public void loadSprites(String type, ArrayList<String> spriteStrings) {
 		for (String constructionString : spriteStrings) {
 			ConstructionSprite constructionSprite = new SpriteLoaderSaver<ConstructionSprite>().loadSprite(constructionString, new ConstructionLoaderEvent());
 			constructionSprites.put(constructionSprite.getID(), constructionSprite);
@@ -39,7 +38,7 @@ public class ConstructionSpriteRepository implements SpriteRepository<Constructi
 	}
 
 	@Override
-	public void updateSprite(ConstructionSprite constructionSpriteToUpdate) throws SpriteException {
+	public void updateSprite(ConstructionSprite constructionSpriteToUpdate) {
 		ConstructionSprite constructionSprite = constructionSprites.get(constructionSpriteToUpdate.getID());
 		constructionSprite.setX(constructionSpriteToUpdate.getX());
 		constructionSprite.setY(constructionSpriteToUpdate.getY());
@@ -48,7 +47,7 @@ public class ConstructionSpriteRepository implements SpriteRepository<Constructi
 	}
 	
 	@Override
-	public ConstructionSprite createSprite(ConstructionSprite sprite) throws SpriteRepositoryException {
+	public ConstructionSprite createSprite(ConstructionSprite sprite) {
 		if(constructionSprites.containsKey(sprite.getID())){
 			throw new SpriteRepositoryException("A weapon with this ID already exists. The sprite given to this method cannot have an already existing id.");
 		}
@@ -60,7 +59,7 @@ public class ConstructionSpriteRepository implements SpriteRepository<Constructi
 	
 	private static class ConstructionLoaderEvent extends SpriteLoaderEvent<ConstructionSprite> {
 		@Override
-		public ConstructionSprite createSprite(Map<SpriteProperty, String> values) throws LoaderException {
+		public ConstructionSprite createSprite(Map<SpriteProperty, String> values) {
 			try {
 				SpriteType spriteType = SpriteType.valueOf(values.get(SpriteProperty.SPRITETYPE));
 				float x = parseFloat(values.get(SpriteProperty.X));

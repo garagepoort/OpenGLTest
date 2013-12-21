@@ -1,7 +1,6 @@
 package be.davidcorp.domain.sprite.construction;
 
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.SpriteType;
@@ -16,8 +15,7 @@ public class Door extends ConstructionSprite{
 	/**Constructor 
 	 * @see ConstructionSprite
 	 */
-	public Door(float x, float y, int width, int height)
-			throws SpriteException {
+	public Door(float x, float y, int width, int height) {
 		super(x, y, width, height);
 	}
 

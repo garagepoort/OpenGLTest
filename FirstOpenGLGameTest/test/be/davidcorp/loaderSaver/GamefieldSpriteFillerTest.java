@@ -4,15 +4,11 @@ import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import be.davidcorp.domain.exception.GameFieldException;
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.domain.sprite.item.weapon.Pistol;
 import be.davidcorp.domain.sprite.organic.enemy.Spider;
@@ -36,7 +32,7 @@ public class GamefieldSpriteFillerTest {
 	}
 	
 	@Test
-	public void givenAGamefieldLink_whenGamefieldFilledIn_thenGamefieldIsFilledInCorrectly() throws LoaderException, GameFieldException, IOException, SpriteException{
+	public void givenAGamefieldLink_whenGamefieldFilledIn_thenGamefieldIsFilledInCorrectly() {
 		//given
 		Zombie zombie= mock(Zombie.class);
 		Spider spider= mock(Spider.class);

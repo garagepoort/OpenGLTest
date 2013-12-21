@@ -2,15 +2,13 @@ package be.davidcorp.domain.sprite;
 
 import java.util.HashMap;
 
-import be.davidcorp.domain.exception.SpriteException;
-
 
 public class GuideArea extends Sprite{
 
 	private HashMap<Integer, String> guidances = new HashMap<Integer, String>();
 	private int counter;
 	private String guidance;
-	public GuideArea(float x, float y, int width, int height) throws SpriteException {
+	public GuideArea(float x, float y, int width, int height) {
 		super(x, y, width, height);
 
 	}

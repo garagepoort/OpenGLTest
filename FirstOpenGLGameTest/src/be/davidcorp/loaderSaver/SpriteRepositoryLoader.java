@@ -28,7 +28,7 @@ public class SpriteRepositoryLoader {
 		fileUtility = new FileUtility();
 	}
 
-	public void loadAllSprites(String type) throws LoaderException {
+	public void loadAllSprites(String type) {
 		Scanner scanner = null;
 		try {
 			scanner = new Scanner(fileUtility.getFileContent(file));
@@ -46,7 +46,7 @@ public class SpriteRepositoryLoader {
 		}
 	}
 
-	private void fillRepositories(String type) throws LoaderException {
+	private void fillRepositories(String type) {
 		new EnemyRepository().loadSprites(type, enemies);
 		new WeaponRepository().loadSprites(type, weapons);
 		new ConstructionSpriteRepository().loadSprites(type, constructionSprites);

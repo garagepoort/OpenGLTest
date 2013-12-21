@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class FileLoaderUtilities {
 
-	public static Map<SpriteProperty, String> getSpriteProperties(String sprite) throws LoaderException {
+	public static Map<SpriteProperty, String> getSpriteProperties(String sprite) {
 		Map<SpriteProperty, String> properties = new HashMap<SpriteProperty, String>();
 		Scanner scanner = new Scanner(sprite);
 		while (scanner.hasNextLine()) {
@@ -20,7 +20,7 @@ public class FileLoaderUtilities {
 		return properties;
 	}
 
-	public static Map<GamefieldProperty, String> getGamefieldProperties(String gamefield) throws LoaderException {
+	public static Map<GamefieldProperty, String> getGamefieldProperties(String gamefield) {
 		Map<GamefieldProperty, String> properties = new HashMap<GamefieldProperty, String>();
 		Scanner scanner = new Scanner(gamefield);
 		while (scanner.hasNextLine()) {

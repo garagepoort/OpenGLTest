@@ -38,7 +38,7 @@ public class Inventory {
 	// items[rij2][kolom2] = i1;
 	// }
 
-	public void addItem(Item i, int row, int column) throws InventoryException {
+	public void addItem(Item i, int row, int column)  {
 		if (row < 0 || row > items.length - 1 || column < 0 || column > items[0].length) {
 			throw new InventoryException("Index out of bounds");
 		}
@@ -55,7 +55,7 @@ public class Inventory {
 		items[row][column] = i;
 	}
 
-	public void addItem(Item item) throws InventoryException {
+	public void addItem(Item item)  {
 
 		if (currentWeight + item.getWeight() > maxWeight) {
 			throw new InventoryException("You can not carry anymore items");
@@ -80,7 +80,7 @@ public class Inventory {
 
 	}
 
-	public void removeItem(int row, int column) throws InventoryException {
+	public void removeItem(int row, int column)  {
 		if (row < 0 || row > items.length - 1 || column < 0 || column > items[0].length) {
 			throw new InventoryException("Index out of bounds");
 		}
@@ -102,7 +102,7 @@ public class Inventory {
 		}
 	}
 
-	public Item getItem(int row, int column) throws InventoryException {
+	public Item getItem(int row, int column)  {
 		if (row < 0 || row > items.length - 1 || column < 0 || column > items[0].length) {
 			throw new InventoryException("Index out of bounds");
 		}

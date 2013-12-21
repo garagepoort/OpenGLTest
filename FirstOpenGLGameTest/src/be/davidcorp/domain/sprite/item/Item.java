@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import be.davidcorp.domain.attribute.Attributer;
 import be.davidcorp.domain.attribute.Attributes;
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.organic.OrganicSprite;
 
@@ -15,7 +14,7 @@ public abstract class Item extends Sprite implements Attributer{
 	private HashMap<Attributes, Float> attributes = new HashMap<>();
 	private OrganicSprite owner;
 	
-	public Item(float x, float y) throws SpriteException {
+	public Item(float x, float y) {
 		super(x, y,32,32);
 		setOwner(owner);
 	}

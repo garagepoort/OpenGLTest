@@ -5,15 +5,12 @@ import static be.davidcorp.domain.trigger.TriggerWhen.ONLIGHTOFF;
 import static be.davidcorp.domain.trigger.TriggerWhen.ONUSE;
 import static java.lang.Integer.parseInt;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import be.davidcorp.domain.exception.GameFieldException;
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.construction.Wall;
@@ -30,39 +27,34 @@ public class GamefieldRepository {
 	private static HashMap<Integer, Gamefield> gamefields = new HashMap<Integer, Gamefield>();
 
 	private void addTestGamefield() {
-		try {
-			Gamefield gamefield = new Gamefield("field", 2000, 2000);
-			gamefield.setID(6);
+		Gamefield gamefield = new Gamefield("field", 2000, 2000);
+		gamefield.setID(6);
 
-			Zombie zombie = new Zombie(200, 200);
-			HealthPotion healthPotion = new HealthPotion(500, 500);
-			Wall wall = new Wall(100, 100, 100, 100);
-			Light light = new Light(200, 200, new Color(255, 0, 0), 200, true);
-			Light secondLight = new Light(400, 400, new Color(0, 255, 0), 200, true);
-			
-			gamefield.addConstructionItem(wall);
-			gamefield.addLight(light);
-			gamefield.addLight(secondLight);
-			gamefield.addEnemyToWorld(zombie);
-			gamefield.addGroundItem(healthPotion);
+		Zombie zombie = new Zombie(200, 200);
+		HealthPotion healthPotion = new HealthPotion(500, 500);
+		Wall wall = new Wall(100, 100, 100, 100);
+		Light light = new Light(200, 200, new Color(255, 0, 0), 200, true);
+		Light secondLight = new Light(400, 400, new Color(0, 255, 0), 200, true);
 
-			light.addTrigger(createTrigger(1, ONLIGHTOFF, secondLight, new LightSwitchEvent()));
-			wall.addTrigger(createTrigger(2, ONUSE, light, new LightSwitchEvent()));
-			
-			gamefields.put(gamefield.getID(), gamefield);
-		} catch (GameFieldException | SpriteException | IOException e) {
-			e.printStackTrace();
-		}
+		gamefield.addConstructionItem(wall);
+		gamefield.addLight(light);
+		gamefield.addLight(secondLight);
+		gamefield.addEnemyToWorld(zombie);
+		gamefield.addGroundItem(healthPotion);
+
+		light.addTrigger(createTrigger(1, ONLIGHTOFF, secondLight, new LightSwitchEvent()));
+		wall.addTrigger(createTrigger(2, ONUSE, light, new LightSwitchEvent()));
+
+		gamefields.put(gamefield.getID(), gamefield);
 	}
 
-	public void loadGamefields(List<String> gamefieldStrings) throws LoaderException {
+	public void loadGamefields(List<String> gamefieldStrings) {
 		addTestGamefield();
 		for (String gamefieldString : gamefieldStrings) {
 			Gamefield gamefield = load(gamefieldString);
 			gamefields.put(gamefield.getID(), gamefield);
 		}
 	}
-	
 
 	public Gamefield getGamefield(int id) {
 		return gamefields.get(id);
@@ -85,25 +77,25 @@ public class GamefieldRepository {
 		return null;
 	}
 
-	public void createGamefield(String gamefieldName, int width, int height) throws GameFieldException, SpriteException {
+	public void createGamefield(String gamefieldName, int width, int height) {
 		int id = IDGenerator.generateIdForGamefields(gamefields);
 		Gamefield gamefield = new Gamefield(gamefieldName, width, height);
 		gamefield.setID(id);
 		gamefields.put(id, gamefield);
 	}
 
-	private Gamefield load(String gamefieldString) throws LoaderException {
+	private Gamefield load(String gamefieldString) {
 		try {
 			Map<GamefieldProperty, String> values = FileLoaderUtilities.getGamefieldProperties(gamefieldString);
-			
+
 			String name = values.get(GamefieldProperty.GAMEFIELDNAME);
 			int width = parseInt(values.get(GamefieldProperty.WIDTH));
 			int height = parseInt(values.get(GamefieldProperty.HEIGHT));
-			
+
 			Gamefield gamefield = new Gamefield(name, width, height);
 			gamefield.setID(parseInt(values.get(GamefieldProperty.ID)));
 			gamefield.setName(name);
-			
+
 			return gamefield;
 		} catch (Exception exception) {
 			throw new LoaderException(exception);

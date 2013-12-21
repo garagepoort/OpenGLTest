@@ -1,14 +1,11 @@
 package be.davidcorp.domain.sprite.item.weapon;
 
-import java.io.IOException;
-
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.sprite.organic.OrganicSprite;
 import be.davidcorp.texture.TextureBunch;
 
 public class Bullet extends Ammo{
 
-	public Bullet(float x, float y) throws SpriteException, IOException {
+	public Bullet(float x, float y){
 		super(x, y, 4,4);
 		initializeTextureBunch();
 		setSpeed(2f);

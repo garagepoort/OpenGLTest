@@ -1,7 +1,7 @@
 package be.davidcorp.domain.exception;
 
 @SuppressWarnings("serial")
-public class InventoryException extends Exception{
+public class InventoryException extends RuntimeException{
 	
 	private String mistake;
 

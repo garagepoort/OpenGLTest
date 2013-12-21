@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.inputControl.InputController;
 import be.davidcorp.inputControl.MouseButton;
 import be.davidcorp.view.drawer.GamePanelDrawer;
@@ -23,7 +22,7 @@ public class GamePanel extends Observable{
 		this.inputController = inputController;
 	}
 	
-	public void render() throws IOException, MapperException {
+	public void render() throws IOException {
 		removeClosedPanels();
 		renderPanels();
 	}
@@ -74,7 +73,7 @@ public class GamePanel extends Observable{
 	}
 	
 
-	private void renderPanels() throws IOException, MapperException {
+	private void renderPanels() throws IOException {
 		gamePanelDrawer.drawGamePanel(this);
 	}
 	

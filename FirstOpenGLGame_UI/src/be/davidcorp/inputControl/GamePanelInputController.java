@@ -3,7 +3,6 @@ package be.davidcorp.inputControl;
 import org.lwjgl.input.Mouse;
 
 import be.davidcorp.WindDirection;
-import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.metric.Point;
@@ -43,11 +42,7 @@ public class GamePanelInputController extends InputController {
 
 	@Override
 	public void on_G_Key_pressed() {
-		try {
-			playGamePanel.togglePickupPanel();
-		} catch (MapperException e) {
-			e.printStackTrace();
-		}
+		playGamePanel.togglePickupPanel();
 	}
 
 	@Override

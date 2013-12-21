@@ -1,14 +1,11 @@
 package be.davidcorp.domain.sprite.item.weapon;
 
-import java.io.IOException;
-
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.texture.TextureBunch;
 
 public class RocketLauncher extends RangedWeapon{
 
 	
-	public RocketLauncher(float x, float y, int aantalRockets) throws  SpriteException, IOException{
+	public RocketLauncher(float x, float y, int aantalRockets) {
 		super(x,y,64,64,aantalRockets);
 		setTextureBunch(new TextureBunch().withDefaultTexture("resources/images/weapons/rocketlauncher.png"));
 		setTextureBunch(new TextureBunch());
@@ -17,7 +14,7 @@ public class RocketLauncher extends RangedWeapon{
 	}
 
 	@Override
-	public Ammo getAmmoInstance() throws SpriteException, IOException {
+	public Ammo getAmmoInstance() {
 		return new Rocket(getX(), getY());
 	}
 

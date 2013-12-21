@@ -27,7 +27,6 @@ import be.davidcorp.applicationLayer.dto.AmmoDTO;
 import be.davidcorp.applicationLayer.dto.ConstructionSpriteDTO;
 import be.davidcorp.applicationLayer.dto.EnemyDTO;
 import be.davidcorp.applicationLayer.dto.ItemDTO;
-import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 
 public class GamefieldDrawer {
@@ -75,7 +74,7 @@ public class GamefieldDrawer {
 			glEnable(GL_TEXTURE_2D);
 	}
 	
-	public static void drawConstructionItems() throws MapperException {
+	public static void drawConstructionItems()  {
 		for (ConstructionSpriteDTO constructionSprite : fieldFacade.getConstructionSpritesFromWorld()) {
 			SpriteDrawer.drawSpriteWithoutTexture(constructionSprite);
 		}
@@ -92,12 +91,12 @@ public class GamefieldDrawer {
 			for (ItemDTO item : fieldFacade.getItemsOnGroundInWorld()) {
 				SpriteDrawer.drawSpriteWithTexture(item);
 			}
-		} catch (MapperException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void drawEnemies() throws MapperException {
+	public static void drawEnemies()  {
 		for (EnemyDTO enemy : fieldFacade.getEnemiesInWorld()) {
 			SpriteDrawer.drawSpriteWithTexture(enemy);
 		}

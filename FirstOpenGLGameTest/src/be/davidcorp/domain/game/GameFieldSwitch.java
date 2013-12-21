@@ -1,6 +1,5 @@
 package be.davidcorp.domain.game;
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.organic.player.Player;
 import be.davidcorp.metric.Point;
@@ -17,7 +16,7 @@ public class GameFieldSwitch extends Sprite{
 	private String gameFieldName;
 	private Point spawnPoint;
 	
-	public GameFieldSwitch(float x, float y, int width, int height, String gamefieldName) throws SpriteException {
+	public GameFieldSwitch(float x, float y, int width, int height, String gamefieldName) {
 		super(x, y, width, height);
 		setGameFieldName(gamefieldName);
 	}

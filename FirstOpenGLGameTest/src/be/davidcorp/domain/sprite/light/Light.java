@@ -1,6 +1,5 @@
 package be.davidcorp.domain.sprite.light;
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.trigger.TriggerWhen;
@@ -12,7 +11,7 @@ public class Light extends Sprite{
 	private boolean lightOn = true;
 
 
-	public Light(float x, float y, Color color, int radius, boolean lightOn) throws SpriteException{
+	public Light(float x, float y, Color color, int radius, boolean lightOn){
 		super(x, y, 10, 10);
 		setLightOn(lightOn);
 		setColor(color);

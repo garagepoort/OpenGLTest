@@ -8,7 +8,6 @@ import org.newdawn.slick.Color;
 
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.PlayerDTO;
-import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.applicationLayer.facade.InventoryFacade;
 import be.davidcorp.inputControl.MouseButton;
 import be.davidcorp.metric.Point;
@@ -22,7 +21,7 @@ public class InventoryPanel extends Panel {
 	private PlayerDTO playerDTO;
 	
 	public InventoryPanel(float x, float y, int width, int height, Color c,
-			PlayGamePanel p) throws MapperException {
+			PlayGamePanel p)  {
 		super(x, y, width, height, c);
 		setGamePanel(p);
 		addItemPanels();
@@ -60,7 +59,7 @@ public class InventoryPanel extends Panel {
 		 */
 		try {
 			addItemPanels();
-		} catch (MapperException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		if (inventorySubPanel != null && !inventorySubPanel.isClosed()) {
@@ -68,7 +67,7 @@ public class InventoryPanel extends Panel {
 		}
 	}
 
-	public void addItemPanels() throws MapperException {
+	public void addItemPanels()  {
 		// int rijrand = 5;
 		int kolomrand = 5;
 		getComponents().clear();

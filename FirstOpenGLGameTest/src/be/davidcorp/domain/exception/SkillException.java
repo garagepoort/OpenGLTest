@@ -1,7 +1,7 @@
 package be.davidcorp.domain.exception;
 
 @SuppressWarnings("serial")
-public class SkillException extends Exception{
+public class SkillException extends RuntimeException{
 	private String mistake;
 
 	public SkillException()

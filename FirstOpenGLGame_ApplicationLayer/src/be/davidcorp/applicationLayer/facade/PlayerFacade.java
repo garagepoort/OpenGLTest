@@ -7,7 +7,6 @@ import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ItemDTOMapper;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.LightToLightDTOMapper;
-import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.domain.exception.InventoryException;
 import be.davidcorp.domain.exception.SkillException;
 import be.davidcorp.domain.game.GameFieldManager;
@@ -183,7 +182,7 @@ public class PlayerFacade {
 	}
 
 	
-	public ItemDTO getPlayerWeapon() throws MapperException {
+	public ItemDTO getPlayerWeapon() {
 		if(getCurrentPlayer().getEquippedWeapon() == null) return null;
 		return ItemDTOMapper.doAutoMappingForItem(getCurrentPlayer().getEquippedWeapon());
 	}

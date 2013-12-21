@@ -6,7 +6,6 @@ import java.util.List;
 import org.newdawn.slick.Color;
 
 import be.davidcorp.applicationLayer.dto.ItemDTO;
-import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.inputControl.GamePanelInputController;
 import be.davidcorp.view.drawer.PlayerDrawer;
@@ -26,20 +25,20 @@ public class PlayGamePanel extends GamePanel {
 
 	// private boolean stepSound = false;
 
-	public PlayGamePanel() throws IOException, MapperException {
+	public PlayGamePanel() throws IOException {
 		super();
 		setInputController(new GamePanelInputController(this));
 		initializePanels();
 	}
 
 	@Override
-	public void render() throws IOException, MapperException {
+	public void render() throws IOException {
 		super.render();
 		PlayerDrawer.drawHealth();
 		PlayerDrawer.drawStamina();
 	}
 
-	private void initializePanels() throws IOException, MapperException {
+	private void initializePanels() throws IOException {
 		inventoryMenu = new InventoryPanel(519f, 100f, 281, 519, new Color(0, 255, 0), this);
 		equipmentPanel = new EquipmentPanel(0, 88, this);
 		guidePanel = new GuidePanel(10, 480, 400, 100, new Color(255, 0, 0, 0.8f));
@@ -48,7 +47,7 @@ public class PlayGamePanel extends GamePanel {
 		addPanel(guidePanel);
 	}
 
-	public void togglePickupPanel() throws MapperException {
+	public void togglePickupPanel()  {
 		List<ItemDTO> items = gamefieldFacade.getItemsThatCanBePickedUpByPlayer();
 		if (items.size() > 0) {
 			if (pickupPanel == null || pickupPanel.isClosed()) {

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.item.weapon.Pistol;
@@ -23,7 +22,7 @@ public class WeaponRepository implements SpriteRepository<Weapon> {
 	private static HashMap<Integer, Weapon> weapons = new HashMap<Integer, Weapon>();
 
 	@Override
-	public void loadSprites(String type, ArrayList<String> spriteStrings) throws LoaderException {
+	public void loadSprites(String type, ArrayList<String> spriteStrings) {
 		for (String weaponString : spriteStrings) {
 			Weapon weapon = new SpriteLoaderSaver<Weapon>().loadSprite(weaponString, new WeaponLoaderEvent());
 			weapons.put(weapon.getID(), weapon);
@@ -39,7 +38,7 @@ public class WeaponRepository implements SpriteRepository<Weapon> {
 	}
 	
 	@Override
-	public Weapon createSprite(Weapon sprite) throws SpriteRepositoryException {
+	public Weapon createSprite(Weapon sprite) {
 		if(weapons.containsKey(sprite.getID())){
 			throw new SpriteRepositoryException("A weapon with this ID already exists. The sprite given to this method cannot have an already existing id.");
 		}
@@ -52,7 +51,7 @@ public class WeaponRepository implements SpriteRepository<Weapon> {
 	private static class WeaponLoaderEvent extends SpriteLoaderEvent<Weapon> {
 
 		@Override
-		public Weapon createSprite(Map<SpriteProperty, String> values) throws LoaderException {
+		public Weapon createSprite(Map<SpriteProperty, String> values) {
 			try {
 				SpriteType spriteType = SpriteType.valueOf(values.get(SpriteProperty.SPRITETYPE));
 				float x = parseFloat(values.get(SpriteProperty.X));
@@ -70,7 +69,7 @@ public class WeaponRepository implements SpriteRepository<Weapon> {
 	}
 
 	@Override
-	public void updateSprite(Weapon spriteToUpdate) throws SpriteException {
+	public void updateSprite(Weapon spriteToUpdate) {
 		throw new UnsupportedOperationException("Not yet implemented");		
 	}
 

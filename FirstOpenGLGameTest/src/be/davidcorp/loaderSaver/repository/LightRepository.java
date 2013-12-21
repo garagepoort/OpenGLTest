@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.light.Light;
@@ -26,7 +25,7 @@ public class LightRepository implements SpriteRepository<Light> {
 	}
 
 	@Override
-	public void loadSprites(String type, ArrayList<String> spriteStrings) throws LoaderException {
+	public void loadSprites(String type, ArrayList<String> spriteStrings) {
 		for (String lightString : spriteStrings) {
 			Light light = new SpriteLoaderSaver<Light>().loadSprite(lightString, new LightLoaderEvent());
 			lights.put(light.getID(), light);
@@ -42,7 +41,7 @@ public class LightRepository implements SpriteRepository<Light> {
 	}
 
 	@Override
-	public Light createSprite(Light light) throws SpriteRepositoryException {
+	public Light createSprite(Light light) {
 		int id = IDGenerator.generateIdForSprites(lights);
 		light.setID(id);
 		lights.put(id, light);
@@ -52,7 +51,7 @@ public class LightRepository implements SpriteRepository<Light> {
 	private static class LightLoaderEvent extends SpriteLoaderEvent<Light> {
 
 		@Override
-		public Light createSprite(Map<SpriteProperty, String> values) throws LoaderException {
+		public Light createSprite(Map<SpriteProperty, String> values) {
 			try {
 				boolean lightOn = parseBoolean(values.get(SpriteProperty.LIGHTON));
 				float x = parseFloat(values.get(SpriteProperty.X));
@@ -70,7 +69,7 @@ public class LightRepository implements SpriteRepository<Light> {
 	}
 
 	@Override
-	public void updateSprite(Light spriteToUpdate) throws SpriteException {
+	public void updateSprite(Light spriteToUpdate) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 

@@ -2,7 +2,6 @@ package be.davidcorp.domain.sprite.organic.enemy;
 
 import java.io.IOException;
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.texture.TextureBunch;
@@ -10,13 +9,13 @@ import be.davidcorp.texture.TextureBunch;
 public class Zombie extends Enemy {
 
 	public Zombie(float x, float y, int width, int height)
-			throws SpriteException, IOException {
+			throws IOException {
 		super(x, y, width, height);
 		initializeTextureBunch();
 		initializeVariables();
 	}
 
-	public Zombie(float x, float y) throws SpriteException, IOException {
+	public Zombie(float x, float y) {
 		super(x, y, 32, 32);
 		initializeTextureBunch();
 		initializeVariables();
@@ -59,10 +58,6 @@ public class Zombie extends Enemy {
 	@Override
 	public void onDeath() {
 		super.onDeath();
-		try {
-			GameFieldManager.getCurrentGameField().addEnemyToWorld(new Spider(getCenter().x - getWidth() / 2, getCenter().y - getHeight() / 2));
-		} catch (SpriteException | IOException e) {
-			e.printStackTrace();
-		}
+		GameFieldManager.getCurrentGameField().addEnemyToWorld(new Spider(getCenter().x - getWidth() / 2, getCenter().y - getHeight() / 2));
 	}
 }

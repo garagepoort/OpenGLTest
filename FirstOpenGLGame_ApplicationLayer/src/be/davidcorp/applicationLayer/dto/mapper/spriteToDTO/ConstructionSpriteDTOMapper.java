@@ -17,7 +17,7 @@ public class ConstructionSpriteDTOMapper {
 		return constructionSpriteDTO;
 	}
 	
-	public static Wall mapConstructionSpriteDTOToWall(ConstructionSpriteDTO constructionSpriteDTO) throws MapperException{
+	public static Wall mapConstructionSpriteDTOToWall(ConstructionSpriteDTO constructionSpriteDTO) {
 		if(constructionSpriteDTO.getConstructionSpriteType() != ConstructionType.WALL){
 			throw new MapperException("The type does not equal Wall");
 		}
@@ -31,7 +31,7 @@ public class ConstructionSpriteDTOMapper {
 		spriteDTO.initializeSegments();
 	}
 	
-	private static void mapConstructionSpriteDTO(ConstructionSprite constructionSprite, ConstructionSpriteDTO spriteDTO) throws MapperException {
+	private static void mapConstructionSpriteDTO(ConstructionSprite constructionSprite, ConstructionSpriteDTO spriteDTO)  {
 		SpriteDTOMapper.mapSpriteDTOToSprite(constructionSprite, spriteDTO);
 	}
 
@@ -43,7 +43,7 @@ public class ConstructionSpriteDTOMapper {
 		return dtos;
 	}
 	
-	public static List<ConstructionSpriteDTO> doAutoMappingForConstructionSprites(List<ConstructionSprite> constructionSprites) throws MapperException {
+	public static List<ConstructionSpriteDTO> doAutoMappingForConstructionSprites(List<ConstructionSprite> constructionSprites)  {
 		ArrayList<ConstructionSpriteDTO> result = new ArrayList<ConstructionSpriteDTO>();
 		for (ConstructionSprite constructionSprite : constructionSprites) {
 			ConstructionSpriteDTO constructionSpriteDTO = doAutoMappingForConstructionSprite(constructionSprite);
@@ -54,7 +54,7 @@ public class ConstructionSpriteDTOMapper {
 	
 	
 	
-	public static ConstructionSpriteDTO doAutoMappingForConstructionSprite(ConstructionSprite constructionSprite) throws MapperException {
+	public static ConstructionSpriteDTO doAutoMappingForConstructionSprite(ConstructionSprite constructionSprite)  {
 		ConstructionSpriteDTO constructionSpriteDTO = null;
 		if(constructionSprite instanceof Wall){
 			constructionSpriteDTO = ConstructionSpriteDTOMapper.mapWallToConstructionSpriteDTO((Wall) constructionSprite);

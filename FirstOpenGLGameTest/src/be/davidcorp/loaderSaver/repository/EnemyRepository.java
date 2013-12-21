@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
@@ -23,7 +22,7 @@ public class EnemyRepository implements SpriteRepository<Enemy>{
 	private static HashMap<Integer, Enemy> enemies = new HashMap<Integer, Enemy>();
 
 	@Override
-	public void loadSprites(String type, ArrayList<String> spriteStrings) throws LoaderException {
+	public void loadSprites(String type, ArrayList<String> spriteStrings) {
 		for (String enemyString : spriteStrings) {
 			Enemy enemy = new SpriteLoaderSaver<Enemy>().loadSprite(enemyString, new EnemyLoaderEvent());
 			enemies.put(enemy.getID(), enemy);
@@ -39,7 +38,7 @@ public class EnemyRepository implements SpriteRepository<Enemy>{
 	}
 
 	@Override
-	public Enemy createSprite(Enemy sprite) throws SpriteRepositoryException {
+	public Enemy createSprite(Enemy sprite) {
 		if(enemies.containsKey(sprite.getID())){
 			throw new SpriteRepositoryException("A weapon with this ID already exists. The sprite given to this method cannot have an already existing id.");
 		}
@@ -52,7 +51,7 @@ public class EnemyRepository implements SpriteRepository<Enemy>{
 	private static class EnemyLoaderEvent extends SpriteLoaderEvent<Enemy>{
 
 		@Override
-		public Enemy createSprite(Map<SpriteProperty, String> values) throws LoaderException {
+		public Enemy createSprite(Map<SpriteProperty, String> values)  {
 			try {
 				SpriteType spriteType = SpriteType.valueOf(values.get(SpriteProperty.SPRITETYPE));
 				float x = parseFloat(values.get(SpriteProperty.X));
@@ -74,7 +73,7 @@ public class EnemyRepository implements SpriteRepository<Enemy>{
 	}
 
 	@Override
-	public void updateSprite(Enemy spriteToUpdate) throws SpriteException {
+	public void updateSprite(Enemy spriteToUpdate) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 

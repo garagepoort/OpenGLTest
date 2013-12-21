@@ -17,7 +17,7 @@ public class HealingSkill extends Skill<OrganicSprite> {
 	}
 
 	@Override
-	public void useSkill(OrganicSprite healer, OrganicSprite healy) throws SkillException {
+	public void useSkill(OrganicSprite healer, OrganicSprite healy)  {
 		if (healer.getStamina() < getManaCost()) {
 			throw new SkillException("Healer cannot perform skill because he has not enough mana");
 		}
@@ -37,7 +37,7 @@ public class HealingSkill extends Skill<OrganicSprite> {
 	}
 
 	@Override
-	public void useSkill(OrganicSprite healer, ArrayList<OrganicSprite> healies) throws SkillException {
+	public void useSkill(OrganicSprite healer, ArrayList<OrganicSprite> healies)  {
 		if (healer.getStamina() < getManaCost()) {
 			throw new SkillException("Healer cannot perform skill because he has not enough mana");
 		}

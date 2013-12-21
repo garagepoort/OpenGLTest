@@ -7,9 +7,6 @@ import java.util.Observer;
 
 import be.davidcorp.domain.TextureBunchFactory;
 import be.davidcorp.domain.attribute.Attributes;
-import be.davidcorp.domain.exception.InventoryException;
-import be.davidcorp.domain.exception.SkillException;
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.inventory.Equipment;
 import be.davidcorp.domain.inventory.Inventory;
 import be.davidcorp.domain.skill.Skill;
@@ -32,20 +29,19 @@ public abstract class OrganicSprite extends Sprite implements Observer {
 	
 	public OrganicSprite(){}
 
-	public OrganicSprite(float x, float y, int width, int height)
-			throws SpriteException {
+	public OrganicSprite(float x, float y, int width, int height) {
 		super(x, y, width, height);
 		initialize();
 	}
 
-	public OrganicSprite(float x, float y, int health) throws SpriteException {
+	public OrganicSprite(float x, float y, int health) {
 		super(x, y, 64, 64);
 		initialize();
 		setMaxHealthPoints(health);
 	}
 
 
-	private void initialize() throws SpriteException{
+	private void initialize(){
 		initializeAtributes();
 		equipment.addObserver(this);
 	}
@@ -111,7 +107,7 @@ public abstract class OrganicSprite extends Sprite implements Observer {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void useSkill(int index, Sprite sprite) throws SkillException {
+	public void useSkill(int index, Sprite sprite) {
 		skills.get(index).useSkill(this, sprite);
 	}
 
@@ -211,7 +207,7 @@ public abstract class OrganicSprite extends Sprite implements Observer {
 		item.setY(getY());
 	}
 	
-	public void addItemToInventory(Item item) throws InventoryException {
+	public void addItemToInventory(Item item) {
 		inventory.addItem(item);
 	}
 

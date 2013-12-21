@@ -20,7 +20,6 @@ import GameCreator.SpringUtilities;
 import be.davidcorp.applicationLayer.dto.ConstructionSpriteDTO;
 import be.davidcorp.applicationLayer.dto.color.ColorDTO;
 import be.davidcorp.applicationLayer.dto.mapper.ConstructionType;
-import be.davidcorp.applicationLayer.exception.ModelException;
 import be.davidcorp.applicationLayer.facade.ConstructionSpriteFacade;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 
@@ -121,7 +120,7 @@ public class CreateWallDialog extends CreateDialog implements MouseListener {
 			} else if (event.getSource() == colorPickerButton) {
 				colorPickerFrame = new ColorPickerFrame();
 			}
-		} catch (ModelException e) {
+		} catch (Exception e) {
 			ErrorHandler.handleError(dialog, e);
 		}
 	}

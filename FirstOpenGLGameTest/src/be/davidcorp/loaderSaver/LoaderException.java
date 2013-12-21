@@ -1,6 +1,6 @@
 package be.davidcorp.loaderSaver;
 
-public class LoaderException extends Exception{
+public class LoaderException extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 

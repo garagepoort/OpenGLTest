@@ -42,8 +42,7 @@ public class Sprite extends Triggerable {
 
 	private HitBox hitbox = new HitBox();
 
-	public Sprite(float x, float y, int width, int height)
-			throws SpriteException {
+	public Sprite(float x, float y, int width, int height) {
 		initializeSprite(x, y, width, height);
 	}
 
@@ -111,7 +110,7 @@ public class Sprite extends Triggerable {
 		return (int) hitbox.getWidth();
 	}
 
-	public void setWidth(int width) throws SpriteException {
+	public void setWidth(int width) {
 		if (width < 1) {
 			throw new SpriteException("The width must be 1 or greater");
 		}
@@ -125,7 +124,7 @@ public class Sprite extends Triggerable {
 		return (int) hitbox.getHeight();
 	}
 
-	public void setHeight(int height) throws SpriteException {
+	public void setHeight(int height) {
 		if (height < 1) {
 			throw new SpriteException("The height must be 1 or greater");
 		}
@@ -162,7 +161,7 @@ public class Sprite extends Triggerable {
 		return healthPoints;
 	}
 
-	public void setHealthPoints(int healthPoints) throws SpriteException {
+	public void setHealthPoints(int healthPoints) {
 		if (healthPoints > getMaxHealthPoints()) {
 			throw new SpriteException("The healthpoints can't be greater then the maximum healthpoints");
 		}
@@ -178,11 +177,7 @@ public class Sprite extends Triggerable {
 
 	public void setMaxHealthPoints(int maxHealthPoints) {
 		this.maxHealthPoints = maxHealthPoints;
-		try {
-			setHealthPoints(maxHealthPoints);
-		} catch (SpriteException e) {
-			e.printStackTrace();
-		}
+		setHealthPoints(maxHealthPoints);
 	}
 
 	public boolean isMoving() {
@@ -201,27 +196,21 @@ public class Sprite extends Triggerable {
 	}
 
 	public void addHealth(int hp) {
-		try {
-			if (getHealthPoints() + hp >= getMaxHealthPoints()) {
-				setHealthPoints(getMaxHealthPoints());
-			} else {
-				setHealthPoints(getHealthPoints() + hp);
-			}
-			checkTriggers(ONHEALTHGAIN, null);
-		} catch (SpriteException e) {
+		if (getHealthPoints() + hp >= getMaxHealthPoints()) {
+			setHealthPoints(getMaxHealthPoints());
+		} else {
+			setHealthPoints(getHealthPoints() + hp);
 		}
+		checkTriggers(ONHEALTHGAIN, null);
 	}
 
 	public void removeHealth(int hp) {
-		try {
-			if (getHealthPoints() - hp <= 0) {
-				setHealthPoints(0);
-			} else {
-				setHealthPoints(getHealthPoints() - hp);
-			}
-			checkTriggers(ONHEALTHLOSS, null);
-		} catch (SpriteException e) {
+		if (getHealthPoints() - hp <= 0) {
+			setHealthPoints(0);
+		} else {
+			setHealthPoints(getHealthPoints() - hp);
 		}
+		checkTriggers(ONHEALTHLOSS, null);
 	}
 
 	private void updateTTL() {
@@ -266,7 +255,7 @@ public class Sprite extends Triggerable {
 	public void removeTrigger(Trigger trigger) {
 		triggers.remove(trigger);
 	}
-	
+
 	protected void updateTexture() {
 		if (textureBunch != null) {
 			textureBunch.updateTexture();
@@ -289,7 +278,7 @@ public class Sprite extends Triggerable {
 		return SpriteType.SPRITE;
 	}
 
-	private void initializeSprite(float x, float y, int width, int height) throws SpriteException {
+	private void initializeSprite(float x, float y, int width, int height) {
 		setWidth(width);
 		setHeight(height);
 		setX(x);

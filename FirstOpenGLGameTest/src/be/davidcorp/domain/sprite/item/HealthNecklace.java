@@ -3,14 +3,13 @@ package be.davidcorp.domain.sprite.item;
 import java.io.IOException;
 
 import be.davidcorp.domain.attribute.Attributes;
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.sprite.organic.OrganicSprite;
 import be.davidcorp.texture.TextureBunch;
 
 
 public class HealthNecklace extends Item{
 	
-	public HealthNecklace(float x, float y) throws SpriteException, IOException {
+	public HealthNecklace(float x, float y) throws IOException {
 		super(x, y);
 		initializeNecklace();
 	}

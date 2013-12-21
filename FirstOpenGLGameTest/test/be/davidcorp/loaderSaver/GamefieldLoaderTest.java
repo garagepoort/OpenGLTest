@@ -27,7 +27,7 @@ public class GamefieldLoaderTest {
 	}
 	
 	@Test
-	public void givenAGamefieldFileWithOneGamefield_whenFileLoaded_thenTheCorrectGamefieldIsLoadedInsideTheLoader() throws LoaderException, IOException{
+	public void givenAGamefieldFileWithOneGamefield_whenFileLoaded_thenTheCorrectGamefieldIsLoadedInsideTheLoader() throws IOException{
 		when(fileUtility.getFileContent(Mockito.any(File.class))).thenReturn(
 						"GAMEFIELDNAME:fieldname\n"
 						+ "ID:1\n"
@@ -42,7 +42,7 @@ public class GamefieldLoaderTest {
 	}
 	
 	@Test
-	public void givenAGamefieldFileWithTwoGamefields_whenFileLoaded_thenTheCorrectGamefieldsAreLoadedInsideTheLoader() throws LoaderException, IOException{
+	public void givenAGamefieldFileWithTwoGamefields_whenFileLoaded_thenTheCorrectGamefieldsAreLoadedInsideTheLoader() throws IOException{
 		when(fileUtility.getFileContent(Mockito.any(File.class))).thenReturn(
 				"GAMEFIELDNAME:fieldname\n"
 						+ "ID:1\n"

@@ -4,7 +4,6 @@ import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.List;
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.utilities.sprite.SpriteCollisionChecker;
 
@@ -19,38 +18,34 @@ public class Trigger {
 	private float y = 0;
 
 	public Trigger(TriggerWhen triggerWhen) {
-		this.triggerWhen=triggerWhen;
+		this.triggerWhen = triggerWhen;
 	}
 	public void trigger(Sprite sprite) {
-		if(this.triggerWhen == TriggerWhen.ONUSE){
+		if (this.triggerWhen == TriggerWhen.ONUSE) {
 			if (insideTriggerRange(sprite)) {
-				    handleTriggerEventFromAllTriggerables();
+				handleTriggerEventFromAllTriggerables();
 			}
-		}else{
+		} else {
 			handleTriggerEventFromAllTriggerables();
 		}
 	}
-	
+
 	private void handleTriggerEventFromAllTriggerables() {
-		for (Triggerable triggerable : triggerables){
-	    	triggerable.handleTriggerEvent(this);
+		for (Triggerable triggerable : triggerables) {
+			triggerable.handleTriggerEvent(this);
 		}
 	}
-	
+
 	public boolean insideTriggerRange(Sprite s) {
 		float x2 = getX() - triggerRadiusWidth;
 		float y2 = getY() - triggerRadiusHeight;
 		Sprite collisionSprite = null;
-		try {
-			collisionSprite = new Sprite(x2, y2, 2 * triggerRadiusWidth, 2 * triggerRadiusHeight) {
-				@Override
-				public void onDeath() {
-				}
-			};
+		collisionSprite = new Sprite(x2, y2, 2 * triggerRadiusWidth, 2 * triggerRadiusHeight) {
+			@Override
+			public void onDeath() {
+			}
+		};
 
-		} catch (SpriteException e) {
-			e.printStackTrace();
-		}
 		return SpriteCollisionChecker.doesCollisionExist(collisionSprite, s);
 	}
 

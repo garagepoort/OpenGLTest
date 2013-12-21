@@ -1,6 +1,5 @@
 package be.davidcorp.domain.sprite.item.weapon;
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.metric.Vector;
 
 public class MeleeWeapon extends Weapon {
@@ -8,8 +7,7 @@ public class MeleeWeapon extends Weapon {
 	private int widthRadius;
 	private int staminaCost;
 
-	public MeleeWeapon(float x, float y, SwingArea area)
-			throws SpriteException {
+	public MeleeWeapon(float x, float y, SwingArea area) {
 		super(x, y, 32, 32);
 	}
 

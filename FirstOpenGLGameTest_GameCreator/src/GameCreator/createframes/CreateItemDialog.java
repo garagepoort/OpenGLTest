@@ -15,7 +15,6 @@ import GameCreator.ErrorHandler;
 import GameCreator.SpringUtilities;
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.mapper.ItemType;
-import be.davidcorp.applicationLayer.exception.ModelException;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PotionFacade;
 import be.davidcorp.applicationLayer.facade.WeaponFacade;
@@ -103,7 +102,7 @@ public class CreateItemDialog extends CreateDialog implements MouseListener {
 					gameFieldFacade.addGroundItemToWorld(itemDTO.getId());
 					FrameFacade.closeCreateDialog(CreateItemDialog.this);
 				}
-			} catch (NumberFormatException | ModelException e) {
+			} catch (Exception e) {
 				ErrorHandler.handleError(getMainPanel(), e);
 			}
 		}

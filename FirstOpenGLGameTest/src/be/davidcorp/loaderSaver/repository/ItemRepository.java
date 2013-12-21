@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.item.Item;
@@ -22,7 +21,7 @@ public class ItemRepository implements SpriteRepository<Item>{
 	private static HashMap<Integer, Item> items = new HashMap<Integer, Item>();
 
 	@Override
-	public void loadSprites(String type, ArrayList<String> spriteStrings) throws LoaderException {
+	public void loadSprites(String type, ArrayList<String> spriteStrings) {
 		for (String itemString : spriteStrings) {
 			Item item = new SpriteLoaderSaver<Item>().loadSprite(itemString, new ItemLoaderEvent());
 			items.put(item.getID(), item);
@@ -48,7 +47,7 @@ public class ItemRepository implements SpriteRepository<Item>{
 	private static class ItemLoaderEvent extends SpriteLoaderEvent<Item>{
 
 		@Override
-		public Item createSprite(Map<SpriteProperty, String> values) throws LoaderException {
+		public Item createSprite(Map<SpriteProperty, String> values) {
 			try {
 				SpriteType spriteType = SpriteType.valueOf(values.get(SpriteProperty.SPRITETYPE));
 				float x = parseFloat(values.get(SpriteProperty.X));
@@ -66,7 +65,7 @@ public class ItemRepository implements SpriteRepository<Item>{
 	}
 
 	@Override
-	public void updateSprite(Item spriteToUpdate) throws SpriteException {
+	public void updateSprite(Item spriteToUpdate) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 	

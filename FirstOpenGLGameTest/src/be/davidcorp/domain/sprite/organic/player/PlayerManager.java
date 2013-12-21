@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import be.davidcorp.domain.exception.InventoryException;
-import be.davidcorp.domain.exception.SpriteException;
 
 
 public class PlayerManager {
@@ -14,7 +13,7 @@ public class PlayerManager {
 	private static HashMap<String, Player> players = new HashMap<>();
 	private static Player currentPlayer;
 
-	public static void loadPlayers(File file) throws SpriteException, IOException,  InventoryException{
+	public static void loadPlayers(File file) throws IOException{
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(file);
 
@@ -27,7 +26,7 @@ public class PlayerManager {
 		}
 	}
 	
-	public static Player loadPlayer(File file) throws SpriteException, IOException,  InventoryException{
+	public static Player loadPlayer(File file) throws IOException{
 		return new Player(200, 250);
 	}
 

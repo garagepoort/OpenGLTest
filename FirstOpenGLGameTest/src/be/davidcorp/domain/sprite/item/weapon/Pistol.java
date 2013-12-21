@@ -2,31 +2,30 @@ package be.davidcorp.domain.sprite.item.weapon;
 
 import java.io.IOException;
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.sprite.organic.OrganicSprite;
 import be.davidcorp.texture.TextureBunch;
 
 public class Pistol extends RangedWeapon{
 
 
-	public Pistol(float x, float y, int aantalBullets) throws  SpriteException, IOException{
+	public Pistol(float x, float y, int aantalBullets) {
 		super(x,y,32,32,aantalBullets);
 		initialize();
 	}
 	
-	public Pistol(float x, float y, int aantalBullets, OrganicSprite organicSprite) throws SpriteException, IOException {
+	public Pistol(float x, float y, int aantalBullets, OrganicSprite organicSprite) throws IOException {
 		super(x,y,32,32,aantalBullets);
 		initialize();
 		setOwner(organicSprite);
 	}
 
-	private void initialize() throws SpriteException {
+	private void initialize() {
 		setTextureBunch(new TextureBunch().withDefaultTexture("resources/images/weapons/pistol.png"));
 		setAttackCooldown(40);
 	}
 
 	@Override
-	public Ammo getAmmoInstance() throws SpriteException, IOException {
+	public Ammo getAmmoInstance() {
 		return new Bullet(getX(), getY());
 	}
 

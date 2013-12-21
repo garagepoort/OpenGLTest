@@ -4,8 +4,6 @@ import javax.swing.JPanel;
 
 import org.lwjgl.input.Mouse;
 
-import be.davidcorp.applicationLayer.exception.MapperException;
-import be.davidcorp.applicationLayer.exception.ModelException;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.inputControl.InputController;
 import be.davidcorp.view.TranslationManager;
@@ -31,7 +29,7 @@ public class GameCreatorPanelInputController extends InputController {
 			} else if (gameCreatorPanel.getSelectedSprite() != null) {
 				gameCreatorPanel.dragSelectedSprite(pointX, pointY);
 			}
-		} catch (MapperException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -47,7 +45,7 @@ public class GameCreatorPanelInputController extends InputController {
 			try {
 				gamefieldFacade.removeSpriteFromWorld(gameCreatorPanel.getSelectedSprite());
 				gameCreatorPanel.setSelectedSprite(null);
-			} catch (ModelException e) {
+			} catch (Exception e) {
 				ErrorHandler.handleError((JPanel) null, e);
 			}
 		}

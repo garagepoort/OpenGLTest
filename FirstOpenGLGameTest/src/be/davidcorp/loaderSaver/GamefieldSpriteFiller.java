@@ -19,7 +19,7 @@ public class GamefieldSpriteFiller {
 	private GamefieldRepository gamefieldRepository = new GamefieldRepository();
 	private DefaultSpriteRepository defaultSpriteRepository = new DefaultSpriteRepository();
 
-	public void fillGamefields(String gamefieldSpriteLinks) throws LoaderException {
+	public void fillGamefields(String gamefieldSpriteLinks) {
 		Scanner scanner = new Scanner(gamefieldSpriteLinks);
 		while (scanner.hasNext()) {
 			Scanner lineScanner = new Scanner(scanner.nextLine());

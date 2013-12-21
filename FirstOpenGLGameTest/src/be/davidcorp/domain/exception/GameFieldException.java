@@ -1,7 +1,7 @@
 package be.davidcorp.domain.exception;
 
 @SuppressWarnings("serial")
-public class GameFieldException extends Exception {
+public class GameFieldException extends RuntimeException {
 	private String mistake;
 
 	public GameFieldException()

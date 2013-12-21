@@ -20,7 +20,7 @@ public class GamefieldLoaderSaver {
 	private GamefieldRepository gamefieldRepository = new GamefieldRepository();
 	private List<String> gamefieldStrings = new ArrayList<String>();
 
-	public void save(File file, Gamefield gamefield) throws LoaderException {
+	public void save(File file, Gamefield gamefield) {
 		PrintWriter printWriter = null;
 		try {
 			printWriter = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
@@ -35,7 +35,7 @@ public class GamefieldLoaderSaver {
 		}
 	}
 
-	public void loadAllGamefieldsToRepository(File file) throws LoaderException, IOException {
+	public void loadAllGamefieldsToRepository(File file) throws IOException {
 		Scanner scanner = null;
 		try {
 			scanner = new Scanner(fileUtility.getFileContent(file));
@@ -75,7 +75,7 @@ public class GamefieldLoaderSaver {
 		this.fileUtility = fileUtility;
 	}
 
-	public void loadEntireField(String name) throws LoaderException {
+	public void loadEntireField(String name) {
 		try {
 			File spritesFile = new File("resources/saveFiles/"+ name +"/sprites.txt");
 			File triggerLinksFile = new File("resources/saveFiles/"+ name +"/triggerLinks.txt");

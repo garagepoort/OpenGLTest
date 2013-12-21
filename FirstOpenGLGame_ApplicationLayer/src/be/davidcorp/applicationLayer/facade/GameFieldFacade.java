@@ -20,10 +20,7 @@ import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ItemDTOMapper;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.LightToLightDTOMapper;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.OrganicSpriteDTOMapper;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.SpriteDTOMapper;
-import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.applicationLayer.exception.ModelException;
-import be.davidcorp.domain.exception.GameFieldException;
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
@@ -31,7 +28,6 @@ import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.utilities.PauseManager;
-import be.davidcorp.loaderSaver.LoaderException;
 import be.davidcorp.loaderSaver.repository.ConstructionSpriteRepository;
 import be.davidcorp.loaderSaver.repository.EnemyRepository;
 import be.davidcorp.loaderSaver.repository.GamefieldRepository;
@@ -62,8 +58,8 @@ public class GameFieldFacade {
 	public void updateGameField(int secondsMovedInGame) {
 		try {
 			getCurrentGameField().update(secondsMovedInGame);
-		} catch (GameFieldException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			throw new ModelException(e);
 		}
 	}
 
@@ -109,11 +105,11 @@ public class GameFieldFacade {
 		return getCurrentGameField().isCreationMode();
 	}
 
-	public List<ItemDTO> getItemsThatCanBePickedUpByPlayer() throws MapperException {
+	public List<ItemDTO> getItemsThatCanBePickedUpByPlayer()  {
 		return ItemDTOMapper.doAutoMappingForItems(getCurrentGameField().getItemsThatCanBePickedUpByPlayer());
 	}
 
-	public List<ConstructionSpriteDTO> getConstructionSpritesFromWorld() throws MapperException {
+	public List<ConstructionSpriteDTO> getConstructionSpritesFromWorld()  {
 		return ConstructionSpriteDTOMapper.doAutoMappingForConstructionSprites(getCurrentGameField().getConstructionItems());
 	}
 
@@ -137,11 +133,11 @@ public class GameFieldFacade {
 		getCurrentGameField().removeSpriteFromWorld(sprite);
 	}
 
-	public List<EnemyDTO> getEnemiesInWorld() throws MapperException {
+	public List<EnemyDTO> getEnemiesInWorld()  {
 		return OrganicSpriteDTOMapper.doAutoMappingForEnemies(getCurrentGameField().getEnemiesInWorld());
 	}
 
-	public List<SpriteDTO> getSpritesOnPointInGamefield(Point point) throws MapperException {
+	public List<SpriteDTO> getSpritesOnPointInGamefield(Point point)  {
 		return SpriteDTOMapper.doAutoMappingForSprites(getCurrentGameField().getSpritesCollidingWithPoint(point));
 	}
 
@@ -149,32 +145,32 @@ public class GameFieldFacade {
 		return new AmmoToAmmoDTOMapper().mapSpritesToDTO(getCurrentGameField().getAmmoInWorld());
 	}
 
-	public List<ItemDTO> getItemsOnGroundInWorld() throws MapperException {
+	public List<ItemDTO> getItemsOnGroundInWorld()  {
 		return ItemDTOMapper.doAutoMappingForItems(getCurrentGameField().getGroundItems());
 	}
 
-	public void initializeGameField(GamefieldDTO gamefieldDTO) throws ModelException {
+	public void initializeGameField(GamefieldDTO gamefieldDTO) {
 		try {
 			Gamefield gamefield = gamefieldRepository.getGamefield(gamefieldDTO.getId());
 			setCurrentGameField(gamefield);
-		} catch (LoaderException e) {
+		} catch (Exception e) {
 			throw new ModelException(e);
 		}
 	}
 
-	public void initializeGameFieldWithName(String name) throws ModelException {
+	public void initializeGameFieldWithName(String name) {
 		try {
 			Gamefield field = gamefieldRepository.getGamefield(name);
 			setCurrentGameField(field);
-		} catch (LoaderException e) {
+		} catch (Exception e) {
 			throw new ModelException(e);
 		}
 	}
 
-	public void createNewGamefield(String gamefieldName, int width, int height) throws ModelException {
+	public void createNewGamefield(String gamefieldName, int width, int height) {
 		try {
 			gamefieldRepository.createGamefield(gamefieldName, width, height);
-		} catch (GameFieldException | SpriteException e) {
+		} catch (Exception e) {
 			throw new ModelException(e);
 		}
 	}
@@ -184,7 +180,7 @@ public class GameFieldFacade {
 		getCurrentGameField().addConstructionItem(constructionSprite);
 	}
 
-	public void addEnemyToWorld(int id) throws ModelException {
+	public void addEnemyToWorld(int id)  {
 		Enemy enemy = enemyRepository.getSprite(id);
 		getCurrentGameField().addEnemyToWorld(enemy);
 	}
@@ -204,7 +200,7 @@ public class GameFieldFacade {
 		return new GamefieldToGamefieldDTOMapper().mapToDTO(gamefield);
 	}
 
-	public void removeSpriteFromWorld(SpriteDTO sprite) throws ModelException {
+	public void removeSpriteFromWorld(SpriteDTO sprite) {
 		if (sprite instanceof ConstructionSpriteDTO) {
 			removeConstructionSpriteFromWorld(sprite.getId());
 		}
@@ -219,7 +215,7 @@ public class GameFieldFacade {
 		}
 	}
 
-	public void updateSpriteInGamefield(SpriteDTO spriteDTO) throws ModelException {
+	public void updateSpriteInGamefield(SpriteDTO spriteDTO)  {
 		try {
 			if (spriteDTO instanceof ConstructionSpriteDTO) {
 				ConstructionSprite constructionSprite = ConstructionSpriteDTOMapper.mapConstructionSpriteDTOToWall((ConstructionSpriteDTO) spriteDTO);
@@ -237,7 +233,7 @@ public class GameFieldFacade {
 				Enemy enemy = OrganicSpriteDTOMapper.doAutoMappingForEnemyDTO((EnemyDTO) spriteDTO);
 				getCurrentGameField().updateEnemy(enemy);
 			}
-		} catch (MapperException | GameFieldException e) {
+		} catch (Exception e) {
 			throw new ModelException(e);
 		}
 	}

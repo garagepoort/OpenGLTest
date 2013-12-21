@@ -14,7 +14,7 @@ import be.davidcorp.domain.sprite.Sprite;
 
 public class SpriteLoaderSaver<T extends Sprite> {
 
-	public void saveSprite(File file, T sprite, Map<SpriteProperty, String> properties) throws LoaderException {
+	public void saveSprite(File file, T sprite, Map<SpriteProperty, String> properties) {
 		PrintWriter printWriter = null;
 		try {
 			printWriter = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
@@ -28,7 +28,7 @@ public class SpriteLoaderSaver<T extends Sprite> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public T loadSprite(String spriteString, SpriteLoaderEvent<T> spriteLoaderEvent) throws LoaderException {
+	public T loadSprite(String spriteString, SpriteLoaderEvent<T> spriteLoaderEvent) {
 		try {
 			Map<SpriteProperty, String> properties = getSpriteProperties(spriteString);
 			Sprite sprite = spriteLoaderEvent.createSprite(properties);
@@ -40,6 +40,6 @@ public class SpriteLoaderSaver<T extends Sprite> {
 	}
 
 	public static abstract class SpriteLoaderEvent<T>{
-		public abstract T createSprite(Map<SpriteProperty, String> values) throws LoaderException;
+		public abstract T createSprite(Map<SpriteProperty, String> values);
 	}
 }

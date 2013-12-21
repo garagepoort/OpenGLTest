@@ -1,6 +1,6 @@
 package be.davidcorp.applicationLayer.exception;
 
-public class ModelException extends Exception{
+public class ModelException extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 

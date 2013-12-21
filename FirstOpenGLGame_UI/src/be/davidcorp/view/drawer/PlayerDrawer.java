@@ -45,7 +45,7 @@ public class PlayerDrawer {
 	private static PlayerFacade playerFacade = new PlayerFacade();
 	private static LightManager lightManager = new LightManager();
 
-	public static void drawPlayer() throws IOException {
+	public static void drawPlayer(){
 		float x = WIDTH / 2 + getPlayerTranslationX();
 		float y = HEIGHT / 2 + getPlayerTranslationY();
 		
@@ -112,7 +112,7 @@ public class PlayerDrawer {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
-	private static void drawPlayerBody(float x, float y) throws IOException {
+	private static void drawPlayerBody(float x, float y) {
 		glPushMatrix();
 		glPushAttrib(GL_CURRENT_BIT);
 
@@ -121,7 +121,12 @@ public class PlayerDrawer {
 		glRotatef(playerFacade.getRotationAngle(), 0f, 0f, 1f);
 		glTranslatef(-x - playerFacade.getWidth() / 2, -y - playerFacade.getHeight() / 2, 0);
 		Texture t = null;
-		t = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(playerFacade.getTextureBunch().getCurrentTexture()));
+		try {
+			t = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(playerFacade.getTextureBunch().getCurrentTexture()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		t.bind();
 		glBegin(GL_QUADS);
 		{

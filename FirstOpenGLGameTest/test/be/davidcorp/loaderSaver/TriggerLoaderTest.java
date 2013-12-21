@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.construction.Wall;
 import be.davidcorp.domain.sprite.light.Light;
@@ -38,7 +37,7 @@ public class TriggerLoaderTest {
 	
 	@SuppressWarnings("rawtypes")
 	@Test
-	public void givenAWallAndALight_whenTriggersLoaded_thenTriggerOnWallLinkedToLight() throws SpriteException{
+	public void givenAWallAndALight_whenTriggersLoaded_thenTriggerOnWallLinkedToLight(){
 		//given
 		Wall wall = new Wall(0, 0, 1, 1);
 		Light light = new Light(0, 0, new Color(0, 0, 255), 10, true);

@@ -1,7 +1,7 @@
 package be.davidcorp.domain.exception;
 
 @SuppressWarnings("serial")
-public class SpriteException extends Exception{
+public class SpriteException extends RuntimeException{
 	private String mistake;
 
 	public SpriteException()

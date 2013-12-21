@@ -32,13 +32,10 @@ import static org.lwjgl.opengl.GL11.glStencilOp;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
-import java.io.IOException;
-
 import org.newdawn.slick.Color;
 
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
 import be.davidcorp.applicationLayer.dto.light.LightTriangle;
-import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.view.TranslationManager;
 import be.davidcorp.view.game.GamePanel;
@@ -51,7 +48,7 @@ public class GamePanelDrawer {
 	private LightManager lightManager = new LightManager();
 	private boolean shadowsOn = true;
 
-	public void drawGamePanel(GamePanel gamePanel) throws IOException, MapperException {
+	public void drawGamePanel(GamePanel gamePanel) {
 		// Clear The Screen And The Depth Buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
@@ -120,7 +117,7 @@ public class GamePanelDrawer {
 		glPopMatrix();
 	}
 
-	private int drawLightsInGamefield(int lightCounter) throws MapperException {
+	private int drawLightsInGamefield(int lightCounter)  {
 		glDisable(GL_TEXTURE_2D);
 		for (LightDTO light : lightManager.getGamefieldLights()) {
 			if (light.isLightOn()) {
@@ -159,7 +156,7 @@ public class GamePanelDrawer {
 		return lightCounter;
 	}
 
-	private int drawPlayerFlashLight(int lightCounter) throws MapperException {
+	private int drawPlayerFlashLight(int lightCounter)  {
 		if (playerFacade.isFlashLightOn()) {
 			// draw the flashlight
 			glStencilFunc(GL_ALWAYS, lightCounter, 0xFF);
@@ -197,7 +194,7 @@ public class GamePanelDrawer {
 		return lightCounter;
 	}
 
-	private void drawWorld() throws MapperException {
+	private void drawWorld()  {
 		glPushMatrix();
 		glTranslatef(getGameFieldXTranslation(), getGameFieldYTranslation(), 0);
 		BackgroundDrawer.drawBackgroundColor(new Color(0.2f, 0.2f, 0.2f));
@@ -211,13 +208,13 @@ public class GamePanelDrawer {
 
 	}
 
-	private void drawPanels(GamePanel gamePanel) throws IOException {
+	private void drawPanels(GamePanel gamePanel){
 		for (Panel p : gamePanel.getPanels()) {
 			p.draw();
 		}
 	}
 
-	private void drawSpritesInWorld() throws MapperException {
+	private void drawSpritesInWorld()  {
 		GamefieldDrawer.drawFiredAmmo();
 		GamefieldDrawer.drawEnemies();
 		GamefieldDrawer.drawGroundItems();

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Observer;
 
 import be.davidcorp.WindDirection;
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.mission.Mission;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.item.weapon.Pistol;
@@ -20,7 +19,7 @@ public class Player extends OrganicSprite implements Observer {
 	public Light flashLight;
 	public Light LineOfSight;
 
-	public Player(float x, float y) throws SpriteException, IOException {
+	public Player(float x, float y) throws  IOException {
 		super(x, y, 32, 32);
 		Pistol pistol = new Pistol(getX(), getY(), 100, this);
 		setEquippedWeapon(pistol);

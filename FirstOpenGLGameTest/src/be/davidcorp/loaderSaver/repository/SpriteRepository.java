@@ -2,19 +2,17 @@ package be.davidcorp.loaderSaver.repository;
 
 import java.util.ArrayList;
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.sprite.Sprite;
-import be.davidcorp.loaderSaver.LoaderException;
 
 public interface SpriteRepository<SPRITE extends Sprite> {
 	
-	public void loadSprites(String type, ArrayList<String> spriteStrings) throws LoaderException;
+	public void loadSprites(String type, ArrayList<String> spriteStrings);
 
 	public SPRITE getSprite(int id);
 	
-	public SPRITE createSprite(SPRITE sprite) throws SpriteRepositoryException;
+	public SPRITE createSprite(SPRITE sprite);
 
-	void updateSprite(SPRITE spriteToUpdate) throws SpriteException;
+	void updateSprite(SPRITE spriteToUpdate);
 	
 	public void emptyRepository();
 }

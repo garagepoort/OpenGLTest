@@ -1,8 +1,5 @@
 package be.davidcorp.domain.sprite.item.weapon;
 
-import java.io.IOException;
-
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.metric.Vector;
 
@@ -11,32 +8,27 @@ public abstract class RangedWeapon extends Weapon {
 	private float startX;
 	private float startY;
 
-	public RangedWeapon(float x, float y, int width, int height, int aantalAmmo)
-			throws SpriteException, IOException {
+	public RangedWeapon(float x, float y, int width, int height, int aantalAmmo) {
 		super(x, y, width, height);
 		initializeWeapon(aantalAmmo);
 	}
 
-	private void initializeWeapon(int aantalAmmo) throws SpriteException, IOException {
+	private void initializeWeapon(int aantalAmmo) {
 		this.startX = 16;
 		this.startY = 16;
 		this.ammoSize = aantalAmmo;
 	}
 
-	public abstract Ammo getAmmoInstance() throws SpriteException, IOException;
+	public abstract Ammo getAmmoInstance();
 
 	@Override
 	protected void attack(Vector p) {
-		try {
-			Ammo ammoInstance = getAmmoInstance();
-			ammoInstance.setX(calculateAmmoStartPointX(ammoInstance));
-			ammoInstance.setY(calculateAmmoStartPointY());
-			ammoInstance.setDirectionVector(p);
-			GameFieldManager.getCurrentGameField().addAmmoToWorld(ammoInstance);
-			ammoSize--;
-		} catch (SpriteException | IOException e) {
-			e.printStackTrace();
-		}
+		Ammo ammoInstance = getAmmoInstance();
+		ammoInstance.setX(calculateAmmoStartPointX(ammoInstance));
+		ammoInstance.setY(calculateAmmoStartPointY());
+		ammoInstance.setDirectionVector(p);
+		GameFieldManager.getCurrentGameField().addAmmoToWorld(ammoInstance);
+		ammoSize--;
 	}
 
 	private float calculateAmmoStartPointY() {

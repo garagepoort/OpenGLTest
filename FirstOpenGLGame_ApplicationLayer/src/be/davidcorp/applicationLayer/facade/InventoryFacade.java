@@ -8,13 +8,12 @@ import java.util.List;
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.PlayerDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ItemDTOMapper;
-import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
 
 public class InventoryFacade {
 
-	public List<ItemDTO> getItemsFromPlayer(PlayerDTO playerDTO) throws MapperException {
+	public List<ItemDTO> getItemsFromPlayer(PlayerDTO playerDTO) {
 		Item[][] items = PlayerManager.getCurrentPlayer().getInventory().getItems();
 		List<ItemDTO> itemdtos = new ArrayList<>();
 		for (Item[] items2 : items) {

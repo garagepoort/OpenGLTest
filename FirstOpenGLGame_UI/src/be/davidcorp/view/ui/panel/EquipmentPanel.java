@@ -9,7 +9,6 @@ import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 
 import be.davidcorp.applicationLayer.dto.ItemDTO;
-import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.applicationLayer.uiModels.EquipmentModel;
 import be.davidcorp.inputControl.MouseButton;
@@ -22,7 +21,7 @@ public class EquipmentPanel extends Panel implements Observer {
 	private PlayerFacade playerFacade = new PlayerFacade();
 
 	public EquipmentPanel(float x, float y, PlayGamePanel gamepanel)
-			throws IOException, MapperException {
+			throws IOException {
 
 		super(x, y, 256, 512, "resources/images/equipment.png");
 		EquipmentModel.getInstance().addObserver(this);
@@ -55,7 +54,7 @@ public class EquipmentPanel extends Panel implements Observer {
 		// }
 	}
 
-	public void addItemPanels() throws MapperException {
+	public void addItemPanels()  {
 
 		// getComponents().clear();
 		ItemDTO weaponDTO = playerFacade.getPlayerWeapon();

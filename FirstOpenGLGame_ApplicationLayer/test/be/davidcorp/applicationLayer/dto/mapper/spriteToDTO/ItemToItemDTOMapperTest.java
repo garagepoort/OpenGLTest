@@ -32,7 +32,7 @@ public class ItemToItemDTOMapperTest {
 	private static final String INFOTEKST = "test";
 
 	@Test
-	public void givenAHealtPotion_whenAutoMapping_thenMapCorrectly() throws MapperException {
+	public void givenAHealtPotion_whenAutoMapping_thenMapCorrectly() {
 		Item item = mockItem();
 		ItemDTO dto = ItemDTOMapper.doAutoMappingForItem(item);
 		
@@ -52,7 +52,7 @@ public class ItemToItemDTOMapperTest {
 	}
 	
 	@Test(expected = MapperException.class)
-	public void givenAnUnspecifiedItem_whenAutoMapping_thenThrowMappingException() throws MapperException {
+	public void givenAnUnspecifiedItem_whenAutoMapping_thenThrowMappingException() {
 		Item item = mock(Item.class);
 		ItemDTOMapper.doAutoMappingForItem(item);
 	}

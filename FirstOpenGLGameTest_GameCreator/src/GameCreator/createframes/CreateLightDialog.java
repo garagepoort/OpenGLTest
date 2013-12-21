@@ -19,7 +19,6 @@ import javax.swing.SpringLayout;
 import GameCreator.SpringUtilities;
 import be.davidcorp.applicationLayer.dto.color.ColorDTO;
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
-import be.davidcorp.applicationLayer.exception.ModelException;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.LightFacade;
 import be.davidcorp.metric.Point;
@@ -113,7 +112,7 @@ public class CreateLightDialog extends CreateDialog implements MouseListener {
 				
 				setChanged();
 				notifyObservers();
-			} catch (NumberFormatException | ModelException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

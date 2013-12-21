@@ -21,8 +21,6 @@ import java.util.List;
 import org.newdawn.slick.Color;
 
 import be.davidcorp.applicationLayer.dto.SpriteDTO;
-import be.davidcorp.applicationLayer.exception.MapperException;
-import be.davidcorp.applicationLayer.exception.ModelException;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.metric.Point;
 import be.davidcorp.view.game.GamePanel;
@@ -38,7 +36,7 @@ public class GameCreatorPanel extends GamePanel{
 	}
 
 	@Override
-	public void render() throws IOException, MapperException {
+	public void render() throws IOException {
 		super.render();
 		getGamePanelDrawer().setShadowsOn(false);
 		drawSelectedSprite();
@@ -51,7 +49,7 @@ public class GameCreatorPanel extends GamePanel{
 			selectedSprite.setY(pointY - selectedSprite.getHeight() / 2);
 			try {
 				gameFieldFacade.updateSpriteInGamefield(selectedSprite);
-			} catch (ModelException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			setChanged();
@@ -59,7 +57,7 @@ public class GameCreatorPanel extends GamePanel{
 		}
 	}
 
-	public void selectSelectedSprite(float pointX, float pointY) throws MapperException {
+	public void selectSelectedSprite(float pointX, float pointY)  {
 		List<SpriteDTO> mouseCollisionSprites = getMouseCollisionSprite(pointX, pointY);
 		if (mouseCollisionSprites.size() > 0) {
 			selectedSprite = mouseCollisionSprites.get(0);
@@ -72,7 +70,7 @@ public class GameCreatorPanel extends GamePanel{
 		}
 	}
 	
-	private List<SpriteDTO> getMouseCollisionSprite(float x, float y) throws MapperException {
+	private List<SpriteDTO> getMouseCollisionSprite(float x, float y)  {
 		Point point = new Point(x, y, 0);
 		return gameFieldFacade.getSpritesOnPointInGamefield(point);
 	}

@@ -16,7 +16,6 @@ import GameCreator.ErrorHandler;
 import GameCreator.SpringUtilities;
 import be.davidcorp.applicationLayer.dto.EnemyDTO;
 import be.davidcorp.applicationLayer.dto.mapper.EnemyType;
-import be.davidcorp.applicationLayer.exception.ModelException;
 import be.davidcorp.applicationLayer.facade.EnemyFacade;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 
@@ -86,13 +85,13 @@ public class CreateEnemyDialog extends CreateDialog implements MouseListener {
 				closeCreateDialog(CreateEnemyDialog.this);
 				setChanged();
 				notifyObservers();
-			} catch (ModelException e) {
+			} catch (Exception e) {
 				ErrorHandler.handleError(getMainPanel(), e);
 			}
 		}
 	}
 
-	public EnemyDTO createEnemy() throws ModelException {
+	public EnemyDTO createEnemy()  {
 		EnemyDTO enemyDTO = null;
 		switch (enemyType) {
 			case ZOMBIE :

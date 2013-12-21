@@ -2,30 +2,29 @@ package be.davidcorp.domain.sprite.organic.enemy;
 
 import java.io.IOException;
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.texture.TextureBunch;
 
 public class Spider extends Enemy {
 
-	public Spider() throws SpriteException, IOException{
+	public Spider() throws IOException{
 		super();
 	};
 	
 	public Spider(float x, float y, int width, int height)
-			throws SpriteException, IOException {
+			throws IOException {
 		super(x, y, width, height);
 		initializeTexture();
 		initializeSpider();
 	}
 
-	public Spider(float x, float y) throws SpriteException, IOException {
+	public Spider(float x, float y) {
 		super(x, y, 32, 32);
 		initializeTexture();
 		initializeSpider();
 	}
 
-	private void initializeTexture() throws SpriteException {
+	private void initializeTexture() {
 		setTextureBunch(new TextureBunch().withDefaultTexture("resources/images/enemies/spider.png"));;
 	}
 

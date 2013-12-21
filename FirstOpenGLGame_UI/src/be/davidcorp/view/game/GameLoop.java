@@ -14,7 +14,6 @@ import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.PixelFormat;
 
-import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.view.TranslationManager;
 import be.davidcorp.view.light.LightManager;
@@ -51,7 +50,7 @@ public class GameLoop {
 		}
 	}
 	
-	public void start() throws IOException, LWJGLException, MapperException {
+	public void start() {
 		gameThread = new Thread() {
 			public void run() {
 				try {
@@ -81,7 +80,7 @@ public class GameLoop {
 					}
 
 					Display.destroy();
-				} catch (LWJGLException | MapperException | IOException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}

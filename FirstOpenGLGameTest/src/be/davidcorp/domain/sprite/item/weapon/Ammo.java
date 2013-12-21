@@ -1,6 +1,5 @@
 package be.davidcorp.domain.sprite.item.weapon;
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.Sprite;
@@ -13,14 +12,14 @@ import be.davidcorp.metric.Vector;
 public abstract class Ammo extends Item {
 	private int damage = 50;
 
-	public Ammo(float x, float y, int width, int height) throws SpriteException {
+	public Ammo(float x, float y, int width, int height) {
 		super(x, y);
 		setWidth(width);
 		setHeight(height);
 		setColor(new Color(0, 1, 0));
 	}
 
-	public void launch(Point p) throws SpriteException {
+	public void launch(Point p) {
 		setDirectionVector(new Vector(new Point(getX() + getWidth() / 2, getY()
 				+ getHeight() / 2, 0), p));
 	}

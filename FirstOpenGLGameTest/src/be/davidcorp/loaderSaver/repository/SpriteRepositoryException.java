@@ -1,6 +1,6 @@
 package be.davidcorp.loaderSaver.repository;
 
-public class SpriteRepositoryException extends Exception{
+public class SpriteRepositoryException extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 

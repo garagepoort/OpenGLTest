@@ -9,7 +9,6 @@ import be.davidcorp.applicationLayer.dto.light.EndPoint;
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
 import be.davidcorp.applicationLayer.dto.light.LightTriangle;
 import be.davidcorp.applicationLayer.dto.light.Segment;
-import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.metric.Point;
@@ -26,7 +25,7 @@ public class LightManager {
 	private static LightDTO playerFlashLight;
 	private static LightDTO playerLineOfSight;
 
-	public void traceAllLights() throws MapperException {
+	public void traceAllLights() {
 		gamefieldLights.clear();
 		endpoints.clear();
 		segments.clear();

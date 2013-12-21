@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import be.davidcorp.domain.exception.GameFieldException;
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.construction.Wall;
@@ -53,22 +52,21 @@ public class Gamefield {
 
 	private TextureBunch textureBunch;
 
-	public Gamefield(String name, int width, int height)
-			throws GameFieldException, SpriteException {
+	public Gamefield(String name, int width, int height) {
 		setWidth(width);
 		setHeight(height);
 		this.gamefieldName = name;
 		addSurroundingWalls();
 	}
 
-	private void addSurroundingWalls() throws SpriteException {
+	private void addSurroundingWalls() {
 		constructionSprites.put(-1, new Wall(0, 0, width, 10));
 		constructionSprites.put(-2, new Wall(width, 0, 10, height));
 		constructionSprites.put(-3, new Wall(0, height, width, 10));
 		constructionSprites.put(-4, new Wall(0, 0, 10, height));
 	}
 
-	public void update(int secondsMovedInGame) throws GameFieldException {
+	public void update(int secondsMovedInGame)  {
 		if (!PauseManager.isGamePaused()) {
 			if (!creationMode) {
 				// checkIfPlayerIsStandingOnSwitch();
@@ -110,7 +108,7 @@ public class Gamefield {
 	}
 
 	// UPDATES
-	private void updateAllTheSprites(int secondsMovedInGame) throws GameFieldException {
+	private void updateAllTheSprites(int secondsMovedInGame){
 		updateSpriteMap(enemies, secondsMovedInGame);
 		updateSpriteMap(constructionSprites, secondsMovedInGame);
 		updateSpriteMap(worldAmmo, secondsMovedInGame);
@@ -278,7 +276,7 @@ public class Gamefield {
 		return width;
 	}
 
-	public void setWidth(int width) throws GameFieldException {
+	public void setWidth(int width)  {
 		if (width < 1) {
 			throw new GameFieldException("The width must be 1 or greater");
 		}
@@ -289,7 +287,7 @@ public class Gamefield {
 		return height;
 	}
 
-	public void setHeight(int height) throws GameFieldException {
+	public void setHeight(int height)  {
 		if (height < 1) {
 			throw new GameFieldException("The height must be 1 or greater");
 		}
@@ -303,7 +301,7 @@ public class Gamefield {
 		return textureBunch.getCurrentTexture();
 	}
 
-	public void setTexture(String texture) throws GameFieldException {
+	public void setTexture(String texture)  {
 		if (getTextureBunch() == null) {
 			setTextureBunch(new TextureBunch());
 		}
@@ -331,28 +329,28 @@ public class Gamefield {
 		return gamefieldName;
 	}
 
-	public void updateConstructionSprite(ConstructionSprite constructionSprite) throws GameFieldException {
+	public void updateConstructionSprite(ConstructionSprite constructionSprite)  {
 		if (!constructionSprites.containsKey(constructionSprite.getID())) {
 			throw new GameFieldException("The gamefield does not contain this sprite: " + constructionSprite);
 		}
 		constructionSprites.put(constructionSprite.getID(), constructionSprite);
 	}
 
-	public void updateGroundItem(Item item) throws GameFieldException {
+	public void updateGroundItem(Item item)  {
 		if (!groundItems.containsKey(item.getID())) {
 			throw new GameFieldException("The gamefield does not contain this sprite: " + item);
 		}
 		groundItems.put(item.getID(), item);
 	}
 	
-	public void updateLight(Light light) throws GameFieldException {
+	public void updateLight(Light light)  {
 		if (!lights.containsKey(light.getID())) {
 			throw new GameFieldException("The gamefield does not contain this sprite: " + light);
 		}
 		lights.put(light.getID(), light);
 	}
 
-	public void updateEnemy(Enemy enemy) throws GameFieldException {
+	public void updateEnemy(Enemy enemy)  {
 		if (!enemies.containsKey(enemy.getID())) {
 			throw new GameFieldException("The gamefield does not contain this sprite: " + enemy);
 		}

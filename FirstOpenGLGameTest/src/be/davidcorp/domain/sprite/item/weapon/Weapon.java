@@ -1,7 +1,6 @@
 package be.davidcorp.domain.sprite.item.weapon;
 
 
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.organic.OrganicSprite;
 import be.davidcorp.domain.sprite.organic.player.Player;
@@ -12,7 +11,7 @@ public abstract class Weapon extends Item{
 	
 	private Cooldowner attackCooldowner = new Cooldowner(200);
 
-	public Weapon(float x, float y, int width, int height) throws  SpriteException {
+	public Weapon(float x, float y, int width, int height) {
 		super(x, y);
 		setWidth(width);
 		setHeight(height);

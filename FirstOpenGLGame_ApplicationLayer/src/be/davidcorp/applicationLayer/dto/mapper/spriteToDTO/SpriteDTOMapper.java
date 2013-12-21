@@ -6,7 +6,6 @@ import java.util.List;
 import be.davidcorp.applicationLayer.dto.SpriteDTO;
 import be.davidcorp.applicationLayer.dto.color.ColorDTO;
 import be.davidcorp.applicationLayer.exception.MapperException;
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
@@ -16,7 +15,7 @@ import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 
 public class SpriteDTOMapper{
 	
-	public static SpriteDTO doAutoMappingForSprite(Sprite sprite) throws MapperException{
+	public static SpriteDTO doAutoMappingForSprite(Sprite sprite) {
 		SpriteDTO spriteDTO = null;
 		if(sprite instanceof Item){
 			spriteDTO = ItemDTOMapper.doAutoMappingForItem((Item) sprite);
@@ -36,7 +35,7 @@ public class SpriteDTOMapper{
 		return spriteDTO;
 	}
 	
-	public static List<SpriteDTO> doAutoMappingForSprites(List<Sprite> sprites) throws MapperException {
+	public static List<SpriteDTO> doAutoMappingForSprites(List<Sprite> sprites)  {
 		ArrayList<SpriteDTO> result = new ArrayList<SpriteDTO>();
 		for (Sprite sprite : sprites) {
 			result.add(doAutoMappingForSprite(sprite));
@@ -68,7 +67,7 @@ public class SpriteDTOMapper{
 		}
 	}
 	
-	public static void mapSpriteDTOToSprite(Sprite sprite, SpriteDTO spriteDTO) throws MapperException{
+	public static void mapSpriteDTOToSprite(Sprite sprite, SpriteDTO spriteDTO) {
 		try {
 		sprite.setID(spriteDTO.getId());
 		
@@ -89,7 +88,7 @@ public class SpriteDTOMapper{
 			Color color = new Color(spriteDTO.getColor().getRed(), spriteDTO.getColor().getGreen(), spriteDTO.getColor().getBlue());
 			sprite.setColor(color);
 		}
-		} catch (SpriteException e) {
+		} catch (Exception e) {
 			throw new MapperException(e);
 		}
 	}

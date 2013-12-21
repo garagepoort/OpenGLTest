@@ -11,13 +11,12 @@ import javax.swing.JSplitPane;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 
-import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.applicationLayer.facade.GameFacade;
 
 @SuppressWarnings("serial")
 public class TestFrame extends JFrame{
 
-	public TestFrame() throws IOException, LWJGLException, MapperException{
+	public TestFrame() throws IOException, LWJGLException{
 		new GameFacade().startApplication();
 		GameLoop gameLoop = new GameLoop(new PlayGamePanel(),800, 600);
 		
@@ -45,7 +44,7 @@ public class TestFrame extends JFrame{
 		this.add(jSplitPane);
 	}
 
-	public static void main(String[] args) throws IOException, LWJGLException, MapperException{
+	public static void main(String[] args) throws IOException, LWJGLException{
 		new TestFrame();
 	}
 }

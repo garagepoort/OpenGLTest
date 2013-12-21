@@ -9,7 +9,6 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -21,7 +20,6 @@ import javax.swing.JSplitPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 
 import GameCreator.ErrorHandler;
@@ -30,8 +28,6 @@ import GameCreator.panels.SelectedSpritePanel;
 import GameCreator.panels.SpriteTreePanel;
 import be.davidcorp.applicationLayer.dto.GamefieldDTO;
 import be.davidcorp.applicationLayer.dto.SpriteDTO;
-import be.davidcorp.applicationLayer.exception.MapperException;
-import be.davidcorp.applicationLayer.exception.ModelException;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.view.game.GameLoop;
 
@@ -80,7 +76,7 @@ public class EditGameFrame extends JFrame implements MouseListener, Observer {
 	private void createNewGamefield(String fieldName) {
 		try {
 			gameFieldFacade.createNewGamefield(fieldName, 1800, 1800);
-		} catch (ModelException e) {
+		} catch (Exception e) {
 			ErrorHandler.handleError(this, e);
 		}
 	}
@@ -146,8 +142,7 @@ public class EditGameFrame extends JFrame implements MouseListener, Observer {
 					gameLoop.start();
 
 					openGLFrameButton.setEnabled(true);
-				} catch (IOException | LWJGLException | MapperException
-						| ModelException e) {
+				} catch (Exception e) {
 					ErrorHandler.handleError(EditGameFrame.this, e);
 				}
 

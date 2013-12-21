@@ -1,8 +1,5 @@
 package be.davidcorp.domain.sprite.organic.enemy;
 
-import java.io.IOException;
-
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.SpriteType;
@@ -23,8 +20,7 @@ public class Enemy extends OrganicSprite {
 	public Enemy() {
 	}
 
-	public Enemy(float x, float y, int width, int height)
-			throws SpriteException, IOException {
+	public Enemy(float x, float y, int width, int height) {
 		super(x, y, width, height);
 		initialize();
 

@@ -2,7 +2,6 @@ package be.davidcorp.applicationLayer.dto.mapper.spriteToDTO;
 
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
 import be.davidcorp.applicationLayer.exception.MapperException;
-import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.sprite.light.Light;
 
 public class LightToLightDTOMapper {
@@ -15,14 +14,14 @@ public class LightToLightDTOMapper {
 		return lightDTO;
 	}
 
-	public static Light mapDTOToLight(LightDTO lightDTO) throws MapperException {
+	public static Light mapDTOToLight(LightDTO lightDTO) {
 		try {
 			Light light = new Light(0, 0, null, 0, false);
 			SpriteDTOMapper.mapSpriteToSpriteDTO(lightDTO, light);
 			light.setRadius(lightDTO.getRadius());
 			light.setLightOn(lightDTO.isLightOn());
 			return light;
-		} catch (SpriteException e) {
+		} catch (Exception e) {
 			throw new MapperException(e);
 		}
 	}

@@ -41,7 +41,7 @@ public class SpriteRepositoryLoaderTest {
 		loader.setFileUtility(fileUtility);
 	}
 	@Test
-	public void givenASpriteFileWithOneEnemy_whenLoadAllSprites_thenEnemyInsideEnemyRepository() throws LoaderException, IOException{
+	public void givenASpriteFileWithOneEnemy_whenLoadAllSprites_thenEnemyInsideEnemyRepository() throws IOException{
 		when(fileUtility.getFileContent(Mockito.any(File.class))).thenReturn(
 				"ENEMY\n"
 						+ "SPRITETYPE:ZOMBIE\n"
@@ -58,7 +58,7 @@ public class SpriteRepositoryLoaderTest {
 	}
 	
 	@Test
-	public void givenASpriteFileWithOneLight_whenLoadAllSprites_thenLightInsideLightRepository() throws LoaderException, IOException{
+	public void givenASpriteFileWithOneLight_whenLoadAllSprites_thenLightInsideLightRepository() throws IOException{
 		when(fileUtility.getFileContent(Mockito.any(File.class))).thenReturn(
 					"LIGHT\n"
 						+ "ID:1\n"
@@ -82,7 +82,7 @@ public class SpriteRepositoryLoaderTest {
 	}
 	
 	@Test
-	public void givenASpriteFileWithOneWall_whenLoadAllSprites_thenWallInsideConstructionSpriteRepository() throws LoaderException, IOException{
+	public void givenASpriteFileWithOneWall_whenLoadAllSprites_thenWallInsideConstructionSpriteRepository() throws  IOException{
 		when(fileUtility.getFileContent(Mockito.any(File.class))).thenReturn(
 				"CONSTRUCTION\n"
 						+ "SPRITETYPE:WALL\n"
@@ -103,7 +103,7 @@ public class SpriteRepositoryLoaderTest {
 	}
 	
 	@Test
-	public void givenASpriteFileWithOneItem_whenLoadAllSprites_thenItemInsideItemRepository() throws LoaderException, IOException{
+	public void givenASpriteFileWithOneItem_whenLoadAllSprites_thenItemInsideItemRepository() throws IOException{
 		when(fileUtility.getFileContent(Mockito.any(File.class))).thenReturn(
 						"ITEM\n"
 						+ "SPRITETYPE:HEALTHPOTION\n"
@@ -120,7 +120,7 @@ public class SpriteRepositoryLoaderTest {
 	}
 	
 	@Test
-	public void givenASpriteFileWithTwoEnemies_whenLoadAllSprites_thenEnemyRepositoryIsCalled() throws LoaderException, IOException{
+	public void givenASpriteFileWithTwoEnemies_whenLoadAllSprites_thenEnemyRepositoryIsCalled() throws IOException{
 		when(fileUtility.getFileContent(Mockito.any(File.class))).thenReturn(
 						"ENEMY\n"
 						+ "SPRITETYPE:ZOMBIE\n"
@@ -152,7 +152,7 @@ public class SpriteRepositoryLoaderTest {
 	
 	
 	@Test
-	public void givenASpriteFileWithEnemiesAndWeapons_whenLoadAllSprites_thenWeaponsAndEnemiesLoaded() throws LoaderException, IOException{
+	public void givenASpriteFileWithEnemiesAndWeapons_whenLoadAllSprites_thenWeaponsAndEnemiesLoaded() throws IOException{
 		when(fileUtility.getFileContent(Mockito.any(File.class))).thenReturn(
 						"ENEMY\n"
 						+ "SPRITETYPE:ZOMBIE\n"
