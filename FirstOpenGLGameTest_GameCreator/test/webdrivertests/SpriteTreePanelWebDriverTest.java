@@ -1,3 +1,4 @@
+package webdrivertests;
 import static org.fest.assertions.Assertions.assertThat;
 
 import java.awt.AWTException;
