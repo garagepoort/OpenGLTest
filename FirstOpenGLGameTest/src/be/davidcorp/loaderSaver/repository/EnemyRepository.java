@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
+import be.davidcorp.loaderSaver.repository.exception.SpriteRepositoryException;
 
 public class EnemyRepository implements SpriteRepository<Enemy>{
 

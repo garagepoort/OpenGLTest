@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import be.davidcorp.domain.sprite.item.weapon.Weapon;
+import be.davidcorp.loaderSaver.repository.exception.SpriteRepositoryException;
 
 public class WeaponRepository implements SpriteRepository<Weapon> {
 

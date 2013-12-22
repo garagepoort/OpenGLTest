@@ -1,4 +1,4 @@
-package be.davidcorp.loaderSaver;
+package be.davidcorp.loaderSaver.filehandling;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -23,6 +23,7 @@ import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.sprite.organic.enemy.Spider;
 import be.davidcorp.domain.sprite.organic.enemy.Zombie;
+import be.davidcorp.loaderSaver.filehandling.SpriteFileLoader;
 import be.davidcorp.loaderSaver.repository.ConstructionSpriteRepository;
 import be.davidcorp.loaderSaver.repository.EnemyRepository;
 import be.davidcorp.loaderSaver.repository.ItemRepository;

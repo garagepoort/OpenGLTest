@@ -1,6 +1,6 @@
 package be.davidcorp.loaderSaver.stringSpriteMapper;
 
-import static be.davidcorp.loaderSaver.SpriteFileLoaderUtilities.addSpritePropertiesToPrintWriter;
+import static be.davidcorp.loaderSaver.filehandling.SpriteFileLoaderUtilities.addSpritePropertiesToPrintWriter;
 import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
 
@@ -20,8 +20,8 @@ import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Spider;
 import be.davidcorp.domain.sprite.organic.enemy.Zombie;
 import be.davidcorp.loaderSaver.LoaderException;
-import be.davidcorp.loaderSaver.SpriteFileLoaderUtilities;
 import be.davidcorp.loaderSaver.SpriteProperty;
+import be.davidcorp.loaderSaver.filehandling.SpriteFileLoaderUtilities;
 
 public abstract class StringToSpriteMapper<T extends Sprite> {
 

@@ -1,4 +1,4 @@
-package be.davidcorp.loaderSaver.repository;
+package be.davidcorp.loaderSaver.repository.exception;
 
 public class SpriteRepositoryException extends RuntimeException{
 

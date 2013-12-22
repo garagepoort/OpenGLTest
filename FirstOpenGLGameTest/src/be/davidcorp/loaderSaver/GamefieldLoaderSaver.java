@@ -12,6 +12,8 @@ import java.util.Scanner;
 
 import be.davidcorp.FileUtility;
 import be.davidcorp.domain.game.Gamefield;
+import be.davidcorp.loaderSaver.filehandling.SpriteFileLoader;
+import be.davidcorp.loaderSaver.filehandling.SpriteFileLoaderUtilities;
 import be.davidcorp.loaderSaver.repository.GamefieldRepository;
 
 public class GamefieldLoaderSaver {

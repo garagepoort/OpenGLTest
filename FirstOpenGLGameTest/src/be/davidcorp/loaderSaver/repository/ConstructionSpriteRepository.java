@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
+import be.davidcorp.loaderSaver.repository.exception.SpriteRepositoryException;
 
 public class ConstructionSpriteRepository implements SpriteRepository<ConstructionSprite>{
 	

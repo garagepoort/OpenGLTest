@@ -1,4 +1,4 @@
-package be.davidcorp.loaderSaver;
+package be.davidcorp.loaderSaver.filehandling;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,6 +12,7 @@ import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
+import be.davidcorp.loaderSaver.LoaderException;
 import be.davidcorp.loaderSaver.repository.ConstructionSpriteRepository;
 import be.davidcorp.loaderSaver.repository.EnemyRepository;
 import be.davidcorp.loaderSaver.repository.ItemRepository;

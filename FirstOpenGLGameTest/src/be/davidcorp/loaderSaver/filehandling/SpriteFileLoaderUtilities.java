@@ -1,9 +1,12 @@
-package be.davidcorp.loaderSaver;
+package be.davidcorp.loaderSaver.filehandling;
 
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
+import be.davidcorp.loaderSaver.GamefieldProperty;
+import be.davidcorp.loaderSaver.SpriteProperty;
 
 public class SpriteFileLoaderUtilities {
 
