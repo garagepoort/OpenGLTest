@@ -1,20 +1,9 @@
 package be.davidcorp.loaderSaver.repository;
 
-import static java.lang.Boolean.parseBoolean;
-import static java.lang.Float.parseFloat;
-import static java.lang.Integer.parseInt;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
-import be.davidcorp.domain.game.GameFieldManager;
-import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.light.Light;
-import be.davidcorp.loaderSaver.LoaderException;
-import be.davidcorp.loaderSaver.SpriteLoaderSaver;
-import be.davidcorp.loaderSaver.SpriteLoaderSaver.SpriteLoaderEvent;
-import be.davidcorp.loaderSaver.SpriteProperty;
 
 public class LightRepository implements SpriteRepository<Light> {
 
@@ -22,17 +11,6 @@ public class LightRepository implements SpriteRepository<Light> {
 
 	public void saveLight(Light light) {
 		throw new UnsupportedOperationException("No tyet implemented");
-	}
-
-	@Override
-	public void loadSprites(String type, ArrayList<String> spriteStrings) {
-		for (String lightString : spriteStrings) {
-			Light light = new SpriteLoaderSaver<Light>().loadSprite(lightString, new LightLoaderEvent());
-			lights.put(light.getID(), light);
-			if(type.equals("gamefield")){
-				GameFieldManager.getCurrentGameField().addLight(light);
-			}
-		}
 	}
 
 	@Override
@@ -48,26 +26,6 @@ public class LightRepository implements SpriteRepository<Light> {
 		return light;
 	}
 
-	private static class LightLoaderEvent extends SpriteLoaderEvent<Light> {
-
-		@Override
-		public Light createSprite(Map<SpriteProperty, String> values) {
-			try {
-				boolean lightOn = parseBoolean(values.get(SpriteProperty.LIGHTON));
-				float x = parseFloat(values.get(SpriteProperty.X));
-				float y = parseFloat(values.get(SpriteProperty.Y));
-				int radius = parseInt(values.get(SpriteProperty.RADIUS));
-				int r = parseInt(values.get(SpriteProperty.RED));
-				int g = parseInt(values.get(SpriteProperty.GREEN));
-				int b = parseInt(values.get(SpriteProperty.BLUE));
-				
-				return new Light(x, y, new Color(r, g, b), radius, lightOn);
-			} catch (Exception e) {
-				throw new LoaderException(e);
-			}
-		}
-	}
-
 	@Override
 	public void updateSprite(Light spriteToUpdate) {
 		throw new UnsupportedOperationException("Not yet implemented");
@@ -76,5 +34,12 @@ public class LightRepository implements SpriteRepository<Light> {
 	@Override
 	public void emptyRepository(){
 		lights.clear();
+	}
+
+	@Override
+	public void loadSprites(List<Light> sprites) {
+		for (Light light : sprites) {
+			lights.put(light.getID(), light);
+		}
 	}
 }

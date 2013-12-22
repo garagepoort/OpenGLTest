@@ -18,6 +18,7 @@ public class Enemy extends OrganicSprite {
 	private Cooldowner cooldowner = new Cooldowner(200);
 
 	public Enemy() {
+		super();
 	}
 
 	public Enemy(float x, float y, int width, int height) {

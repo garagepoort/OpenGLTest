@@ -26,7 +26,7 @@ public class GamefieldLoaderSaver {
 			printWriter = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
 			HashMap<GamefieldProperty, String> properties = new HashMap<>();
 			fillGamefieldProperties(gamefield, properties);
-			FileLoaderUtilities.addGamefieldPropertiesToPrintWriter(properties, printWriter);
+			SpriteFileLoaderUtilities.addGamefieldPropertiesToPrintWriter(properties, printWriter);
 		} catch (Exception exception) {
 			throw new LoaderException(exception);
 		} finally {
@@ -80,7 +80,7 @@ public class GamefieldLoaderSaver {
 			File spritesFile = new File("resources/saveFiles/"+ name +"/sprites.txt");
 			File triggerLinksFile = new File("resources/saveFiles/"+ name +"/triggerLinks.txt");
 
-			new SpriteRepositoryLoader(spritesFile).loadAllSprites("gamefield");
+			new SpriteFileLoader(spritesFile).loadAllSprites();
 			new TriggerLoader().loadTriggers(fileUtility.getFileContent(triggerLinksFile));
 		} catch (IOException e) {
 			throw new LoaderException(e);

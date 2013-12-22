@@ -1,13 +1,11 @@
 package be.davidcorp.loaderSaver.repository;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import be.davidcorp.domain.sprite.Sprite;
 
 public interface SpriteRepository<SPRITE extends Sprite> {
 	
-	public void loadSprites(String type, ArrayList<String> spriteStrings);
-
 	public SPRITE getSprite(int id);
 	
 	public SPRITE createSprite(SPRITE sprite);
@@ -15,4 +13,7 @@ public interface SpriteRepository<SPRITE extends Sprite> {
 	void updateSprite(SPRITE spriteToUpdate);
 	
 	public void emptyRepository();
+
+	void loadSprites(List<SPRITE> sprites);
+
 }

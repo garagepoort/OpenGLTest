@@ -12,9 +12,9 @@ public class Wall extends ConstructionSprite{
 		setMaxHealthPoints(1000);
 		setColor(new Color(255, 0, 0));
 	}
-
-
+	
 	public Wall() {
+		this(0, 0, 10, 10);
 	}
 
 	public void removeHealth(int hp){

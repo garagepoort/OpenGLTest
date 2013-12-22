@@ -10,6 +10,9 @@ public class Light extends Sprite{
 	private int radius = 50;
 	private boolean lightOn = true;
 
+	public Light(){
+		this(0,0, new Color(255, 0, 0), 100, true);
+	}
 
 	public Light(float x, float y, Color color, int radius, boolean lightOn){
 		super(x, y, 10, 10);

@@ -8,6 +8,10 @@ import be.davidcorp.texture.TextureBunch;
 public class Pistol extends RangedWeapon{
 
 
+	public Pistol() {
+		this(0,0,0);
+	}
+	
 	public Pistol(float x, float y, int aantalBullets) {
 		super(x,y,32,32,aantalBullets);
 		initialize();

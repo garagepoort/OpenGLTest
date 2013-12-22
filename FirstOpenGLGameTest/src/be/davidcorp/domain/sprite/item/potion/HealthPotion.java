@@ -12,6 +12,10 @@ public class HealthPotion extends Item {
 		setTextureBunch(new TextureBunch().withDefaultTexture("resources/images/potions/healthPotion.png"));
 		setInfoText("This potion heals you for 20 health.");
 	}
+	
+	public HealthPotion()  {
+		this(32, 32);
+	}
 
 	@Override
 	public void useItem(OrganicSprite organicSprite) {

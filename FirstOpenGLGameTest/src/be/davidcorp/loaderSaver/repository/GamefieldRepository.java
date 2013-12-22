@@ -18,7 +18,7 @@ import be.davidcorp.domain.sprite.item.potion.HealthPotion;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Zombie;
 import be.davidcorp.domain.trigger.triggerableEvents.LightSwitchEvent;
-import be.davidcorp.loaderSaver.FileLoaderUtilities;
+import be.davidcorp.loaderSaver.SpriteFileLoaderUtilities;
 import be.davidcorp.loaderSaver.GamefieldProperty;
 import be.davidcorp.loaderSaver.LoaderException;
 
@@ -86,7 +86,7 @@ public class GamefieldRepository {
 
 	private Gamefield load(String gamefieldString) {
 		try {
-			Map<GamefieldProperty, String> values = FileLoaderUtilities.getGamefieldProperties(gamefieldString);
+			Map<GamefieldProperty, String> values = SpriteFileLoaderUtilities.getGamefieldProperties(gamefieldString);
 
 			String name = values.get(GamefieldProperty.GAMEFIELDNAME);
 			int width = parseInt(values.get(GamefieldProperty.WIDTH));

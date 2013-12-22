@@ -1,24 +1,23 @@
 package be.davidcorp.domain.sprite.organic.enemy;
 
-import java.io.IOException;
-
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.texture.TextureBunch;
 
 public class Zombie extends Enemy {
 
-	public Zombie(float x, float y, int width, int height)
-			throws IOException {
+	public Zombie(float x, float y, int width, int height){
 		super(x, y, width, height);
 		initializeTextureBunch();
 		initializeVariables();
 	}
+	
+	public Zombie(){
+		this(0, 0, 32, 32);
+	}
 
 	public Zombie(float x, float y) {
-		super(x, y, 32, 32);
-		initializeTextureBunch();
-		initializeVariables();
+		this(x, y, 32, 32);
 	}
 
 	private void initializeVariables() {

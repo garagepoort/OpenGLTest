@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class FileLoaderUtilities {
+public class SpriteFileLoaderUtilities {
 
 	public static Map<SpriteProperty, String> getSpriteProperties(String sprite) {
 		Map<SpriteProperty, String> properties = new HashMap<SpriteProperty, String>();

@@ -1,6 +1,7 @@
 package be.davidcorp.loaderSaver;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
@@ -26,18 +27,17 @@ import be.davidcorp.loaderSaver.repository.ConstructionSpriteRepository;
 import be.davidcorp.loaderSaver.repository.EnemyRepository;
 import be.davidcorp.loaderSaver.repository.ItemRepository;
 import be.davidcorp.loaderSaver.repository.LightRepository;
-import be.davidcorp.loaderSaver.repository.WeaponRepository;
 
 
-public class SpriteRepositoryLoaderTest {
+public class SpriteFileLoaderTest {
 
-	private SpriteRepositoryLoader loader;
+	private SpriteFileLoader loader;
 	private FileUtility fileUtility;
 	
 	@Before
 	public void initialize(){
-		loader = spy(new SpriteRepositoryLoader(null));		
-		fileUtility = Mockito.mock(FileUtility.class);
+		loader = spy(new SpriteFileLoader(null));		
+		fileUtility = mock(FileUtility.class);
 		loader.setFileUtility(fileUtility);
 	}
 	@Test
@@ -49,7 +49,7 @@ public class SpriteRepositoryLoaderTest {
 						+ "X:10f\n"
 						+ "Y:11f\n"
 						+ "END");
-		loader.loadAllSprites("gamefield");
+		loader.loadAllSprites();
 		Enemy enemy = new EnemyRepository().getSprite(1);
 		assertThat(enemy).isInstanceOf(Zombie.class);
 		assertThat(enemy.getID()).isEqualTo(1);
@@ -60,7 +60,8 @@ public class SpriteRepositoryLoaderTest {
 	@Test
 	public void givenASpriteFileWithOneLight_whenLoadAllSprites_thenLightInsideLightRepository() throws IOException{
 		when(fileUtility.getFileContent(Mockito.any(File.class))).thenReturn(
-					"LIGHT\n"
+					"LIGHT\n" 
+							+ "SPRITETYPE:LIGHT\n"
 						+ "ID:1\n"
 						+ "X:10f\n"
 						+ "Y:11f\n"
@@ -69,7 +70,7 @@ public class SpriteRepositoryLoaderTest {
 						+ "GREEN:0\n"
 						+ "BLUE:0\n"
 						+ "END");
-		loader.loadAllSprites("gamefield");
+		loader.loadAllSprites();
 		Light light = new LightRepository().getSprite(1);
 		assertThat(light).isInstanceOf(Light.class);
 		assertThat(light.getID()).isEqualTo(1);
@@ -92,7 +93,7 @@ public class SpriteRepositoryLoaderTest {
 						+ "WIDTH:12\n"
 						+ "HEIGHT:13\n"
 						+ "END");
-		loader.loadAllSprites("gamefield");
+		loader.loadAllSprites();
 		ConstructionSprite wall = new ConstructionSpriteRepository().getSprite(1);
 		assertThat(wall).isInstanceOf(Wall.class);
 		assertThat(wall.getID()).isEqualTo(1);
@@ -111,7 +112,7 @@ public class SpriteRepositoryLoaderTest {
 						+ "X:10f\n"
 						+ "Y:11f\n"
 						+ "END");
-		loader.loadAllSprites("gamefield");
+		loader.loadAllSprites();
 		Item item = new ItemRepository().getSprite(1);
 		assertThat(item).isInstanceOf(HealthPotion.class);
 		assertThat(item.getID()).isEqualTo(1);
@@ -136,7 +137,7 @@ public class SpriteRepositoryLoaderTest {
 						+ "Y:11f\n"
 						+ "END");
 
-		loader.loadAllSprites("gamefield");
+		loader.loadAllSprites();
 		Enemy enemy = new EnemyRepository().getSprite(1);
 		assertThat(enemy).isInstanceOf(Zombie.class);
 		assertThat(enemy.getID()).isEqualTo(1);
@@ -168,7 +169,7 @@ public class SpriteRepositoryLoaderTest {
 						+ "Y:11f\n"
 						+ "END\n"
 						
-						+ "WEAPON\n"
+						+ "ITEM\n"
 						+ "SPRITETYPE:PISTOL\n"
 						+ "ID:3\n"
 						+ "X:10f\n"
@@ -176,7 +177,7 @@ public class SpriteRepositoryLoaderTest {
 						+ "AANTAL_BULLETS:30\n"
 						+ "END"
 				);
-		loader.loadAllSprites("gamefield");
+		loader.loadAllSprites();
 		Enemy enemy = new EnemyRepository().getSprite(1);
 		assertThat(enemy).isInstanceOf(Zombie.class);
 		assertThat(enemy.getID()).isEqualTo(1);
@@ -189,7 +190,7 @@ public class SpriteRepositoryLoaderTest {
 		assertThat(enemy2.getX()).isEqualTo(10f);
 		assertThat(enemy2.getY()).isEqualTo(11f);
 		
-		Weapon weapon = new WeaponRepository().getSprite(3);
+		Weapon weapon = (Weapon) new ItemRepository().getSprite(3);
 		assertThat(weapon).isInstanceOf(Pistol.class);
 		Pistol pistol = (Pistol) weapon;
 		assertThat(pistol.getID()).isEqualTo(3);

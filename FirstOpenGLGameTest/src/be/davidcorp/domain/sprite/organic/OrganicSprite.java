@@ -27,7 +27,9 @@ public abstract class OrganicSprite extends Sprite implements Observer {
 	private int staminaRegen;
 	private HashMap<Attributes, Float> attributes = new HashMap<>();
 	
-	public OrganicSprite(){}
+	public OrganicSprite(){
+		super();
+	}
 
 	public OrganicSprite(float x, float y, int width, int height) {
 		super(x, y, width, height);
