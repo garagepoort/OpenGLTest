@@ -1,4 +1,4 @@
-package be.davidcorp.loaderSaver.stringSpriteMapper;
+package be.davidcorp.loaderSaver.mapper.stringSpriteMapper;
 
 import static be.davidcorp.loaderSaver.SpriteProperty.LIGHTON;
 import static java.lang.Boolean.parseBoolean;

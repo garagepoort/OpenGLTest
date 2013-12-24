@@ -1,13 +1,8 @@
-package be.davidcorp.loaderSaver.stringSpriteMapper;
+package be.davidcorp.loaderSaver.mapper.stringSpriteMapper;
 
-import static be.davidcorp.loaderSaver.filehandling.SpriteFileLoaderUtilities.addSpritePropertiesToPrintWriter;
 import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.util.Map;
 
 import be.davidcorp.domain.sprite.Sprite;
@@ -19,39 +14,11 @@ import be.davidcorp.domain.sprite.item.weapon.Pistol;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Spider;
 import be.davidcorp.domain.sprite.organic.enemy.Zombie;
-import be.davidcorp.loaderSaver.LoaderException;
 import be.davidcorp.loaderSaver.SpriteProperty;
 import be.davidcorp.loaderSaver.filehandling.SpriteFileLoaderUtilities;
 
 public abstract class StringToSpriteMapper<T extends Sprite> {
-
-	public void saveSprite(File file, T sprite, Map<SpriteProperty, String> properties) {
-		PrintWriter printWriter = null;
-		try {
-			printWriter = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
-			addSpritePropertiesToPrintWriter(properties, printWriter);
-		} catch (Exception exception) {
-			throw new LoaderException(exception);
-		} finally {
-			if (printWriter != null)
-				printWriter.close();
-		}
-	}
-
-	// @SuppressWarnings("unchecked")
-	// public T loadSprite(String spriteString, SpriteLoaderEvent<T>
-	// spriteLoaderEvent) {
-	// try {
-	// Map<SpriteProperty, String> properties =
-	// getSpriteProperties(spriteString);
-	// Sprite sprite = spriteLoaderEvent.createSprite(properties);
-	// sprite.setID(parseInt(properties.get(SpriteProperty.ID)));
-	// return (T) sprite;
-	// } catch (Exception exception) {
-	// throw new LoaderException(exception);
-	// }
-	// }
-
+	
 	@SuppressWarnings("unchecked")
 	public T loadSprite(String spriteString) {
 		Map<SpriteProperty, String> properties = SpriteFileLoaderUtilities.getSpriteProperties(spriteString);

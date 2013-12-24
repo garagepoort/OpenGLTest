@@ -1,4 +1,4 @@
-package be.davidcorp.loaderSaver.stringSpriteMapper;
+package be.davidcorp.loaderSaver.mapper.stringSpriteMapper;
 
 import static java.lang.Integer.parseInt;
 

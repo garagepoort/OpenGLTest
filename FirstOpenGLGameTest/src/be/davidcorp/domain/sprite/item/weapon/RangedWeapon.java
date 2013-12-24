@@ -47,9 +47,14 @@ public abstract class RangedWeapon extends Weapon {
 		this.ammoSize = amount;
 	}
 	
+	public int getMaximumAmountOfAmmo() {
+		return ammoSize;
+	}
+	
 	@Override
 	public WeaponType getWeaponType() {
 		return WeaponType.RANGED;
 	}
+
 
 }

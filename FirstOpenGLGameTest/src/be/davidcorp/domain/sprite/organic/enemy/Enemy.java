@@ -59,7 +59,11 @@ public class Enemy extends OrganicSprite {
 		super.updateSprite(secondsMovedInGame);
 	}
 
-	protected void setAttackDamage(int attackDamage) {
+	public int getAttackDamage() {
+		return attackDamage;
+	}
+	
+	public void setAttackDamage(int attackDamage) {
 		this.attackDamage = attackDamage;
 	}
 

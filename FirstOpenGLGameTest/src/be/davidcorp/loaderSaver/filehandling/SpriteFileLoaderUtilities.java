@@ -36,11 +36,6 @@ public class SpriteFileLoaderUtilities {
 		return properties;
 	}
 
-	public static void addSpritePropertiesToPrintWriter(Map<SpriteProperty, String> properties, PrintWriter printWriter) {
-		for (Map.Entry<SpriteProperty, String> entry : properties.entrySet()) {
-			printWriter.println(entry.getKey() + ":" + entry.getValue());
-		}
-	}
 
 	public static void addGamefieldPropertiesToPrintWriter(Map<GamefieldProperty, String> properties, PrintWriter printWriter) {
 		for (Map.Entry<GamefieldProperty, String> entry : properties.entrySet()) {

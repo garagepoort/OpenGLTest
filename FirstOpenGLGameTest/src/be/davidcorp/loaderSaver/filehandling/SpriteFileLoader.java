@@ -1,5 +1,7 @@
 package be.davidcorp.loaderSaver.filehandling;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,28 +15,28 @@ import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.loaderSaver.LoaderException;
+import be.davidcorp.loaderSaver.mapper.stringSpriteMapper.StringToConstructionSpriteMapper;
+import be.davidcorp.loaderSaver.mapper.stringSpriteMapper.StringToEnemyMapper;
+import be.davidcorp.loaderSaver.mapper.stringSpriteMapper.StringToItemMapper;
+import be.davidcorp.loaderSaver.mapper.stringSpriteMapper.StringToLightMapper;
+import be.davidcorp.loaderSaver.mapper.stringSpriteMapper.StringToSpriteMapper;
 import be.davidcorp.loaderSaver.repository.ConstructionSpriteRepository;
 import be.davidcorp.loaderSaver.repository.EnemyRepository;
 import be.davidcorp.loaderSaver.repository.ItemRepository;
 import be.davidcorp.loaderSaver.repository.LightRepository;
 import be.davidcorp.loaderSaver.repository.SpriteRepository;
-import be.davidcorp.loaderSaver.stringSpriteMapper.StringToConstructionSpriteMapper;
-import be.davidcorp.loaderSaver.stringSpriteMapper.StringToEnemyMapper;
-import be.davidcorp.loaderSaver.stringSpriteMapper.StringToItemMapper;
-import be.davidcorp.loaderSaver.stringSpriteMapper.StringToLightMapper;
-import be.davidcorp.loaderSaver.stringSpriteMapper.StringToSpriteMapper;
 
 public class SpriteFileLoader {
 
-	private ArrayList<String> enemiesStrings = new ArrayList<String>(); 
-	private ArrayList<String> constructionSpritesStrings = new ArrayList<String>();
-	private ArrayList<String> itemsStrings = new ArrayList<String>();
-	private ArrayList<String> lightsStrings = new ArrayList<String>();
+	private ArrayList<String> enemiesStrings = newArrayList(); 
+	private ArrayList<String> constructionSpritesStrings = newArrayList();
+	private ArrayList<String> itemsStrings = newArrayList();
+	private ArrayList<String> lightsStrings = newArrayList();
 
-	private ArrayList<Enemy> enemies = new ArrayList<Enemy>(); 
-	private ArrayList<ConstructionSprite> constructionSprites = new ArrayList<ConstructionSprite>();
-	private ArrayList<Item> items = new ArrayList<Item>();
-	private ArrayList<Light> lights= new ArrayList<Light>();
+	private ArrayList<Enemy> enemies = newArrayList(); 
+	private ArrayList<ConstructionSprite> constructionSprites = newArrayList();
+	private ArrayList<Item> items = newArrayList();
+	private ArrayList<Light> lights= newArrayList();
 	
 	private File file;
 	private FileUtility fileUtility;
