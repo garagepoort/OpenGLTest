@@ -37,6 +37,11 @@ public class GamefieldSpriteFillerTest {
 		Zombie zombie= mock(Zombie.class);
 		Spider spider= mock(Spider.class);
 		Pistol pistol = mock(Pistol.class);
+		
+		when(zombie.getID()).thenReturn(1);
+		when(spider.getID()).thenReturn(2);
+		when(pistol.getID()).thenReturn(3);
+		
 		Gamefield gamefield = new Gamefield("testfield", 100, 100);
 
 		when(defaultSpriteRepository.getSprite(1)).thenReturn(zombie);

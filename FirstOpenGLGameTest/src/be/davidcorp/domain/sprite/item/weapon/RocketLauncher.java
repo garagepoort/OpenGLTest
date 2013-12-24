@@ -1,5 +1,7 @@
 package be.davidcorp.domain.sprite.item.weapon;
 
+import static be.davidcorp.domain.sprite.SpriteType.ROCKETLAUNCHER;
+import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.texture.TextureBunch;
 
 public class RocketLauncher extends RangedWeapon{
@@ -16,6 +18,11 @@ public class RocketLauncher extends RangedWeapon{
 	@Override
 	public Ammo getAmmoInstance() {
 		return new Rocket(getX(), getY());
+	}
+
+	@Override
+	public SpriteType getType() {
+		return ROCKETLAUNCHER;
 	}
 
 }

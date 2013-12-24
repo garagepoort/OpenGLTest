@@ -3,11 +3,16 @@ package be.davidcorp.loaderSaver;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import be.davidcorp.FileUtility;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.construction.Wall;
 import be.davidcorp.domain.sprite.light.Light;
@@ -23,21 +28,29 @@ public class TriggerLoaderTest {
 
 	private TriggerLoader triggerLoader;
 	private TriggerRepository triggerRepository;
+	private File file;
 	
 	@Mock private DefaultSpriteRepository defaultSpriteRepository;
+	@Mock private FileUtility fileUtility;
 
 	@Before
 	public void initialize(){
 		MockitoAnnotations.initMocks(this);
-		triggerLoader = new TriggerLoader();
 		triggerRepository = new TriggerRepository();
-		
+		triggerLoader = new TriggerLoader();
+		triggerLoader.setFileUtility(fileUtility);
 		triggerLoader.setDefaultSpriteRepository(defaultSpriteRepository);
+		file = new File("resources/test/testfile.txt");
+	}
+	
+	@After
+	public void tearDown(){
+		file.delete();
 	}
 	
 	@SuppressWarnings("rawtypes")
 	@Test
-	public void givenAWallAndALight_whenTriggersLoaded_thenTriggerOnWallLinkedToLight(){
+	public void givenAWallAndALight_whenTriggersLoaded_thenTriggerOnWallLinkedToLight() throws IOException{
 		//given
 		Wall wall = new Wall(0, 0, 1, 1);
 		Light light = new Light(0, 0, new Color(0, 0, 255), 10, true);
@@ -54,8 +67,11 @@ public class TriggerLoaderTest {
 				+ "EVENT:LIGHTSWITCH\n"
 				+ "END";
 		
+		when(fileUtility.getFileContent(file)).thenReturn(loadedTriggers);
+		
+		
 		//when
-		triggerLoader.loadTriggers(loadedTriggers);
+		triggerLoader.loadTriggers(file);
 		
 		//then
 		Trigger createdTrigger = triggerRepository.getTrigger(1);

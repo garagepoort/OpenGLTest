@@ -1,29 +1,29 @@
 package be.davidcorp.domain.sprite.construction;
 
 import be.davidcorp.domain.sprite.Sprite;
-import be.davidcorp.domain.sprite.SpriteType;
 
 
 public abstract class ConstructionSprite extends Sprite{
 
+	private int usableRange = 100;
 	
 	public ConstructionSprite(float x, float y, int width, int height) {
 		super(x, y, width, height);
 	}
 
 	public ConstructionSprite() {
+		super();
 	}
 
-	private int usableRange = 100;
 	
-	public SpriteType getType() {
-		return SpriteType.CONSTRUCTION;
-	}
-
 	protected abstract void onUse(Sprite sprite);
 	
-	protected void setUsableRange(int usableRange){
+	public void setUsableRange(int usableRange){
 		this.usableRange = usableRange;
+	}
+	
+	public int getUsableRange() {
+		return usableRange;
 	}
 	
 	public void doUse(Sprite sprite){

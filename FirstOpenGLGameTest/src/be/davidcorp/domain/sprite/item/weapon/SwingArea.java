@@ -1,6 +1,8 @@
 package be.davidcorp.domain.sprite.item.weapon;
 
+import static be.davidcorp.domain.sprite.SpriteType.SWINGAREA;
 import be.davidcorp.domain.sprite.Sprite;
+import be.davidcorp.domain.sprite.SpriteType;
 
 public class SwingArea extends Sprite{
 
@@ -13,5 +15,10 @@ public class SwingArea extends Sprite{
 
 	@Override
 	public void onDeath() {}
+
+	@Override
+	public SpriteType getType() {
+		return SWINGAREA;
+	}
 
 }

@@ -1,5 +1,7 @@
 package be.davidcorp.loaderSaver;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -12,8 +14,10 @@ import java.util.Scanner;
 
 import be.davidcorp.FileUtility;
 import be.davidcorp.domain.game.Gamefield;
+import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.loaderSaver.filehandling.SpriteFileLoader;
 import be.davidcorp.loaderSaver.filehandling.SpriteFileLoaderUtilities;
+import be.davidcorp.loaderSaver.filehandling.SpriteFileWriter;
 import be.davidcorp.loaderSaver.repository.GamefieldRepository;
 
 public class GamefieldLoaderSaver {
@@ -78,14 +82,30 @@ public class GamefieldLoaderSaver {
 	}
 
 	public void loadEntireField(String name) {
-		try {
-			File spritesFile = new File("resources/saveFiles/"+ name +"/sprites.txt");
-			File triggerLinksFile = new File("resources/saveFiles/"+ name +"/triggerLinks.txt");
+		File spritesFile = new File("resources/saveFiles/" + name + "/sprites.txt");
+		File triggerLinksFile = new File("resources/saveFiles/" + name + "/triggerLinks.txt");
 
-			new SpriteFileLoader(spritesFile).loadAllSprites();
-			new TriggerLoader().loadTriggers(fileUtility.getFileContent(triggerLinksFile));
-		} catch (IOException e) {
-			throw new LoaderException(e);
-		}
+		new SpriteFileLoader(spritesFile).loadAllSprites();
+		new TriggerLoader().loadTriggers((triggerLinksFile));
+	}
+
+	public void saveEntireField(Gamefield gamefield) {
+		File spritesFile = new File("resources/saveFiles/" + gamefield.getName() + "/sprites.txt");
+		File triggerLinksFile = new File("resources/saveFiles/" + gamefield.getName() + "/triggerLinks.txt");
+		spritesFile.getParentFile().mkdirs();
+		triggerLinksFile.getParentFile().mkdirs();
+
+		new SpriteFileWriter(spritesFile).saveSprites(getAllGamefieldSprites(gamefield));
+		// new
+		// TriggerLoader().loadTriggers(fileUtility.getFileContent(triggerLinksFile));
+	}
+
+	private List<Sprite> getAllGamefieldSprites(Gamefield gamefield) {
+		List<Sprite> sprites = newArrayList();
+		sprites.addAll(gamefield.getEnemiesInWorld());
+		sprites.addAll(gamefield.getGroundItems());
+		sprites.addAll(gamefield.getLightsFromWorld());
+		sprites.addAll(gamefield.getConstructionItems());
+		return sprites;
 	}
 }

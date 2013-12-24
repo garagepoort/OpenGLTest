@@ -1,6 +1,7 @@
 package be.davidcorp.domain.game;
 
 import be.davidcorp.domain.sprite.Sprite;
+import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.organic.player.Player;
 import be.davidcorp.metric.Point;
 
@@ -42,6 +43,11 @@ public class GameFieldSwitch extends Sprite{
 	public void onDeath() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public SpriteType getType() {
+		return null;
 	}
 
 

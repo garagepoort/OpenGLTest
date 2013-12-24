@@ -20,7 +20,7 @@ import be.davidcorp.loaderSaver.filehandling.SpriteFileLoaderUtilities;
 public abstract class StringToSpriteMapper<T extends Sprite> {
 	
 	@SuppressWarnings("unchecked")
-	public T loadSprite(String spriteString) {
+	public T mapSprite(String spriteString) {
 		Map<SpriteProperty, String> properties = SpriteFileLoaderUtilities.getSpriteProperties(spriteString);
 		Sprite sprite = SpriteFactory.createSprite(SpriteType.valueOf(properties.get(SpriteProperty.SPRITETYPE)));
 		mapStringToSprite(properties, sprite);

@@ -1,8 +1,11 @@
 package be.davidcorp.domain.sprite.item;
 
+import static be.davidcorp.domain.sprite.SpriteType.HEALTHNECKLACE;
+
 import java.io.IOException;
 
 import be.davidcorp.domain.attribute.Attributes;
+import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.organic.OrganicSprite;
 import be.davidcorp.texture.TextureBunch;
 
@@ -25,6 +28,12 @@ public class HealthNecklace extends Item{
 	@Override
 	public void useItem(OrganicSprite organicSprite) {
 		// TODO Auto-generated method stub
+	}
+
+
+	@Override
+	public SpriteType getType() {
+		return HEALTHNECKLACE;
 	}
 
 

@@ -4,7 +4,7 @@ import be.davidcorp.domain.sprite.organic.OrganicSprite;
 
 public abstract class OrganicSpriteTestBuilder<ORGANICSPRITE extends OrganicSprite> extends SpriteTestBuilder<ORGANICSPRITE>{
 
-	private int stamina;
+	private int stamina= 200;
 
 	@Override
 	protected ORGANICSPRITE buildBasic() {

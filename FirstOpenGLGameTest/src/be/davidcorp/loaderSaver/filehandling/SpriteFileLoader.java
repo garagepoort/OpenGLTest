@@ -74,7 +74,7 @@ public class SpriteFileLoader {
 	
 	private <SPRITE extends Sprite> void mapSpriteAndAddToRepository(List<String> spriteStrings, List<SPRITE> sprites, SpriteRepository<SPRITE> repository, StringToSpriteMapper<SPRITE> mapper){
 		for (String spriteString : spriteStrings) {
-			sprites.add(mapper.loadSprite(spriteString));
+			sprites.add(mapper.mapSprite(spriteString));
 		}
 		repository.loadSprites(sprites);
 	}

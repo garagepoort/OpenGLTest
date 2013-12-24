@@ -6,9 +6,13 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import be.davidcorp.domain.sprite.Sprite;
+import be.davidcorp.domain.sprite.construction.ConstructionSprite;
+import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
+import be.davidcorp.loaderSaver.mapper.spriteToString.ConstructionSpriteToStringMapper;
 import be.davidcorp.loaderSaver.mapper.spriteToString.EnemyToStringMapper;
+import be.davidcorp.loaderSaver.mapper.spriteToString.ItemToStringMapper;
 import be.davidcorp.loaderSaver.mapper.spriteToString.LightToStringMapper;
 import be.davidcorp.loaderSaver.mapper.spriteToString.MapperException;
 import be.davidcorp.loaderSaver.mapper.spriteToString.SpriteToStringMapper;
@@ -45,6 +49,12 @@ public class SpriteFileWriter {
 		}
 		if (sprite instanceof Light) {
 			return new LightToStringMapper();
+		}
+		if (sprite instanceof Item) {
+			return new ItemToStringMapper();
+		}
+		if (sprite instanceof ConstructionSprite) {
+			return new ConstructionSpriteToStringMapper();
 		}
 		throw new MapperException("No mapper for sprite: " + sprite);
 	}

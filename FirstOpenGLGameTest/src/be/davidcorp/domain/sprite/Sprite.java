@@ -19,7 +19,7 @@ import be.davidcorp.metric.Point;
 import be.davidcorp.metric.Vector;
 import be.davidcorp.texture.TextureBunch;
 
-public class Sprite extends Triggerable {
+public abstract class Sprite extends Triggerable {
 
 	private int ID;
 	private Color color;
@@ -273,10 +273,8 @@ public class Sprite extends Triggerable {
 	public void setTextureBunch(TextureBunch textureBunch) {
 		this.textureBunch = textureBunch;
 	}
-
-	public SpriteType getType() {
-		return SpriteType.SPRITE;
-	}
+	
+	public abstract SpriteType getType();
 
 	private void initializeSprite(float x, float y, int width, int height) {
 		setWidth(width);

@@ -1,5 +1,7 @@
 package be.davidcorp.domain.sprite.item.weapon;
 
+import static be.davidcorp.domain.sprite.SpriteType.BULLET;
+import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.organic.OrganicSprite;
 import be.davidcorp.texture.TextureBunch;
 
@@ -21,6 +23,11 @@ public class Bullet extends Ammo{
 	public void useItem(OrganicSprite organicSprite) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public SpriteType getType() {
+		return BULLET;
 	}
 
 }

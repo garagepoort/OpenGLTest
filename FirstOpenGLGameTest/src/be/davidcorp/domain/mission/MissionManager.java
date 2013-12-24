@@ -25,8 +25,8 @@ public class MissionManager {
 		Mission mission = new Mission("Turn the light on. (Press 'E' near the wall)", acceptationCriteriaHandler);
 		Mission healthMission = new Mission("Find 4 healthpotions", new AcceptationCriteriaHandler().withCriteria(new FindHealthCriteria()));
 		ConstructionSprite constructionSprite = new ConstructionSpriteRepository().getSprite(1);
-		constructionSprite.addTrigger(TriggerManager.<Mission>createTrigger(8, TriggerWhen.ONUSE, mission, new EndMissionEvent()));
-		constructionSprite.addTrigger(TriggerManager.<Mission>createTrigger(9, TriggerWhen.ONUSE, healthMission, new BeginMissionEvent()));
+		TriggerManager.<Mission>createTriggerOnSprite(8, TriggerWhen.ONUSE, mission, new EndMissionEvent(),constructionSprite);
+		TriggerManager.<Mission>createTriggerOnSprite(9, TriggerWhen.ONUSE, healthMission, new BeginMissionEvent(),constructionSprite);
 		
 		PlayerManager.getCurrentPlayer().setCurrentMission(mission);
 	}

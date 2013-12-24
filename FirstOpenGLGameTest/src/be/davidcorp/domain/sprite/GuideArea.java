@@ -1,5 +1,7 @@
 package be.davidcorp.domain.sprite;
 
+import static be.davidcorp.domain.sprite.SpriteType.GUIDEAREA;
+
 import java.util.HashMap;
 
 
@@ -39,6 +41,11 @@ public class GuideArea extends Sprite{
 
 	@Override
 	public void onDeath() {
+	}
+
+	@Override
+	public SpriteType getType() {
+		return GUIDEAREA;
 	}
 
 }

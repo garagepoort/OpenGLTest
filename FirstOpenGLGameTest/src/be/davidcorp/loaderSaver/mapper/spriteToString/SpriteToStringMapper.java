@@ -1,6 +1,7 @@
 package be.davidcorp.loaderSaver.mapper.spriteToString;
 
 import static be.davidcorp.loaderSaver.SpriteProperty.HEIGHT;
+import static be.davidcorp.loaderSaver.SpriteProperty.ID;
 import static be.davidcorp.loaderSaver.SpriteProperty.WIDTH;
 import static be.davidcorp.loaderSaver.SpriteProperty.X;
 import static be.davidcorp.loaderSaver.SpriteProperty.Y;
@@ -23,7 +24,7 @@ public abstract class SpriteToStringMapper<SPRITE extends Sprite> {
 		
 		StringBuilder builder = new StringBuilder();
 		builder.append(getSpriteClass() + lineSeparator());
-		builder.append("SPRITETYPE:" + getSpriteType() + lineSeparator());
+		builder.append("SPRITETYPE:" + sprite.getType() + lineSeparator());
 		
 		for (Map.Entry<SpriteProperty, String> entry : properties.entrySet()) {
 			builder.append(entry.getKey() + ":" + entry.getValue() + lineSeparator());
@@ -33,6 +34,7 @@ public abstract class SpriteToStringMapper<SPRITE extends Sprite> {
 	}
 	
 	public void addProperties(){
+		properties.put(ID, valueToString(sprite.getID()));
 		properties.put(X, valueToString(sprite.getX()));
 		properties.put(Y, valueToString(sprite.getY()));
 		properties.put(WIDTH, valueToString(sprite.getWidth()));
@@ -40,8 +42,6 @@ public abstract class SpriteToStringMapper<SPRITE extends Sprite> {
 	}
 
 	public abstract String getSpriteClass();
-	
-	public abstract String getSpriteType();
 	
 	protected String valueToString(int value){
 		return Integer.toString(value);

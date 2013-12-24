@@ -1,11 +1,14 @@
 package be.davidcorp.domain.sprite.organic.player;
 
+import static be.davidcorp.domain.sprite.SpriteType.PLAYER;
+
 import java.io.IOException;
 import java.util.Observer;
 
 import be.davidcorp.WindDirection;
 import be.davidcorp.domain.mission.Mission;
 import be.davidcorp.domain.sprite.Color;
+import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.item.weapon.Pistol;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.OrganicSprite;
@@ -105,6 +108,11 @@ public class Player extends OrganicSprite implements Observer {
 			}
 			getTextureBunch().updateTexture();
 		}
+	}
+
+	@Override
+	public SpriteType getType() {
+		return PLAYER;
 	}
 	
 	

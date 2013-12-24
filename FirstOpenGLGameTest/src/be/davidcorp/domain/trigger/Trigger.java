@@ -5,6 +5,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import java.util.List;
 
 import be.davidcorp.domain.sprite.Sprite;
+import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.utilities.sprite.SpriteCollisionChecker;
 
 public class Trigger {
@@ -43,6 +44,11 @@ public class Trigger {
 		collisionSprite = new Sprite(x2, y2, 2 * triggerRadiusWidth, 2 * triggerRadiusHeight) {
 			@Override
 			public void onDeath() {
+			}
+
+			@Override
+			public SpriteType getType() {
+				return null;
 			}
 		};
 

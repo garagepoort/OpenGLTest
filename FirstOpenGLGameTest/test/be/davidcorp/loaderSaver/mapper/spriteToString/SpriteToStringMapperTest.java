@@ -20,6 +20,7 @@ public class SpriteToStringMapperTest {
 		
 		assertThat(result).contains("ENEMY");
 		assertThat(result).contains("SPRITETYPE:SPIDER");
+		assertThat(result).contains("ID:1");
 		assertThat(result).contains("X:10");
 		assertThat(result).contains("Y:12");
 		assertThat(result).contains("WIDTH:30");
@@ -35,6 +36,7 @@ public class SpriteToStringMapperTest {
 		
 		assertThat(result).contains("LIGHT");
 		assertThat(result).contains("SPRITETYPE:LIGHT");
+		assertThat(result).contains("ID:1");
 		assertThat(result).contains("X:10");
 		assertThat(result).contains("Y:12");
 		assertThat(result).contains("WIDTH:30");
@@ -45,6 +47,7 @@ public class SpriteToStringMapperTest {
 
 	private Spider aSpider() {
 		return new SpiderTestBuilder()
+			.withID(1)
 			.withX(10)
 			.withY(12)
 			.withWidth(30)
@@ -60,6 +63,7 @@ public class SpriteToStringMapperTest {
 		.withY(12)
 		.withWidth(30)
 		.withHeight(20)
+		.withID(1)
 		.build();
 	}
 

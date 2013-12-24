@@ -19,9 +19,4 @@ public class LightToStringMapper extends SpriteToStringMapper<Light> {
 		return "LIGHT";
 	}
 
-	@Override
-	public String getSpriteType() {
-		return "LIGHT";
-	}
-
 }

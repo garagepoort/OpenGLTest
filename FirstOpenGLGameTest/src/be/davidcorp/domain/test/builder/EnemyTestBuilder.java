@@ -4,7 +4,7 @@ import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 
 public abstract class EnemyTestBuilder<ENEMY extends Enemy> extends OrganicSpriteTestBuilder<ENEMY>{
 
-	private int attackDamage;
+	private int attackDamage = 100;
 
 	@Override
 	protected ENEMY buildBasic() {

@@ -2,7 +2,7 @@ package be.davidcorp.domain.sprite.item.weapon;
 
 import be.davidcorp.metric.Vector;
 
-public class MeleeWeapon extends Weapon {
+public abstract class MeleeWeapon extends Weapon {
 
 	private int widthRadius;
 	private int staminaCost;

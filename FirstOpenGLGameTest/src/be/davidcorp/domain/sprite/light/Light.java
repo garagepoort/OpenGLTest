@@ -1,7 +1,9 @@
 package be.davidcorp.domain.sprite.light;
 
+import static be.davidcorp.domain.sprite.SpriteType.LIGHT;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.Sprite;
+import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.trigger.TriggerWhen;
 
 public class Light extends Sprite{
@@ -47,5 +49,10 @@ public class Light extends Sprite{
 
 	public void setRadius(int radius) {
 		this.radius = radius;
+	}
+
+	@Override
+	public SpriteType getType() {
+		return LIGHT;
 	}
 }

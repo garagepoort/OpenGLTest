@@ -1,6 +1,8 @@
 package be.davidcorp.domain.sprite.item.gear;
 
+import static be.davidcorp.domain.sprite.SpriteType.GEAR;
 import be.davidcorp.domain.sprite.Sprite;
+import be.davidcorp.domain.sprite.SpriteType;
 
 public class Gear extends Sprite{
 
@@ -13,6 +15,11 @@ public class Gear extends Sprite{
 	public void onDeath() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public SpriteType getType() {
+		return GEAR;
 	}
 
 }
