@@ -1,6 +1,5 @@
 package be.davidcorp.domain.trigger.triggerableEvents;
 
 public enum TriggerableEventType {
-
-	LIGHTSWITCH
+	LIGHTSWITCH, BEGINMISSION, DESTROYEVENT, ENDMISSION
 }

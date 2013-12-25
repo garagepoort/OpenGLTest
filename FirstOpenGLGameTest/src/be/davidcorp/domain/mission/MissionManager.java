@@ -1,13 +1,13 @@
 package be.davidcorp.domain.mission;
 
+import static be.davidcorp.domain.trigger.TriggerBuilder.aTrigger;
+import static be.davidcorp.domain.trigger.TriggerWhen.ONUSE;
 import be.davidcorp.domain.mission.acceptionCriteria.AcceptationCriteria;
 import be.davidcorp.domain.mission.acceptionCriteria.AcceptationCriteriaHandler;
 import be.davidcorp.domain.mission.acceptionCriteria.FindHealthCriteria;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
-import be.davidcorp.domain.trigger.TriggerManager;
-import be.davidcorp.domain.trigger.TriggerWhen;
 import be.davidcorp.domain.trigger.triggerableEvents.BeginMissionEvent;
 import be.davidcorp.domain.trigger.triggerableEvents.EndMissionEvent;
 import be.davidcorp.loaderSaver.repository.ConstructionSpriteRepository;
@@ -25,8 +25,20 @@ public class MissionManager {
 		Mission mission = new Mission("Turn the light on. (Press 'E' near the wall)", acceptationCriteriaHandler);
 		Mission healthMission = new Mission("Find 4 healthpotions", new AcceptationCriteriaHandler().withCriteria(new FindHealthCriteria()));
 		ConstructionSprite constructionSprite = new ConstructionSpriteRepository().getSprite(1);
-		TriggerManager.<Mission>createTriggerOnSprite(8, TriggerWhen.ONUSE, mission, new EndMissionEvent(),constructionSprite);
-		TriggerManager.<Mission>createTriggerOnSprite(9, TriggerWhen.ONUSE, healthMission, new BeginMissionEvent(),constructionSprite);
+		aTrigger()
+			.withID(8)
+			.triggeredWhen(ONUSE)
+			.withSource(constructionSprite)
+			.withAnotherTriggerable(mission, new EndMissionEvent())
+			.build();
+		
+		aTrigger()
+			.withID(9)
+			.triggeredWhen(ONUSE)
+			.withSource(constructionSprite)
+			.withAnotherTriggerable(healthMission, new BeginMissionEvent())
+			.build();
+		
 		
 		PlayerManager.getCurrentPlayer().setCurrentMission(mission);
 	}

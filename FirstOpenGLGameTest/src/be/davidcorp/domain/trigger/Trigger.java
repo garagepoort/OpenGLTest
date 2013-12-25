@@ -11,6 +11,7 @@ import be.davidcorp.domain.utilities.sprite.SpriteCollisionChecker;
 public class Trigger {
 
 	private int ID;
+	private Sprite source;
 	private List<Triggerable> triggerables = newArrayList();
 	private int triggerRadiusWidth = 100;
 	private int triggerRadiusHeight = 100;
@@ -18,9 +19,16 @@ public class Trigger {
 	private float x = 0;
 	private float y = 0;
 
-	public Trigger(TriggerWhen triggerWhen) {
+	public Trigger(Sprite source, TriggerWhen triggerWhen) {
 		this.triggerWhen = triggerWhen;
+		this.source = source;
+		source.addTrigger(this);
 	}
+	
+	public Sprite getSource() {
+		return source;
+	}
+	
 	public void trigger(Sprite sprite) {
 		if (this.triggerWhen == TriggerWhen.ONUSE) {
 			if (insideTriggerRange(sprite)) {

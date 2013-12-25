@@ -1,6 +1,6 @@
 package be.davidcorp.loaderSaver.repository;
 
-import static be.davidcorp.domain.trigger.TriggerManager.createTriggerOnSprite;
+import static be.davidcorp.domain.trigger.TriggerBuilder.aTrigger;
 import static be.davidcorp.domain.trigger.TriggerWhen.ONLIGHTOFF;
 import static be.davidcorp.domain.trigger.TriggerWhen.ONUSE;
 import static java.lang.Integer.parseInt;
@@ -42,8 +42,20 @@ public class GamefieldRepository {
 		gamefield.addEnemyToWorld(zombie);
 		gamefield.addGroundItem(healthPotion);
 
-		createTriggerOnSprite(1, ONLIGHTOFF, secondLight, new LightSwitchEvent(), light);
-		createTriggerOnSprite(2, ONUSE, light, new LightSwitchEvent(), wall);
+		
+		aTrigger()
+			.withID(1)
+			.triggeredWhen(ONLIGHTOFF)
+			.withSource(light)
+			.withAnotherTriggerable(secondLight, new LightSwitchEvent())
+			.build();
+		
+		aTrigger()
+			.withID(2)
+			.triggeredWhen(ONUSE)
+			.withSource(wall)
+			.withAnotherTriggerable(light, new LightSwitchEvent())
+			.build();
 
 		gamefields.put(gamefield.getID(), gamefield);
 	}

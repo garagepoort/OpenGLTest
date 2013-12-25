@@ -7,4 +7,6 @@ public interface TriggerableEvent<SPRITE extends Triggerable> {
 
 	public void doTriggerEvent(Trigger trigger, SPRITE sprite);
 	
+	public TriggerableEventType getType();
+	
 }

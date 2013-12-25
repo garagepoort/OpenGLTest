@@ -1,6 +1,6 @@
 package be.davidcorp.loaderSaver;
 
-import static be.davidcorp.domain.trigger.TriggerManager.createTriggerOnSprite;
+import static be.davidcorp.domain.trigger.TriggerBuilder.aTrigger;
 import static be.davidcorp.domain.trigger.TriggerableEventFactory.createTriggerableEvent;
 import static com.google.common.collect.Maps.newHashMap;
 import static java.lang.Integer.parseInt;
@@ -72,8 +72,12 @@ public class TriggerLoader {
 		TriggerableEventType eventType = TriggerableEventType.valueOf(triggerProperties.get(EVENT));
 
 		TriggerableEvent event = createTriggerableEvent(eventType);
-		Trigger createdTrigger = createTriggerOnSprite(TRIGGERID, triggerWhen, triggerable, event, sprite);
-		return createdTrigger;
+		return aTrigger()
+				.withID(TRIGGERID)
+				.triggeredWhen(triggerWhen)
+				.withSource(sprite)
+				.withAnotherTriggerable(triggerable, event)
+				.build();
 	}
 
 	public void setDefaultSpriteRepository(DefaultSpriteRepository defaultSpriteRepository) {
