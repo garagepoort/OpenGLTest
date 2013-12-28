@@ -2,7 +2,7 @@ package be.davidcorp.domain.game;
 
 import static be.davidcorp.domain.game.GameFieldManager.getCurrentGameField;
 import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newHashMap;
+import static com.google.common.collect.Maps.newConcurrentMap;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,18 +29,17 @@ public class Gamefield {
 	private Integer ID;
 	private String gamefieldName;
 
-	private Map<Integer, Enemy> enemies = newHashMap();
-	private Map<Integer, Item> groundItems = newHashMap();
-	private Map<Integer, Ammo> worldAmmo = newHashMap();
-	private Map<Integer, ConstructionSprite> constructionSprites = newHashMap();
-	private Map<Integer, Light> lights = newHashMap();
+	private Map<Integer, Enemy> enemies = newConcurrentMap();
+	private Map<Integer, Item> groundItems = newConcurrentMap();
+	private Map<Integer, Ammo> worldAmmo = newConcurrentMap();
+	private Map<Integer, ConstructionSprite> constructionSprites = newConcurrentMap();
+	private Map<Integer, Light> lights = newConcurrentMap();
 
-	private Map<Integer, Light> lightsToAdd = newHashMap();
-	private Map<Integer, Enemy> enemiesToAdd = newHashMap();
-	private Map<Integer, Item> groundItemsToAdd = newHashMap();
-	private Map<Integer, ConstructionSprite> constructionItemsToAdd = newHashMap();
+//	private Map<Integer, Light> lightsToAdd = newHashMap();
+//	private Map<Integer, Enemy> enemiesToAdd = newHashMap();
+//	private Map<Integer, Item> groundItemsToAdd = newHashMap();
+//	private Map<Integer, ConstructionSprite> constructionItemsToAdd = newHashMap();
 
-	private ArrayList<Sprite> spritesToRemove = new ArrayList<Sprite>();
 	private Guide guide = new Guide();
 
 	private boolean creationMode = false;
@@ -74,8 +73,7 @@ public class Gamefield {
 				guide.checkCollisionWithGuideArea(PlayerManager.getCurrentPlayer(), secondsMovedInGame);
 			}
 			PlayerManager.getCurrentPlayer().updateSprite(secondsMovedInGame);
-			removeSpritesFromWorld();
-			addSpritesToWorld();
+//			addSpritesToWorld();
 		}
 	}
 
@@ -129,20 +127,8 @@ public class Gamefield {
 		}
 	}
 
-	public void addSpritesToWorld() {
-		enemies.putAll(enemiesToAdd);
-		groundItems.putAll(groundItemsToAdd);
-		constructionSprites.putAll(constructionItemsToAdd);
-		lights.putAll(lightsToAdd);
-
-		enemiesToAdd.clear();
-		groundItemsToAdd.clear();
-		constructionItemsToAdd.clear();
-		lightsToAdd.clear();
-	}
-
 	public void addEnemyToWorld(Enemy enemy) {
-		enemiesToAdd.put(enemy.getID(), enemy);
+		enemies.put(enemy.getID(), enemy);
 	}
 
 	public void addAmmoToWorld(Ammo ammo) {
@@ -150,29 +136,23 @@ public class Gamefield {
 	}
 
 	public void addLight(Light light) {
-		lightsToAdd.put(light.getID(), light);
+		lights.put(light.getID(), light);
 	}
 
 	public void addConstructionItem(ConstructionSprite constructionSprite) {
-		constructionItemsToAdd.put(constructionSprite.getID(), constructionSprite);
+		constructionSprites.put(constructionSprite.getID(), constructionSprite);
 	}
 
 	public void addGroundItem(Item groundItem) {
-		groundItemsToAdd.put(groundItem.getID(), groundItem);
-	}
-
-	private void removeSpritesFromWorld() {
-		for (Sprite sprite : spritesToRemove) {
-			enemies.remove(sprite.getID());
-			groundItems.remove(sprite.getID());
-			worldAmmo.remove(sprite.getID());
-			lights.remove(sprite.getID());
-		}
-		spritesToRemove.clear();
+		groundItems.put(groundItem.getID(), groundItem);
 	}
 
 	public void removeSpriteFromWorld(Sprite sprite) {
-		spritesToRemove.add(sprite);
+		if(sprite instanceof Enemy) enemies.remove(sprite.getID());
+		if(sprite instanceof Item) groundItems.remove(sprite.getID());
+		if(sprite instanceof Ammo) worldAmmo.remove(sprite.getID());
+		if(sprite instanceof Light) lights.remove(sprite.getID());
+		if(sprite instanceof ConstructionSprite) constructionSprites.remove(sprite.getID());
 	}
 
 	public List<Ammo> getAmmoInWorld() {

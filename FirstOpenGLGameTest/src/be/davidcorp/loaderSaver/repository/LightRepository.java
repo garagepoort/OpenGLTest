@@ -1,13 +1,15 @@
 package be.davidcorp.loaderSaver.repository;
 
-import java.util.HashMap;
+import static com.google.common.collect.Maps.newConcurrentMap;
+
 import java.util.List;
+import java.util.Map;
 
 import be.davidcorp.domain.sprite.light.Light;
 
 public class LightRepository implements SpriteRepository<Light> {
 
-	private static HashMap<Integer, Light> lights = new HashMap<Integer, Light>();
+	private static Map<Integer, Light> lights = newConcurrentMap();
 
 	public void saveLight(Light light) {
 		throw new UnsupportedOperationException("No tyet implemented");

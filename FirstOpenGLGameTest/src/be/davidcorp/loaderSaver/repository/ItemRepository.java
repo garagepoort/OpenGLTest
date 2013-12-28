@@ -1,13 +1,15 @@
 package be.davidcorp.loaderSaver.repository;
 
-import java.util.HashMap;
+import static com.google.common.collect.Maps.newConcurrentMap;
+
 import java.util.List;
+import java.util.Map;
 
 import be.davidcorp.domain.sprite.item.Item;
 
 public class ItemRepository implements SpriteRepository<Item>{
 
-	private static HashMap<Integer, Item> items = new HashMap<Integer, Item>();
+	private static Map<Integer, Item> items = newConcurrentMap();
 
 	@Override
 	public void loadSprites(List<Item> itemsList) {

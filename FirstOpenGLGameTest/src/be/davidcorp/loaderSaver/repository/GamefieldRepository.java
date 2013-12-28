@@ -3,10 +3,10 @@ package be.davidcorp.loaderSaver.repository;
 import static be.davidcorp.domain.trigger.TriggerBuilder.aTrigger;
 import static be.davidcorp.domain.trigger.TriggerWhen.ONLIGHTOFF;
 import static be.davidcorp.domain.trigger.TriggerWhen.ONUSE;
+import static com.google.common.collect.Maps.newConcurrentMap;
 import static java.lang.Integer.parseInt;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -24,7 +24,7 @@ import be.davidcorp.loaderSaver.filehandling.SpriteFileLoaderUtilities;
 
 public class GamefieldRepository {
 
-	private static HashMap<Integer, Gamefield> gamefields = new HashMap<Integer, Gamefield>();
+	private static Map<Integer, Gamefield> gamefields = newConcurrentMap();
 
 	private void addTestGamefield() {
 		Gamefield gamefield = new Gamefield("field", 2000, 2000);

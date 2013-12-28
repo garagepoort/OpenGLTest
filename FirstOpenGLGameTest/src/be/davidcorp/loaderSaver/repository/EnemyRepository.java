@@ -1,14 +1,16 @@
 package be.davidcorp.loaderSaver.repository;
 
-import java.util.HashMap;
+import static com.google.common.collect.Maps.newConcurrentMap;
+
 import java.util.List;
+import java.util.Map;
 
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.loaderSaver.repository.exception.SpriteRepositoryException;
 
 public class EnemyRepository implements SpriteRepository<Enemy>{
 
-	private static HashMap<Integer, Enemy> enemies = new HashMap<Integer, Enemy>();
+	private static Map<Integer, Enemy> enemies = newConcurrentMap();
 
 	@Override
 	public void loadSprites(List<Enemy> enemiesList) {

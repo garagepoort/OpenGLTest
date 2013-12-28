@@ -1,14 +1,16 @@
 package be.davidcorp.loaderSaver.repository;
 
-import java.util.HashMap;
+import static com.google.common.collect.Maps.newConcurrentMap;
+
 import java.util.List;
+import java.util.Map;
 
 import be.davidcorp.domain.sprite.item.weapon.Weapon;
 import be.davidcorp.loaderSaver.repository.exception.SpriteRepositoryException;
 
 public class WeaponRepository implements SpriteRepository<Weapon> {
 
-	private static HashMap<Integer, Weapon> weapons = new HashMap<Integer, Weapon>();
+	private static Map<Integer, Weapon> weapons = newConcurrentMap();
 
 
 	@Override

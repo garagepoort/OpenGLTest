@@ -200,20 +200,20 @@ public class GameFieldFacade {
 		return new GamefieldToGamefieldDTOMapper().mapToDTO(gamefield);
 	}
 
-	public void removeSpriteFromWorld(SpriteDTO sprite) {
-		if (sprite instanceof ConstructionSpriteDTO) {
-			removeConstructionSpriteFromWorld(sprite.getId());
-		}
-		if (sprite instanceof ItemDTO) {
-			removeGroundItemFromWorld(sprite.getId());
-		}
-		if (sprite instanceof LightDTO) {
-			removeLightFromWorld(sprite.getId());
-		}
-		if (sprite instanceof EnemyDTO) {
-			removeEnemyFromWorld(sprite.getId());
-		}
-	}
+//	public void removeSpriteFromWorld(SpriteDTO sprite) {
+//		if (sprite instanceof ConstructionSpriteDTO) {
+//			removeConstructionSpriteFromWorld(sprite.getId());
+//		}
+//		if (sprite instanceof ItemDTO) {
+//			removeGroundItemFromWorld(sprite.getId());
+//		}
+//		if (sprite instanceof LightDTO) {
+//			removeLightFromWorld(sprite.getId());
+//		}
+//		if (sprite instanceof EnemyDTO) {
+//			removeEnemyFromWorld(sprite.getId());
+//		}
+//	}
 
 	public void updateSpriteInGamefield(SpriteDTO spriteDTO)  {
 		try {

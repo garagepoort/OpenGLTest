@@ -53,9 +53,11 @@ public class GamefieldLoaderSaver {
 	public void loadEntireField(String name) {
 		File spritesFile = new File("resources/saveFiles/" + name + "/sprites.txt");
 		File triggerLinksFile = new File("resources/saveFiles/" + name + "/triggerLinks.txt");
+		File gamefieldSpriteLinksFile = new File("resources/saveFiles/" + name + "/gamefieldLinks.txt");
 		
 		new SpriteFileLoader(spritesFile).loadAllSprites();
 		new TriggerLoader().loadTriggers((triggerLinksFile));
+		new GamefieldSpriteFiller(gamefieldSpriteLinksFile).fillGamefields();
 	}
 	
 	private String createGamefieldString(Scanner scanner, StringBuilder builder) {

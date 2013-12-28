@@ -20,9 +20,11 @@ public class GamefieldTestBuilder {
 	private List<Item> items = newArrayList();
 	private List<Light> lights = newArrayList();
 	private List<ConstructionSprite> constructionSprites = newArrayList();
+	private int id;
 
 	public Gamefield build(){
 		Gamefield gamefield = new Gamefield(name, width, height);
+		gamefield.setID(id);
 		for (Enemy enemy : enemies) {
 			gamefield.addEnemyToWorld(enemy);
 		}
@@ -60,6 +62,11 @@ public class GamefieldTestBuilder {
 	
 	public GamefieldTestBuilder withGroundItem(Item item) {
 		items.add(item);
+		return this;
+	}
+
+	public GamefieldTestBuilder withID(int id) {
+		this.id = id;
 		return this;
 	}
 }

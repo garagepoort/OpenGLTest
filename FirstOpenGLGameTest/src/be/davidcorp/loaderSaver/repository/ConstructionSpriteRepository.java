@@ -1,14 +1,16 @@
 package be.davidcorp.loaderSaver.repository;
 
-import java.util.HashMap;
+import static com.google.common.collect.Maps.newConcurrentMap;
+
 import java.util.List;
+import java.util.Map;
 
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.loaderSaver.repository.exception.SpriteRepositoryException;
 
 public class ConstructionSpriteRepository implements SpriteRepository<ConstructionSprite>{
 	
-	private static HashMap<Integer, ConstructionSprite> constructionSprites = new HashMap<Integer, ConstructionSprite>();
+	private static Map<Integer, ConstructionSprite> constructionSprites = newConcurrentMap();
 
 	@Override
 	public ConstructionSprite getSprite(int id) {

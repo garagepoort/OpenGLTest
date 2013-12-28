@@ -25,5 +25,9 @@ public class LightFacade {
 		}
 	}
 
+	public void deleteLight(int id) {
+		
+	}
+
 	
 }
