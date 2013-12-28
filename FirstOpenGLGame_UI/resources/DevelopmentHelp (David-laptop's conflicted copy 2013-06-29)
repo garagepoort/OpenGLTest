@@ -1,6 +1,0 @@
-/Creating new Enemy
-	- Make a custom class that extends Enemy
-	- Add a EnemyToken for your enemy to the EnemyToken enum class.
-	- create a loader for the enemy and make it extend the EnemyLoader. Implement the loadSprite() Method.
-	- Add a LoaderToken to the LoaderToken Enum class for your enemy.
-	- Change the createLoader() method of the LoaderFactory class so that your custom loader will be created by the LoaderFactory.
