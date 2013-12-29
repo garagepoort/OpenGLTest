@@ -27,6 +27,6 @@ public class MovementSystem implements System{
 			if(inputComponent.keyMoveLeft) positionComponent.x -= currentSpeed;
 			if(inputComponent.keyMoveDown) positionComponent.y -= currentSpeed;
 			if(inputComponent.keyMoveUp) positionComponent.y += currentSpeed;
-		}		
+		}
 	}
 }

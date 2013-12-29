@@ -45,10 +45,10 @@ public class PlayerDrawer {
 	private static PlayerFacade playerFacade = new PlayerFacade();
 	private static LightManager lightManager = new LightManager();
 
-	public static void drawPlayer(){
+	public static void drawPlayer() {
 		float x = WIDTH / 2 + getPlayerTranslationX();
 		float y = HEIGHT / 2 + getPlayerTranslationY();
-		
+
 		lookInRightDirection(x, y);
 
 		drawPlayerBody(x, y);
@@ -115,36 +115,37 @@ public class PlayerDrawer {
 	private static void drawPlayerBody(float x, float y) {
 		glPushMatrix();
 		glPushAttrib(GL_CURRENT_BIT);
-
-		// rotation
-		glTranslatef(x + playerFacade.getWidth() / 2, y + playerFacade.getHeight() / 2, 0);
-		glRotatef(playerFacade.getRotationAngle(), 0f, 0f, 1f);
-		glTranslatef(-x - playerFacade.getWidth() / 2, -y - playerFacade.getHeight() / 2, 0);
-		Texture t = null;
-		try {
-			t = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(playerFacade.getTextureBunch().getCurrentTexture()));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		t.bind();
-		glBegin(GL_QUADS);
 		{
-			glTexCoord2f(0, 0);// top left
-			glVertex2f(x, y + t.getTextureHeight());
-			glTexCoord2f(1, 0);// top right
-			glVertex2f(x + t.getTextureWidth(), y + t.getTextureHeight());
-			glTexCoord2f(1, 1);// bottom right
-			glVertex2f(x + t.getTextureWidth(), y);
-			glTexCoord2f(0, 1);// bottom left
-			glVertex2f(x, y);
-		}
-		glEnd();
 
+			// rotation
+			glTranslatef(x + playerFacade.getWidth() / 2, y + playerFacade.getHeight() / 2, 0);
+			glRotatef(playerFacade.getRotationAngle(), 0f, 0f, 1f);
+			glTranslatef(-x - playerFacade.getWidth() / 2, -y - playerFacade.getHeight() / 2, 0);
+			
+			Texture t = null;
+			try {
+				t = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(playerFacade.getTextureBunch().getCurrentTexture()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			t.bind();
+			glBegin(GL_QUADS);
+			{
+				glTexCoord2f(0, 0);// top left
+				glVertex2f(x, y + t.getTextureHeight());
+				glTexCoord2f(1, 0);// top right
+				glVertex2f(x + t.getTextureWidth(), y + t.getTextureHeight());
+				glTexCoord2f(1, 1);// bottom right
+				glVertex2f(x + t.getTextureWidth(), y);
+				glTexCoord2f(0, 1);// bottom left
+				glVertex2f(x, y);
+			}
+			glEnd();
+		}
 		glPopAttrib();
 		glPopMatrix();
 	}
-	
+
 	public static void drawStamina() {
 		double mPerc = (double) playerFacade.getStamina() / (double) playerFacade.getMaxStamina() * 100 / 2;
 		CircleDrawer.drawCircle(100, 0, 50, 0, 0, 0);

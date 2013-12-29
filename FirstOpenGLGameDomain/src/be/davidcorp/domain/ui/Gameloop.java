@@ -22,6 +22,7 @@ import be.davidcorp.domain.entity.Sprite;
 import be.davidcorp.domain.entity.SpriteFactory;
 import be.davidcorp.domain.system.FiringSystem;
 import be.davidcorp.domain.system.MovementSystem;
+import be.davidcorp.domain.system.PlayerControlSystem;
 import be.davidcorp.domain.system.PlayerInputSystem;
 import be.davidcorp.domain.system.RenderSystem;
 import be.davidcorp.domain.system.TimeToLiveSystem;
@@ -66,6 +67,7 @@ public class Gameloop {
 
 						for (Sprite sprite : World.getSprites()) {
 							PlayerInputSystem.getInstance().executeSystem(sprite, secondsMovedInGame);
+							PlayerControlSystem.getInstance().executeSystem(sprite, secondsMovedInGame);
 							FiringSystem.getInstance().executeSystem(sprite, secondsMovedInGame);
 							MovementSystem.getInstance().executeSystem(sprite, secondsMovedInGame);
 							RenderSystem.getInstance().executeSystem(sprite, secondsMovedInGame);

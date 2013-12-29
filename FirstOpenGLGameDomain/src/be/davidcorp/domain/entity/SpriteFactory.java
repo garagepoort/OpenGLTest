@@ -4,6 +4,7 @@ import be.davidcorp.domain.components.InputComponent;
 import be.davidcorp.domain.components.PlayerComponent;
 import be.davidcorp.domain.components.PositionComponent;
 import be.davidcorp.domain.components.RenderComponent;
+import be.davidcorp.domain.components.RotationComponent;
 import be.davidcorp.domain.components.SpeedComponent;
 import be.davidcorp.domain.components.TimeToLiveComponent;
 
@@ -15,6 +16,7 @@ public class SpriteFactory {
 				new InputComponent(), 
 				new PositionComponent(10, 10), 
 				new SpeedComponent(0.5f),
+				new RotationComponent(0),
 //				new RenderComponent("resources/images/player/playerstanding.png"));
 				new RenderComponent("resources/images/light.png"));
 	}

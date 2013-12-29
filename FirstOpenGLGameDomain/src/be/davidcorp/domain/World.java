@@ -19,6 +19,8 @@ public class World {
 		for (Sprite sprite : spritesToRemove) {
 			sprites.remove(sprite);
 		}
+		spritesToAdd.clear();
+		spritesToRemove.clear();
 	}
 	
 	public static List<Sprite> getSprites() {
@@ -30,6 +32,6 @@ public class World {
 	}
 	
 	public static void removeSprite(Sprite sprite) {
-		spritesToRemove.remove(sprite);
+		spritesToRemove.add(sprite);
 	}
 }
