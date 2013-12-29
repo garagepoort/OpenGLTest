@@ -51,11 +51,11 @@ public class InputController {
 				if (Keyboard.getEventKey() == Keyboard.KEY_SPACE) {
 					onSpaceKey();
 				}
-				checkNumberKeys();
-				checkLetters();
 				if(Keyboard.getEventKey() == Keyboard.KEY_DELETE){
 					onDeletePressed();
 				}
+				checkLetters();
+				checkNumberKeys();
 			}
 		}
 
