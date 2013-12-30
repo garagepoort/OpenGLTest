@@ -1,11 +1,10 @@
 package be.davidcorp.domain.system;
 
-import be.davidcorp.domain.components.InputComponent;
 import be.davidcorp.domain.components.PositionComponent;
-import be.davidcorp.domain.components.SpeedComponent;
+import be.davidcorp.domain.components.VelocityComponent;
 import be.davidcorp.domain.entity.Sprite;
 
-public class MovementSystem implements System{
+public class MovementSystem extends System{
 
 	private static MovementSystem instance = new MovementSystem();
 	
@@ -17,16 +16,13 @@ public class MovementSystem implements System{
 	
 	@Override
 	public void executeSystem(Sprite sprite, float secondsMovedInGame) {
-		SpeedComponent speedComponent = sprite.getComponent(SpeedComponent.class);
+		VelocityComponent velocityComponent = sprite.getComponent(VelocityComponent.class);
 		PositionComponent positionComponent = sprite.getComponent(PositionComponent.class);
-		InputComponent inputComponent = sprite.getComponent(InputComponent.class);
 		
-		if(positionComponent != null && speedComponent != null && inputComponent != null){
-			float currentSpeed = speedComponent.speed*secondsMovedInGame;
-			if(inputComponent.keyMoveRight) positionComponent.x += currentSpeed;
-			if(inputComponent.keyMoveLeft) positionComponent.x -= currentSpeed;
-			if(inputComponent.keyMoveDown) positionComponent.y -= currentSpeed;
-			if(inputComponent.keyMoveUp) positionComponent.y += currentSpeed;
+		if(containsNecessaryComponents(velocityComponent, positionComponent)){
+			positionComponent.x += velocityComponent.xVelocity;
+			positionComponent.y += velocityComponent.yVelocity;
 		}
 	}
+	
 }

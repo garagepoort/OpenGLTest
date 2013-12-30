@@ -10,5 +10,7 @@ public class InputComponent implements Component{
 	public boolean keyMoveDown;
 	public boolean keyMoveRight;
 	public boolean keyMoveUp;
+	public int mouseXPosition;
+	public int mouseYPosition;
 
 }

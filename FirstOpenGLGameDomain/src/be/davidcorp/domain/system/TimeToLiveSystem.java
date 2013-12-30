@@ -4,7 +4,7 @@ import be.davidcorp.domain.World;
 import be.davidcorp.domain.components.TimeToLiveComponent;
 import be.davidcorp.domain.entity.Sprite;
 
-public class TimeToLiveSystem implements System {
+public class TimeToLiveSystem extends System {
 
 	private static TimeToLiveSystem instance = new TimeToLiveSystem();
 
@@ -19,7 +19,7 @@ public class TimeToLiveSystem implements System {
 	public void executeSystem(Sprite sprite, float secondsMovedInGame) {
 		TimeToLiveComponent timeToLiveComponent = sprite.getComponent(TimeToLiveComponent.class);
 		
-		if (timeToLiveComponent != null) {
+		if (containsNecessaryComponents(timeToLiveComponent)) {
 			if(timeToLiveComponent.timeToLive <= 0){
 				World.removeSprite(sprite);
 			}else{

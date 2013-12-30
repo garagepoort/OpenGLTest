@@ -7,7 +7,7 @@ import be.davidcorp.domain.components.InputComponent;
 import be.davidcorp.domain.components.PlayerComponent;
 import be.davidcorp.domain.entity.Sprite;
 
-public class PlayerInputSystem implements System {
+public class PlayerInputSystem extends System {
 
 	private static PlayerInputSystem instance = new PlayerInputSystem();
 
@@ -22,7 +22,7 @@ public class PlayerInputSystem implements System {
 	public void executeSystem(Sprite sprite, float secondsMovedInGame) {
 		InputComponent inputComponent = sprite.<InputComponent> getComponent(InputComponent.class);
 		PlayerComponent playerComponent = sprite.<PlayerComponent> getComponent(PlayerComponent.class);
-		if (inputComponent != null && playerComponent != null) {
+		if (containsNecessaryComponents(inputComponent, playerComponent)) {
 			checkKeyboard(inputComponent);
 			checkMouse(inputComponent);
 		}
@@ -37,6 +37,8 @@ public class PlayerInputSystem implements System {
 		while (Mouse.next()) {
 			component.leftMouseButtonDown = Mouse.isButtonDown(0);
 			component.rightMouseButtonDown = Mouse.isButtonDown(1);
+			component.mouseXPosition = Mouse.getX();
+			component.mouseYPosition = Mouse.getY();
 			// onMouseMoved();
 		}
 	}

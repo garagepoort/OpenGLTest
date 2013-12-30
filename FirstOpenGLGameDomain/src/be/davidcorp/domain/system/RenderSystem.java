@@ -1,9 +1,17 @@
 package be.davidcorp.domain.system;
 
+import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_CURRENT_BIT;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glPopAttrib;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushAttrib;
@@ -20,7 +28,7 @@ import be.davidcorp.domain.components.RenderComponent;
 import be.davidcorp.domain.components.RotationComponent;
 import be.davidcorp.domain.entity.Sprite;
 
-public class RenderSystem implements System {
+public class RenderSystem extends System {
 
 	private static RenderSystem instance = new RenderSystem();
 
@@ -37,35 +45,48 @@ public class RenderSystem implements System {
 		RenderComponent renderComponent = sprite.getComponent(RenderComponent.class);
 		RotationComponent rotationComponent = sprite.getComponent(RotationComponent.class);
 
-		if (position != null && renderComponent != null) {
+		if (containsNecessaryComponents(position, renderComponent)) {
 			glPushMatrix();
-			glPushAttrib(GL_CURRENT_BIT);
-
-			Texture texture = renderComponent.texture;
-			texture.bind();
-
-			if(rotationComponent != null){
-				glTranslatef(position.x + texture.getWidth() / 2, position.y + texture.getHeight() / 2, 0);
-				glRotatef(rotationComponent.rotationAngle, 0f, 0f, 1f);
-				glTranslatef(-position.x - texture.getWidth() / 2, -position.y - texture.getHeight() / 2, 0);
-			}
-
-			glBegin(GL_QUADS);
 			{
-				glTexCoord2f(0, 0);// top left
-				glVertex2f(position.x, position.y + texture.getTextureHeight());
-				glTexCoord2f(1, 0);// top right
-				glVertex2f(position.x + texture.getTextureWidth(), position.y + texture.getTextureHeight());
-				glTexCoord2f(1, 1);// bottom right
-				glVertex2f(position.x + texture.getTextureWidth(), position.y);
-				glTexCoord2f(0, 1);// bottom left
-				glVertex2f(position.x, position.y);
-			}
-			glEnd();
+				glSetup();
 
-			glPopAttrib();
+				Texture texture = renderComponent.texture;
+				texture.bind();
+
+				if (containsNecessaryComponents(rotationComponent)) {
+					glTranslatef(position.x + texture.getTextureWidth() / 2, position.y + texture.getTextureHeight() / 2, 0);
+					glRotatef(rotationComponent.rotationAngle, 0f, 0f, 1f);
+					glTranslatef(-position.x - texture.getTextureWidth() / 2, -position.y - texture.getTextureHeight()/ 2, 0);
+				}
+				
+				glBegin(GL_QUADS);
+				{
+					glTexCoord2f(0, 0);// top left
+					glVertex2f(position.x, position.y + texture.getTextureHeight());
+					glTexCoord2f(1, 0);// top right
+					glVertex2f(position.x + texture.getTextureWidth(), position.y + texture.getTextureHeight());
+					glTexCoord2f(1, 1);// bottom right
+					glVertex2f(position.x + texture.getTextureWidth(), position.y);
+					glTexCoord2f(0, 1);// bottom left
+					glVertex2f(position.x, position.y);
+				}
+				glEnd();
+				glTearDown();
+			}
 			glPopMatrix();
 		}
 	}
 
+	private static void glTearDown() {
+		glPopAttrib();
+		glEnable(GL_TEXTURE_2D);
+	}
+
+	private static void glSetup() {
+		glLoadIdentity();
+		glDisable(GL_TEXTURE_2D);
+		glPushAttrib(GL_CURRENT_BIT);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
 }

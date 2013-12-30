@@ -5,8 +5,9 @@ import be.davidcorp.domain.components.InputComponent;
 import be.davidcorp.domain.components.PositionComponent;
 import be.davidcorp.domain.entity.Sprite;
 import be.davidcorp.domain.entity.SpriteFactory;
+import be.davidcorp.metric.Point;
 
-public class FiringSystem implements System {
+public class FiringSystem extends System {
 
 	private static FiringSystem instance = new FiringSystem();
 
@@ -21,11 +22,10 @@ public class FiringSystem implements System {
 	public void executeSystem(Sprite sprite, float secondsMovedInGame) {
 		InputComponent inputComponent = sprite.getComponent(InputComponent.class);
 		PositionComponent positionComponent = sprite.getComponent(PositionComponent.class);
-		
-		if (inputComponent != null 
-				&& positionComponent != null 
-				&& inputComponent.leftMouseButtonDown) {
-			World.addSprite(SpriteFactory.createBullet(positionComponent.x, positionComponent.y));
+
+		if (containsNecessaryComponents(inputComponent, positionComponent) && inputComponent.leftMouseButtonDown) {
+			Point targetPoint = new Point(inputComponent.mouseXPosition, inputComponent.mouseYPosition, 0);
+			World.addSprite(SpriteFactory.createBullet(positionComponent.x, positionComponent.y, targetPoint));
 		}
 	}
 

@@ -1,10 +1,17 @@
 package be.davidcorp.domain.system;
 
+import be.davidcorp.domain.components.Component;
 import be.davidcorp.domain.entity.Sprite;
 
-public interface System {
+public abstract class System {
 
 	
-	public void executeSystem(Sprite sprite, float secondsMovedInGame);
+	public abstract void executeSystem(Sprite sprite, float secondsMovedInGame);
 
+	protected boolean containsNecessaryComponents(Component... components) {
+		for(Component component : components){
+			if(component == null) return false;
+		}
+		return true;
+	}
 }
