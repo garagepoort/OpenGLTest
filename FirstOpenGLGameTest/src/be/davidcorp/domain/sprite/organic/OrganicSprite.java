@@ -57,7 +57,7 @@ public abstract class OrganicSprite extends Sprite implements Observer {
 
 
 	@Override
-	public void updateSprite(int secondsMovedInGame) {
+	public void updateSprite(float secondsMovedInGame) {
 		super.updateSprite(secondsMovedInGame);
 		upDateSkillCooldowns();
 		addStamina(staminaRegen);

@@ -4,6 +4,9 @@ import javax.swing.JPanel;
 
 import org.lwjgl.input.Mouse;
 
+import be.davidcorp.applicationLayer.dto.ConstructionSpriteDTO;
+import be.davidcorp.applicationLayer.dto.EnemyDTO;
+import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
 import be.davidcorp.applicationLayer.facade.ConstructionSpriteFacade;
 import be.davidcorp.applicationLayer.facade.EnemyFacade;
@@ -57,7 +60,18 @@ public class GameCreatorPanelInputController extends InputController {
 					lightFacade.deleteLight(id);
 					gamefieldFacade.removeLightFromWorld(id);
 				}
-				gamefieldFacade.removeSpriteFromWorld(gameCreatorPanel.getSelectedSprite());
+				if(gameCreatorPanel.getSelectedSprite() instanceof ConstructionSpriteDTO){
+					constructionSpriteFacade.deleteConstructionSprite(id);
+					gamefieldFacade.removeConstructionSpriteFromWorld(id);
+				}
+				if(gameCreatorPanel.getSelectedSprite() instanceof EnemyDTO){
+					enemyFacade.deleteEnemy(id);
+					gamefieldFacade.removeEnemyFromWorld(id);
+				}
+				if(gameCreatorPanel.getSelectedSprite() instanceof ItemDTO){
+					itemFacade.deleteItem(id);
+					gamefieldFacade.removeGroundItemFromWorld(id);
+				}
 				gameCreatorPanel.setSelectedSprite(null);
 			} catch (Exception e) {
 				ErrorHandler.handleError((JPanel) null, e);

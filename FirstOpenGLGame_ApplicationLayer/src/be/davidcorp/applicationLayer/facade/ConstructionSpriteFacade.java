@@ -20,4 +20,9 @@ public class ConstructionSpriteFacade {
 			throw new ModelException(e);
 		}
 	}
+
+	public void deleteConstructionSprite(int id) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -17,4 +17,9 @@ public class ItemFacade {
 		item.setX(x);
 		item.setY(y);
 	}
+
+	public void deleteItem(int id) {
+		// TODO Auto-generated method stub
+		
+	}
 }

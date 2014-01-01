@@ -16,7 +16,7 @@ public class Guide {
 	private String filePath;
 	private boolean guidanceOn = false;
 	
-	public void checkCollisionWithGuideArea(Sprite sprite, int secondsMovedInGame){
+	public void checkCollisionWithGuideArea(Sprite sprite, float secondsMovedInGame){
 
 
 		for(GuideArea area : areas){

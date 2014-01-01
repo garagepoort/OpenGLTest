@@ -38,7 +38,7 @@ public class Enemy extends OrganicSprite {
 	}
 
 	@Override
-	public void updateSprite(int secondsMovedInGame) {
+	public void updateSprite(float secondsMovedInGame) {
 		alterViewRange(PlayerManager.getCurrentPlayer().flashLight.isLightOn());
 
 		float prevx = getX();
@@ -46,7 +46,7 @@ public class Enemy extends OrganicSprite {
 		if (spriteInViewRange(PlayerManager.getCurrentPlayer())) {
 			SpriteMovingUtility.turnSpriteTowardsPoint(this, PlayerManager.getCurrentPlayer().getCenter());
 			if (inAttackRange(PlayerManager.getCurrentPlayer())) {
-				attack(PlayerManager.getCurrentPlayer());
+				attack(PlayerManager.getCurrentPlayer(), secondsMovedInGame);
 			} else {
 				SpriteMovingUtility.moveSpriteOnHisDirectionVector(this, getSpeed() * secondsMovedInGame);
 				if (GameFieldManager.getCurrentGameField().doesEnemyCollideWithAnyConstructionItem(this)) {
@@ -115,9 +115,9 @@ public class Enemy extends OrganicSprite {
 		return false;
 	}
 
-	private void attack(OrganicSprite organicSprite) {
+	private void attack(OrganicSprite organicSprite, float secondsMovedInGame) {
 		if (cooldowner.isCoolDowned()) {
-			organicSprite.removeHealth(attackDamage);
+			organicSprite.removeHealth((int) (attackDamage* secondsMovedInGame));
 			cooldowner.resetCooldownProgress();
 		} else {
 			cooldowner.progressCooldown();

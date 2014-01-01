@@ -25,7 +25,7 @@ public class Door extends ConstructionSprite{
 	}
 
 	@Override
-	public void updateSprite(int secondsMovedInGame){
+	public void updateSprite(float secondsMovedInGame){
 		super.updateSprite(secondsMovedInGame);
 		if(isDoorOpening()){
 			openDoor(secondsMovedInGame);
@@ -47,7 +47,7 @@ public class Door extends ConstructionSprite{
 		return open && getRotationAngle()<90;
 	}
 
-	private void openDoor(int secondsMovedInGame) {
+	private void openDoor(float secondsMovedInGame) {
 		SpriteRotator.rotateSprite(this, openSpeed * secondsMovedInGame, getHitBox().getUpperLeftPoint());
 		if(switched){
 //			SoundManager.replaySound("door");

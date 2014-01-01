@@ -19,10 +19,13 @@ import be.davidcorp.domain.sprite.item.weapon.Ammo;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
+import be.davidcorp.domain.system.HealthRegenerationSystem;
 import be.davidcorp.domain.trigger.TriggerWhen;
 import be.davidcorp.domain.utilities.PauseManager;
 import be.davidcorp.domain.utilities.sprite.SpriteCollisionChecker;
 import be.davidcorp.metric.Point;
+import be.davidcorp.system.System;
+import be.davidcorp.system.TimeToLiveSystem;
 import be.davidcorp.texture.TextureBunch;
 
 public class Gamefield {
@@ -35,11 +38,8 @@ public class Gamefield {
 	private Map<Integer, ConstructionSprite> constructionSprites = newConcurrentMap();
 	private Map<Integer, Light> lights = newConcurrentMap();
 
-//	private Map<Integer, Light> lightsToAdd = newHashMap();
-//	private Map<Integer, Enemy> enemiesToAdd = newHashMap();
-//	private Map<Integer, Item> groundItemsToAdd = newHashMap();
-//	private Map<Integer, ConstructionSprite> constructionItemsToAdd = newHashMap();
-
+	private List<System> systems = newArrayList();
+	
 	private Guide guide = new Guide();
 
 	private boolean creationMode = false;
@@ -56,6 +56,12 @@ public class Gamefield {
 		setHeight(height);
 		this.gamefieldName = name;
 		addSurroundingWalls();
+		addSystems();
+	}
+
+	private void addSystems() {
+		systems.add(new TimeToLiveSystem());
+		systems.add(new HealthRegenerationSystem());
 	}
 
 	private void addSurroundingWalls() {
@@ -65,7 +71,7 @@ public class Gamefield {
 		constructionSprites.put(-4, new Wall(0, 0, 10, height));
 	}
 
-	public void update(int secondsMovedInGame)  {
+	public void update(float secondsMovedInGame)  {
 		if (!PauseManager.isGamePaused()) {
 			if (!creationMode) {
 				// checkIfPlayerIsStandingOnSwitch();
@@ -106,24 +112,32 @@ public class Gamefield {
 	}
 
 	// UPDATES
-	private void updateAllTheSprites(int secondsMovedInGame){
+	private void updateAllTheSprites(float secondsMovedInGame){
 		updateSpriteMap(enemies, secondsMovedInGame);
 		updateSpriteMap(constructionSprites, secondsMovedInGame);
 		updateSpriteMap(worldAmmo, secondsMovedInGame);
+		executeSystems(PlayerManager.getCurrentPlayer(), secondsMovedInGame);
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void updateSpriteMap(Map<Integer, ? extends Sprite> sprites, int secondsMovedInGame) {
+	private void updateSpriteMap(Map<Integer, ? extends Sprite> sprites, float secondsMovedInGame) {
 		Iterator iterator = sprites.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Map.Entry pairs = (Map.Entry) iterator.next();
 			Sprite sprite = (Sprite) pairs.getValue();
 			if (sprite.isAlive()) {
 				sprite.updateSprite(secondsMovedInGame);
+				executeSystems(sprite, secondsMovedInGame);
 			} else {
 				iterator.remove();
 			}
 
+		}
+	}
+
+	private void executeSystems(Sprite sprite, float secondsMovedInGame) {
+		for(System system : systems){
+			system.executeSystem(sprite, secondsMovedInGame);
 		}
 	}
 

@@ -1,5 +1,6 @@
 package be.davidcorp.domain.sprite.item.weapon;
 
+import be.davidcorp.component.TimeToLiveComponent;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.Sprite;
@@ -12,8 +13,9 @@ import be.davidcorp.metric.Vector;
 public abstract class Ammo extends Item {
 	private int damage = 50;
 
-	public Ammo(float x, float y, int width, int height) {
+	public Ammo(float x, float y, int width, int height, int TimeToLive) {
 		super(x, y);
+		addComponent(new TimeToLiveComponent(TimeToLive));
 		setWidth(width);
 		setHeight(height);
 		setColor(new Color(0, 1, 0));
@@ -25,7 +27,7 @@ public abstract class Ammo extends Item {
 	}
 
 	@Override
-	public void updateSprite(int secondsMovedInGame) {
+	public void updateSprite(float secondsMovedInGame) {
 		super.updateSprite(secondsMovedInGame);
 		SpriteMovingUtility.moveSpriteOnHisDirectionVector(this, secondsMovedInGame * this.getSpeed());
 		for (int i = 0; i < GameFieldManager.getCurrentGameField().getConstructionItems().size() && isAlive(); i++) {

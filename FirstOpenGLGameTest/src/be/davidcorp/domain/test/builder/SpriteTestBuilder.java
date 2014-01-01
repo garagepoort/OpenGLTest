@@ -8,6 +8,7 @@ public abstract class SpriteTestBuilder<SPRITE extends Sprite> {
 	private float y = 11;
 	private int width = 12;
 	private int height = 13;
+	private int health;
 	
 	protected abstract SPRITE createInstance();
 	
@@ -23,6 +24,7 @@ public abstract class SpriteTestBuilder<SPRITE extends Sprite> {
 		sprite.setY(y);
 		sprite.setWidth(width);
 		sprite.setHeight(height);
+		sprite.setHealthPoints(health);
 		return sprite;
 	}
 	
@@ -47,6 +49,11 @@ public abstract class SpriteTestBuilder<SPRITE extends Sprite> {
 
 	public SpriteTestBuilder<SPRITE> withHeight(int height) {
 		this.height = height;
+		return this;
+	}
+	
+	public SpriteTestBuilder<SPRITE> withHealth(int health) {
+		this.health = health;
 		return this;
 	}
 }

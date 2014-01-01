@@ -27,7 +27,7 @@ public class Zombie extends Enemy {
 		setDefaultViewRange(50);
 		setViewRangeOffset(150);
 		setAttackRange(30);
-		setAttackDamage(500);
+		setAttackDamage(5000);
 	}
 
 	private void initializeTextureBunch() {

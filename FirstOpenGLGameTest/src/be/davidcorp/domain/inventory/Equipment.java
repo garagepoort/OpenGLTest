@@ -67,7 +67,7 @@ public class Equipment extends Observable implements Attributer {
 		notifyObservers();
 	}
 
-	public void updateAllEquippeditems(int secondsMovedInGame) {
+	public void updateAllEquippeditems(float secondsMovedInGame) {
 		//TODO david this is not ok updated. See update in sprite
 		if (weapon != null) weapon.updateSprite(secondsMovedInGame);
 	}

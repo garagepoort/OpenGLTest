@@ -8,7 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.common.collect.Maps;
+
 import be.davidcorp.WindDirection;
+import be.davidcorp.component.Component;
+import be.davidcorp.component.ComponentType;
 import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.trigger.Trigger;
@@ -21,6 +25,8 @@ import be.davidcorp.texture.TextureBunch;
 
 public abstract class Sprite extends Triggerable {
 
+	private Map<ComponentType, Component> componentsMap = Maps.newHashMap();
+	
 	private int ID;
 	private Color color;
 	private float defaultSpeed = 0.35f;
@@ -30,10 +36,6 @@ public abstract class Sprite extends Triggerable {
 	private int maxHealthPoints = 10000;
 	private float rotationAngle;
 	private boolean isMoving;
-
-	private int TTL = -1;
-	private int TTLProgress;
-	private int healthRegen;
 
 	private TextureBunch textureBunch;
 	private Vector directionVector = new Vector(new Point(0, 0, 0), new Point(0, 300, 0));
@@ -188,10 +190,8 @@ public abstract class Sprite extends Triggerable {
 		this.isMoving = isMoving;
 	}
 
-	public void updateSprite(int secondsMovedInGame) {
-		updateTTL();
+	public void updateSprite(float secondsMovedInGame) {
 		updateTexture();
-		addHealth(healthRegen);
 		setMoving(false);
 	}
 
@@ -211,16 +211,6 @@ public abstract class Sprite extends Triggerable {
 			setHealthPoints(getHealthPoints() - hp);
 		}
 		checkTriggers(ONHEALTHLOSS, null);
-	}
-
-	private void updateTTL() {
-		if (TTL != -1) {
-			if (TTLProgress != TTL) {
-				TTLProgress++;
-			} else {
-				kill();
-			}
-		}
 	}
 
 	public Point getCenter() {
@@ -262,10 +252,6 @@ public abstract class Sprite extends Triggerable {
 		}
 	}
 
-	protected void setTTL(int tTL) {
-		TTL = tTL;
-	}
-
 	public TextureBunch getTextureBunch() {
 		return textureBunch;
 	}
@@ -276,12 +262,6 @@ public abstract class Sprite extends Triggerable {
 	
 	public abstract SpriteType getType();
 
-	private void initializeSprite(float x, float y, int width, int height) {
-		setWidth(width);
-		setHeight(height);
-		setX(x);
-		setY(y);
-	}
 
 	public ArrayList<Trigger> getAllTriggers() {
 		ArrayList<Trigger> allTriggers = new ArrayList<>();
@@ -290,4 +270,22 @@ public abstract class Sprite extends Triggerable {
 		}
 		return allTriggers;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public <COMPONENT extends Component> COMPONENT getComponent(ComponentType componentType){
+		Component component = componentsMap.get(componentType);
+		return (COMPONENT) component;
+	}
+	
+	public void addComponent(Component component){
+		componentsMap.put(component.getType(), component);
+	}
+	
+	private void initializeSprite(float x, float y, int width, int height) {
+		setWidth(width);
+		setHeight(height);
+		setX(x);
+		setY(y);
+	}
+	
 }

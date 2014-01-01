@@ -30,4 +30,9 @@ public class EnemyFacade {
 		}
 	}
 
+	public void deleteEnemy(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
