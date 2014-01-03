@@ -4,15 +4,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 import be.davidcorp.domain.game.Gamefield;
-import be.davidcorp.domain.sprite.construction.Wall;
+import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.item.potion.HealthPotion;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
+import be.davidcorp.domain.test.builder.ConstructionSpriteBuilder;
+import be.davidcorp.domain.test.builder.EnemyBuilder;
 import be.davidcorp.domain.test.builder.GamefieldTestBuilder;
 import be.davidcorp.domain.test.builder.HealthPotionTestBuilder;
 import be.davidcorp.domain.test.builder.LightTestBuilder;
-import be.davidcorp.domain.test.builder.WallTestBuilder;
-import be.davidcorp.domain.test.builder.ZombieTestBuilder;
 
 
 public class GamefieldLoaderSaverTest {
@@ -56,13 +56,13 @@ public class GamefieldLoaderSaverTest {
 	}
 
 	private Enemy aZombieWithID(int id) {
-		return new ZombieTestBuilder()
+		return new EnemyBuilder()
 				.withID(id)
 				.build();
 	}
 	
-	private Wall aWallWithID(int id) {
-		return new WallTestBuilder()
+	private ConstructionSprite aWallWithID(int id) {
+		return new ConstructionSpriteBuilder()
 		.withID(id)
 		.build();
 	}

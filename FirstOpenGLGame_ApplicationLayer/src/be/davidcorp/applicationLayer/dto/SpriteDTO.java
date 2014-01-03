@@ -13,6 +13,7 @@ public class SpriteDTO {
 	private int width;
 	private int height;
 	
+	
 	private Point downLeftPoint;
 	private Point downRightPoint;
 	private Point upperRightPoint;

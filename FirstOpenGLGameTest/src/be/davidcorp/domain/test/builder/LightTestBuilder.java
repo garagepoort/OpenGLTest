@@ -2,7 +2,7 @@ package be.davidcorp.domain.test.builder;
 
 import be.davidcorp.domain.sprite.light.Light;
 
-public class LightTestBuilder extends SpriteTestBuilder<Light>{
+public class LightTestBuilder extends SpriteBuilder<Light>{
 
 	private int radius;
 	private boolean lightOn;

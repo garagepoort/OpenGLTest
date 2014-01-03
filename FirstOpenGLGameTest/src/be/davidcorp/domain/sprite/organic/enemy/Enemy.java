@@ -2,7 +2,6 @@ package be.davidcorp.domain.sprite.organic.enemy;
 
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.Sprite;
-import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.organic.OrganicSprite;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
 import be.davidcorp.domain.utilities.Cooldowner;
@@ -30,11 +29,6 @@ public class Enemy extends OrganicSprite {
 	private void initialize() {
 		setTextureBunch(new TextureBunch().withDefaultTexture("resources/images/droid.png"));
 		setSpeed(0.10f);
-	}
-
-	@Override
-	public SpriteType getType() {
-		return SpriteType.ENEMY;
 	}
 
 	@Override
@@ -67,7 +61,7 @@ public class Enemy extends OrganicSprite {
 		this.attackDamage = attackDamage;
 	}
 
-	protected void setAttackRange(int range) {
+	public void setAttackRange(int range) {
 		this.range = range;
 	}
 
@@ -75,11 +69,11 @@ public class Enemy extends OrganicSprite {
 		this.viewRange = viewRange;
 	}
 
-	protected void setDefaultViewRange(double defaultViewRange) {
+	public void setDefaultViewRange(double defaultViewRange) {
 		this.defaultViewRange = defaultViewRange;
 	}
 
-	protected void setViewRangeOffset(double viewRangeOffset) {
+	public void setViewRangeOffset(double viewRangeOffset) {
 		this.viewRangeOffset = viewRangeOffset;
 	}
 
@@ -123,4 +117,5 @@ public class Enemy extends OrganicSprite {
 			cooldowner.progressCooldown();
 		}
 	}
+	
 }

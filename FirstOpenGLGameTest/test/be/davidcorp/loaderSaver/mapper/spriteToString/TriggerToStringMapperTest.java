@@ -12,10 +12,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import be.davidcorp.domain.sprite.construction.Wall;
+import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.light.Light;
+import be.davidcorp.domain.test.builder.ConstructionSpriteBuilder;
 import be.davidcorp.domain.test.builder.LightTestBuilder;
-import be.davidcorp.domain.test.builder.WallTestBuilder;
 import be.davidcorp.domain.trigger.Trigger;
 import be.davidcorp.domain.trigger.Triggerable;
 import be.davidcorp.domain.trigger.triggerableEvents.LightSwitchEvent;
@@ -64,8 +64,8 @@ public class TriggerToStringMapperTest {
 		assertThat(result).contains("END");
 	}
 
-	public Wall aWall() {
-		return new WallTestBuilder().withID(1).build();
+	public ConstructionSprite aWall() {
+		return new ConstructionSpriteBuilder().withID(1).build();
 	}
 
 	public Light aLight() {

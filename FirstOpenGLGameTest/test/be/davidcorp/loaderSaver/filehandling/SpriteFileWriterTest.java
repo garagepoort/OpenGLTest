@@ -23,10 +23,10 @@ import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
+import be.davidcorp.domain.test.builder.ConstructionSpriteBuilder;
+import be.davidcorp.domain.test.builder.EnemyBuilder;
 import be.davidcorp.domain.test.builder.LightTestBuilder;
 import be.davidcorp.domain.test.builder.PistolTestBuilder;
-import be.davidcorp.domain.test.builder.WallTestBuilder;
-import be.davidcorp.domain.test.builder.ZombieTestBuilder;
 import be.davidcorp.loaderSaver.SpriteProperty;
 
 
@@ -46,7 +46,6 @@ public class SpriteFileWriterTest {
 	public void breakDown(){
 		file.delete();
 	}
-	
 	
 	@Test
 	public void givenAnEnemy_whenSave_thenIsSavedCorrectly() throws IOException{
@@ -115,7 +114,7 @@ public class SpriteFileWriterTest {
 	}
 
 	private Sprite aWall() {
-		return new WallTestBuilder()
+		return new ConstructionSpriteBuilder()
 			.withUsableRange(212)
 			.withID(1)
 			.build();
@@ -140,13 +139,14 @@ public class SpriteFileWriterTest {
 
 
 	private Enemy aZombie() {
-		return new ZombieTestBuilder()
+		return new EnemyBuilder()
 			.withAttackDamage(100)
 			.withX(10)
 			.withY(11)
 			.withWidth(12)
 			.withHeight(13)
 			.withID(1)
+			.withSpriteType(SpriteType.ZOMBIE)
 			.build();
 	}
 }

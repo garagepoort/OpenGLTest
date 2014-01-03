@@ -16,7 +16,8 @@ import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.construction.Wall;
 import be.davidcorp.domain.sprite.item.potion.HealthPotion;
 import be.davidcorp.domain.sprite.light.Light;
-import be.davidcorp.domain.sprite.organic.enemy.Zombie;
+import be.davidcorp.domain.sprite.organic.enemy.Enemy;
+import be.davidcorp.domain.sprite.organic.enemy.EnemyFactory;
 import be.davidcorp.domain.trigger.triggerableEvents.LightSwitchEvent;
 import be.davidcorp.loaderSaver.GamefieldProperty;
 import be.davidcorp.loaderSaver.LoaderException;
@@ -30,7 +31,7 @@ public class GamefieldRepository {
 		Gamefield gamefield = new Gamefield("field", 2000, 2000);
 		gamefield.setID(6);
 
-		Zombie zombie = new Zombie(200, 200);
+		Enemy zombie = EnemyFactory.createZombie(200, 200);
 		HealthPotion healthPotion = new HealthPotion(500, 500);
 		Wall wall = new Wall(100, 100, 100, 100);
 		Light light = new Light(200, 200, new Color(255, 0, 0), 200, true);

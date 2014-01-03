@@ -14,7 +14,7 @@ import org.unitils.inject.annotation.TestedObject;
 
 import be.davidcorp.component.ComponentType;
 import be.davidcorp.component.TimeToLiveComponent;
-import be.davidcorp.domain.sprite.organic.enemy.Spider;
+import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.system.TimeToLiveSystem;
 
 @RunWith(UnitilsJUnit4TestClassRunner.class)
@@ -25,7 +25,7 @@ public class TimeToLiveSystemTest {
 	
 	@Test
 	public void givenASpriteWithTimeToLiveComponent_whenExecuteSystem_SpriteHasLessTimeToLive(){
-		Spider spider = mock(Spider.class);
+		Enemy spider = mock(Enemy.class);
 		TimeToLiveComponent component = new TimeToLiveComponent(500);
 		Mockito.when(spider.getComponent(ComponentType.TIME_TO_LIVE)).thenReturn(component);
 	
@@ -37,7 +37,7 @@ public class TimeToLiveSystemTest {
 	
 	@Test
 	public void givenASpriteWithTimeToLiveAlmostUp_whenExecuteSystem_SpriteGetsKilled(){
-		Spider spider = mock(Spider.class);
+		Enemy spider = mock(Enemy.class);
 		TimeToLiveComponent component = new TimeToLiveComponent(1);
 		Mockito.when(spider.getComponent(ComponentType.TIME_TO_LIVE)).thenReturn(component);
 		

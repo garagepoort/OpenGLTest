@@ -21,7 +21,7 @@ public class SpriteDTOMapper{
 			spriteDTO = ItemDTOMapper.doAutoMappingForItem((Item) sprite);
 		}
 		if(sprite instanceof Enemy){
-			spriteDTO = OrganicSpriteDTOMapper.doAutoMappingForEnemy((Enemy) sprite);
+			spriteDTO = OrganicSpriteDTOMapper.mapEnemyToEnemyDTO((Enemy) sprite);
 		}
 		if(sprite instanceof Light){
 			spriteDTO = LightToLightDTOMapper.mapLightToDTO((Light) sprite);

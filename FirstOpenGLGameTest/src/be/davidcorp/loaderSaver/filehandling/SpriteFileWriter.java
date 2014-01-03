@@ -45,7 +45,7 @@ public class SpriteFileWriter {
 	@SuppressWarnings("rawtypes")
 	private SpriteToStringMapper getMapperForSprite(Sprite sprite) {
 		if (sprite instanceof Enemy) {
-			return new EnemyToStringMapper<>();
+			return new EnemyToStringMapper();
 		}
 		if (sprite instanceof Light) {
 			return new LightToStringMapper();

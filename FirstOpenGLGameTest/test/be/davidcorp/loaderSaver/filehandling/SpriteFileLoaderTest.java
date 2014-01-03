@@ -14,7 +14,6 @@ import org.mockito.Mockito;
 
 import be.davidcorp.FileUtility;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
-import be.davidcorp.domain.sprite.organic.enemy.Zombie;
 import be.davidcorp.loaderSaver.repository.ConstructionSpriteRepository;
 import be.davidcorp.loaderSaver.repository.EnemyRepository;
 import be.davidcorp.loaderSaver.repository.ItemRepository;
@@ -43,7 +42,7 @@ public class SpriteFileLoaderTest {
 						+ "END");
 		loader.loadAllSprites();
 		Enemy enemy = new EnemyRepository().getSprite(1);
-		assertThat(enemy).isInstanceOf(Zombie.class);
+		assertThat(enemy).isInstanceOf(Enemy.class);
 		assertThat(enemy.getID()).isEqualTo(1);
 		assertThat(enemy.getX()).isEqualTo(10f);
 		assertThat(enemy.getY()).isEqualTo(11f);
@@ -79,6 +78,30 @@ public class SpriteFileLoaderTest {
 						+ "END");
 		loader.loadAllSprites();
 		assertThat(new ConstructionSpriteRepository().getSprite(1)).isNotNull();
+	}
+	
+	@Test
+	public void givenASpriteFileWithTwoWall_whenLoadAllSprites_thenTwoWallInsideConstructionSpriteRepository() throws  IOException{
+		when(fileUtility.getFileContent(Mockito.any(File.class))).thenReturn(
+				"CONSTRUCTION\n"
+						+ "SPRITETYPE:WALL\n"
+						+ "ID:1\n"
+						+ "X:10f\n"
+						+ "Y:11f\n"
+						+ "WIDTH:12\n"
+						+ "HEIGHT:13\n"
+						+ "END\n"
+						+"CONSTRUCTION\n"
+						+ "SPRITETYPE:WALL\n"
+						+ "ID:2\n"
+						+ "X:10f\n"
+						+ "Y:11f\n"
+						+ "WIDTH:12\n"
+						+ "HEIGHT:13\n"
+						+ "END");
+		loader.loadAllSprites();
+		assertThat(new ConstructionSpriteRepository().getSprite(1)).isNotNull();
+		assertThat(new ConstructionSpriteRepository().getSprite(2)).isNotNull();
 	}
 	
 	@Test

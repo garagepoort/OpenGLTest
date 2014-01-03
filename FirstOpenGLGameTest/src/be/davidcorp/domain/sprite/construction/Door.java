@@ -2,6 +2,7 @@ package be.davidcorp.domain.sprite.construction;
 
 
 import be.davidcorp.domain.game.GameFieldManager;
+import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.utilities.sprite.SpriteRotator;
@@ -19,6 +20,11 @@ public class Door extends ConstructionSprite{
 		super(x, y, width, height);
 	}
 
+	public Door() {
+		super();
+		setColor(new Color(0, 255, 0));
+	}
+
 	public void openDoor(Sprite sprite){
 			open = !open;
 			switched=true;
@@ -30,7 +36,7 @@ public class Door extends ConstructionSprite{
 		if(isDoorOpening()){
 			openDoor(secondsMovedInGame);
 		}else if(isDoorClosing()){
-			closeDoor();
+			closeDoor(secondsMovedInGame);
 		}else{
 //			SoundManager.stopSound("door");
 		}
@@ -55,8 +61,8 @@ public class Door extends ConstructionSprite{
 		}
 	}
 
-	private void closeDoor() {
-		SpriteRotator.rotateSprite(this, -openSpeed, getHitBox().getUpperLeftPoint());
+	private void closeDoor(float secondsMovedInGame) {
+		SpriteRotator.rotateSprite(this, -openSpeed * secondsMovedInGame, getHitBox().getUpperLeftPoint());
 		if(switched){
 //			SoundManager.replaySound("door");
 			switched=false;

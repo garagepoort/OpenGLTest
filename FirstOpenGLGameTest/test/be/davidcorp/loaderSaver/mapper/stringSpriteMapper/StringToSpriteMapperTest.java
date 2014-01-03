@@ -13,7 +13,6 @@ import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.item.potion.HealthPotion;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
-import be.davidcorp.domain.sprite.organic.enemy.Zombie;
 
 
 
@@ -32,7 +31,7 @@ public class StringToSpriteMapperTest {
 						+ "X:10f\n"
 						+ "Y:11f";
 		Enemy enemy = new StringToEnemyMapper().mapSprite(zombie);
-		assertThat(enemy).isInstanceOf(Zombie.class);
+		assertThat(enemy).isInstanceOf(Enemy.class);
 		assertThat(enemy.getID()).isEqualTo(1);
 		assertThat(enemy.getX()).isEqualTo(10f);
 		assertThat(enemy.getY()).isEqualTo(11f);

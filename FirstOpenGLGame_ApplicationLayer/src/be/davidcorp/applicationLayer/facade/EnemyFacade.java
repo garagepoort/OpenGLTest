@@ -3,8 +3,8 @@ package be.davidcorp.applicationLayer.facade;
 import be.davidcorp.applicationLayer.dto.EnemyDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.OrganicSpriteDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
-import be.davidcorp.domain.sprite.organic.enemy.Spider;
-import be.davidcorp.domain.sprite.organic.enemy.Zombie;
+import be.davidcorp.domain.sprite.organic.enemy.Enemy;
+import be.davidcorp.domain.sprite.organic.enemy.EnemyFactory;
 import be.davidcorp.loaderSaver.repository.EnemyRepository;
 
 public class EnemyFacade {
@@ -12,9 +12,9 @@ public class EnemyFacade {
 
 	public EnemyDTO createZombie(float x, float y) {
 		try {
-			Zombie zombie = new Zombie(x, y);
-			zombie = (Zombie) enemyRepository.createSprite(zombie);
-			return OrganicSpriteDTOMapper.mapZombieToEnemyDTO(zombie);
+			Enemy enemy = EnemyFactory.createZombie(x, y);
+			enemyRepository.createSprite(enemy);
+			return OrganicSpriteDTOMapper.mapEnemyToEnemyDTO(enemy);
 		} catch (Exception e) {
 			throw new ModelException(e);
 		}
@@ -22,17 +22,15 @@ public class EnemyFacade {
 
 	public EnemyDTO createSpider(float x, float y) {
 		try {
-			Spider spider = new Spider(x, y);
-			spider = (Spider) enemyRepository.createSprite(spider);
-			return OrganicSpriteDTOMapper.mapSpiderToEnemyDTO(spider);
+			Enemy spider = EnemyFactory.createSpider(x, y);
+			spider = enemyRepository.createSprite(spider);
+			return OrganicSpriteDTOMapper.mapEnemyToEnemyDTO(spider);
 		} catch (Exception e) {
 			throw new ModelException(e);
 		}
 	}
 
 	public void deleteEnemy(int id) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

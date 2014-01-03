@@ -2,7 +2,7 @@ package be.davidcorp.domain.test.builder;
 
 import be.davidcorp.domain.sprite.organic.OrganicSprite;
 
-public abstract class OrganicSpriteTestBuilder<ORGANICSPRITE extends OrganicSprite> extends SpriteTestBuilder<ORGANICSPRITE>{
+public abstract class OrganicSpriteBuilder<ORGANICSPRITE extends OrganicSprite> extends SpriteBuilder<ORGANICSPRITE>{
 
 	private int stamina= 200;
 
@@ -13,7 +13,7 @@ public abstract class OrganicSpriteTestBuilder<ORGANICSPRITE extends OrganicSpri
 		return organicsprite;
 	}
 	
-	public OrganicSpriteTestBuilder<ORGANICSPRITE> withMaxStamina(int stamina){
+	public OrganicSpriteBuilder<ORGANICSPRITE> withMaxStamina(int stamina){
 		this.stamina = stamina;
 		return this;
 	}

@@ -29,6 +29,7 @@ public abstract class OrganicSprite extends Sprite implements Observer {
 	
 	public OrganicSprite(){
 		super();
+		initialize();
 	}
 
 	public OrganicSprite(float x, float y, int width, int height) {

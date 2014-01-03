@@ -1,0 +1,44 @@
+package be.davidcorp.domain.sprite.organic.enemy;
+
+import be.davidcorp.domain.sprite.SpriteType;
+import be.davidcorp.domain.test.builder.EnemyBuilder;
+import be.davidcorp.texture.TextureBunch;
+
+public class EnemyFactory {
+
+	public static Enemy createZombie(float x, float y){
+		Enemy enemy = new EnemyBuilder()
+			.withAttackDamage(5000)
+			.withAttackRange(30)
+			.withViewRange(50)
+			.withViewRangeOffset(150)
+			.withX(x)
+			.withY(y)
+			.withSpeed(0.05f)
+			.withMaxHealth(30000)
+			.withWidth(32)
+			.withHeight(32)
+			.withSpriteType(SpriteType.ZOMBIE)
+			.build();
+		enemy.setTextureBunch(new TextureBunch().withDefaultTexture("resources/images/enemies/zombie/zombieStanding.png"));
+		return enemy;
+	}
+	
+	public static Enemy createSpider(float x, float y){
+		Enemy enemy = new EnemyBuilder()
+		.withAttackDamage(500)
+		.withAttackRange(75)
+		.withViewRange(500)
+		.withViewRangeOffset(150)
+		.withX(x)
+		.withY(y)
+		.withSpeed(0.30f)
+		.withMaxHealth(5000)
+		.withWidth(32)
+		.withHeight(32)
+		.withSpriteType(SpriteType.SPIDER)
+		.build();
+		enemy.setTextureBunch(new TextureBunch().withDefaultTexture("resources/images/enemies/spider.png"));
+		return enemy;
+	}
+}

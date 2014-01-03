@@ -7,6 +7,7 @@ import be.davidcorp.applicationLayer.dto.ConstructionSpriteDTO;
 import be.davidcorp.applicationLayer.dto.mapper.ConstructionType;
 import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
+import be.davidcorp.domain.sprite.construction.Door;
 import be.davidcorp.domain.sprite.construction.Wall;
 
 public class ConstructionSpriteDTOMapper {
@@ -14,6 +15,12 @@ public class ConstructionSpriteDTOMapper {
 	public static ConstructionSpriteDTO mapWallToConstructionSpriteDTO(Wall wall){
 		ConstructionSpriteDTO constructionSpriteDTO = new ConstructionSpriteDTO(ConstructionType.WALL);
 		mapConstructionSprite(constructionSpriteDTO, wall);
+		return constructionSpriteDTO;
+	}
+	
+	public static ConstructionSpriteDTO mapDoorToConstructionSpriteDTO(Door door){
+		ConstructionSpriteDTO constructionSpriteDTO = new ConstructionSpriteDTO(ConstructionType.DOOR);
+		mapConstructionSprite(constructionSpriteDTO, door);
 		return constructionSpriteDTO;
 	}
 	
@@ -58,6 +65,9 @@ public class ConstructionSpriteDTOMapper {
 		ConstructionSpriteDTO constructionSpriteDTO = null;
 		if(constructionSprite instanceof Wall){
 			constructionSpriteDTO = ConstructionSpriteDTOMapper.mapWallToConstructionSpriteDTO((Wall) constructionSprite);
+		}
+		if(constructionSprite instanceof Door){
+			constructionSpriteDTO = ConstructionSpriteDTOMapper.mapDoorToConstructionSpriteDTO((Door) constructionSprite);
 		}
 		if(constructionSpriteDTO == null){
 			throw new MapperException("No mapping found for: " + constructionSprite.getClass().getCanonicalName());

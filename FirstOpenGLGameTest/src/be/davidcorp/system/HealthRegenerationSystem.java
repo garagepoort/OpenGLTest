@@ -1,9 +1,8 @@
-package be.davidcorp.domain.system;
+package be.davidcorp.system;
 
 import be.davidcorp.component.ComponentType;
 import be.davidcorp.component.HealthRegenerationComponent;
 import be.davidcorp.domain.sprite.Sprite;
-import be.davidcorp.system.System;
 
 public class HealthRegenerationSystem implements System{
 

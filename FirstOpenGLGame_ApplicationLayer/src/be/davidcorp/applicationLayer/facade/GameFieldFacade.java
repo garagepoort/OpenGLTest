@@ -134,7 +134,7 @@ public class GameFieldFacade {
 	}
 
 	public List<EnemyDTO> getEnemiesInWorld()  {
-		return OrganicSpriteDTOMapper.doAutoMappingForEnemies(getCurrentGameField().getEnemiesInWorld());
+		return OrganicSpriteDTOMapper.mapEnemiesToDTOs(getCurrentGameField().getEnemiesInWorld());
 	}
 
 	public List<SpriteDTO> getSpritesOnPointInGamefield(Point point)  {
@@ -230,7 +230,7 @@ public class GameFieldFacade {
 				getCurrentGameField().updateLight(light);
 			}
 			if (spriteDTO instanceof EnemyDTO) {
-				Enemy enemy = OrganicSpriteDTOMapper.doAutoMappingForEnemyDTO((EnemyDTO) spriteDTO);
+				Enemy enemy = OrganicSpriteDTOMapper.mapEnemyDTOToEnemy((EnemyDTO) spriteDTO);
 				getCurrentGameField().updateEnemy(enemy);
 			}
 		} catch (Exception e) {

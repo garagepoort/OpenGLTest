@@ -4,19 +4,16 @@ import static be.davidcorp.domain.trigger.TriggerWhen.ONUSE;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import org.fest.assertions.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import be.davidcorp.domain.sprite.construction.Wall;
+import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.light.Light;
+import be.davidcorp.domain.test.builder.ConstructionSpriteBuilder;
 import be.davidcorp.domain.test.builder.LightTestBuilder;
-import be.davidcorp.domain.test.builder.WallTestBuilder;
 import be.davidcorp.domain.trigger.Trigger;
-import be.davidcorp.domain.trigger.TriggerWhen;
 import be.davidcorp.loaderSaver.repository.DefaultSpriteRepository;
 
 
@@ -35,7 +32,7 @@ public class StringToTriggerMapperTest {
 	
 	@Test
 	public void givenComplexTriggerString_whenMapToTrigger_thenMapperCorrectly(){
-		Wall wall = aWall();
+		ConstructionSprite wall = aWall();
 		Light light = aLight();
 		
 		when(defaultSpriteRepository.getSprite(1)).thenReturn(wall);
@@ -59,8 +56,8 @@ public class StringToTriggerMapperTest {
 		assertThat(light.getTriggerableEvents().get(trigger)).hasSize(1);
 	}
 
-	private Wall aWall() {
-		return new WallTestBuilder()
+	private ConstructionSprite aWall() {
+		return new ConstructionSpriteBuilder()
 				.withID(1)
 				.build();
 	}

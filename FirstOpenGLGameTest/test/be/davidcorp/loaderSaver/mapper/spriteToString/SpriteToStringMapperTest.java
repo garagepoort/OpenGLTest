@@ -4,19 +4,20 @@ import static org.fest.assertions.Assertions.assertThat;
 
 import org.junit.Test;
 
+import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.light.Light;
-import be.davidcorp.domain.sprite.organic.enemy.Spider;
+import be.davidcorp.domain.sprite.organic.enemy.Enemy;
+import be.davidcorp.domain.test.builder.EnemyBuilder;
 import be.davidcorp.domain.test.builder.LightTestBuilder;
-import be.davidcorp.domain.test.builder.SpiderTestBuilder;
 
 public class SpriteToStringMapperTest {
 
 	@Test
 	public void givenAnEnemy_whenMapSprite_correctStringIsReturned() {
 		// given
-		Spider spider = aSpider();
+		Enemy spider = aSpider();
 		
-		String result = new EnemyToStringMapper<Spider>().buildStringFromSprite(spider);
+		String result = new EnemyToStringMapper().buildStringFromSprite(spider);
 		
 		assertThat(result).contains("ENEMY");
 		assertThat(result).contains("SPRITETYPE:SPIDER");
@@ -45,13 +46,14 @@ public class SpriteToStringMapperTest {
 		assertThat(result).contains("LIGHTON:true");
 	}
 
-	private Spider aSpider() {
-		return new SpiderTestBuilder()
+	private Enemy aSpider() {
+		return new EnemyBuilder()
 			.withID(1)
 			.withX(10)
 			.withY(12)
 			.withWidth(30)
 			.withHeight(20)
+			.withSpriteType(SpriteType.SPIDER)
 			.build();
 	}
 	

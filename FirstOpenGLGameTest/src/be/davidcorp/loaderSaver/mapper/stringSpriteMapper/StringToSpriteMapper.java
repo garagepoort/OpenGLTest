@@ -10,13 +10,13 @@ import java.util.Scanner;
 import be.davidcorp.component.TimeToLiveComponent;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.SpriteType;
+import be.davidcorp.domain.sprite.construction.Door;
 import be.davidcorp.domain.sprite.construction.Wall;
 import be.davidcorp.domain.sprite.item.potion.HealthPotion;
 import be.davidcorp.domain.sprite.item.potion.StaminaPotion;
 import be.davidcorp.domain.sprite.item.weapon.Pistol;
 import be.davidcorp.domain.sprite.light.Light;
-import be.davidcorp.domain.sprite.organic.enemy.Spider;
-import be.davidcorp.domain.sprite.organic.enemy.Zombie;
+import be.davidcorp.domain.sprite.organic.enemy.EnemyFactory;
 import be.davidcorp.loaderSaver.SpriteProperty;
 
 public abstract class StringToSpriteMapper<T extends Sprite> {
@@ -50,15 +50,17 @@ public abstract class StringToSpriteMapper<T extends Sprite> {
 					case STAMINAPOTION :
 						return new StaminaPotion();
 					case ZOMBIE :
-						return new Zombie();
+						return EnemyFactory.createZombie(0, 0);
 					case SPIDER :
-						return new Spider();
+						return EnemyFactory.createSpider(0, 0);
 					case WALL :
 						return new Wall();
 					case LIGHT :
 						return new Light();
 					case PISTOL :
 						return new Pistol();
+					case DOOR :
+						return new Door();
 					default :
 						throw new RuntimeException("No sprite found for this type");
 				}

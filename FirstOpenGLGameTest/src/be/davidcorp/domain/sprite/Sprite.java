@@ -26,7 +26,7 @@ import be.davidcorp.texture.TextureBunch;
 public abstract class Sprite extends Triggerable {
 
 	private Map<ComponentType, Component> componentsMap = Maps.newHashMap();
-	
+
 	private int ID;
 	private Color color;
 	private float defaultSpeed = 0.35f;
@@ -43,6 +43,8 @@ public abstract class Sprite extends Triggerable {
 	private Map<TriggerWhen, ArrayList<Trigger>> triggers = new HashMap<>();
 
 	private HitBox hitbox = new HitBox();
+
+	private SpriteType spriteType;
 
 	public Sprite(float x, float y, int width, int height) {
 		initializeSprite(x, y, width, height);
@@ -259,33 +261,39 @@ public abstract class Sprite extends Triggerable {
 	public void setTextureBunch(TextureBunch textureBunch) {
 		this.textureBunch = textureBunch;
 	}
-	
-	public abstract SpriteType getType();
 
+	public SpriteType getType(){
+		return spriteType;
+	}
 
 	public ArrayList<Trigger> getAllTriggers() {
 		ArrayList<Trigger> allTriggers = new ArrayList<>();
-		for (TriggerWhen key : this.triggers.keySet()) {
-			allTriggers.addAll(this.triggers.get(key));
+		for (ArrayList<Trigger> value : this.triggers.values()) {
+			allTriggers.addAll(value);
 		}
 		return allTriggers;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public <COMPONENT extends Component> COMPONENT getComponent(ComponentType componentType){
+	public <COMPONENT extends Component> COMPONENT getComponent(ComponentType componentType) {
 		Component component = componentsMap.get(componentType);
 		return (COMPONENT) component;
 	}
-	
-	public void addComponent(Component component){
+
+	public void addComponent(Component component) {
 		componentsMap.put(component.getType(), component);
 	}
 	
+	public void setSpriteType(SpriteType spriteType){
+		this.spriteType = spriteType;
+	}
+
 	private void initializeSprite(float x, float y, int width, int height) {
 		setWidth(width);
 		setHeight(height);
 		setX(x);
 		setY(y);
 	}
-	
+
+
 }

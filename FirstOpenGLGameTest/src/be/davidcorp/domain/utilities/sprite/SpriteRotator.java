@@ -27,7 +27,6 @@ public class SpriteRotator {
 		rotatePoint(sprite.getHitBox().getUpperLeftPoint(), rotationPoint, angle);
 	}
 
-
 	private static void rotatePoint(Point point, Point rotationPoint,
 			float angle) {
 		point.x = (float) (Math.cos(angle) * (point.x - rotationPoint.x)

@@ -8,8 +8,9 @@ import org.unitils.UnitilsJUnit4TestClassRunner;
 import org.unitils.inject.annotation.TestedObject;
 
 import be.davidcorp.component.HealthRegenerationComponent;
-import be.davidcorp.domain.sprite.organic.enemy.Zombie;
-import be.davidcorp.domain.test.builder.ZombieTestBuilder;
+import be.davidcorp.domain.sprite.organic.enemy.Enemy;
+import be.davidcorp.domain.test.builder.EnemyBuilder;
+import be.davidcorp.system.HealthRegenerationSystem;
 
 @RunWith(UnitilsJUnit4TestClassRunner.class)
 public class HealthRegenerationSystemTest {
@@ -19,7 +20,7 @@ public class HealthRegenerationSystemTest {
 	
 	@Test
 	public void givenASpriteWithHealthRegenerationComponent_whenExecuteSystemAfterHalfSecondMovedInGame_thenHealthIsRegenerated(){
-		Zombie zombie = new ZombieTestBuilder().withHealth(50).build();
+		Enemy zombie = new EnemyBuilder().withHealth(50).withMaxHealth(100).build();
 		HealthRegenerationComponent healthRegenerationComponent = new HealthRegenerationComponent(10);
 		zombie.addComponent(healthRegenerationComponent);
 		

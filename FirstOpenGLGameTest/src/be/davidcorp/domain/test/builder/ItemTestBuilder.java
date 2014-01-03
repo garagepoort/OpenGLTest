@@ -2,7 +2,7 @@ package be.davidcorp.domain.test.builder;
 
 import be.davidcorp.domain.sprite.item.Item;
 
-public abstract class ItemTestBuilder<ITEM extends Item> extends SpriteTestBuilder<ITEM>{
+public abstract class ItemTestBuilder<ITEM extends Item> extends SpriteBuilder<ITEM>{
 
 	
 	private int weight;

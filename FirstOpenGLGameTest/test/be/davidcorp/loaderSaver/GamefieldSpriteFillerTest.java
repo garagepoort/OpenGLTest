@@ -14,12 +14,10 @@ import org.mockito.MockitoAnnotations;
 import be.davidcorp.FileUtility;
 import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.domain.sprite.item.weapon.Pistol;
-import be.davidcorp.domain.sprite.organic.enemy.Spider;
-import be.davidcorp.domain.sprite.organic.enemy.Zombie;
+import be.davidcorp.domain.sprite.organic.enemy.Enemy;
+import be.davidcorp.domain.test.builder.EnemyBuilder;
 import be.davidcorp.domain.test.builder.GamefieldTestBuilder;
 import be.davidcorp.domain.test.builder.PistolTestBuilder;
-import be.davidcorp.domain.test.builder.SpiderTestBuilder;
-import be.davidcorp.domain.test.builder.ZombieTestBuilder;
 import be.davidcorp.loaderSaver.repository.DefaultSpriteRepository;
 import be.davidcorp.loaderSaver.repository.GamefieldRepository;
 
@@ -44,8 +42,8 @@ public class GamefieldSpriteFillerTest {
 	@Test
 	public void givenAGamefieldLink_whenGamefieldFilledIn_thenGamefieldIsFilledInCorrectly() throws IOException {
 		//given
-		Zombie zombie= new ZombieTestBuilder().withID(1).build();
-		Spider spider= new SpiderTestBuilder().withID(2).build();
+		Enemy zombie= new EnemyBuilder().withID(1).build();
+		Enemy spider= new EnemyBuilder().withID(2).build();
 		Pistol pistol = new PistolTestBuilder().withID(3).build();
 		
 		
