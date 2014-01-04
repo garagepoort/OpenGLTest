@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import be.davidcorp.component.TimeToLiveComponent;
 import be.davidcorp.domain.sprite.Sprite;
+import be.davidcorp.domain.sprite.SpriteSpawner;
 import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.construction.Door;
 import be.davidcorp.domain.sprite.construction.Wall;
@@ -61,6 +62,8 @@ public abstract class StringToSpriteMapper<T extends Sprite> {
 						return new Pistol();
 					case DOOR :
 						return new Door();
+					case SPRITESPAWNER :
+						return new SpriteSpawner();
 					default :
 						throw new RuntimeException("No sprite found for this type");
 				}

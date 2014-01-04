@@ -113,6 +113,7 @@ public class Gamefield {
 
 	// UPDATES
 	private void updateAllTheSprites(float secondsMovedInGame){
+		
 		updateSpriteMap(enemies, secondsMovedInGame);
 		updateSpriteMap(constructionSprites, secondsMovedInGame);
 		updateSpriteMap(worldAmmo, secondsMovedInGame);
@@ -197,14 +198,7 @@ public class Gamefield {
 		this.guide = guide;
 	}
 
-	public void useContructionItem() {
-		for (ConstructionSprite s : getConstructionItems()) {
-			s.doUse(PlayerManager.getCurrentPlayer());
-		}
-		checkAllOnUseTriggers();
-	}
-
-	private void checkAllOnUseTriggers() {
+	public void checkOnUseTriggers() {
 		for (ConstructionSprite constructionSprite : constructionSprites.values()) {
 			constructionSprite.checkTriggers(TriggerWhen.ONUSE, PlayerManager.getCurrentPlayer());
 		}

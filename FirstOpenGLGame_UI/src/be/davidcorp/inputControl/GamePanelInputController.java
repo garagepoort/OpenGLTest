@@ -36,7 +36,7 @@ public class GamePanelInputController extends InputController {
 	@Override
 	public void on_E_Key_pressed() {
 		if (!gameFieldFacade.isGamePaused()) {
-			gameFieldFacade.useContructionInRangeOfPlayer();
+			gameFieldFacade.useInRangeOfPlayer();
 		}
 	}
 

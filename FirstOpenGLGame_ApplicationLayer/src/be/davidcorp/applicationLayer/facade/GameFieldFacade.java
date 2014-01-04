@@ -21,12 +21,15 @@ import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.LightToLightDTOMappe
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.OrganicSpriteDTOMapper;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.SpriteDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
+import be.davidcorp.component.ComponentType;
+import be.davidcorp.component.UsingComponent;
 import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
+import be.davidcorp.domain.sprite.organic.player.PlayerManager;
 import be.davidcorp.domain.utilities.PauseManager;
 import be.davidcorp.loaderSaver.repository.ConstructionSpriteRepository;
 import be.davidcorp.loaderSaver.repository.EnemyRepository;
@@ -76,8 +79,10 @@ public class GameFieldFacade {
 		return PauseManager.isGamePaused();
 	}
 
-	public void useContructionInRangeOfPlayer() {
-		getCurrentGameField().useContructionItem();
+	public void useInRangeOfPlayer() {
+		UsingComponent component = PlayerManager.getCurrentPlayer().getComponent(ComponentType.USING_COMPONENT);
+		component.setUsing(true);
+		getCurrentGameField().checkOnUseTriggers();
 	}
 
 	public float getXPosition() {

@@ -3,12 +3,10 @@ package be.davidcorp.domain.sprite;
 import static be.davidcorp.domain.trigger.TriggerWhen.ONDESTROY;
 import static be.davidcorp.domain.trigger.TriggerWhen.ONHEALTHGAIN;
 import static be.davidcorp.domain.trigger.TriggerWhen.ONHEALTHLOSS;
+import static com.google.common.collect.Maps.newHashMap;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
-
-import com.google.common.collect.Maps;
 
 import be.davidcorp.WindDirection;
 import be.davidcorp.component.Component;
@@ -16,6 +14,7 @@ import be.davidcorp.component.ComponentType;
 import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.trigger.Trigger;
+import be.davidcorp.domain.trigger.TriggerBuilder;
 import be.davidcorp.domain.trigger.TriggerWhen;
 import be.davidcorp.domain.trigger.Triggerable;
 import be.davidcorp.domain.utilities.sprite.SpriteMovingUtility;
@@ -25,7 +24,8 @@ import be.davidcorp.texture.TextureBunch;
 
 public abstract class Sprite extends Triggerable {
 
-	private Map<ComponentType, Component> componentsMap = Maps.newHashMap();
+	private Map<ComponentType, Component> componentsMap = newHashMap();
+	private Map<TriggerWhen, ArrayList<Trigger>> triggers = newHashMap();
 
 	private int ID;
 	private Color color;
@@ -40,7 +40,6 @@ public abstract class Sprite extends Triggerable {
 	private TextureBunch textureBunch;
 	private Vector directionVector = new Vector(new Point(0, 0, 0), new Point(0, 300, 0));
 
-	private Map<TriggerWhen, ArrayList<Trigger>> triggers = new HashMap<>();
 
 	private HitBox hitbox = new HitBox();
 
@@ -48,6 +47,7 @@ public abstract class Sprite extends Triggerable {
 
 	public Sprite(float x, float y, int width, int height) {
 		initializeSprite(x, y, width, height);
+		
 	}
 
 	public Sprite() {

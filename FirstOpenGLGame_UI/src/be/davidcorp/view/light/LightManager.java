@@ -65,21 +65,21 @@ public class LightManager {
 		}
 	}
 	private void traceLight(LightDTO lightDTO) {
-		Point p = lightDTO.getCenter();
+		Point centerOfLight = lightDTO.getCenter();
 		// LightTriangle lt = new LightTriangle(new Point(p.x-50, p.y+250, 0),
 		// new Point(p.x+50, p.y+250, 0), getPlayer().getCenter());
 		lightDTO.removeAllLightTriangles();
 		for (Segment segment : segments) {
-			double dx = 0.5 * (segment.p1.point.x + segment.p2.point.x) - p.x;
-			double dy = 0.5 * (segment.p1.point.y + segment.p2.point.y) - p.y;
+			double dx = 0.5 * (segment.p1.point.x + segment.p2.point.x) - centerOfLight.x;
+			double dy = 0.5 * (segment.p1.point.y + segment.p2.point.y) - centerOfLight.y;
 			
 			// NOTE: we only use this for comparison so we can use distance squared instead of distance
 			segment.distance = (float) (dx * dx + dy * dy);
 
 			// NOTE: future optimization: we could record the quadrant and the y/x or x/y ratio, 
 			//and sort by (quadrant,ratio), instead of calling atan2.
-			segment.p1.angle = (float) Math.atan2(segment.p1.point.y - p.y, segment.p1.point.x - p.x);
-			segment.p2.angle = (float) Math.atan2(segment.p2.point.y - p.y, segment.p2.point.x - p.x);
+			segment.p1.angle = (float) Math.atan2(segment.p1.point.y - centerOfLight.y, segment.p1.point.x - centerOfLight.x);
+			segment.p2.angle = (float) Math.atan2(segment.p2.point.y - centerOfLight.y, segment.p2.point.x - centerOfLight.x);
 
 			double dAngle = segment.p2.angle - segment.p1.angle;
 			if (dAngle <= -Math.PI) {
@@ -92,7 +92,7 @@ public class LightManager {
 			segment.p2.begin = !segment.p1.begin;
 		}
 		Collections.sort(endpoints);
-		sweep(360, p, lightDTO);
+		sweep(360, centerOfLight, lightDTO);
 	}
 
 	private void sweep(float maxAngle, Point center, LightDTO lightDTO) {

@@ -7,6 +7,7 @@ import java.util.Observer;
 
 import be.davidcorp.WindDirection;
 import be.davidcorp.component.HealthRegenerationComponent;
+import be.davidcorp.component.UsingComponent;
 import be.davidcorp.domain.mission.Mission;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.SpriteType;
@@ -39,6 +40,7 @@ public class Player extends OrganicSprite implements Observer {
 		flashLight = new Light(getCenter().x, getCenter().y, new Color(255, 246, 133), 150, false);
 		LineOfSight = new Light(getCenter().x, getCenter().y, new Color(255, 246, 133), 50, true);
 		addComponent(new HealthRegenerationComponent(5));
+		addComponent(new UsingComponent());
 	}
 
 	@Override

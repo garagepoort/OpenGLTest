@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import be.davidcorp.FileUtility;
+import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.item.Item;
@@ -17,10 +18,12 @@ import be.davidcorp.loaderSaver.mapper.stringSpriteMapper.StringToConstructionSp
 import be.davidcorp.loaderSaver.mapper.stringSpriteMapper.StringToEnemyMapper;
 import be.davidcorp.loaderSaver.mapper.stringSpriteMapper.StringToItemMapper;
 import be.davidcorp.loaderSaver.mapper.stringSpriteMapper.StringToLightMapper;
+import be.davidcorp.loaderSaver.mapper.stringSpriteMapper.StringToSpriteSpawnerMapper;
 import be.davidcorp.loaderSaver.repository.ConstructionSpriteRepository;
 import be.davidcorp.loaderSaver.repository.EnemyRepository;
 import be.davidcorp.loaderSaver.repository.ItemRepository;
 import be.davidcorp.loaderSaver.repository.LightRepository;
+import be.davidcorp.loaderSaver.repository.MiscRepository;
 
 public class SpriteFileLoader {
 
@@ -28,6 +31,7 @@ public class SpriteFileLoader {
 	private ArrayList<ConstructionSprite> constructionSprites = newArrayList();
 	private ArrayList<Item> items = newArrayList();
 	private ArrayList<Light> lights= newArrayList();
+	private ArrayList<Sprite> miscs= newArrayList();
 	
 	private File file;
 	private FileUtility fileUtility;
@@ -60,6 +64,7 @@ public class SpriteFileLoader {
 		new EnemyRepository().loadSprites(enemies);
 		new ItemRepository().loadSprites(items);
 		new LightRepository().loadSprites(lights);
+		new MiscRepository().loadSprites(miscs);
 		new ConstructionSpriteRepository().loadSprites(constructionSprites);
 	}
 	
@@ -75,6 +80,9 @@ public class SpriteFileLoader {
 		}
 		if (type.equals(SpriteType.LIGHT.toString())) {
 			lights.add(new StringToLightMapper().mapSprite(builder.toString()));
+		}
+		if (type.equals(SpriteType.MISC.toString())) {
+			miscs.add(new StringToSpriteSpawnerMapper().mapSprite(builder.toString()));
 		}
 	}
 

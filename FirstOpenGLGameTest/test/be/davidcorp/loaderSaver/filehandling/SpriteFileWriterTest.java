@@ -110,13 +110,12 @@ public class SpriteFileWriterTest {
 		String result = fileUtility.getFileContent(file);
 		assertThat(result).contains(CONSTRUCTION.toString());
 		assertThat(result).contains(SPRITETYPE + ":" + WALL);
-		assertThat(result).contains(SpriteProperty.USABLERANGE + ":" + 212);
 	}
 
 	private Sprite aWall() {
 		return new ConstructionSpriteBuilder()
-			.withUsableRange(212)
 			.withID(1)
+			.withSpriteType(SpriteType.WALL)
 			.build();
 	}
 
