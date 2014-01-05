@@ -29,7 +29,7 @@ public class ConstructionSpriteRepository implements SpriteRepository<Constructi
 	@Override
 	public ConstructionSprite createSprite(ConstructionSprite sprite) {
 		if(constructionSprites.containsKey(sprite.getID())){
-			throw new SpriteRepositoryException("A weapon with this ID already exists. The sprite given to this method cannot have an already existing id.");
+			throw new SpriteRepositoryException("A constructionsprite with this ID already exists. The sprite given to this method cannot have an already existing id.");
 		}
 		int id = IDGenerator.generateIdForSprites(constructionSprites);
 		sprite.setID(IDGenerator.generateIdForSprites(constructionSprites));

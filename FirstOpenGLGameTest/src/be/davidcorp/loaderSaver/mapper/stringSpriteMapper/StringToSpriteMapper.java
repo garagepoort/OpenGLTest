@@ -11,10 +11,8 @@ import be.davidcorp.component.TimeToLiveComponent;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.SpriteSpawner;
 import be.davidcorp.domain.sprite.SpriteType;
-import be.davidcorp.domain.sprite.construction.Door;
-import be.davidcorp.domain.sprite.construction.Wall;
-import be.davidcorp.domain.sprite.item.potion.HealthPotion;
-import be.davidcorp.domain.sprite.item.potion.StaminaPotion;
+import be.davidcorp.domain.sprite.construction.ConstructionSpriteFactory;
+import be.davidcorp.domain.sprite.item.ItemFactory;
 import be.davidcorp.domain.sprite.item.weapon.Pistol;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.EnemyFactory;
@@ -47,21 +45,19 @@ public abstract class StringToSpriteMapper<T extends Sprite> {
 			// TODO david haal IO-exception weg
 				switch (type) {
 					case HEALTHPOTION :
-						return new HealthPotion();
+						return ItemFactory.createHealthPotion(0, 0, 20);
 					case STAMINAPOTION :
-						return new StaminaPotion();
+						return ItemFactory.createStaminaPotion(0, 0, 20);
 					case ZOMBIE :
 						return EnemyFactory.createZombie(0, 0);
 					case SPIDER :
 						return EnemyFactory.createSpider(0, 0);
 					case WALL :
-						return new Wall();
+						return ConstructionSpriteFactory.createWall(0, 0, 1, 1);
 					case LIGHT :
 						return new Light();
 					case PISTOL :
 						return new Pistol();
-					case DOOR :
-						return new Door();
 					case SPRITESPAWNER :
 						return new SpriteSpawner();
 					default :

@@ -14,7 +14,7 @@ public class WeaponFacade {
 		try {
 			pistol = new Pistol(x, y, ammo);
 			pistol = (Pistol) weaponRepository.createSprite(pistol);
-			return ItemDTOMapper.mapPistolToItemDTO(pistol);
+			return ItemDTOMapper.mapItemToItemDTO(pistol);
 		} catch (Exception e) {
 			throw new ModelException(e);
 		}

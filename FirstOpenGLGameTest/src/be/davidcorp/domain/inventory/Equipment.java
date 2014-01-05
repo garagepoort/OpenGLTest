@@ -1,18 +1,16 @@
 package be.davidcorp.domain.inventory;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Observable;
 
-import be.davidcorp.domain.attribute.Attributer;
-import be.davidcorp.domain.attribute.Attributes;
+import be.davidcorp.domain.attribute.AttributeType;
 import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.item.weapon.Weapon;
 
-public class Equipment extends Observable implements Attributer {
+public class Equipment extends Observable  {
 	private Weapon weapon;
 	private Item accesoire1;
-	private HashMap<Attributes, Float> attributes = new HashMap<>();
+	private HashMap<AttributeType, Float> attributeType = new HashMap<>();
 
 	public void unequipItem(Item item) {
 		item.setOwner(null);
@@ -22,10 +20,10 @@ public class Equipment extends Observable implements Attributer {
 		notifyObservers();
 	}
 
-	@Override
-	public void setAttributes(HashMap<Attributes, Float> attributes) {
-		this.attributes = attributes;
-	}
+//	@Override
+//	public void setAttributes(HashMap<AttributeType, Float> attributeType) {
+//		this.attributeType = attributeType;
+//	}
 
 	public void setAccesoire1(Item a) {
 		this.accesoire1 = a;
@@ -33,25 +31,6 @@ public class Equipment extends Observable implements Attributer {
 		notifyObservers();
 	}
 
-	@Override
-	public HashMap<Attributes, Float> getAttributes() {
-
-		if (accesoire1 != null) {
-			for (Map.Entry<Attributes, Float> entry : getAttributes().entrySet()) {
-				if (attributes.containsKey(entry.getKey())) {
-					float v = attributes.get(entry.getKey());
-					v += (Float) (entry.getValue());
-					attributes.put((Attributes) entry.getKey(), v);
-				} else {
-					attributes.put((Attributes) entry.getKey(),
-							(Float) entry.getValue());
-				}
-				// it.remove(); // avoids a ConcurrentModificationException but
-				// emptys the map
-			}
-		}
-		return attributes;
-	}
 
 	public Item getAccesoire1() {
 		return accesoire1;

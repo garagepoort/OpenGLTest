@@ -8,9 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
-import be.davidcorp.domain.sprite.construction.Wall;
 import be.davidcorp.domain.sprite.item.Item;
-import be.davidcorp.domain.sprite.item.potion.HealthPotion;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 
@@ -67,7 +65,7 @@ public class StringToSpriteMapperTest {
 						+ "WIDTH:12\n"
 						+ "HEIGHT:13";
 		ConstructionSprite wall = new StringToConstructionSpriteMapper().mapSprite(construction);
-		assertThat(wall).isInstanceOf(Wall.class);
+		assertThat(wall).isInstanceOf(ConstructionSprite.class);
 		assertThat(wall.getID()).isEqualTo(1);
 		assertThat(wall.getX()).isEqualTo(10f);
 		assertThat(wall.getY()).isEqualTo(11f);
@@ -82,7 +80,7 @@ public class StringToSpriteMapperTest {
 						+ "X:10f\n"
 						+ "Y:11f";
 		Item item = new StringToItemMapper().mapSprite(itemString);
-		assertThat(item).isInstanceOf(HealthPotion.class);
+		assertThat(item).isInstanceOf(Item.class);
 		assertThat(item.getID()).isEqualTo(1);
 		assertThat(item.getX()).isEqualTo(10f);
 		assertThat(item.getY()).isEqualTo(11f);

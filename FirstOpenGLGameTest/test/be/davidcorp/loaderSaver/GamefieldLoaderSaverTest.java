@@ -5,13 +5,13 @@ import org.junit.Test;
 
 import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
-import be.davidcorp.domain.sprite.item.potion.HealthPotion;
+import be.davidcorp.domain.sprite.item.Item;
+import be.davidcorp.domain.sprite.item.ItemFactory;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.test.builder.ConstructionSpriteBuilder;
 import be.davidcorp.domain.test.builder.EnemyBuilder;
 import be.davidcorp.domain.test.builder.GamefieldTestBuilder;
-import be.davidcorp.domain.test.builder.HealthPotionTestBuilder;
 import be.davidcorp.domain.test.builder.LightTestBuilder;
 
 
@@ -49,10 +49,10 @@ public class GamefieldLoaderSaverTest {
 			.build();
 	}
 	
-	private HealthPotion aHealthPotionWithID(int id) {
-		return new HealthPotionTestBuilder()
-		.withID(id)
-		.build();
+	private Item aHealthPotionWithID(int id) {
+		Item createHealthPotion = ItemFactory.createHealthPotion(10, 10, 100);
+		createHealthPotion.setID(id);
+		return createHealthPotion;
 	}
 
 	private Enemy aZombieWithID(int id) {

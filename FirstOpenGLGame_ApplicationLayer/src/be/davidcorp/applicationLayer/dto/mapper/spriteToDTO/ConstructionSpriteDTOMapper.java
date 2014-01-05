@@ -5,32 +5,25 @@ import java.util.List;
 
 import be.davidcorp.applicationLayer.dto.ConstructionSpriteDTO;
 import be.davidcorp.applicationLayer.dto.mapper.ConstructionType;
-import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
-import be.davidcorp.domain.sprite.construction.Door;
-import be.davidcorp.domain.sprite.construction.Wall;
+import be.davidcorp.domain.sprite.construction.ConstructionSpriteFactory;
 
 public class ConstructionSpriteDTOMapper {
 
-	public static ConstructionSpriteDTO mapWallToConstructionSpriteDTO(Wall wall){
-		ConstructionSpriteDTO constructionSpriteDTO = new ConstructionSpriteDTO(ConstructionType.WALL);
-		mapConstructionSprite(constructionSpriteDTO, wall);
+	public static ConstructionSpriteDTO mapConstructionSpriteToConstructionSpriteDTO(ConstructionSprite constructionSprite){
+		ConstructionType constructionType = ConstructionType.valueOf(constructionSprite.getType().toString());
+		ConstructionSpriteDTO constructionSpriteDTO = new ConstructionSpriteDTO(constructionType);
+		mapConstructionSprite(constructionSpriteDTO, constructionSprite);
 		return constructionSpriteDTO;
 	}
 	
-	public static ConstructionSpriteDTO mapDoorToConstructionSpriteDTO(Door door){
-		ConstructionSpriteDTO constructionSpriteDTO = new ConstructionSpriteDTO(ConstructionType.DOOR);
-		mapConstructionSprite(constructionSpriteDTO, door);
-		return constructionSpriteDTO;
-	}
-	
-	public static Wall mapConstructionSpriteDTOToWall(ConstructionSpriteDTO constructionSpriteDTO) {
-		if(constructionSpriteDTO.getConstructionSpriteType() != ConstructionType.WALL){
-			throw new MapperException("The type does not equal Wall");
+	public static ConstructionSprite mapConstructionSpriteDTOToConstructionSprite(ConstructionSpriteDTO constructionSpriteDTO) {
+		ConstructionSprite constructionSprite = null;
+		if(constructionSpriteDTO.getConstructionSpriteType() == ConstructionType.WALL){
+			constructionSprite = ConstructionSpriteFactory.createWall(0, 0, 1, 1);
 		}
-		Wall wall = new Wall();
-		mapConstructionSpriteDTO(wall, constructionSpriteDTO);
-		return wall;
+		mapConstructionSpriteDTO(constructionSprite, constructionSpriteDTO);
+		return constructionSprite;
 	}
 
 	private static void mapConstructionSprite(ConstructionSpriteDTO spriteDTO, ConstructionSprite sprite) {
@@ -41,38 +34,13 @@ public class ConstructionSpriteDTOMapper {
 	private static void mapConstructionSpriteDTO(ConstructionSprite constructionSprite, ConstructionSpriteDTO spriteDTO)  {
 		SpriteDTOMapper.mapSpriteDTOToSprite(constructionSprite, spriteDTO);
 	}
-
-	public List<ConstructionSpriteDTO> mapWallsToConstructionSpriteDTOs(List<Wall> sprites) {
+	
+	public static List<ConstructionSpriteDTO> mapConstructionSpritesToDTOs(List<ConstructionSprite> constructionItems) {
 		ArrayList<ConstructionSpriteDTO> dtos = new ArrayList<>();
-		for(Wall wall : sprites){
-			dtos.add(mapWallToConstructionSpriteDTO(wall));
+		for(ConstructionSprite constructionSprite : constructionItems){
+			dtos.add(mapConstructionSpriteToConstructionSpriteDTO(constructionSprite));
 		}
 		return dtos;
-	}
-	
-	public static List<ConstructionSpriteDTO> doAutoMappingForConstructionSprites(List<ConstructionSprite> constructionSprites)  {
-		ArrayList<ConstructionSpriteDTO> result = new ArrayList<ConstructionSpriteDTO>();
-		for (ConstructionSprite constructionSprite : constructionSprites) {
-			ConstructionSpriteDTO constructionSpriteDTO = doAutoMappingForConstructionSprite(constructionSprite);
-			result.add(constructionSpriteDTO);
-		}
-		return result;
-	}
-	
-	
-	
-	public static ConstructionSpriteDTO doAutoMappingForConstructionSprite(ConstructionSprite constructionSprite)  {
-		ConstructionSpriteDTO constructionSpriteDTO = null;
-		if(constructionSprite instanceof Wall){
-			constructionSpriteDTO = ConstructionSpriteDTOMapper.mapWallToConstructionSpriteDTO((Wall) constructionSprite);
-		}
-		if(constructionSprite instanceof Door){
-			constructionSpriteDTO = ConstructionSpriteDTOMapper.mapDoorToConstructionSpriteDTO((Door) constructionSprite);
-		}
-		if(constructionSpriteDTO == null){
-			throw new MapperException("No mapping found for: " + constructionSprite.getClass().getCanonicalName());
-		}
-		return constructionSpriteDTO;
 	}
 	
 }

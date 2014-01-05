@@ -2,7 +2,6 @@ package be.davidcorp.domain.sprite.item.weapon;
 
 import static be.davidcorp.domain.sprite.SpriteType.ROCKET;
 import be.davidcorp.domain.sprite.SpriteType;
-import be.davidcorp.domain.sprite.organic.OrganicSprite;
 import be.davidcorp.texture.TextureBunch;
 
 public class Rocket extends Ammo {
@@ -13,12 +12,6 @@ public class Rocket extends Ammo {
 		setSpeed(2f);
 		setSpeed(2f);
 		setDamage(50000);
-	}
-
-	@Override
-	public void useItem(OrganicSprite organicSprite) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

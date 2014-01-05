@@ -7,10 +7,9 @@ import static org.mockito.Mockito.when;
 import org.junit.Test;
 
 import be.davidcorp.applicationLayer.dto.ItemDTO;
-import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.domain.sprite.HitBox;
+import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.item.Item;
-import be.davidcorp.domain.sprite.item.potion.HealthPotion;
 import be.davidcorp.metric.Point;
 
 public class ItemToItemDTOMapperTest {
@@ -34,7 +33,7 @@ public class ItemToItemDTOMapperTest {
 	@Test
 	public void givenAHealtPotion_whenAutoMapping_thenMapCorrectly() {
 		Item item = mockItem();
-		ItemDTO dto = ItemDTOMapper.doAutoMappingForItem(item);
+		ItemDTO dto = ItemDTOMapper.mapItemToItemDTO(item);
 		
 		assertEquals(ID, dto.getId());
 		
@@ -51,12 +50,6 @@ public class ItemToItemDTOMapperTest {
 		assertEquals(INFOTEKST, dto.getInfoTekst());
 	}
 	
-	@Test(expected = MapperException.class)
-	public void givenAnUnspecifiedItem_whenAutoMapping_thenThrowMappingException() {
-		Item item = mock(Item.class);
-		ItemDTOMapper.doAutoMappingForItem(item);
-	}
-
 	private Item mockItem() {
 		HitBox hitBox = mock(HitBox.class);
 		when(hitBox.getDownLeftPoint()).thenReturn(DOWNLEFTPOINT);
@@ -64,7 +57,7 @@ public class ItemToItemDTOMapperTest {
 		when(hitBox.getDownRightPoint()).thenReturn(DOWNRIGHTPOINT);
 		when(hitBox.getUpperRightPoint()).thenReturn(UPPERRIGHTPOINT);
 		
-		HealthPotion item = mock(HealthPotion.class);
+		Item item = mock(Item.class);
 		when(item.getHitBox()).thenReturn(hitBox);
 		
 		when(item.getID()).thenReturn(ID);
@@ -74,6 +67,8 @@ public class ItemToItemDTOMapperTest {
 		when(item.getY()).thenReturn(Y);
 		when(item.getWidth()).thenReturn(WIDTH);
 		when(item.getHeight()).thenReturn(HEIGHT);
+		
+		when(item.getType()).thenReturn(SpriteType.HEALTHPOTION);
 
 
 		when(item.getInfoText()).thenReturn(INFOTEKST);

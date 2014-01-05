@@ -3,7 +3,8 @@ package be.davidcorp.applicationLayer.facade;
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ItemDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
-import be.davidcorp.domain.sprite.item.potion.HealthPotion;
+import be.davidcorp.domain.sprite.item.Item;
+import be.davidcorp.domain.sprite.item.ItemFactory;
 import be.davidcorp.loaderSaver.repository.ItemRepository;
 
 public class PotionFacade {
@@ -12,9 +13,9 @@ public class PotionFacade {
 	
 	public ItemDTO createHealthPotion(float x, float y)  {
 		try {
-			HealthPotion healthPotion = new HealthPotion(x, y);
+			Item healthPotion = ItemFactory.createHealthPotion(x, y, 20);
 			itemRepository.createSprite(healthPotion);
-			return ItemDTOMapper.mapHealthPotionToItemDTO(healthPotion);
+			return ItemDTOMapper.mapItemToItemDTO(healthPotion);
 		} catch (Exception e) {
 			throw new ModelException(e);
 		}

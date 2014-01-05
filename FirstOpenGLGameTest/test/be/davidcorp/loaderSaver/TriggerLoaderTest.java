@@ -14,7 +14,8 @@ import org.mockito.MockitoAnnotations;
 
 import be.davidcorp.FileUtility;
 import be.davidcorp.domain.sprite.Color;
-import be.davidcorp.domain.sprite.construction.Wall;
+import be.davidcorp.domain.sprite.construction.ConstructionSprite;
+import be.davidcorp.domain.sprite.construction.ConstructionSpriteFactory;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.trigger.Trigger;
 import be.davidcorp.domain.trigger.TriggerWhen;
@@ -52,7 +53,7 @@ public class TriggerLoaderTest {
 	@Test
 	public void givenAWallAndALight_whenTriggersLoaded_thenTriggerOnWallLinkedToLight() throws IOException{
 		//given
-		Wall wall = new Wall(0, 0, 1, 1);
+		ConstructionSprite wall = ConstructionSpriteFactory.createWall(0, 0, 1, 1);
 		Light light = new Light(0, 0, new Color(0, 0, 255), 10, true);
 		
 		when(defaultSpriteRepository.getSprite(1)).thenReturn(wall);

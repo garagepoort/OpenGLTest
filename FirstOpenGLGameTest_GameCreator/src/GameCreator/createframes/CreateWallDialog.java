@@ -113,8 +113,7 @@ public class CreateWallDialog extends CreateDialog implements MouseListener {
 			if (event.getSource() == createButton) {
 				ColorDTO color = getPickedColor();
 				initializeWallDTO(color);
-
-				constructionSpriteDTO = new ConstructionSpriteFacade().createWall(constructionSpriteDTO);
+				constructionSpriteDTO = new ConstructionSpriteFacade().createConstructionSprite(constructionSpriteDTO);
 				gameFieldFacade.addConstructionSpriteToWorld(constructionSpriteDTO.getId());
 				FrameFacade.closeCreateDialog(CreateWallDialog.this);
 			} else if (event.getSource() == colorPickerButton) {

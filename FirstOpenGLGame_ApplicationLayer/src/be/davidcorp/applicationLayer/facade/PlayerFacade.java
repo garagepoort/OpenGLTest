@@ -184,7 +184,7 @@ public class PlayerFacade {
 	
 	public ItemDTO getPlayerWeapon() {
 		if(getCurrentPlayer().getEquippedWeapon() == null) return null;
-		return ItemDTOMapper.doAutoMappingForItem(getCurrentPlayer().getEquippedWeapon());
+		return ItemDTOMapper.mapItemToItemDTO(getCurrentPlayer().getEquippedWeapon());
 	}
 
 }

@@ -1,6 +1,7 @@
 package be.davidcorp.domain.game;
 
 import static be.davidcorp.domain.game.GameFieldManager.getCurrentGameField;
+import static be.davidcorp.domain.sprite.construction.ConstructionSpriteFactory.createWall;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newConcurrentMap;
 
@@ -13,7 +14,6 @@ import java.util.Map;
 import be.davidcorp.domain.exception.GameFieldException;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
-import be.davidcorp.domain.sprite.construction.Wall;
 import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.item.weapon.Ammo;
 import be.davidcorp.domain.sprite.light.Light;
@@ -65,10 +65,10 @@ public class Gamefield {
 	}
 
 	private void addSurroundingWalls() {
-		constructionSprites.put(-1, new Wall(0, 0, width, 10));
-		constructionSprites.put(-2, new Wall(width, 0, 10, height));
-		constructionSprites.put(-3, new Wall(0, height, width, 10));
-		constructionSprites.put(-4, new Wall(0, 0, 10, height));
+		constructionSprites.put(-1, createWall(0, 0, width, 10));
+		constructionSprites.put(-2, createWall(width, 0, 10, height));
+		constructionSprites.put(-3, createWall(0, height, width, 10));
+		constructionSprites.put(-4, createWall(0, 0, 10, height));
 	}
 
 	public void update(float secondsMovedInGame)  {

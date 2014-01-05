@@ -149,6 +149,10 @@ public abstract class Sprite extends Triggerable {
 	public boolean isAlive() {
 		return alive;
 	}
+	
+	public void setAlive(boolean alive) {
+		this.alive = alive;
+	}
 
 	public void kill() {
 		this.alive = false;

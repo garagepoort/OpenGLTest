@@ -4,8 +4,8 @@ import static be.davidcorp.domain.sprite.organic.player.PlayerManager.getCurrent
 
 import java.util.ArrayList;
 
+import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.item.Item;
-import be.davidcorp.domain.sprite.item.potion.HealthPotion;
 
 import com.google.common.collect.Lists;
 
@@ -18,7 +18,7 @@ public class FindHealthCriteria implements AcceptationCriteria{
 		for (Item[] items2 : items) {
 			ArrayList<Item> itemss = Lists.newArrayList(items2);
 			for (Item item : itemss) {
-				if(item instanceof HealthPotion) healtcounter++;
+				if(item.getType() == SpriteType.HEALTHPOTION) healtcounter++;
 			}
 		}
 		return healtcounter>=4;

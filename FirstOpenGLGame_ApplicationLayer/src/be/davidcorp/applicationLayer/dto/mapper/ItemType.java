@@ -5,5 +5,5 @@ public enum ItemType {
 	HEALTHPOTION,
 	STAMINAPOTION,
 	PISTOL,
-	AX;
+	AX, HEALTNECKLACE;
 }

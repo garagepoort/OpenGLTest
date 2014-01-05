@@ -111,11 +111,11 @@ public class GameFieldFacade {
 	}
 
 	public List<ItemDTO> getItemsThatCanBePickedUpByPlayer()  {
-		return ItemDTOMapper.doAutoMappingForItems(getCurrentGameField().getItemsThatCanBePickedUpByPlayer());
+		return ItemDTOMapper.mapItemsToItemDTOs(getCurrentGameField().getItemsThatCanBePickedUpByPlayer());
 	}
 
 	public List<ConstructionSpriteDTO> getConstructionSpritesFromWorld()  {
-		return ConstructionSpriteDTOMapper.doAutoMappingForConstructionSprites(getCurrentGameField().getConstructionItems());
+		return ConstructionSpriteDTOMapper.mapConstructionSpritesToDTOs(getCurrentGameField().getConstructionItems());
 	}
 
 	public void removeConstructionSpriteFromWorld(int id) {
@@ -151,7 +151,7 @@ public class GameFieldFacade {
 	}
 
 	public List<ItemDTO> getItemsOnGroundInWorld()  {
-		return ItemDTOMapper.doAutoMappingForItems(getCurrentGameField().getGroundItems());
+		return ItemDTOMapper.mapItemsToItemDTOs(getCurrentGameField().getGroundItems());
 	}
 
 	public void initializeGameField(GamefieldDTO gamefieldDTO) {
@@ -223,11 +223,11 @@ public class GameFieldFacade {
 	public void updateSpriteInGamefield(SpriteDTO spriteDTO)  {
 		try {
 			if (spriteDTO instanceof ConstructionSpriteDTO) {
-				ConstructionSprite constructionSprite = ConstructionSpriteDTOMapper.mapConstructionSpriteDTOToWall((ConstructionSpriteDTO) spriteDTO);
+				ConstructionSprite constructionSprite = ConstructionSpriteDTOMapper.mapConstructionSpriteDTOToConstructionSprite((ConstructionSpriteDTO) spriteDTO);
 				getCurrentGameField().updateConstructionSprite(constructionSprite);
 			}
 			if (spriteDTO instanceof ItemDTO) {
-				Item item = ItemDTOMapper.doAutoMappingForItemDTO((ItemDTO) spriteDTO);
+				Item item = ItemDTOMapper.mapItemDTOToItem((ItemDTO) spriteDTO);
 				getCurrentGameField().updateGroundItem(item);
 			}
 			if (spriteDTO instanceof LightDTO) {

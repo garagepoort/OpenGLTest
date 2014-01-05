@@ -35,7 +35,7 @@ public abstract class Weapon extends Item{
 		}
 	}
 	
-	@Override
+
 	public void useItem(OrganicSprite organicSprite) {
 		if(organicSprite instanceof Player){
 			Player p = (Player) organicSprite;

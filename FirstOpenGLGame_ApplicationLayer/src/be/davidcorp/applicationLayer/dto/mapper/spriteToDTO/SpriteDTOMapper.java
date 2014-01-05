@@ -18,7 +18,7 @@ public class SpriteDTOMapper{
 	public static SpriteDTO doAutoMappingForSprite(Sprite sprite) {
 		SpriteDTO spriteDTO = null;
 		if(sprite instanceof Item){
-			spriteDTO = ItemDTOMapper.doAutoMappingForItem((Item) sprite);
+			spriteDTO = ItemDTOMapper.mapItemToItemDTO((Item) sprite);
 		}
 		if(sprite instanceof Enemy){
 			spriteDTO = OrganicSpriteDTOMapper.mapEnemyToEnemyDTO((Enemy) sprite);
@@ -27,7 +27,7 @@ public class SpriteDTOMapper{
 			spriteDTO = LightToLightDTOMapper.mapLightToDTO((Light) sprite);
 		}
 		if(sprite instanceof ConstructionSprite){
-			spriteDTO = ConstructionSpriteDTOMapper.doAutoMappingForConstructionSprite((ConstructionSprite) sprite);
+			spriteDTO = ConstructionSpriteDTOMapper.mapConstructionSpriteToConstructionSpriteDTO((ConstructionSprite) sprite);
 		}
 		if(spriteDTO == null){
 			throw new MapperException("No mapping found for sprite: "+ sprite.getClass().getCanonicalName());

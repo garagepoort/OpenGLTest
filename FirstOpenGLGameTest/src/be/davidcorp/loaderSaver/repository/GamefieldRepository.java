@@ -13,8 +13,10 @@ import java.util.Map.Entry;
 
 import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.domain.sprite.Color;
-import be.davidcorp.domain.sprite.construction.Wall;
-import be.davidcorp.domain.sprite.item.potion.HealthPotion;
+import be.davidcorp.domain.sprite.construction.ConstructionSprite;
+import be.davidcorp.domain.sprite.construction.ConstructionSpriteFactory;
+import be.davidcorp.domain.sprite.item.Item;
+import be.davidcorp.domain.sprite.item.ItemFactory;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.sprite.organic.enemy.EnemyFactory;
@@ -32,8 +34,8 @@ public class GamefieldRepository {
 		gamefield.setID(6);
 
 		Enemy zombie = EnemyFactory.createZombie(200, 200);
-		HealthPotion healthPotion = new HealthPotion(500, 500);
-		Wall wall = new Wall(100, 100, 100, 100);
+		Item healthPotion = ItemFactory.createHealthPotion(500, 500, 100);
+		ConstructionSprite wall = ConstructionSpriteFactory.createWall(100, 100, 100, 100);
 		Light light = new Light(200, 200, new Color(255, 0, 0), 200, true);
 		Light secondLight = new Light(400, 400, new Color(0, 255, 0), 200, true);
 

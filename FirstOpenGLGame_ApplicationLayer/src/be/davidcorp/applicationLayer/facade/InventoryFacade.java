@@ -19,7 +19,7 @@ public class InventoryFacade {
 		for (Item[] items2 : items) {
 			List<Item> temp = new ArrayList<>(Arrays.asList(items2));
 			temp.removeAll(Collections.singleton(null));
-			itemdtos.addAll(ItemDTOMapper.doAutoMappingForItems(temp));
+			itemdtos.addAll(ItemDTOMapper.mapItemsToItemDTOs(temp));
 		}
 		return itemdtos;
 	}

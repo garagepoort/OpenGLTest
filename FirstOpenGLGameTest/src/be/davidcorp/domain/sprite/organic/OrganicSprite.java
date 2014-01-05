@@ -1,12 +1,14 @@
 package be.davidcorp.domain.sprite.organic;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import be.davidcorp.domain.TextureBunchFactory;
-import be.davidcorp.domain.attribute.Attributes;
+import be.davidcorp.domain.attribute.Attribute;
 import be.davidcorp.domain.inventory.Equipment;
 import be.davidcorp.domain.inventory.Inventory;
 import be.davidcorp.domain.skill.Skill;
@@ -19,13 +21,13 @@ import be.davidcorp.metric.Vector;
 public abstract class OrganicSprite extends Sprite implements Observer {
 
 	@SuppressWarnings("rawtypes")
-	private ArrayList<Skill> skills = new ArrayList<>();
+	private ArrayList<Skill> skills = newArrayList();
 	private Inventory inventory = new Inventory();
 	private Equipment equipment = new Equipment();
 	private int stamina = 1000;
 	private int maxStamina = 1000;
 	private int staminaRegen;
-	private HashMap<Attributes, Float> attributes = new HashMap<>();
+	private List<Attribute> attributes = newArrayList();
 	
 	public OrganicSprite(){
 		super();
@@ -45,18 +47,9 @@ public abstract class OrganicSprite extends Sprite implements Observer {
 
 
 	private void initialize(){
-		initializeAtributes();
 		equipment.addObserver(this);
 	}
 	
-	private void initializeAtributes() {
-		attributes = new HashMap<>();
-		for (Attributes attribute : Attributes.values()) {
-			attributes.put(attribute, 0f);
-		}
-	}
-
-
 	@Override
 	public void updateSprite(float secondsMovedInGame) {
 		super.updateSprite(secondsMovedInGame);
@@ -72,19 +65,8 @@ public abstract class OrganicSprite extends Sprite implements Observer {
 		}
 	}
 
-	private void updateAttributes() {
-		initializeAtributes();
-		HashMap<Attributes, Float> att = equipment.getAttributes();
-		for (Attributes a : Attributes.values()) {
-			if (att.containsKey(a)) {
-				attributes.put(a, att.get(a));
-			}
-		}
-	}
-
 	@Override
 	public void update(Observable o, Object arg) {
-		updateAttributes();
 		setTextureBunch(TextureBunchFactory.createTextureBunch(this));
 	}
 
@@ -161,7 +143,7 @@ public abstract class OrganicSprite extends Sprite implements Observer {
 	}
 
 	public int getMaxStamina() {
-		return (int) (maxStamina + attributes.get(Attributes.STAMINA));
+		return (int) (maxStamina);
 	}
 
 	public void setMaxStamina(int maxStamina) {
@@ -171,12 +153,12 @@ public abstract class OrganicSprite extends Sprite implements Observer {
 	@Override
 	public int getMaxHealthPoints() {
 		int m = super.getMaxHealthPoints();
-		return (int) (m + attributes.get(Attributes.HEALTH));
+		return (int) (m);
 	}
 
 	public float getSpeed() {
 		float s = super.getSpeed();
-		return s + attributes.get(Attributes.SPEED);
+		return s;
 	}
 
 	public void addStamina(int stamina) {

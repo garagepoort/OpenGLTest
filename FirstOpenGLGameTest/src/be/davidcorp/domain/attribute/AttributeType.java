@@ -1,6 +1,7 @@
 package be.davidcorp.domain.attribute;
 
-public enum Attributes {
+
+public enum AttributeType {
 	HEALTH,
 	STAMINA,
 	ATTACKSPEED,

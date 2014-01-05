@@ -5,6 +5,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import java.util.List;
 
 import be.davidcorp.component.Component;
+import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.SpriteType;
 
@@ -19,7 +20,9 @@ public abstract class SpriteBuilder<SPRITE extends Sprite> {
 	private int maxHealth = 100;
 	private SpriteType spriteType;
 	private List<Component> components = newArrayList();
-
+	private boolean alive = true;
+	private Color color;
+	
 	protected abstract SPRITE createInstance();
 
 	public SPRITE build() {
@@ -38,6 +41,8 @@ public abstract class SpriteBuilder<SPRITE extends Sprite> {
 		sprite.setHealthPoints(health);
 		sprite.setSpeed(speed);
 		sprite.setSpriteType(spriteType);
+		sprite.setAlive(alive);
+		sprite.setColor(color);
 		for(Component component : components){
 			sprite.addComponent(component);
 		}
@@ -85,6 +90,16 @@ public abstract class SpriteBuilder<SPRITE extends Sprite> {
 
 	public SpriteBuilder<SPRITE> withSpriteType(SpriteType spriteType) {
 		this.spriteType = spriteType;
+		return this;
+	}
+	
+	public SpriteBuilder<SPRITE> withAlive(boolean alive) {
+		this.alive = alive;
+		return this;
+	}
+	
+	public SpriteBuilder<SPRITE> withColor(Color color) {
+		this.color = color;
 		return this;
 	}
 	
