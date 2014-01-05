@@ -18,7 +18,7 @@ public abstract class Ammo extends Item {
 		addComponent(new TimeToLiveComponent(TimeToLive));
 		setWidth(width);
 		setHeight(height);
-		setColor(new Color(0, 1, 0));
+		setColor(new Color(0, 255, 0));
 	}
 
 	public void launch(Point p) {

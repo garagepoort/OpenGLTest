@@ -7,6 +7,8 @@ import java.util.Map;
 
 import be.davidcorp.domain.sprite.light.Light;
 
+import com.google.common.collect.Lists;
+
 public class LightRepository implements SpriteRepository<Light> {
 
 	private static Map<Integer, Light> lights = newConcurrentMap();
@@ -43,5 +45,10 @@ public class LightRepository implements SpriteRepository<Light> {
 		for (Light light : sprites) {
 			lights.put(light.getID(), light);
 		}
+	}
+	
+	@Override
+	public List<Light> getAllSprites() {
+		return Lists.newArrayList(lights.values());
 	}
 }

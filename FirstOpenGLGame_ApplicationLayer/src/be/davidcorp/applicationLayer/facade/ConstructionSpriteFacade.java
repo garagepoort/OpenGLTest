@@ -22,7 +22,6 @@ public class ConstructionSpriteFacade {
 	}
 
 	public void deleteConstructionSprite(int id) {
-		// TODO Auto-generated method stub
-		
+		throw new RuntimeException("Not yet implemented");
 	}
 }

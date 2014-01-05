@@ -182,16 +182,25 @@ public class GameFieldFacade {
 
 	public void addConstructionSpriteToWorld(int id) {
 		ConstructionSprite constructionSprite = constructionSpriteRepository.getSprite(id);
+		if(constructionSprite == null){
+			throw new ModelException("A constructionSprite with this id doesn't exist.");
+		}
 		getCurrentGameField().addConstructionItem(constructionSprite);
 	}
 
 	public void addEnemyToWorld(int id)  {
 		Enemy enemy = enemyRepository.getSprite(id);
+		if(enemy == null){
+			throw new ModelException("An enemy with this id doesn't exist.");
+		}
 		getCurrentGameField().addEnemyToWorld(enemy);
 	}
 
 	public void addLightToWorld(int id) {
 		Light light = lightRepository.getSprite(id);
+		if(light == null){
+			throw new ModelException("A light with this id doesn't exist.");
+		}
 		getCurrentGameField().addLight(light);
 	}
 
@@ -231,7 +240,7 @@ public class GameFieldFacade {
 				getCurrentGameField().updateGroundItem(item);
 			}
 			if (spriteDTO instanceof LightDTO) {
-				Light light = LightToLightDTOMapper.mapDTOToLight((LightDTO) spriteDTO);
+				Light light = LightToLightDTOMapper.mapLightDTOToLight((LightDTO) spriteDTO);
 				getCurrentGameField().updateLight(light);
 			}
 			if (spriteDTO instanceof EnemyDTO) {
@@ -241,5 +250,10 @@ public class GameFieldFacade {
 		} catch (Exception e) {
 			throw new ModelException(e);
 		}
+	}
+
+	public boolean isDTOCollidingWithConstructionItem(SpriteDTO selectedSprite) {
+		Sprite sprite = SpriteDTOMapper.doAutoMappingForSpriteDTO(selectedSprite);
+		return getCurrentGameField().spriteAgainstAnyConstructionItem(sprite);
 	}
 }

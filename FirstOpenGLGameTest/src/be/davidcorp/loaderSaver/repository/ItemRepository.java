@@ -7,6 +7,8 @@ import java.util.Map;
 
 import be.davidcorp.domain.sprite.item.Item;
 
+import com.google.common.collect.Lists;
+
 public class ItemRepository implements SpriteRepository<Item>{
 
 	private static Map<Integer, Item> items = newConcurrentMap();
@@ -39,5 +41,10 @@ public class ItemRepository implements SpriteRepository<Item>{
 	@Override
 	public void emptyRepository(){
 		items.clear();
+	}
+	
+	@Override
+	public List<Item> getAllSprites() {
+		return Lists.newArrayList(items.values());
 	}
 }

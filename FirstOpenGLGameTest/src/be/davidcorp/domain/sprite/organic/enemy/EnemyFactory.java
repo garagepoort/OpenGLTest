@@ -1,5 +1,7 @@
 package be.davidcorp.domain.sprite.organic.enemy;
 
+import static be.davidcorp.domain.sprite.SpriteType.SPIDER;
+import static be.davidcorp.domain.sprite.SpriteType.ZOMBIE;
 import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.test.builder.EnemyBuilder;
 import be.davidcorp.texture.TextureBunch;
@@ -18,7 +20,7 @@ public class EnemyFactory {
 			.withMaxHealth(30000)
 			.withWidth(32)
 			.withHeight(32)
-			.withSpriteType(SpriteType.ZOMBIE)
+			.withSpriteType(ZOMBIE)
 			.build();
 		enemy.setTextureBunch(new TextureBunch().withDefaultTexture("resources/images/enemies/zombie/zombieStanding.png"));
 		return enemy;
@@ -36,9 +38,15 @@ public class EnemyFactory {
 		.withMaxHealth(5000)
 		.withWidth(32)
 		.withHeight(32)
-		.withSpriteType(SpriteType.SPIDER)
+		.withSpriteType(SPIDER)
 		.build();
 		enemy.setTextureBunch(new TextureBunch().withDefaultTexture("resources/images/enemies/spider.png"));
 		return enemy;
+	}
+	
+	public static Enemy createFromType(float x, float y, SpriteType spriteType){
+		if(spriteType == SPIDER) return createSpider(x, y);
+		if(spriteType == ZOMBIE) return createZombie(x, y);
+		throw new RuntimeException("No enemy for type: " + spriteType);
 	}
 }

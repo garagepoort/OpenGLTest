@@ -28,6 +28,7 @@ import GameCreator.panels.SelectedSpritePanel;
 import GameCreator.panels.SpriteTreePanel;
 import be.davidcorp.applicationLayer.dto.GamefieldDTO;
 import be.davidcorp.applicationLayer.dto.SpriteDTO;
+import be.davidcorp.applicationLayer.facade.GameFacade;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.view.game.GameLoop;
 
@@ -56,7 +57,6 @@ public class EditGameFrame extends JFrame implements MouseListener, Observer {
 		}
 		field = gameFieldFacade.getGamefieldWithName(fieldName);
 
-		
 		setSize(new Dimension(1600, 800));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -64,7 +64,7 @@ public class EditGameFrame extends JFrame implements MouseListener, Observer {
 		initComponents();
 		addComponents();
 		initHandlers();
-		
+
 		createDisplay(field);
 
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -160,17 +160,9 @@ public class EditGameFrame extends JFrame implements MouseListener, Observer {
 		if (e.getSource() == openGLFrameButton && openGLFrameButton.isEnabled()) {
 			createDisplay(field);
 		}
-		//
-		// if (e.getSource() == saveButton) {
-		// PauseManager.setGamePaused(true);
-		// field.setName(fieldName);
-		// try {
-		// GameFieldCRUD.saveGameField(field);
-		// } catch (DatabaseException e1) {
-		// e1.printStackTrace();
-		// }
-		// PauseManager.setGamePaused(false);
-		// }
+		if (e.getSource() == saveButton) {
+			new GameFacade().saveTheGame();
+		}
 
 		// if (e.getSource() == loadButton) {
 		// loadGameField();

@@ -1,7 +1,10 @@
 package be.davidcorp.loaderSaver.filehandling;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -26,10 +29,10 @@ public class SpriteFileWriter {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void saveSprites(List<Sprite> sprites) {
+	public void saveSprites(List<? extends Sprite> sprites) throws IOException {
 		PrintWriter printWriter = null;
 		try {
-			printWriter = new PrintWriter(file);
+			printWriter = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
 			for (Sprite sprite : sprites) {
 				String spriteString = getMapperForSprite(sprite).buildStringFromSprite(sprite);
 				printWriter.println(spriteString);

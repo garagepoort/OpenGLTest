@@ -4,34 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.davidcorp.applicationLayer.dto.EnemyDTO;
+import be.davidcorp.applicationLayer.dto.mapper.EnemyType;
+import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
+import be.davidcorp.domain.sprite.organic.enemy.EnemyFactory;
 
 public class OrganicSpriteDTOMapper {
 
-//	public static Zombie mapEnemyDTOToZombie(EnemyDTO enemyDTO)  {
-//		if (enemyDTO.enemyType != EnemyType.ZOMBIE) {
-//			throw new MapperException("This is not a ZOMBIE type");
-//		}
-//		Zombie zombie = new Zombie(enemyDTO.getX(), enemyDTO.getY());
-//		SpriteDTOMapper.mapSpriteDTOToSprite(zombie, enemyDTO);
-//		return zombie;
-//	}
-//
-//	public static Spider mapEnemyDTOToSpider(EnemyDTO enemyDTO)  {
-//		if (enemyDTO.enemyType != EnemyType.SPIDER) {
-//			throw new MapperException("This is not a SPIDER type");
-//		}
-//		try {
-//			Spider spider = new Spider(enemyDTO.getX(), enemyDTO.getY());
-//			SpriteDTOMapper.mapSpriteDTOToSprite(spider, enemyDTO);
-//			return spider;
-//		} catch (Exception e) {
-//			throw new MapperException(e);
-//		}
-//	}
-
 	public static EnemyDTO mapEnemyToEnemyDTO(Enemy enemy)  {
-		EnemyDTO enemyDTO = new EnemyDTO();
+		EnemyDTO enemyDTO = new EnemyDTO(EnemyType.valueOf(enemy.getType().toString()));
 		SpriteDTOMapper.mapSpriteToSpriteDTO(enemyDTO, enemy);
 		return enemyDTO;
 	}
@@ -44,9 +25,11 @@ public class OrganicSpriteDTOMapper {
 		return enemyDTOs;
 	}
 
-	public static Enemy mapEnemyDTOToEnemy(EnemyDTO spriteDTO) {
-		
-		return null;
+	public static Enemy mapEnemyDTOToEnemy(EnemyDTO enemyDTO) {
+		SpriteType spriteType = SpriteType.valueOf(enemyDTO.getEnemyType().toString());
+		Enemy enemy = EnemyFactory.createFromType(0, 0, spriteType);
+		SpriteDTOMapper.mapSpriteDTOToSprite(enemy, enemyDTO);
+		return enemy;
 	}
 
 //	public static Enemy doAutoMappingForEnemyDTO(EnemyDTO spriteDTO)  {

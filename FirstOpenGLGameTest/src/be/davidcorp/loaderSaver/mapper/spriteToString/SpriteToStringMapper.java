@@ -29,6 +29,7 @@ public abstract class SpriteToStringMapper<SPRITE extends Sprite> {
 		for (Map.Entry<SpriteProperty, String> entry : properties.entrySet()) {
 			builder.append(entry.getKey() + ":" + entry.getValue() + lineSeparator());
 		}
+		builder.append("END");
 		
 		return builder.toString();
 	}

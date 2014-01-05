@@ -8,4 +8,10 @@ public class ConstructionSprite extends Sprite{
 	public ConstructionSprite() {
 		super();
 	}
+
+	@Override
+	public void kill() {
+	}
+	
+	
 }

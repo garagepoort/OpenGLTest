@@ -14,7 +14,6 @@ import be.davidcorp.component.ComponentType;
 import be.davidcorp.domain.exception.SpriteException;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.trigger.Trigger;
-import be.davidcorp.domain.trigger.TriggerBuilder;
 import be.davidcorp.domain.trigger.TriggerWhen;
 import be.davidcorp.domain.trigger.Triggerable;
 import be.davidcorp.domain.utilities.sprite.SpriteMovingUtility;

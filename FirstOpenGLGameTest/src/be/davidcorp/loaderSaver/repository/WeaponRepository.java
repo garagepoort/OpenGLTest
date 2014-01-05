@@ -8,6 +8,8 @@ import java.util.Map;
 import be.davidcorp.domain.sprite.item.weapon.Weapon;
 import be.davidcorp.loaderSaver.repository.exception.SpriteRepositoryException;
 
+import com.google.common.collect.Lists;
+
 public class WeaponRepository implements SpriteRepository<Weapon> {
 
 	private static Map<Integer, Weapon> weapons = newConcurrentMap();
@@ -44,5 +46,10 @@ public class WeaponRepository implements SpriteRepository<Weapon> {
 		for (Weapon weapon : itemsList) {
 			weapons.put(weapon.getID(), weapon);
 		}
+	}
+	
+	@Override
+	public List<Weapon> getAllSprites() {
+		return Lists.newArrayList(weapons.values());
 	}
 }

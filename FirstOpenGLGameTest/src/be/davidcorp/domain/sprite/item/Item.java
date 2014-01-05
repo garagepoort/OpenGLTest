@@ -57,18 +57,17 @@ public class Item extends Sprite implements Attributer {
 		}
 	}
 
-	// public abstract void useItem(OrganicSprite organicSprite);
-
 	@Override
 	public List<Attribute> getAttributes() {
 		return attributes;
+	}
+	
+	public void addAttribute(Attribute attribute) {
+		attributes.add(attribute);
 	}
 
 	public interface UsableImplementation {
 		public void useItem(Item item, Sprite usingSprite);
 	}
 
-	public void addAttribute(Attribute attribute) {
-		attributes.add(attribute);
-	}
 }

@@ -6,11 +6,7 @@ import be.davidcorp.metric.Vector;
 
 public class SpriteRotator {
 
-	public SpriteRotator() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public static void rotateSprite(Sprite sprite, float angle, Point rotationPoint) {
+	public static void rotateSprite(Sprite sprite, float angle, Point rotationPoint) { 
 		rotateSpriteAroundPointWithAngle(sprite, angle, rotationPoint);
 	}
 

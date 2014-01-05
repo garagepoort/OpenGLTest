@@ -93,9 +93,10 @@ public class Gamefield {
 		return spriteAgainstAnyConstructionItem(enemy);
 	}
 
-	private boolean spriteAgainstAnyConstructionItem(Sprite sprite) {
+	public boolean spriteAgainstAnyConstructionItem(Sprite sprite) {
 		for (int i = 0; i < getConstructionItems().size(); i++) {
-			if (SpriteCollisionChecker.doesCollisionExist(getConstructionItems().get(i), sprite))
+			ConstructionSprite constructionSprite = getConstructionItems().get(i);
+			if (constructionSprite.getID() != sprite.getID() && SpriteCollisionChecker.doesCollisionExist(constructionSprite, sprite))
 				return true;
 		}
 		return false;

@@ -16,4 +16,5 @@ public interface SpriteRepository<SPRITE extends Sprite> {
 
 	void loadSprites(List<SPRITE> sprites);
 
+	List<SPRITE> getAllSprites();
 }

@@ -7,6 +7,8 @@ import java.util.Map;
 
 import be.davidcorp.domain.sprite.Sprite;
 
+import com.google.common.collect.Lists;
+
 public class MiscRepository implements SpriteRepository<Sprite>{
 
 	private static Map<Integer, Sprite> sprites = newHashMap();
@@ -39,6 +41,11 @@ public class MiscRepository implements SpriteRepository<Sprite>{
 		for(Sprite sprite : sprites){
 			this.sprites.put(sprite.getID(), sprite);
 		}
+	}
+	
+	@Override
+	public List<Sprite> getAllSprites() {
+		return Lists.newArrayList(sprites.values());
 	}
 
 }

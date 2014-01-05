@@ -8,6 +8,8 @@ import java.util.Map;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.loaderSaver.repository.exception.SpriteRepositoryException;
 
+import com.google.common.collect.Lists;
+
 public class ConstructionSpriteRepository implements SpriteRepository<ConstructionSprite>{
 	
 	private static Map<Integer, ConstructionSprite> constructionSprites = newConcurrentMap();
@@ -47,6 +49,11 @@ public class ConstructionSpriteRepository implements SpriteRepository<Constructi
 		for (ConstructionSprite constructionSprite : sprites) {
 			constructionSprites.put(constructionSprite.getID(), constructionSprite);
 		}
+	}
+
+	@Override
+	public List<ConstructionSprite> getAllSprites() {
+		return Lists.newArrayList(constructionSprites.values());
 	}
 
 }

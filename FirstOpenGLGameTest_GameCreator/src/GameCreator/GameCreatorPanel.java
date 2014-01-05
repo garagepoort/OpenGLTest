@@ -25,9 +25,8 @@ import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.metric.Point;
 import be.davidcorp.view.game.GamePanel;
 
+public class GameCreatorPanel extends GamePanel {
 
-public class GameCreatorPanel extends GamePanel{
-	
 	private SpriteDTO selectedSprite = null;
 	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
 
@@ -42,11 +41,16 @@ public class GameCreatorPanel extends GamePanel{
 		drawSelectedSprite();
 	}
 
-	
 	public void dragSelectedSprite(float pointX, float pointY) {
 		if (selectedSprite != null) {
+			float previousX = selectedSprite.getX();
+			float previousY = selectedSprite.getY();
 			selectedSprite.setX(pointX - selectedSprite.getWidth() / 2);
 			selectedSprite.setY(pointY - selectedSprite.getHeight() / 2);
+			if (gameFieldFacade.isDTOCollidingWithConstructionItem(selectedSprite)) {
+				selectedSprite.setX(previousX);
+				selectedSprite.setY(previousY);
+			}
 			try {
 				gameFieldFacade.updateSpriteInGamefield(selectedSprite);
 			} catch (Exception e) {
@@ -54,10 +58,11 @@ public class GameCreatorPanel extends GamePanel{
 			}
 			setChanged();
 			notifyObservers(selectedSprite);
+
 		}
 	}
 
-	public void selectSelectedSprite(float pointX, float pointY)  {
+	public void selectSelectedSprite(float pointX, float pointY) {
 		List<SpriteDTO> mouseCollisionSprites = getMouseCollisionSprite(pointX, pointY);
 		if (mouseCollisionSprites.size() > 0) {
 			selectedSprite = mouseCollisionSprites.get(0);
@@ -65,12 +70,12 @@ public class GameCreatorPanel extends GamePanel{
 				setChanged();
 				this.notifyObservers(selectedSprite);
 			}
-		}else{
+		} else {
 			selectedSprite = null;
 		}
 	}
-	
-	private List<SpriteDTO> getMouseCollisionSprite(float x, float y)  {
+
+	private List<SpriteDTO> getMouseCollisionSprite(float x, float y) {
 		Point point = new Point(x, y, 0);
 		return gameFieldFacade.getSpritesOnPointInGamefield(point);
 	}
@@ -82,40 +87,39 @@ public class GameCreatorPanel extends GamePanel{
 	public void setSelectedSprite(SpriteDTO selectedSprite) {
 		this.selectedSprite = selectedSprite;
 	}
-	
-	
+
 	private void drawSelectedSprite() {
-	if (selectedSprite != null) {
-		glPushMatrix();
-		{
-			Color color = new Color(255, 255, 0);
-			glDisable(GL_TEXTURE_2D);
-			glPushAttrib(GL_CURRENT_BIT);
-			glLineWidth(3);
-			glColor3f(color.r, color.g, color.b);
-
-			glBegin(GL_LINES);
+		if (selectedSprite != null) {
+			glPushMatrix();
 			{
-				glVertex3f(selectedSprite.getDownLeftPoint().x, selectedSprite.getDownLeftPoint().y, 0);
-				glVertex3f(selectedSprite.getDownRightPoint().x, selectedSprite.getDownRightPoint().y, 0);
+				Color color = new Color(255, 255, 0);
+				glDisable(GL_TEXTURE_2D);
+				glPushAttrib(GL_CURRENT_BIT);
+				glLineWidth(3);
+				glColor3f(color.r, color.g, color.b);
 
-				glVertex3f(selectedSprite.getDownRightPoint().x, selectedSprite.getDownRightPoint().y, 0);
-				glVertex3f(selectedSprite.getUpperRightPoint().x, selectedSprite.getUpperRightPoint().y, 0);
+				glBegin(GL_LINES);
+				{
+					glVertex3f(selectedSprite.getDownLeftPoint().x, selectedSprite.getDownLeftPoint().y, 0);
+					glVertex3f(selectedSprite.getDownRightPoint().x, selectedSprite.getDownRightPoint().y, 0);
 
-				glVertex3f(selectedSprite.getUpperRightPoint().x, selectedSprite.getUpperRightPoint().y, 0);
-				glVertex3f(selectedSprite.getUpperLeftPoint().x, selectedSprite.getUpperLeftPoint().y, 0);
+					glVertex3f(selectedSprite.getDownRightPoint().x, selectedSprite.getDownRightPoint().y, 0);
+					glVertex3f(selectedSprite.getUpperRightPoint().x, selectedSprite.getUpperRightPoint().y, 0);
 
-				glVertex3f(selectedSprite.getUpperLeftPoint().x, selectedSprite.getUpperLeftPoint().y, 0);
-				glVertex3f(selectedSprite.getDownLeftPoint().x, selectedSprite.getDownLeftPoint().y, 0);
+					glVertex3f(selectedSprite.getUpperRightPoint().x, selectedSprite.getUpperRightPoint().y, 0);
+					glVertex3f(selectedSprite.getUpperLeftPoint().x, selectedSprite.getUpperLeftPoint().y, 0);
+
+					glVertex3f(selectedSprite.getUpperLeftPoint().x, selectedSprite.getUpperLeftPoint().y, 0);
+					glVertex3f(selectedSprite.getDownLeftPoint().x, selectedSprite.getDownLeftPoint().y, 0);
+				}
+
+				glEnd();
+				glPopAttrib();
+				glEnable(GL_TEXTURE_2D);
+
 			}
-
-			glEnd();
-			glPopAttrib();
-			glEnable(GL_TEXTURE_2D);
-
+			glPopMatrix();
 		}
-		glPopMatrix();
 	}
-}
-	
+
 }

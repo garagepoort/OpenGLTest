@@ -8,6 +8,8 @@ import java.util.Map;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.loaderSaver.repository.exception.SpriteRepositoryException;
 
+import com.google.common.collect.Lists;
+
 public class EnemyRepository implements SpriteRepository<Enemy>{
 
 	private static Map<Integer, Enemy> enemies = newConcurrentMap();
@@ -43,5 +45,10 @@ public class EnemyRepository implements SpriteRepository<Enemy>{
 	@Override
 	public void emptyRepository(){
 		enemies.clear();
+	}
+	
+	@Override
+	public List<Enemy> getAllSprites() {
+		return Lists.newArrayList(enemies.values());
 	}
 }

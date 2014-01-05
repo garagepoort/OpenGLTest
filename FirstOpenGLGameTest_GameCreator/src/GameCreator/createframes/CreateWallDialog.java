@@ -1,5 +1,6 @@
 package GameCreator.createframes;
 
+import static be.davidcorp.applicationLayer.dto.mapper.ConstructionType.WALL;
 import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
 
@@ -19,7 +20,6 @@ import GameCreator.ErrorHandler;
 import GameCreator.SpringUtilities;
 import be.davidcorp.applicationLayer.dto.ConstructionSpriteDTO;
 import be.davidcorp.applicationLayer.dto.color.ColorDTO;
-import be.davidcorp.applicationLayer.dto.mapper.ConstructionType;
 import be.davidcorp.applicationLayer.facade.ConstructionSpriteFacade;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 
@@ -133,7 +133,7 @@ public class CreateWallDialog extends CreateDialog implements MouseListener {
 	}
 
 	private void initializeWallDTO(ColorDTO color) {
-		constructionSpriteDTO = new ConstructionSpriteDTO(ConstructionType.WALL);
+		constructionSpriteDTO = new ConstructionSpriteDTO(WALL);
 		float x = parseFloat(fieldX.getText());
 		float y = parseFloat(fieldY.getText());
 		int width = parseInt(fieldWidth.getText());

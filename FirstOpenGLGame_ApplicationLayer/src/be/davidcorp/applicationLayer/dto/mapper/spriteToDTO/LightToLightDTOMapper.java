@@ -14,7 +14,7 @@ public class LightToLightDTOMapper {
 		return lightDTO;
 	}
 
-	public static Light mapDTOToLight(LightDTO lightDTO) {
+	public static Light mapLightDTOToLight(LightDTO lightDTO) {
 		try {
 			Light light = new Light(0, 0, null, 0, false);
 			SpriteDTOMapper.mapSpriteToSpriteDTO(lightDTO, light);
@@ -25,5 +25,6 @@ public class LightToLightDTOMapper {
 			throw new MapperException(e);
 		}
 	}
+
 
 }

@@ -28,7 +28,7 @@ public abstract class Weapon extends Item{
 		}
 	}
 	
-	public void updateSprite(int secondsMovedInGame){
+	public void updateSprite(float secondsMovedInGame){
 		super.updateSprite(secondsMovedInGame);
 		if(!attackCooldowner.isCoolDowned()){
 			attackCooldowner.progressCooldown();

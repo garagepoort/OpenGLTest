@@ -3,8 +3,12 @@ package be.davidcorp.applicationLayer.dto.mapper.spriteToDTO;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.davidcorp.applicationLayer.dto.ConstructionSpriteDTO;
+import be.davidcorp.applicationLayer.dto.EnemyDTO;
+import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.SpriteDTO;
 import be.davidcorp.applicationLayer.dto.color.ColorDTO;
+import be.davidcorp.applicationLayer.dto.light.LightDTO;
 import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.Sprite;
@@ -33,6 +37,26 @@ public class SpriteDTOMapper{
 			throw new MapperException("No mapping found for sprite: "+ sprite.getClass().getCanonicalName());
 		}
 		return spriteDTO;
+	}
+	
+	public static Sprite doAutoMappingForSpriteDTO(SpriteDTO spriteDTO) {
+		Sprite sprite = null;
+		if(spriteDTO instanceof ItemDTO){
+			sprite = ItemDTOMapper.mapItemDTOToItem((ItemDTO) spriteDTO);
+		}
+		if(spriteDTO instanceof EnemyDTO){
+			sprite = OrganicSpriteDTOMapper.mapEnemyDTOToEnemy((EnemyDTO) spriteDTO);
+		}
+		if(spriteDTO instanceof LightDTO){
+			sprite = LightToLightDTOMapper.mapLightDTOToLight((LightDTO) spriteDTO);
+		}
+		if(spriteDTO instanceof ConstructionSpriteDTO){
+			sprite = ConstructionSpriteDTOMapper.mapConstructionSpriteDTOToConstructionSprite((ConstructionSpriteDTO) spriteDTO);
+		}
+		if(spriteDTO == null){
+			throw new MapperException("No mapping found for sprite: "+ spriteDTO);
+		}
+		return sprite;
 	}
 	
 	public static List<SpriteDTO> doAutoMappingForSprites(List<Sprite> sprites)  {
