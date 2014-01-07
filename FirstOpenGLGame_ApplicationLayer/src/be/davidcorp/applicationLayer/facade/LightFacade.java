@@ -1,5 +1,6 @@
 package be.davidcorp.applicationLayer.facade;
 
+import static be.davidcorp.domain.game.GameFieldManager.getCurrentGameField;
 import be.davidcorp.applicationLayer.dto.color.ColorDTO;
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.LightToLightDTOMapper;
@@ -29,5 +30,13 @@ public class LightFacade {
 		
 	}
 
-	
+	public void updateLight(LightDTO lightDTO) {
+		try {
+			Light light = LightToLightDTOMapper.mapLightDTOToLight(lightDTO);
+			lightRepository.updateSprite(light);
+			getCurrentGameField().updateLight(light);
+		} catch (Exception e) {
+			throw new ModelException(e);
+		}
+	}
 }

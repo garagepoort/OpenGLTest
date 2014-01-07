@@ -20,8 +20,16 @@ import java.util.List;
 
 import org.newdawn.slick.Color;
 
+import be.davidcorp.applicationLayer.dto.ConstructionSpriteDTO;
+import be.davidcorp.applicationLayer.dto.EnemyDTO;
+import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.SpriteDTO;
+import be.davidcorp.applicationLayer.dto.light.LightDTO;
+import be.davidcorp.applicationLayer.facade.ConstructionSpriteFacade;
+import be.davidcorp.applicationLayer.facade.EnemyFacade;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
+import be.davidcorp.applicationLayer.facade.ItemFacade;
+import be.davidcorp.applicationLayer.facade.LightFacade;
 import be.davidcorp.metric.Point;
 import be.davidcorp.view.game.GamePanel;
 
@@ -29,6 +37,10 @@ public class GameCreatorPanel extends GamePanel {
 
 	private SpriteDTO selectedSprite = null;
 	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
+	private ItemFacade itemFacade = new ItemFacade();
+	private ConstructionSpriteFacade constructionSpriteFacade = new ConstructionSpriteFacade();
+	private LightFacade lightFacade = new LightFacade();
+	private EnemyFacade enemyFacade = new EnemyFacade();
 
 	public GameCreatorPanel() {
 		setInputController(new GameCreatorPanelInputController(this));
@@ -52,13 +64,24 @@ public class GameCreatorPanel extends GamePanel {
 				selectedSprite.setY(previousY);
 			}
 			try {
-				gameFieldFacade.updateSpriteInGamefield(selectedSprite);
+				updateSelectedSprite();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			setChanged();
 			notifyObservers(selectedSprite);
+		}
+	}
 
+	public void updateSelectedSprite() {
+		if (selectedSprite instanceof ItemDTO) {
+			itemFacade.updateItem((ItemDTO) selectedSprite);
+		} else if (selectedSprite instanceof ConstructionSpriteDTO) {
+			constructionSpriteFacade.updateConstructionSprite((ConstructionSpriteDTO) selectedSprite);
+		} else if (selectedSprite instanceof EnemyDTO) {
+			enemyFacade.updateEnemy((EnemyDTO) selectedSprite);
+		} else if (selectedSprite instanceof LightDTO) {
+			lightFacade.updateLight((LightDTO) selectedSprite);
 		}
 	}
 

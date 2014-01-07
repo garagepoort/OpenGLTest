@@ -13,8 +13,6 @@ import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.trigger.Trigger;
 import be.davidcorp.loaderSaver.filehandling.SpriteFileLoader;
-import be.davidcorp.loaderSaver.filehandling.SpriteFileWriter;
-import be.davidcorp.loaderSaver.filehandling.TriggerFileWriter;
 import be.davidcorp.loaderSaver.repository.GamefieldRepository;
 
 public class GamefieldLoaderSaver {
@@ -30,8 +28,8 @@ public class GamefieldLoaderSaver {
 		spritesFile.getParentFile().mkdirs();
 		triggerLinksFile.getParentFile().mkdirs();
 		
-		new SpriteFileWriter(spritesFile).saveSprites(getAllGamefieldSprites(gamefield));
-		new TriggerFileWriter(triggerLinksFile).saveTriggerLinks(getAllTriggerFromSprites(getAllGamefieldSprites(gamefield)));
+//		new SpriteFileWriter(spritesFile).saveSprites(getAllGamefieldSprites(gamefield));
+//		new TriggerFileWriter(triggerLinksFile).saveTriggerLinks(getAllTriggerFromSprites(getAllGamefieldSprites(gamefield)));
 		// new TriggerLoader().loadTriggers(fileUtility.getFileContent(triggerLinksFile));
 	}
 	
@@ -73,14 +71,7 @@ public class GamefieldLoaderSaver {
 
 
 
-	private List<Sprite> getAllGamefieldSprites(Gamefield gamefield) {
-		List<Sprite> sprites = newArrayList();
-		sprites.addAll(gamefield.getEnemiesInWorld());
-		sprites.addAll(gamefield.getGroundItems());
-		sprites.addAll(gamefield.getLightsFromWorld());
-		sprites.addAll(gamefield.getConstructionItems());
-		return sprites;
-	}
+	
 	
 	private List<Trigger> getAllTriggerFromSprites(List<Sprite> sprites) {
 		List<Trigger> triggers = newArrayList();

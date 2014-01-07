@@ -90,6 +90,10 @@ public class PlayerFacade {
 	public float getSpeed() {
 		return getCurrentPlayer().getSpeed();
 	}
+	
+	public void setSpeed(float speed) {
+		getCurrentPlayer().setSpeed(speed);
+	}
 
 	
 	public Point getCenter() {

@@ -229,28 +229,28 @@ public class GameFieldFacade {
 //		}
 //	}
 
-	public void updateSpriteInGamefield(SpriteDTO spriteDTO)  {
-		try {
-			if (spriteDTO instanceof ConstructionSpriteDTO) {
-				ConstructionSprite constructionSprite = ConstructionSpriteDTOMapper.mapConstructionSpriteDTOToConstructionSprite((ConstructionSpriteDTO) spriteDTO);
-				getCurrentGameField().updateConstructionSprite(constructionSprite);
-			}
-			if (spriteDTO instanceof ItemDTO) {
-				Item item = ItemDTOMapper.mapItemDTOToItem((ItemDTO) spriteDTO);
-				getCurrentGameField().updateGroundItem(item);
-			}
-			if (spriteDTO instanceof LightDTO) {
-				Light light = LightToLightDTOMapper.mapLightDTOToLight((LightDTO) spriteDTO);
-				getCurrentGameField().updateLight(light);
-			}
-			if (spriteDTO instanceof EnemyDTO) {
-				Enemy enemy = OrganicSpriteDTOMapper.mapEnemyDTOToEnemy((EnemyDTO) spriteDTO);
-				getCurrentGameField().updateEnemy(enemy);
-			}
-		} catch (Exception e) {
-			throw new ModelException(e);
-		}
-	}
+//	public void updateSpriteInGamefield(SpriteDTO spriteDTO)  {
+//		try {
+//			if (spriteDTO instanceof ConstructionSpriteDTO) {
+//				ConstructionSprite constructionSprite = ConstructionSpriteDTOMapper.mapConstructionSpriteDTOToConstructionSprite((ConstructionSpriteDTO) spriteDTO);
+//				getCurrentGameField().updateConstructionSprite(constructionSprite);
+//			}
+//			if (spriteDTO instanceof ItemDTO) {
+//				Item item = ItemDTOMapper.mapItemDTOToItem((ItemDTO) spriteDTO);
+//				getCurrentGameField().updateGroundItem(item);
+//			}
+//			if (spriteDTO instanceof LightDTO) {
+//				Light light = LightToLightDTOMapper.mapLightDTOToLight((LightDTO) spriteDTO);
+//				getCurrentGameField().updateLight(light);
+//			}
+//			if (spriteDTO instanceof EnemyDTO) {
+//				Enemy enemy = OrganicSpriteDTOMapper.mapEnemyDTOToEnemy((EnemyDTO) spriteDTO);
+//				getCurrentGameField().updateEnemy(enemy);
+//			}
+//		} catch (Exception e) {
+//			throw new ModelException(e);
+//		}
+//	}
 
 	public boolean isDTOCollidingWithConstructionItem(SpriteDTO selectedSprite) {
 		Sprite sprite = SpriteDTOMapper.doAutoMappingForSpriteDTO(selectedSprite);

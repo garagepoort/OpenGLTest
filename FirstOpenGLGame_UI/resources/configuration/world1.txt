@@ -1,2 +1,0 @@
-resources/configuration/field2.txt
-resources/configuration/field1.txt

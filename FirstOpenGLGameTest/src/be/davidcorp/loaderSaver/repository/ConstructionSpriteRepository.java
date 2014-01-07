@@ -21,11 +21,7 @@ public class ConstructionSpriteRepository implements SpriteRepository<Constructi
 
 	@Override
 	public void updateSprite(ConstructionSprite constructionSpriteToUpdate) {
-		ConstructionSprite constructionSprite = constructionSprites.get(constructionSpriteToUpdate.getID());
-		constructionSprite.setX(constructionSpriteToUpdate.getX());
-		constructionSprite.setY(constructionSpriteToUpdate.getY());
-		constructionSprite.setWidth(constructionSpriteToUpdate.getWidth());
-		constructionSprite.setHeight(constructionSpriteToUpdate.getHeight());
+		constructionSprites.put(constructionSpriteToUpdate.getID(), constructionSpriteToUpdate);
 	}
 	
 	@Override

@@ -1,7 +1,9 @@
 package be.davidcorp.domain.sprite.organic.enemy;
 
+import static be.davidcorp.config.ImageLocationManager.getImageLocation;
 import static be.davidcorp.domain.sprite.SpriteType.SPIDER;
 import static be.davidcorp.domain.sprite.SpriteType.ZOMBIE;
+import be.davidcorp.config.ImageLocationManager;
 import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.test.builder.EnemyBuilder;
 import be.davidcorp.texture.TextureBunch;
@@ -22,7 +24,7 @@ public class EnemyFactory {
 			.withHeight(32)
 			.withSpriteType(ZOMBIE)
 			.build();
-		enemy.setTextureBunch(new TextureBunch().withDefaultTexture("resources/images/enemies/zombie/zombieStanding.png"));
+		enemy.setTextureBunch(new TextureBunch().withDefaultTexture(getImageLocation(ZOMBIE)));
 		return enemy;
 	}
 	
@@ -40,7 +42,7 @@ public class EnemyFactory {
 		.withHeight(32)
 		.withSpriteType(SPIDER)
 		.build();
-		enemy.setTextureBunch(new TextureBunch().withDefaultTexture("resources/images/enemies/spider.png"));
+		enemy.setTextureBunch(new TextureBunch().withDefaultTexture(ImageLocationManager.getImageLocation(SPIDER)));
 		return enemy;
 	}
 	

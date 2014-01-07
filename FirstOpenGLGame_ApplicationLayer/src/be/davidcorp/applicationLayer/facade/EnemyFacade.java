@@ -1,8 +1,11 @@
 package be.davidcorp.applicationLayer.facade;
 
+import static be.davidcorp.domain.game.GameFieldManager.getCurrentGameField;
 import be.davidcorp.applicationLayer.dto.EnemyDTO;
+import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ConstructionSpriteDTOMapper;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.OrganicSpriteDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
+import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.sprite.organic.enemy.EnemyFactory;
 import be.davidcorp.loaderSaver.repository.EnemyRepository;
@@ -25,6 +28,16 @@ public class EnemyFacade {
 			Enemy spider = EnemyFactory.createSpider(x, y);
 			spider = enemyRepository.createSprite(spider);
 			return OrganicSpriteDTOMapper.mapEnemyToEnemyDTO(spider);
+		} catch (Exception e) {
+			throw new ModelException(e);
+		}
+	}
+	
+	public void updateEnemy(EnemyDTO enemyDTO){
+		try {
+			Enemy enemy = OrganicSpriteDTOMapper.mapEnemyDTOToEnemy(enemyDTO);
+			enemyRepository.updateSprite(enemy);
+			getCurrentGameField().updateEnemy(enemy);
 		} catch (Exception e) {
 			throw new ModelException(e);
 		}

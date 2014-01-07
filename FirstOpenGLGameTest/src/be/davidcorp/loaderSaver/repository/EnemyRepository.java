@@ -39,7 +39,7 @@ public class EnemyRepository implements SpriteRepository<Enemy>{
 
 	@Override
 	public void updateSprite(Enemy spriteToUpdate) {
-		throw new UnsupportedOperationException("Not yet implemented");
+		enemies.put(spriteToUpdate.getID(), spriteToUpdate);
 	}
 
 	@Override

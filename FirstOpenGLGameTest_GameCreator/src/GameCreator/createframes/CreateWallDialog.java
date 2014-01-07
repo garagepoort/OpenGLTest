@@ -40,7 +40,7 @@ public class CreateWallDialog extends CreateDialog implements MouseListener {
 	private JLabel heightLabel;
 	private JLabel colorLabel;
 
-	private JButton createButton = new JButton("create wall");
+	private static JButton createButton = new JButton("create wall");
 	private JButton colorPickerButton = new JButton("pick color");
 
 	private ColorPickerFrame colorPickerFrame = null;

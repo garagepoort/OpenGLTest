@@ -31,6 +31,31 @@ public class GameCreatorPanelInputController extends InputController {
 		this.gameCreatorPanel = gameCreatorPanel;
 	}
 
+	
+	@Override
+	public void on_LEFT_Key() {
+		TranslationManager.initializeLeftTranslation();
+	}
+
+
+	@Override
+	public void on_RIGHT_Key() {
+		TranslationManager.initializeRightTranslation();
+	}
+
+
+	@Override
+	public void on_UP_Key() {
+		TranslationManager.initializeUpTranslation();
+	}
+
+
+	@Override
+	public void on_DOWN_Key() {
+		TranslationManager.initializeDownTranslation();;
+	}
+
+
 	@Override
 	public void onMouseLeftPressed() {
 		try {
