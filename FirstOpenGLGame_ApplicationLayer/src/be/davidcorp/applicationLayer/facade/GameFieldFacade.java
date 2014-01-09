@@ -31,6 +31,7 @@ import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
 import be.davidcorp.domain.utilities.PauseManager;
+import be.davidcorp.loaderSaver.GamefieldLoaderSaver;
 import be.davidcorp.loaderSaver.repository.ConstructionSpriteRepository;
 import be.davidcorp.loaderSaver.repository.EnemyRepository;
 import be.davidcorp.loaderSaver.repository.GamefieldRepository;
@@ -118,26 +119,6 @@ public class GameFieldFacade {
 		return ConstructionSpriteDTOMapper.mapConstructionSpritesToDTOs(getCurrentGameField().getConstructionItems());
 	}
 
-	public void removeConstructionSpriteFromWorld(int id) {
-		Sprite sprite = constructionSpriteRepository.getSprite(id);
-		getCurrentGameField().removeSpriteFromWorld(sprite);
-	}
-
-	public void removeEnemyFromWorld(int id) {
-		Sprite sprite = enemyRepository.getSprite(id);
-		getCurrentGameField().removeSpriteFromWorld(sprite);
-	}
-
-	public void removeLightFromWorld(int id) {
-		Sprite sprite = lightRepository.getSprite(id);
-		getCurrentGameField().removeSpriteFromWorld(sprite);
-	}
-
-	public void removeGroundItemFromWorld(int id) {
-		Sprite sprite = itemRepository.getSprite(id);
-		getCurrentGameField().removeSpriteFromWorld(sprite);
-	}
-
 	public List<EnemyDTO> getEnemiesInWorld()  {
 		return OrganicSpriteDTOMapper.mapEnemiesToDTOs(getCurrentGameField().getEnemiesInWorld());
 	}
@@ -174,7 +155,9 @@ public class GameFieldFacade {
 
 	public void createNewGamefield(String gamefieldName, int width, int height) {
 		try {
-			gamefieldRepository.createGamefield(gamefieldName, width, height);
+			Gamefield createGamefield = gamefieldRepository.createGamefield(gamefieldName, width, height);
+			new GamefieldLoaderSaver().saveEntireField(createGamefield);
+			setCurrentGameField(createGamefield);
 		} catch (Exception e) {
 			throw new ModelException(e);
 		}

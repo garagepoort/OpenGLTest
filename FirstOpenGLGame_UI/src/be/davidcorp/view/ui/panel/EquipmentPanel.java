@@ -93,7 +93,7 @@ public class EquipmentPanel extends Panel implements Observer {
 			public void onLeftClick(EventObject e) {
 			}
 		});
-		itemButton.setTexture(itemDTO.getTextureBunch().getCurrentTexture());
+		itemButton.setTexture(itemDTO.getTexture());
 		return itemButton;
 	}
 

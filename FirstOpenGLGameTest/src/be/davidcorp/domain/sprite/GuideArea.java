@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 public class GuideArea extends Sprite{
 
+	private static final long serialVersionUID = 2750813929640474118L;
 	private HashMap<Integer, String> guidances = new HashMap<Integer, String>();
 	private int counter;
 	private String guidance;

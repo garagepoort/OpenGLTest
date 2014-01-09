@@ -5,7 +5,6 @@ import static com.google.common.collect.Lists.newArrayList;
 import java.util.List;
 
 import be.davidcorp.domain.attribute.Attribute;
-import be.davidcorp.domain.sprite.item.Item.UsableImplementation;
 import be.davidcorp.domain.test.builder.SpriteBuilder;
 
 public class ItemBuilder extends SpriteBuilder<Item>{
@@ -18,6 +17,7 @@ public class ItemBuilder extends SpriteBuilder<Item>{
 	protected Item buildBasic() {
 		Item item = super.buildBasic();
 		item.setUsableImplementation(usableImplementation);
+		item.setInfoText(infoTekst);
 		for(Attribute attribute : attributes){
 			item.addAttribute(attribute);
 		}

@@ -4,6 +4,7 @@ import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.metric.Vector;
 
 public abstract class RangedWeapon extends Weapon {
+	private static final long serialVersionUID = -5999676273584667631L;
 	private int ammoSize;
 	private float startX;
 	private float startY;

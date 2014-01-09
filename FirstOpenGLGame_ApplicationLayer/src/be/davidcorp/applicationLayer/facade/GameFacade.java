@@ -9,30 +9,27 @@ import java.io.PrintWriter;
 
 import be.davidcorp.config.ConfigurationManager;
 import be.davidcorp.domain.game.Gamefield;
-import be.davidcorp.domain.mission.MissionManager;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
 import be.davidcorp.loaderSaver.GamefieldLoaderSaver;
 import be.davidcorp.loaderSaver.GamefieldSpriteLinkSaver;
-import be.davidcorp.loaderSaver.filehandling.SpriteFileWriter;
-import be.davidcorp.loaderSaver.repository.ConstructionSpriteRepository;
+import be.davidcorp.loaderSaver.filehandling.SpriteSerializer;
+import be.davidcorp.loaderSaver.repository.DefaultSpriteRepository;
 
 public class GameFacade {
 
 	public void startApplication() {
 		ConfigurationManager.importProperties();
-		
 		File playerFile = new File("resources/playerfiles/AllPlayers.txt");
 		File gamefieldFile = new File("resources/saveFiles/gamefields.txt");
 
 		try {
-			// SoundManager.loadSounds(soundsFile);
 			PlayerManager.loadPlayers(playerFile);
 
 			new GamefieldLoaderSaver().loadAllGamefieldsToRepository(gamefieldFile);
-			new GameFieldFacade().initializeGameFieldWithName("field1");
-			MissionManager.createFirstMission();
+			new GameFieldFacade().initializeGameFieldWithName("FirstDayOfInvasion");
+//			MissionManager.createFirstMission();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -48,18 +45,16 @@ public class GameFacade {
 
 	public void saveTheGame() {
 		Gamefield gamefield = getCurrentGameField();
-		File file = new File("resources/saveFiles/" + gamefield.getName() + "/sprites.txt");
+		
+		File file = new File("resources/saveFiles/" + gamefield.getName() + "/sprites.ser");
 		File gamefieldlinks = new File("resources/saveFiles/" + gamefield.getName() + "/gamefieldLinks.txt");
 		emptyFile(file);
 		emptyFile(gamefieldlinks);
-		SpriteFileWriter spriteFileWriter = new SpriteFileWriter(file);
+		SpriteSerializer spriteSerializer = new SpriteSerializer(file);
 		GamefieldSpriteLinkSaver gamefieldSpriteLinkSaver = new GamefieldSpriteLinkSaver(gamefieldlinks);
 		try {
-			spriteFileWriter.saveSprites(new ConstructionSpriteRepository().getAllSprites());
 			gamefieldSpriteLinkSaver.saveSpritesFromGamefield(gamefield);
-//			spriteFileWriter.saveSprites(new EnemyRepository().getAllSprites());
-//			spriteFileWriter.saveSprites(new LightRepository().getAllSprites());
-//			spriteFileWriter.saveSprites(new ItemRepository().getAllSprites());
+			spriteSerializer.serializeSprites(new DefaultSpriteRepository().getAllSprites());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -68,7 +63,7 @@ public class GameFacade {
 		// save the triggers.
 		// save the gamefield links.
 	}
-	
+
 	private void emptyFile(File file){
 		PrintWriter writer = null;
 		try {

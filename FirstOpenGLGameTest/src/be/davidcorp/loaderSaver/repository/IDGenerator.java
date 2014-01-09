@@ -5,13 +5,12 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import be.davidcorp.domain.game.Gamefield;
-import be.davidcorp.domain.sprite.Sprite;
 
 public class IDGenerator {
 
-	public static int generateIdForSprites(Map<Integer, ? extends Sprite> sprites) {
-		if(sprites.size()==0) return 1;
-		SortedSet<Integer> keys = new TreeSet<Integer>(sprites.keySet());
+	public static int generateIdForSprites() {
+		SortedSet<Integer> keys = new TreeSet<Integer>(new DefaultSpriteRepository().getAllSpritesMap().keySet());
+		if(keys.isEmpty()) return 1;
 		return keys.last()+1;
 	}
 

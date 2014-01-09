@@ -13,6 +13,8 @@ public interface SpriteRepository<SPRITE extends Sprite> {
 	void updateSprite(SPRITE spriteToUpdate);
 	
 	public void emptyRepository();
+	
+	public void deleteSprite(int id);
 
 	void loadSprites(List<SPRITE> sprites);
 

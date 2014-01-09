@@ -1,10 +1,13 @@
 package be.davidcorp.domain.inventory;
 
+import java.io.Serializable;
+
 import be.davidcorp.domain.exception.InventoryException;
 import be.davidcorp.domain.sprite.item.Item;
 
-public class Inventory {
+public class Inventory implements Serializable{
 
+	private static final long serialVersionUID = -138952561842418910L;
 	private int ID;
 	private int maxWeight = 1000;
 	private int currentWeight;

@@ -1,25 +1,42 @@
 package GameCreator.panels;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Observable;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 import GameCreator.SpringUtilities;
-import GameCreator.createframes.EditGameFrame;
+import be.davidcorp.applicationLayer.dto.ConstructionSpriteDTO;
+import be.davidcorp.applicationLayer.dto.EnemyDTO;
+import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.SpriteDTO;
+import be.davidcorp.applicationLayer.dto.light.LightDTO;
+import be.davidcorp.applicationLayer.facade.ConstructionSpriteFacade;
+import be.davidcorp.applicationLayer.facade.EnemyFacade;
+import be.davidcorp.applicationLayer.facade.ItemFacade;
+import be.davidcorp.applicationLayer.facade.LightFacade;
 
-public class SelectedSpritePanel extends Observable implements KeyListener, MouseListener{
+@SuppressWarnings("serial")
+public class SelectedSpritePanel extends JFrame implements KeyListener, MouseListener{
+
+	private static final EnemyFacade enemyFacade = new EnemyFacade();
+
+	private static final LightFacade lightFacade = new LightFacade();
+
+	private static final ConstructionSpriteFacade constructionSpriteFacade = new ConstructionSpriteFacade();
+
+	private static final ItemFacade itemFacade = new ItemFacade();
 
 	private SpriteDTO sprite;
 	
@@ -40,17 +57,22 @@ public class SelectedSpritePanel extends Observable implements KeyListener, Mous
 	private JPanel labelFieldPanel;
 	
 	private JButton addTriggerButton;
-	private EditGameFrame editGameFrame;
 	
-	public SelectedSpritePanel(EditGameFrame frame){
-		editGameFrame=frame;
+	public SelectedSpritePanel(){
+		
+		setSize(new Dimension(400, 800));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+		
 		labelFieldPanel = new JPanel(new SpringLayout());
 		mainpanel.setLayout(new BoxLayout(mainpanel, BoxLayout.Y_AXIS));
 		labelFieldPanel.setLayout(new SpringLayout());
 		mainpanel.setVisible(true);
 		mainpanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		mainpanel.setPreferredSize(new Dimension(200, 600));
 		//setPreferredSize(new Dimension(200, 200));
 		addComponents();
+		getContentPane().add(mainpanel);
 	}
 
 	private void addComponents() {
@@ -110,8 +132,6 @@ public class SelectedSpritePanel extends Observable implements KeyListener, Mous
 		yField.setText(s.getY()+"");
 		widthField.setText(s.getWidth()+"");
 		heightField.setText(s.getHeight()+"");
-		setChanged();
-		notifyObservers(s);
 	}
 	
 	
@@ -124,6 +144,19 @@ public class SelectedSpritePanel extends Observable implements KeyListener, Mous
 				sprite.setY(Float.parseFloat(yField.getText()));
 				sprite.setWidth(Integer.parseInt(widthField.getText()));
 				sprite.setHeight(Integer.parseInt(heightField.getText()));
+				
+				if(sprite instanceof ItemDTO){
+					itemFacade.updateItem((ItemDTO) sprite);
+				}
+				if(sprite instanceof ConstructionSpriteDTO){
+					constructionSpriteFacade.updateConstructionSprite((ConstructionSpriteDTO) sprite);
+				}
+				if(sprite instanceof LightDTO){
+					lightFacade.updateLight((LightDTO) sprite);
+				}
+				if(sprite instanceof EnemyDTO){
+					enemyFacade.updateEnemy((EnemyDTO) sprite);
+				}
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
 			}

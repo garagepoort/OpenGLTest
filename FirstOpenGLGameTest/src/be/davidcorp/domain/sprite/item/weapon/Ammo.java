@@ -11,6 +11,7 @@ import be.davidcorp.metric.Point;
 import be.davidcorp.metric.Vector;
 
 public abstract class Ammo extends Item {
+	private static final long serialVersionUID = 8930664867463298725L;
 	private int damage = 50;
 
 	public Ammo(float x, float y, int width, int height, int TimeToLive) {

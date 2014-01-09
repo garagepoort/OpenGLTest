@@ -82,7 +82,7 @@ public class SpriteDTOMapper{
 		
 		spriteDTO.setCenter(sprite.getCenter());
 		
-		spriteDTO.setTextureBunch(sprite.getTextureBunch());
+		spriteDTO.setTexture(sprite.getTexture());
 		spriteDTO.setRotationAngle(sprite.getRotationAngle());
 		
 		if(sprite.getColor() != null){
@@ -105,7 +105,7 @@ public class SpriteDTOMapper{
 		sprite.getHitBox().setUpperRightPoint(spriteDTO.getUpperRightPoint());
 		sprite.getHitBox().setUpperLeftPoint(spriteDTO.getUpperLeftPoint());
 		
-		sprite.setTextureBunch(spriteDTO.getTextureBunch());
+//		sprite.setTextureBunch(spriteDTO.getTextureBunch());
 		sprite.setRotationAngle(spriteDTO.getRotationAngle());
 		
 		if(spriteDTO.getColor() != null){

@@ -9,17 +9,20 @@ import be.davidcorp.loaderSaver.repository.EnemyRepository;
 
 public class SpriteSpawner extends Sprite{
 
+	private static final long serialVersionUID = 1L;
 	private EnemyRepository enemyRepository = new EnemyRepository();
 	
-	public SpriteSpawner(){
-		setSpriteType(SPRITESPAWNER);
-	}
 	public void spawnSprite(SpriteType spriteType){
 		if(spriteType == ZOMBIE){
 			Enemy createZombie = EnemyFactory.createZombie(getX(), getY());
 			createZombie = enemyRepository.createSprite(createZombie);
 			GameFieldManager.getCurrentGameField().addEnemyToWorld(createZombie);
 		}
+	}
+	
+	@Override
+	public SpriteType getType() {
+		return SPRITESPAWNER;
 	}
 
 }

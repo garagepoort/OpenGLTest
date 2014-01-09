@@ -10,7 +10,6 @@ import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
 import be.davidcorp.applicationLayer.facade.ConstructionSpriteFacade;
 import be.davidcorp.applicationLayer.facade.EnemyFacade;
-import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.ItemFacade;
 import be.davidcorp.applicationLayer.facade.LightFacade;
 import be.davidcorp.inputControl.InputController;
@@ -19,7 +18,6 @@ import be.davidcorp.view.TranslationManager;
 public class GameCreatorPanelInputController extends InputController {
 
 	private GameCreatorPanel gameCreatorPanel;
-	private GameFieldFacade gamefieldFacade = new GameFieldFacade();
 	
 	private LightFacade lightFacade = new LightFacade();
 	private ConstructionSpriteFacade constructionSpriteFacade = new ConstructionSpriteFacade();
@@ -34,25 +32,26 @@ public class GameCreatorPanelInputController extends InputController {
 	
 	@Override
 	public void on_LEFT_Key() {
-		TranslationManager.initializeLeftTranslation();
+		
+		TranslationManager.initializeLeftTranslationForGameCreator();
 	}
 
 
 	@Override
 	public void on_RIGHT_Key() {
-		TranslationManager.initializeRightTranslation();
+		TranslationManager.initializeRightTranslationForGameCreator();
 	}
 
 
 	@Override
 	public void on_UP_Key() {
-		TranslationManager.initializeUpTranslation();
+		TranslationManager.initializeUpTranslationForGameCreator();
 	}
 
 
 	@Override
 	public void on_DOWN_Key() {
-		TranslationManager.initializeDownTranslation();;
+		TranslationManager.initializeDownTranslationForGameCreator();
 	}
 
 
@@ -83,19 +82,16 @@ public class GameCreatorPanelInputController extends InputController {
 				int id = gameCreatorPanel.getSelectedSprite().getId();
 				if(gameCreatorPanel.getSelectedSprite() instanceof LightDTO){
 					lightFacade.deleteLight(id);
-					gamefieldFacade.removeLightFromWorld(id);
 				}
 				if(gameCreatorPanel.getSelectedSprite() instanceof ConstructionSpriteDTO){
 					constructionSpriteFacade.deleteConstructionSprite(id);
-					gamefieldFacade.removeConstructionSpriteFromWorld(id);
+					
 				}
 				if(gameCreatorPanel.getSelectedSprite() instanceof EnemyDTO){
 					enemyFacade.deleteEnemy(id);
-					gamefieldFacade.removeEnemyFromWorld(id);
 				}
 				if(gameCreatorPanel.getSelectedSprite() instanceof ItemDTO){
 					itemFacade.deleteItem(id);
-					gamefieldFacade.removeGroundItemFromWorld(id);
 				}
 				gameCreatorPanel.setSelectedSprite(null);
 			} catch (Exception e) {

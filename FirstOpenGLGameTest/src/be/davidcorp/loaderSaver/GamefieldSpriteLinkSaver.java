@@ -40,9 +40,9 @@ public class GamefieldSpriteLinkSaver {
 
 	private List<Sprite> getAllGamefieldSprites(Gamefield gamefield) {
 		List<Sprite> sprites = newArrayList();
-		// sprites.addAll(gamefield.getEnemiesInWorld());
-		// sprites.addAll(gamefield.getGroundItems());
-		// sprites.addAll(gamefield.getLightsFromWorld());
+		 sprites.addAll(gamefield.getEnemiesInWorld());
+		 sprites.addAll(gamefield.getGroundItems());
+		 sprites.addAll(gamefield.getLightsFromWorld());
 		sprites.addAll(gamefield.getConstructionItems());
 		return sprites;
 	}

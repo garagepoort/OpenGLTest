@@ -64,7 +64,7 @@ public class GamefieldRepository {
 	}
 
 	public void loadGamefields(List<String> gamefieldStrings) {
-		addTestGamefield();
+//		addTestGamefield();
 		for (String gamefieldString : gamefieldStrings) {
 			Gamefield gamefield = load(gamefieldString);
 			gamefields.put(gamefield.getID(), gamefield);
@@ -92,11 +92,12 @@ public class GamefieldRepository {
 		return null;
 	}
 
-	public void createGamefield(String gamefieldName, int width, int height) {
+	public Gamefield createGamefield(String gamefieldName, int width, int height) {
 		int id = IDGenerator.generateIdForGamefields(gamefields);
 		Gamefield gamefield = new Gamefield(gamefieldName, width, height);
 		gamefield.setID(id);
 		gamefields.put(id, gamefield);
+		return gamefield;
 	}
 
 	private Gamefield load(String gamefieldString) {

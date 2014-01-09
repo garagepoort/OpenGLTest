@@ -7,6 +7,7 @@ import be.davidcorp.domain.sprite.SpriteType;
 
 public class SwingArea extends Sprite{
 
+	private static final long serialVersionUID = 4000219125122072717L;
 	public int damage = 6000;
 	
 	public SwingArea(float x, float y, int width, int height, int ttl) {

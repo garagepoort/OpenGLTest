@@ -1,6 +1,12 @@
 package be.davidcorp.loaderSaver.repository;
 
+import java.util.List;
+import java.util.Map;
+
 import be.davidcorp.domain.sprite.Sprite;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 public class DefaultSpriteRepository {
 
@@ -27,6 +33,28 @@ public class DefaultSpriteRepository {
 		itemRepository.emptyRepository();
 		constructionSpriteRepository.emptyRepository();
 		lightRepository.emptyRepository();
+	}
+	
+	public List<Sprite> getAllSprites(){
+		List<Sprite> sprites = Lists.newArrayList();
+		
+		sprites.addAll(enemyRepository.getAllSprites());
+		sprites.addAll(weaponRepository.getAllSprites());
+		sprites.addAll(constructionSpriteRepository.getAllSprites());
+		sprites.addAll(lightRepository.getAllSprites());
+		sprites.addAll(itemRepository.getAllSprites());
+		return sprites;
+	}
+	
+	public Map<Integer, Sprite> getAllSpritesMap(){
+		Map<Integer, Sprite> sprites = Maps.newHashMap();
+		
+		sprites.putAll(EnemyRepository.enemies);
+		sprites.putAll(WeaponRepository.weapons);
+		sprites.putAll(ConstructionSpriteRepository.constructionSprites);
+		sprites.putAll(LightRepository.lights);
+		sprites.putAll(ItemRepository.items);
+		return sprites;
 	}
 	
 }

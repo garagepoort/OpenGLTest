@@ -1,7 +1,5 @@
 package be.davidcorp.loaderSaver;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,9 +8,7 @@ import java.util.Scanner;
 
 import be.davidcorp.FileUtility;
 import be.davidcorp.domain.game.Gamefield;
-import be.davidcorp.domain.sprite.Sprite;
-import be.davidcorp.domain.trigger.Trigger;
-import be.davidcorp.loaderSaver.filehandling.SpriteFileLoader;
+import be.davidcorp.loaderSaver.filehandling.SpriteSerializer;
 import be.davidcorp.loaderSaver.repository.GamefieldRepository;
 
 public class GamefieldLoaderSaver {
@@ -22,15 +18,29 @@ public class GamefieldLoaderSaver {
 	private List<String> gamefieldStrings = new ArrayList<String>();
 
 	public void saveEntireField(Gamefield gamefield) {
-		File spritesFile = new File("resources/saveFiles/" + gamefield.getName() + "/sprites.txt");
-		File triggerLinksFile = new File("resources/saveFiles/" + gamefield.getName() + "/triggerLinks.txt");
-		
-		spritesFile.getParentFile().mkdirs();
-		triggerLinksFile.getParentFile().mkdirs();
-		
+		createFilesIfNoneExisting(gamefield);
 //		new SpriteFileWriter(spritesFile).saveSprites(getAllGamefieldSprites(gamefield));
 //		new TriggerFileWriter(triggerLinksFile).saveTriggerLinks(getAllTriggerFromSprites(getAllGamefieldSprites(gamefield)));
 		// new TriggerLoader().loadTriggers(fileUtility.getFileContent(triggerLinksFile));
+	}
+
+	public void createFilesIfNoneExisting(Gamefield gamefield) {
+		File spritesFile = new File("resources/saveFiles/" + gamefield.getName() + "/sprites.txt");
+		File triggerLinksFile = new File("resources/saveFiles/" + gamefield.getName() + "/triggerLinks.txt");
+		File gamefieldLinksFile = new File("resources/saveFiles/" + gamefield.getName() + "/gamefieldLinks.txt");
+		
+		spritesFile.getParentFile().mkdirs();
+		triggerLinksFile.getParentFile().mkdirs();
+		gamefieldLinksFile.getParentFile().mkdirs();
+		
+		try {
+			spritesFile.createNewFile();
+			triggerLinksFile.createNewFile();
+			gamefieldLinksFile.createNewFile();
+			
+		} catch (IOException e) {
+			throw new RuntimeException("Something went wrong with the creation of the gamefield files");
+		}
 	}
 	
 	public void loadAllGamefieldsToRepository(File file) throws IOException {
@@ -49,12 +59,10 @@ public class GamefieldLoaderSaver {
 	}
 
 	public void loadEntireField(String name) {
-		File spritesFile = new File("resources/saveFiles/" + name + "/sprites.txt");
-		File triggerLinksFile = new File("resources/saveFiles/" + name + "/triggerLinks.txt");
+		File spritesFile = new File("resources/saveFiles/" + name + "/sprites.ser");
 		File gamefieldSpriteLinksFile = new File("resources/saveFiles/" + name + "/gamefieldLinks.txt");
 		
-		new SpriteFileLoader(spritesFile).loadAllSprites();
-		new TriggerLoader().loadTriggers((triggerLinksFile));
+		new SpriteSerializer(spritesFile).loadAllSprites();
 		new GamefieldSpriteFiller(gamefieldSpriteLinksFile).fillGamefields();
 	}
 	
@@ -73,18 +81,18 @@ public class GamefieldLoaderSaver {
 
 	
 	
-	private List<Trigger> getAllTriggerFromSprites(List<Sprite> sprites) {
-		List<Trigger> triggers = newArrayList();
-		for (Sprite sprite : sprites) {
-			triggers.addAll(sprite.getAllTriggers());
-		}
-		return triggers;
-	}
+//	private List<Trigger> getAllTriggerFromSprites(List<Sprite> sprites) {
+//		List<Trigger> triggers = newArrayList();
+//		for (Sprite sprite : sprites) {
+//			triggers.addAll(sprite.getAllTriggers());
+//		}
+//		return triggers;
+//	}
 	
 	/*
 	 * For tests only
 	 */
-	public void setFileUtility(FileUtility fileUtility) {
+	protected void setFileUtility(FileUtility fileUtility) {
 		this.fileUtility = fileUtility;
 	}
 }

@@ -3,11 +3,11 @@ package be.davidcorp.domain.sprite.light;
 import static be.davidcorp.domain.sprite.SpriteType.LIGHT;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.Sprite;
-import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.trigger.TriggerWhen;
 
 public class Light extends Sprite{
 
+	private static final long serialVersionUID = 5682052162900406390L;
 	//public Color color = new Color(255, 246, 133);
 	private int radius = 50;
 	private boolean lightOn = true;
@@ -20,6 +20,7 @@ public class Light extends Sprite{
 		super(x, y, 10, 10);
 		setLightOn(lightOn);
 		setColor(color);
+		setSpriteType(LIGHT);
 		this.radius=radius;
 	}
 
@@ -51,8 +52,4 @@ public class Light extends Sprite{
 		this.radius = radius;
 	}
 
-	@Override
-	public SpriteType getType() {
-		return LIGHT;
-	}
 }

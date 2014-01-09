@@ -65,10 +65,11 @@ public class Gamefield {
 	}
 
 	private void addSurroundingWalls() {
-		constructionSprites.put(-1, createWallWithID(-1, 0, 0, width, 10));
-		constructionSprites.put(-2, createWallWithID(-2, width, 0, 10, height));
-		constructionSprites.put(-3, createWallWithID(-3, 0, height, width, 10));
-		constructionSprites.put(-4, createWallWithID(-4, 0, 0, 10, height));
+		int wallThickness = 10;
+		constructionSprites.put(-1, createWallWithID(-1, wallThickness, 0, width-wallThickness, wallThickness));
+		constructionSprites.put(-2, createWallWithID(-2, width-wallThickness, 0, wallThickness, height));
+		constructionSprites.put(-3, createWallWithID(-3, wallThickness, height-wallThickness, width-wallThickness, wallThickness));
+		constructionSprites.put(-4, createWallWithID(-4, 0, 0, wallThickness, height));
 	}
 
 	public void update(float secondsMovedInGame)  {
@@ -161,14 +162,6 @@ public class Gamefield {
 
 	public void addGroundItem(Item groundItem) {
 		groundItems.put(groundItem.getID(), groundItem);
-	}
-
-	public void removeSpriteFromWorld(Sprite sprite) {
-		if(sprite instanceof Enemy) enemies.remove(sprite.getID());
-		if(sprite instanceof Item) groundItems.remove(sprite.getID());
-		if(sprite instanceof Ammo) worldAmmo.remove(sprite.getID());
-		if(sprite instanceof Light) lights.remove(sprite.getID());
-		if(sprite instanceof ConstructionSprite) constructionSprites.remove(sprite.getID());
 	}
 
 	public List<Ammo> getAmmoInWorld() {
@@ -353,6 +346,21 @@ public class Gamefield {
 			}
 		}
 		return result;
+	}
+
+	public void removeConstructionSpriteFromWorld(int id) {
+		constructionSprites.remove(id);
+	}
+
+	public void removeLightFromWorld(int id) {
+		lights.remove(id);
+	}
+	
+	public void removeItemFromWorld(int id) {
+		groundItems.remove(id);
+	}
+	public void removeEnemyFromWorld(int id) {
+		enemies.remove(id);
 	}
 
 }

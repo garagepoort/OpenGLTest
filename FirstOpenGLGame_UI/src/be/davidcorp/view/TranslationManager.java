@@ -74,6 +74,30 @@ public class TranslationManager {
 			gameFieldXTranslation += playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
 		}
 	}
+	
+	public static void initializeDownTranslationForGameCreator() {
+		if (gameFieldYTranslation <0) {
+			gameFieldYTranslation += playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+		}
+	}
+	
+	public static void initializeRightTranslationForGameCreator() {
+		if (gameFieldXTranslation > -gameFieldFacade.getWidthOfGamefield() + WIDTH) {
+			gameFieldXTranslation -= playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+		}
+	}
+	
+	public static void initializeUpTranslationForGameCreator(){
+		if (gameFieldYTranslation > -gameFieldFacade.getHeightOfGamefield() + HEIGHT) {
+			gameFieldYTranslation -= playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+		}
+	}
+	
+	public static void initializeLeftTranslationForGameCreator(){
+		if (gameFieldXTranslation < 0) {
+			gameFieldXTranslation += playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+		}
+	}
 
 	public static float getPlayerTranslationX() {
 		return playerTranslationX;

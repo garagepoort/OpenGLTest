@@ -1,8 +1,11 @@
 package be.davidcorp.metric;
 
+import java.io.Serializable;
 
-public class Point {
+
+public class Point implements Serializable{
 	
+	private static final long serialVersionUID = 4799562970460672882L;
 	public float x;
 	public float y;
 	public float z;

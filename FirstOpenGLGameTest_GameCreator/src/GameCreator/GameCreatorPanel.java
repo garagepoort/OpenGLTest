@@ -13,6 +13,7 @@ import static org.lwjgl.opengl.GL11.glPopAttrib;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushAttrib;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex3f;
 
 import java.io.IOException;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import org.newdawn.slick.Color;
 
+import GameCreator.createframes.FrameFacade;
 import be.davidcorp.applicationLayer.dto.ConstructionSpriteDTO;
 import be.davidcorp.applicationLayer.dto.EnemyDTO;
 import be.davidcorp.applicationLayer.dto.ItemDTO;
@@ -31,6 +33,7 @@ import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.ItemFacade;
 import be.davidcorp.applicationLayer.facade.LightFacade;
 import be.davidcorp.metric.Point;
+import be.davidcorp.view.TranslationManager;
 import be.davidcorp.view.game.GamePanel;
 
 public class GameCreatorPanel extends GamePanel {
@@ -41,6 +44,7 @@ public class GameCreatorPanel extends GamePanel {
 	private ConstructionSpriteFacade constructionSpriteFacade = new ConstructionSpriteFacade();
 	private LightFacade lightFacade = new LightFacade();
 	private EnemyFacade enemyFacade = new EnemyFacade();
+	private Point dragPoint;
 
 	public GameCreatorPanel() {
 		setInputController(new GameCreatorPanelInputController(this));
@@ -50,15 +54,18 @@ public class GameCreatorPanel extends GamePanel {
 	public void render() throws IOException {
 		super.render();
 		getGamePanelDrawer().setShadowsOn(false);
+
 		drawSelectedSprite();
 	}
 
 	public void dragSelectedSprite(float pointX, float pointY) {
 		if (selectedSprite != null) {
+			setDragPoint(pointX, pointY);
+			
 			float previousX = selectedSprite.getX();
 			float previousY = selectedSprite.getY();
-			selectedSprite.setX(pointX - selectedSprite.getWidth() / 2);
-			selectedSprite.setY(pointY - selectedSprite.getHeight() / 2);
+			selectedSprite.setX(pointX - dragPoint.x);
+			selectedSprite.setY(pointY - dragPoint.y);
 			if (gameFieldFacade.isDTOCollidingWithConstructionItem(selectedSprite)) {
 				selectedSprite.setX(previousX);
 				selectedSprite.setY(previousY);
@@ -74,6 +81,7 @@ public class GameCreatorPanel extends GamePanel {
 	}
 
 	public void updateSelectedSprite() {
+		FrameFacade.getSelectedSpritePanel().setSprite(selectedSprite);
 		if (selectedSprite instanceof ItemDTO) {
 			itemFacade.updateItem((ItemDTO) selectedSprite);
 		} else if (selectedSprite instanceof ConstructionSpriteDTO) {
@@ -86,12 +94,12 @@ public class GameCreatorPanel extends GamePanel {
 	}
 
 	public void selectSelectedSprite(float pointX, float pointY) {
+		dragPoint = null;
 		List<SpriteDTO> mouseCollisionSprites = getMouseCollisionSprite(pointX, pointY);
-		if (mouseCollisionSprites.size() > 0) {
+		if (mouseCollisionSprites.size() > 0 && mouseCollisionSprites.get(0).getId() > 0) {
 			selectedSprite = mouseCollisionSprites.get(0);
 			if (selectedSprite != null) {
-				setChanged();
-				this.notifyObservers(selectedSprite);
+				FrameFacade.getSelectedSpritePanel().setSprite(selectedSprite);
 			}
 		} else {
 			selectedSprite = null;
@@ -115,6 +123,7 @@ public class GameCreatorPanel extends GamePanel {
 		if (selectedSprite != null) {
 			glPushMatrix();
 			{
+				glTranslatef(TranslationManager.getGameFieldXTranslation(), TranslationManager.getGameFieldYTranslation(), 0);
 				Color color = new Color(255, 255, 0);
 				glDisable(GL_TEXTURE_2D);
 				glPushAttrib(GL_CURRENT_BIT);
@@ -139,9 +148,17 @@ public class GameCreatorPanel extends GamePanel {
 				glEnd();
 				glPopAttrib();
 				glEnable(GL_TEXTURE_2D);
-
 			}
 			glPopMatrix();
+
+		}
+	}
+
+	public void setDragPoint(float pointX, float pointY) {
+		if (this.dragPoint == null) {
+			float selectedSpriteX = selectedSprite.getX();
+			float selectedSpriteY = selectedSprite.getY();
+			this.dragPoint = new Point(pointX-selectedSpriteX, pointY-selectedSpriteY, 0);
 		}
 	}
 

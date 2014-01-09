@@ -10,6 +10,7 @@ import be.davidcorp.domain.sprite.organic.OrganicSprite;
 import com.google.common.collect.Lists;
 
 public class Item extends Sprite implements Attributer {
+	private static final long serialVersionUID = 2593471117706197801L;
 	private int weight;
 	private String infoText;
 	private List<Attribute> attributes = Lists.newArrayList();
@@ -66,8 +67,6 @@ public class Item extends Sprite implements Attributer {
 		attributes.add(attribute);
 	}
 
-	public interface UsableImplementation {
-		public void useItem(Item item, Sprite usingSprite);
-	}
+	
 
 }

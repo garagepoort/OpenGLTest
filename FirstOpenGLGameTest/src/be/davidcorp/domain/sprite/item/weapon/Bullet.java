@@ -1,26 +1,17 @@
 package be.davidcorp.domain.sprite.item.weapon;
 
 import static be.davidcorp.domain.sprite.SpriteType.BULLET;
-import be.davidcorp.domain.sprite.SpriteType;
-import be.davidcorp.texture.TextureBunch;
 
 public class Bullet extends Ammo {
 
+	private static final long serialVersionUID = 4030507961673652655L;
+
 	public Bullet(float x, float y) {
 		super(x, y, 4, 4, 500);
-		initializeTextureBunch();
 		setSpeed(2f);
 		setSpeed(1f);
 		setDamage(5000);
-	}
-
-	public void initializeTextureBunch() {
-		setTextureBunch(new TextureBunch().withDefaultTexture("resources/images/ammo/bullet.png"));
-	}
-
-	@Override
-	public SpriteType getType() {
-		return BULLET;
+		setSpriteType(BULLET);
 	}
 
 }

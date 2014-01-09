@@ -9,6 +9,7 @@ import be.davidcorp.metric.Vector;
 
 public abstract class Weapon extends Item{
 	
+	private static final long serialVersionUID = 6888053320335941087L;
 	private Cooldowner attackCooldowner = new Cooldowner(200);
 
 	public Weapon(float x, float y, int width, int height) {

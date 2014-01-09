@@ -18,7 +18,6 @@ import be.davidcorp.domain.utilities.sprite.SpriteRotator;
 import be.davidcorp.loaderSaver.repository.ItemRepository;
 import be.davidcorp.metric.Point;
 import be.davidcorp.metric.Vector;
-import be.davidcorp.texture.TextureBunch;
 
 public class PlayerFacade {
 
@@ -125,9 +124,9 @@ public class PlayerFacade {
 	}
 
 	
-	public TextureBunch getTextureBunch() {
-		return getCurrentPlayer().getTextureBunch();
-	}
+//	public TextureBunch getTextureBunch() {
+//		return getCurrentPlayer().getTextureBunch();
+//	}
 
 	
 	public LightDTO getFlashLight() {
@@ -145,7 +144,7 @@ public class PlayerFacade {
 	public void pickUpitem(ItemDTO itemDTO) {
 		Item item = itemRepository.getSprite(itemDTO.getId());
 		try {
-			GameFieldManager.getCurrentGameField().removeSpriteFromWorld(item);
+			GameFieldManager.getCurrentGameField().removeItemFromWorld(item.getID());
 			getCurrentPlayer().addItemToInventory(item);
 		} catch (InventoryException e) {
 			e.printStackTrace();
@@ -185,10 +184,22 @@ public class PlayerFacade {
 		item.useItem(getCurrentPlayer());
 	}
 
-	
+
 	public ItemDTO getPlayerWeapon() {
 		if(getCurrentPlayer().getEquippedWeapon() == null) return null;
 		return ItemDTOMapper.mapItemToItemDTO(getCurrentPlayer().getEquippedWeapon());
+	}
+
+	public boolean isPlayerAlive() {
+		return getCurrentPlayer().isAlive();
+	}
+
+	public boolean isCurrentMissionCompleted() {
+		return getCurrentPlayer().isCurrentMissionDone();
+	}
+
+	public String getTexture() {
+		return getCurrentPlayer().getTexture();
 	}
 
 }

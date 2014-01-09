@@ -4,12 +4,11 @@ import static be.davidcorp.domain.sprite.SpriteType.PISTOL;
 
 import java.io.IOException;
 
-import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.sprite.organic.OrganicSprite;
-import be.davidcorp.texture.TextureBunch;
 
 public class Pistol extends RangedWeapon{
 
+	private static final long serialVersionUID = -8206836557019819368L;
 
 	public Pistol() {
 		this(0,0,0);
@@ -27,18 +26,13 @@ public class Pistol extends RangedWeapon{
 	}
 
 	private void initialize() {
-		setTextureBunch(new TextureBunch().withDefaultTexture("resources/images/weapons/pistol.png"));
+		setSpriteType(PISTOL);
 		setAttackCooldown(40);
 	}
 
 	@Override
 	public Ammo getAmmoInstance() {
 		return new Bullet(getX(), getY());
-	}
-
-	@Override
-	public SpriteType getType() {
-		return PISTOL;
 	}
 
 }

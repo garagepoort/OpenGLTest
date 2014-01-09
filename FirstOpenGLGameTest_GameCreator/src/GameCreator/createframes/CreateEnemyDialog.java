@@ -78,6 +78,7 @@ public class CreateEnemyDialog extends CreateDialog implements MouseListener {
 
 		getMainPanel().add(labelFieldPanel);
 		getMainPanel().add(createButton);
+		
 	}
 
 	@Override

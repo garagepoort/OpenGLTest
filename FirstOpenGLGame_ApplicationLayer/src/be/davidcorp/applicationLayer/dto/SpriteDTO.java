@@ -2,7 +2,6 @@ package be.davidcorp.applicationLayer.dto;
 
 import be.davidcorp.applicationLayer.dto.color.ColorDTO;
 import be.davidcorp.metric.Point;
-import be.davidcorp.texture.TextureBunch;
 
 public class SpriteDTO {
 
@@ -21,11 +20,11 @@ public class SpriteDTO {
 	
 	private Point center;
 
-	private TextureBunch textureBunch;
-	
 	private ColorDTO color;
 	
 	private float rotationAngle;
+
+	private String textureLocation;
 	
 	public SpriteDTO() {
 	}
@@ -106,12 +105,12 @@ public class SpriteDTO {
 		this.upperLeftPoint = upperLeftPoint;
 	}
 
-	public TextureBunch getTextureBunch() {
-		return textureBunch;
+	public String getTexture() {
+		return textureLocation;
 	}
 	
-	public void setTextureBunch(TextureBunch textureBunch) {
-		this.textureBunch = textureBunch;
+	public void setTexture(String textureLocation) {
+		this.textureLocation = textureLocation;
 	}
 	
 	public void setColor(ColorDTO color) {

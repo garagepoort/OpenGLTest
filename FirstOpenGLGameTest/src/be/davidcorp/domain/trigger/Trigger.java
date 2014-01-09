@@ -2,14 +2,15 @@ package be.davidcorp.domain.trigger;
 
 import static com.google.common.collect.Lists.newArrayList;
 
+import java.io.Serializable;
 import java.util.List;
 
 import be.davidcorp.domain.sprite.Sprite;
-import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.utilities.sprite.SpriteCollisionChecker;
 
-public class Trigger {
+public class Trigger implements Serializable{
 
+	private static final long serialVersionUID = 3309610310178636147L;
 	private int ID;
 	private Sprite source;
 	private List<Triggerable> triggerables = newArrayList();
@@ -45,19 +46,13 @@ public class Trigger {
 		}
 	}
 
+	@SuppressWarnings("serial")
 	public boolean insideTriggerRange(Sprite s) {
 		float x2 = getX() - triggerRadiusWidth;
 		float y2 = getY() - triggerRadiusHeight;
 		Sprite collisionSprite = null;
 		collisionSprite = new Sprite(x2, y2, 2 * triggerRadiusWidth, 2 * triggerRadiusHeight) {
-			@Override
-			public void onDeath() {
-			}
-
-			@Override
-			public SpriteType getType() {
-				return null;
-			}
+			
 		};
 
 		return SpriteCollisionChecker.doesCollisionExist(collisionSprite, s);

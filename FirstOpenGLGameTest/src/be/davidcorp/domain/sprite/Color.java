@@ -1,6 +1,9 @@
 package be.davidcorp.domain.sprite;
 
-public class Color{
+import java.io.Serializable;
+
+public class Color implements Serializable{
+	private static final long serialVersionUID = -8060196148976938713L;
 	private int id;
 	private int red;
 	private int green;

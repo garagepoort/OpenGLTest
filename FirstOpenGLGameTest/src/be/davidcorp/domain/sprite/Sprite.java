@@ -1,10 +1,12 @@
 package be.davidcorp.domain.sprite;
 
+import static be.davidcorp.config.ImageLocationManager.getImageLocation;
 import static be.davidcorp.domain.trigger.TriggerWhen.ONDESTROY;
 import static be.davidcorp.domain.trigger.TriggerWhen.ONHEALTHGAIN;
 import static be.davidcorp.domain.trigger.TriggerWhen.ONHEALTHLOSS;
 import static com.google.common.collect.Maps.newHashMap;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -12,17 +14,17 @@ import be.davidcorp.WindDirection;
 import be.davidcorp.component.Component;
 import be.davidcorp.component.ComponentType;
 import be.davidcorp.domain.exception.SpriteException;
-import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.trigger.Trigger;
 import be.davidcorp.domain.trigger.TriggerWhen;
 import be.davidcorp.domain.trigger.Triggerable;
 import be.davidcorp.domain.utilities.sprite.SpriteMovingUtility;
 import be.davidcorp.metric.Point;
 import be.davidcorp.metric.Vector;
-import be.davidcorp.texture.TextureBunch;
 
-public abstract class Sprite extends Triggerable {
+public abstract class Sprite extends Triggerable implements Serializable{
 
+	private static final long serialVersionUID = 3463831224950980250L;
+	
 	private Map<ComponentType, Component> componentsMap = newHashMap();
 	private Map<TriggerWhen, ArrayList<Trigger>> triggers = newHashMap();
 
@@ -36,8 +38,8 @@ public abstract class Sprite extends Triggerable {
 	private float rotationAngle;
 	private boolean isMoving;
 
-	private TextureBunch textureBunch;
-	private Vector directionVector = new Vector(new Point(0, 0, 0), new Point(0, 300, 0));
+//	private transient TextureBunch textureBunch;
+	private transient Vector directionVector = new Vector(new Point(0, 0, 0), new Point(0, 300, 0));
 
 
 	private HitBox hitbox = new HitBox();
@@ -160,8 +162,6 @@ public abstract class Sprite extends Triggerable {
 	}
 
 	public void onDeath() {
-		if (GameFieldManager.getCurrentGameField() != null)
-			GameFieldManager.getCurrentGameField().removeSpriteFromWorld(this);
 	}
 
 	public int getHealthPoints() {
@@ -196,7 +196,7 @@ public abstract class Sprite extends Triggerable {
 	}
 
 	public void updateSprite(float secondsMovedInGame) {
-		updateTexture();
+//		updateTexture();
 		setMoving(false);
 	}
 
@@ -251,18 +251,22 @@ public abstract class Sprite extends Triggerable {
 		triggers.remove(trigger);
 	}
 
-	protected void updateTexture() {
-		if (textureBunch != null) {
-			textureBunch.updateTexture();
-		}
-	}
-
-	public TextureBunch getTextureBunch() {
-		return textureBunch;
-	}
-
-	public void setTextureBunch(TextureBunch textureBunch) {
-		this.textureBunch = textureBunch;
+//	protected void updateTexture() {
+//		if (textureBunch != null) {
+//			textureBunch.updateTexture();
+//		}
+//	}
+//
+//	public TextureBunch getTextureBunch() {
+//		return textureBunch;
+//	}
+//
+//	public void setTextureBunch(TextureBunch textureBunch) {
+//		this.textureBunch = textureBunch;
+//	}
+	
+	public String getTexture(){
+		return getImageLocation(spriteType);
 	}
 
 	public SpriteType getType(){

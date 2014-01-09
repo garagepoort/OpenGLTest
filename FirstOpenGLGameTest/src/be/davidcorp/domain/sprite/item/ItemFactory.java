@@ -1,18 +1,14 @@
 package be.davidcorp.domain.sprite.item;
 
+import java.io.Serializable;
+
 import be.davidcorp.domain.attribute.Attribute;
 import be.davidcorp.domain.attribute.AttributeType;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.SpriteType;
-import be.davidcorp.domain.sprite.item.Item.UsableImplementation;
 import be.davidcorp.domain.sprite.organic.OrganicSprite;
-import be.davidcorp.texture.TextureBunch;
 
 public class ItemFactory {
-
-	private static final String MANAPOTION_PNG = "resources/images/potions/manapotion.png";
-	private static final String NECKLACE_PNG = "resources/images/accesoires/necklace.png";
-	private static final String HEALTH_POTION_PNG = "resources/images/potions/healthPotion.png";
 
 	public static Item createHealthPotion(float x, float y, int health){
 		Item item = new ItemBuilder()
@@ -22,7 +18,7 @@ public class ItemFactory {
 			.withX(x)
 			.withY(y)
 			.build();
-		item.setTextureBunch(new TextureBunch().withDefaultTexture(HEALTH_POTION_PNG));
+//		item.setTextureBunch(new TextureBunch().withDefaultTexture(HEALTH_POTION_PNG));
 		return item;
 	}
 	
@@ -34,7 +30,7 @@ public class ItemFactory {
 		.withX(x)
 		.withY(y)
 		.build();
-		item.setTextureBunch(new TextureBunch().withDefaultTexture(MANAPOTION_PNG));
+//		item.setTextureBunch(new TextureBunch().withDefaultTexture(MANAPOTION_PNG));
 		return item;
 	}
 	
@@ -46,11 +42,15 @@ public class ItemFactory {
 			.withX(x)
 			.withY(y)
 			.build();
-		item.setTextureBunch(new TextureBunch().withDefaultTexture(NECKLACE_PNG));
+//		item.setTextureBunch(new TextureBunch().withDefaultTexture(NECKLACE_PNG));
 		return item;
 	}
 	
-	public static class HealthPotionUsableImplementation implements UsableImplementation{
+	public static class HealthPotionUsableImplementation implements UsableImplementation, Serializable{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 424720376034055350L;
 		private int health;
 
 		public HealthPotionUsableImplementation(int health) {
@@ -64,7 +64,11 @@ public class ItemFactory {
 		}
 	}
 	
-	public static class StaminaPotionUsableImplementation implements UsableImplementation{
+	public static class StaminaPotionUsableImplementation implements UsableImplementation, Serializable{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -9164444888431082908L;
 		private int stamina;
 		
 		public StaminaPotionUsableImplementation(int stamina) {

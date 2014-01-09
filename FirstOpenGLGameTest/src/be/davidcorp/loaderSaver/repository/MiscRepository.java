@@ -11,7 +11,7 @@ import com.google.common.collect.Lists;
 
 public class MiscRepository implements SpriteRepository<Sprite>{
 
-	private static Map<Integer, Sprite> sprites = newHashMap();
+	protected static Map<Integer, Sprite> sprites = newHashMap();
 	
 	@Override
 	public Sprite getSprite(int id) {
@@ -20,7 +20,7 @@ public class MiscRepository implements SpriteRepository<Sprite>{
 
 	@Override
 	public Sprite createSprite(Sprite sprite) {
-		int generateIdForSprites = IDGenerator.generateIdForSprites(sprites);
+		int generateIdForSprites = IDGenerator.generateIdForSprites();
 		sprite.setID(generateIdForSprites);
 		sprites.put(generateIdForSprites, sprite);
 		return sprite;
@@ -46,6 +46,11 @@ public class MiscRepository implements SpriteRepository<Sprite>{
 	@Override
 	public List<Sprite> getAllSprites() {
 		return Lists.newArrayList(sprites.values());
+	}
+	
+	@Override
+	public void deleteSprite(int id) {
+		sprites.remove(id);
 	}
 
 }

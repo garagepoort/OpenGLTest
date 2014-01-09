@@ -24,6 +24,7 @@ public class ImageLocationManager {
 	}
 
 	public static String getImageLocation(SpriteType property){
+		if(!prop.containsKey(property.toString())) return null;
 		return baseDirectory + separator + prop.getProperty(property.toString());
 	}
 }

@@ -1,8 +1,12 @@
 package be.davidcorp.metric;
 
+import java.io.Serializable;
 
-public class Vector {
+
+public class Vector implements Serializable{
 	
+	private static final long serialVersionUID = 7957391525112491327L;
+
 	public float x;
 	public float y;
 	public float z;

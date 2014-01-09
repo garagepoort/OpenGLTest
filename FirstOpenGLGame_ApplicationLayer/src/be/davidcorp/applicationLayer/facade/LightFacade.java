@@ -5,6 +5,7 @@ import be.davidcorp.applicationLayer.dto.color.ColorDTO;
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.LightToLightDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
+import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.loaderSaver.repository.LightRepository;
@@ -27,7 +28,8 @@ public class LightFacade {
 	}
 
 	public void deleteLight(int id) {
-		
+		lightRepository.deleteSprite(id);
+		GameFieldManager.getCurrentGameField().removeLightFromWorld(id);
 	}
 
 	public void updateLight(LightDTO lightDTO) {

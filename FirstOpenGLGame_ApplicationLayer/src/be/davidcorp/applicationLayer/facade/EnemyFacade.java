@@ -2,10 +2,9 @@ package be.davidcorp.applicationLayer.facade;
 
 import static be.davidcorp.domain.game.GameFieldManager.getCurrentGameField;
 import be.davidcorp.applicationLayer.dto.EnemyDTO;
-import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ConstructionSpriteDTOMapper;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.OrganicSpriteDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
-import be.davidcorp.domain.sprite.construction.ConstructionSprite;
+import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.sprite.organic.enemy.EnemyFactory;
 import be.davidcorp.loaderSaver.repository.EnemyRepository;
@@ -44,6 +43,8 @@ public class EnemyFacade {
 	}
 
 	public void deleteEnemy(int id) {
+		enemyRepository.deleteSprite(id);
+		GameFieldManager.getCurrentGameField().removeEnemyFromWorld(id);
 	}
 
 }

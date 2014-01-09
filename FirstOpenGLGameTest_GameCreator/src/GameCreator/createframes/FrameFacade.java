@@ -1,5 +1,6 @@
 package GameCreator.createframes;
 
+import GameCreator.panels.SelectedSpritePanel;
 import be.davidcorp.applicationLayer.dto.mapper.EnemyType;
 import be.davidcorp.applicationLayer.dto.mapper.ItemType;
 
@@ -9,6 +10,7 @@ public class FrameFacade {
 	private static CreateEnemyDialog createEnemyDialog;
 	private static CreateLightDialog createLightDialog;
 	private static CreateItemDialog createItemDialog;
+	private static SelectedSpritePanel selectedSpritePanel;
 	
 	public static void openCreateWallDialog(){
 		if(createWallDialog == null){
@@ -34,16 +36,26 @@ public class FrameFacade {
 		}
 	}
 	
+	public static void openSelectedSpritePanel() {
+		if(selectedSpritePanel == null){
+			selectedSpritePanel = new SelectedSpritePanel();
+		}
+	}
+	
+	public static SelectedSpritePanel getSelectedSpritePanel() {
+		return selectedSpritePanel;
+	}
+	
 	public static void closeCreateDialog(CreateDialog createDialog) {	
 		createDialog.setVisible(false);
 		if(createDialog instanceof CreateWallDialog){
 			createWallDialog = null;
 		}
 		if(createDialog instanceof CreateLightDialog){
-			createWallDialog = null;
+			createLightDialog = null;
 		}
 		if(createDialog instanceof CreateEnemyDialog){
-			createWallDialog = null;
+			createEnemyDialog = null;
 		}
 		if(createDialog instanceof CreateItemDialog){
 			createItemDialog = null;

@@ -49,12 +49,14 @@ public class PlayerDrawer {
 		float x = WIDTH / 2 + getPlayerTranslationX();
 		float y = HEIGHT / 2 + getPlayerTranslationY();
 
-		lookInRightDirection(x, y);
+		if (playerFacade.isPlayerAlive()) {
+			lookInRightDirection(x, y);
+		}
 
 		drawPlayerBody(x, y);
 	}
 
-	public static void lookInRightDirection(float x, float y) {
+	private static void lookInRightDirection(float x, float y) {
 		Point beginPointOfVector = new Point(x + playerFacade.getWidth() / 2, y + playerFacade.getHeight() / 2, 0);
 		Point EndPointOfVector = new Point(Mouse.getX(), Mouse.getY(), 0);
 		Vector v = new Vector(beginPointOfVector, EndPointOfVector);
@@ -121,10 +123,10 @@ public class PlayerDrawer {
 			glTranslatef(x + playerFacade.getWidth() / 2, y + playerFacade.getHeight() / 2, 0);
 			glRotatef(playerFacade.getRotationAngle(), 0f, 0f, 1f);
 			glTranslatef(-x - playerFacade.getWidth() / 2, -y - playerFacade.getHeight() / 2, 0);
-			
+
 			Texture t = null;
 			try {
-				t = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(playerFacade.getTextureBunch().getCurrentTexture()));
+				t = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(playerFacade.getTexture()));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

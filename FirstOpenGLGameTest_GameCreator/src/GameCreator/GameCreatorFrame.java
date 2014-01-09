@@ -1,5 +1,7 @@
 package GameCreator;
 
+import static GameCreator.createframes.FrameFacade.openSelectedSpritePanel;
+
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -28,8 +30,9 @@ public class GameCreatorFrame extends JFrame implements MouseListener {
 	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
 
 	public GameCreatorFrame() {
-		setSize(new Dimension(1600, 800));
+		setSize(new Dimension(800, 200));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
 		setVisible(true);
 
 		initComponents();
@@ -76,10 +79,12 @@ public class GameCreatorFrame extends JFrame implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == createGameField) {
 			setVisible(false);
+			openSelectedSpritePanel();
 			new EditGameFrame(fieldNameTextField.getText(), false);
 		}
 		if (e.getSource() == loadGameField) {
 			setVisible(false);
+			openSelectedSpritePanel();
 			new EditGameFrame(list.getSelectedValue().getName(), true);
 		}
 	}

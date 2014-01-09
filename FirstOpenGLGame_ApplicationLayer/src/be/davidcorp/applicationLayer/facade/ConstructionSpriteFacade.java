@@ -5,13 +5,14 @@ import static be.davidcorp.domain.game.GameFieldManager.getCurrentGameField;
 import be.davidcorp.applicationLayer.dto.ConstructionSpriteDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ConstructionSpriteDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
+import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.loaderSaver.repository.ConstructionSpriteRepository;
 
 public class ConstructionSpriteFacade {
 
 	private ConstructionSpriteRepository constructionSpriteRepository = new ConstructionSpriteRepository();
-
+	
 	public ConstructionSpriteDTO createConstructionSprite(ConstructionSpriteDTO constructionSpriteDTO) {
 		try {
 			ConstructionSprite constructionSprite = mapConstructionSpriteDTOToConstructionSprite(constructionSpriteDTO);
@@ -24,7 +25,8 @@ public class ConstructionSpriteFacade {
 	}
 
 	public void deleteConstructionSprite(int id) {
-		throw new RuntimeException("Not yet implemented");
+		constructionSpriteRepository.deleteSprite(id);
+		GameFieldManager.getCurrentGameField().removeConstructionSpriteFromWorld(id);
 	}
 
 	public void updateConstructionSprite(ConstructionSpriteDTO constructionSpriteDTO) {

@@ -1,5 +1,6 @@
 package be.davidcorp.domain.inventory;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Observable;
 
@@ -7,7 +8,8 @@ import be.davidcorp.domain.attribute.AttributeType;
 import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.item.weapon.Weapon;
 
-public class Equipment extends Observable  {
+public class Equipment extends Observable  implements Serializable{
+	private static final long serialVersionUID = 6817168358166879037L;
 	private Weapon weapon;
 	private Item accesoire1;
 	private HashMap<AttributeType, Float> attributeType = new HashMap<>();

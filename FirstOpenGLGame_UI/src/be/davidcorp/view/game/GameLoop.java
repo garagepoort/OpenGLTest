@@ -12,9 +12,11 @@ import java.io.IOException;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.PixelFormat;
 
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
+import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.view.TranslationManager;
 import be.davidcorp.view.light.LightManager;
 import font.FontManager;
@@ -27,21 +29,29 @@ public class GameLoop {
 	private GamePanel playGamePanel;
 	private GameFieldFacade gamefieldFacade;
 	private LightManager lightManager;
+	private boolean onlyRender;
+	private boolean listenForInput = true;
 
 	private static int secondsMovedInGame;
 	public static int WIDTH;
 	public static int HEIGHT;
+	private PlayerFacade playerFacade = new PlayerFacade();
 
-	public GameLoop(GamePanel gamePanel, int width, int height) throws IOException {
-		playGamePanel = gamePanel;
-		GameLoop.WIDTH = width;
-		GameLoop.HEIGHT = height;
-		gamefieldFacade = new GameFieldFacade();
-		lightManager = new LightManager();
+	private Thread gameThread;
+	
+	public GameLoop(GamePanel gamePanel, int width, int height, boolean onlyRender) throws IOException {
+		this.onlyRender = onlyRender;
+		initialize(gamePanel, width, height);
 	}
+	public GameLoop(GamePanel gamePanel, int width, int height) throws IOException {
+		initialize(gamePanel, width, height);
+	}
+	
 
-	Thread gameThread;
 
+	public static int getSecondsMovedInGame() {
+		return secondsMovedInGame;
+	}
 	public void stop() {
 		try {
 			gameThread.join();
@@ -56,9 +66,7 @@ public class GameLoop {
 				try {
 					initializeDisplay();
 					initOpenGL();
-
 					FontManager.load();
-					// ShaderManager.initializeShaders();
 					TranslationManager.initializeBeginTranslation();
 
 					secondsMovedInGame = calculateSecondsMovedInGame();
@@ -67,23 +75,25 @@ public class GameLoop {
 					while (!Display.isCloseRequested()) {
 						secondsMovedInGame = calculateSecondsMovedInGame();
 
-						playGamePanel.checkInput();
-
-						ifGameNotPausedUpdateGamefield();
-
-						lightManager.traceAllLights();
+						getInputFromPlayer();
+						updateGamefield();
 						playGamePanel.render();
 
-						updateFPS(); // update FPS Counter
-						Display.update();
-						Display.sync(120); // cap fps to 60fps
+						updateDisplay();
 					}
 
 					Display.destroy();
 				} catch (Exception e) {
-					e.printStackTrace();
+					throw new RuntimeException(e);
 				}
 			}
+
+			public void updateDisplay() {
+				updateFPS(); // update FPS Counter
+				Display.update();
+				Display.sync(120); // cap fps to 60fps
+			}
+
 		};
 		gameThread.start();
 	}
@@ -95,12 +105,24 @@ public class GameLoop {
 	}
 
 	private void initializeDisplay() throws LWJGLException {
-//		Display.setDisplayMode(new DisplayMode(800, 600));
+		Display.setDisplayMode(new DisplayMode(800, 600));
 		Display.setResizable(false);
 		 Display.setFullscreen(false);
 		Display.create(new PixelFormat(0, 0, 1));
 	}
 
+	private void updateGamefield() {
+		if(playerFacade.isPlayerAlive() && !onlyRender){
+			ifGameNotPausedUpdateGamefield();
+		}
+		lightManager.traceAllLights();
+	}
+	
+	private void getInputFromPlayer() {
+		if(playerFacade.isPlayerAlive() && listenForInput){
+			playGamePanel.checkInput();
+		}
+	}
 	private void initOpenGL() {
 		glViewport(0, 0, WIDTH, HEIGHT);
 		glMatrixMode(GL_PROJECTION);
@@ -109,9 +131,6 @@ public class GameLoop {
 		glMatrixMode(GL_MODELVIEW);
 	}
 
-	public static int getSecondsMovedInGame() {
-		return secondsMovedInGame;
-	}
 
 	private int calculateSecondsMovedInGame() {
 		long time = getTime();
@@ -131,5 +150,17 @@ public class GameLoop {
 			lastFPS += 1000;
 		}
 		fps++;
+	}
+	
+	private void initialize(GamePanel gamePanel, int width, int height) {
+		playGamePanel = gamePanel;
+		GameLoop.WIDTH = width;
+		GameLoop.HEIGHT = height;
+		gamefieldFacade = new GameFieldFacade();
+		lightManager = new LightManager();
+	}
+	
+	public void setListenForInput(boolean listenForInput) {
+		this.listenForInput = listenForInput;
 	}
 }

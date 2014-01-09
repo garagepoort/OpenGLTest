@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.trigger.Trigger;
 import be.davidcorp.loaderSaver.mapper.spriteToString.TriggerToStringMapper;
 

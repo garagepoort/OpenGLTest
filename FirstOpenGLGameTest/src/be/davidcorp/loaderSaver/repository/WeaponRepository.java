@@ -12,7 +12,7 @@ import com.google.common.collect.Lists;
 
 public class WeaponRepository implements SpriteRepository<Weapon> {
 
-	private static Map<Integer, Weapon> weapons = newConcurrentMap();
+	protected static Map<Integer, Weapon> weapons = newConcurrentMap();
 
 
 	@Override
@@ -25,8 +25,8 @@ public class WeaponRepository implements SpriteRepository<Weapon> {
 		if(weapons.containsKey(sprite.getID())){
 			throw new SpriteRepositoryException("A weapon with this ID already exists. The sprite given to this method cannot have an already existing id.");
 		}
-		int id = IDGenerator.generateIdForSprites(weapons);
-		sprite.setID(IDGenerator.generateIdForSprites(weapons));
+		int id = IDGenerator.generateIdForSprites();
+		sprite.setID(IDGenerator.generateIdForSprites());
 		weapons.put(id, sprite);
 		return sprite;
 	}
@@ -51,5 +51,10 @@ public class WeaponRepository implements SpriteRepository<Weapon> {
 	@Override
 	public List<Weapon> getAllSprites() {
 		return Lists.newArrayList(weapons.values());
+	}
+	
+	@Override
+	public void deleteSprite(int id) {
+		weapons.remove(id);
 	}
 }

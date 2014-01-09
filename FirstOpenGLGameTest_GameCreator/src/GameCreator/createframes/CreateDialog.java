@@ -1,8 +1,6 @@
 package GameCreator.createframes;
 
 import java.awt.Dimension;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -24,7 +22,7 @@ public abstract class CreateDialog extends JDialog{
 		setResizable(false);
 		setSize(new Dimension(width, height));
 		setVisible(true);
-		addWindowListener(new NewWindowListener());
+		addWindowListener(new CreateDialogWindowListener(this));
 	}
 	
 	public JPanel getMainPanel() {
@@ -33,37 +31,4 @@ public abstract class CreateDialog extends JDialog{
 
 	protected abstract void initComponents();
 	
-	private class NewWindowListener implements WindowListener {
-
-		@Override
-		public void windowClosing(WindowEvent e) {
-			FrameFacade.closeCreateDialog(CreateDialog.this);
-		}
-
-		@Override
-		public void windowActivated(WindowEvent e) {
-		}
-
-		@Override
-		public void windowClosed(WindowEvent e) {
-		}
-
-		@Override
-		public void windowDeactivated(WindowEvent e) {
-		}
-
-		@Override
-		public void windowDeiconified(WindowEvent e) {
-		}
-
-		@Override
-		public void windowIconified(WindowEvent e) {
-		}
-
-		@Override
-		public void windowOpened(WindowEvent e) {
-		}
-
-	}
-
 }

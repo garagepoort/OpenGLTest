@@ -8,7 +8,6 @@ import be.davidcorp.domain.mission.acceptionCriteria.FindHealthCriteria;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
-import be.davidcorp.domain.trigger.triggerableEvents.BeginMissionEvent;
 import be.davidcorp.domain.trigger.triggerableEvents.EndMissionEvent;
 import be.davidcorp.loaderSaver.repository.ConstructionSpriteRepository;
 import be.davidcorp.loaderSaver.repository.LightRepository;
@@ -20,7 +19,7 @@ public class MissionManager {
 	
 	public static void createFirstMission(){
 		AcceptationCriteriaHandler acceptationCriteriaHandler = new AcceptationCriteriaHandler()
-			.withCriteria(new LightMissionAcceptationCriteria());;
+			.withCriteria(new LightMissionAcceptationCriteria());
 		
 		Mission mission = new Mission("Turn the light on. (Press 'E' near the wall)", acceptationCriteriaHandler);
 		Mission healthMission = new Mission("Find 4 healthpotions", new AcceptationCriteriaHandler().withCriteria(new FindHealthCriteria()));
@@ -30,13 +29,7 @@ public class MissionManager {
 			.triggeredWhen(ONUSE)
 			.withSource(constructionSprite)
 			.withAnotherTriggerable(mission, new EndMissionEvent())
-			.build();
-		
-		aTrigger()
-			.withID(9)
-			.triggeredWhen(ONUSE)
-			.withSource(constructionSprite)
-			.withAnotherTriggerable(healthMission, new BeginMissionEvent())
+//			.withAnotherTriggerable(healthMission, new BeginMissionEvent())
 			.build();
 		
 		

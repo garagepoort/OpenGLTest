@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.inputControl.InputController;
 import be.davidcorp.inputControl.MouseButton;
+import be.davidcorp.view.drawer.GameOverDrawer;
 import be.davidcorp.view.drawer.GamePanelDrawer;
 import be.davidcorp.view.ui.panel.Panel;
 
@@ -17,7 +19,8 @@ public class GamePanel extends Observable{
 	
 	private GamePanelDrawer gamePanelDrawer = new GamePanelDrawer();
 	private InputController inputController;
-	
+
+	private PlayerFacade playerFacade = new PlayerFacade();
 	public void setInputController(InputController inputController) {
 		this.inputController = inputController;
 	}
@@ -25,8 +28,17 @@ public class GamePanel extends Observable{
 	public void render() throws IOException {
 		removeClosedPanels();
 		renderPanels();
+		renderGameOverPanelIfPlayerDeadOrGameWonIfMissionCompleted();
 	}
 	
+	private void renderGameOverPanelIfPlayerDeadOrGameWonIfMissionCompleted() {
+		if(!playerFacade.isPlayerAlive()){
+			GameOverDrawer.drawGameOver();
+		}else if(playerFacade.isCurrentMissionCompleted()){
+			GameWonDrawer.drawGameWon();
+		}
+	}
+
 	public void checkInput(){
 		inputController.checkInput();
 	}

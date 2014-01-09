@@ -10,7 +10,7 @@ import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.SpriteType;
 
 public abstract class SpriteBuilder<SPRITE extends Sprite> {
-	private int id = 1;
+	private int id = 0;
 	private float x = 10;
 	private float y = 11;
 	private int width = 12;

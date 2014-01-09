@@ -19,7 +19,7 @@ public class PickupItemPanel extends Panel {
 		super(x, y, width, height, c);
 		this.itemDTO = itemDTO;
 		initButtons();
-		String t = itemDTO.getTextureBunch().getCurrentTexture();
+		String t = itemDTO.getTexture();
 		setText(itemDTO.getInfoTekst(), 100, 50);
 		Panel p = new Panel(10, 10, 64, 64, t);
 		addComponent(p, 10, 10);

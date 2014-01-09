@@ -4,10 +4,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
-import be.davidcorp.domain.TextureBunchFactory;
 import be.davidcorp.domain.attribute.Attribute;
 import be.davidcorp.domain.inventory.Equipment;
 import be.davidcorp.domain.inventory.Inventory;
@@ -18,8 +15,10 @@ import be.davidcorp.domain.sprite.item.weapon.Weapon;
 import be.davidcorp.domain.sprite.item.weapon.WeaponType;
 import be.davidcorp.metric.Vector;
 
-public abstract class OrganicSprite extends Sprite implements Observer {
+public abstract class OrganicSprite extends Sprite  {
 
+	private static final long serialVersionUID = 3852955984222172928L;
+	
 	@SuppressWarnings("rawtypes")
 	private ArrayList<Skill> skills = newArrayList();
 	private Inventory inventory = new Inventory();
@@ -31,25 +30,17 @@ public abstract class OrganicSprite extends Sprite implements Observer {
 	
 	public OrganicSprite(){
 		super();
-		initialize();
 	}
 
 	public OrganicSprite(float x, float y, int width, int height) {
 		super(x, y, width, height);
-		initialize();
 	}
 
 	public OrganicSprite(float x, float y, int health) {
 		super(x, y, 64, 64);
-		initialize();
 		setMaxHealthPoints(health);
 	}
 
-
-	private void initialize(){
-		equipment.addObserver(this);
-	}
-	
 	@Override
 	public void updateSprite(float secondsMovedInGame) {
 		super.updateSprite(secondsMovedInGame);
@@ -65,10 +56,10 @@ public abstract class OrganicSprite extends Sprite implements Observer {
 		}
 	}
 
-	@Override
-	public void update(Observable o, Object arg) {
-		setTextureBunch(TextureBunchFactory.createTextureBunch(this));
-	}
+//	@Override
+//	public void update(Observable o, Object arg) {
+//		setTextureBunch(TextureBunchFactory.createTextureBunch(this));
+//	}
 
 	public void setX(float x) {
 		super.setX(x);
@@ -127,7 +118,7 @@ public abstract class OrganicSprite extends Sprite implements Observer {
 		equipment.equipWeapon(weapon);
 		equipment.getWeapon().setX(getX());
 		equipment.getWeapon().setY(getY());
-		setTextureBunch(TextureBunchFactory.createTextureBunch(this));
+//		setTextureBunch(TextureBunchFactory.createTextureBunch(this));
 	}
 
 	public Inventory getInventory() {

@@ -12,7 +12,7 @@ import com.google.common.collect.Lists;
 
 public class ConstructionSpriteRepository implements SpriteRepository<ConstructionSprite>{
 	
-	private static Map<Integer, ConstructionSprite> constructionSprites = newConcurrentMap();
+	protected static Map<Integer, ConstructionSprite> constructionSprites = newConcurrentMap();
 
 	@Override
 	public ConstructionSprite getSprite(int id) {
@@ -29,8 +29,8 @@ public class ConstructionSpriteRepository implements SpriteRepository<Constructi
 		if(constructionSprites.containsKey(sprite.getID())){
 			throw new SpriteRepositoryException("A constructionsprite with this ID already exists. The sprite given to this method cannot have an already existing id.");
 		}
-		int id = IDGenerator.generateIdForSprites(constructionSprites);
-		sprite.setID(IDGenerator.generateIdForSprites(constructionSprites));
+		int id = IDGenerator.generateIdForSprites();
+		sprite.setID(IDGenerator.generateIdForSprites());
 		constructionSprites.put(id, sprite);
 		return sprite;
 	}
@@ -50,6 +50,11 @@ public class ConstructionSpriteRepository implements SpriteRepository<Constructi
 	@Override
 	public List<ConstructionSprite> getAllSprites() {
 		return Lists.newArrayList(constructionSprites.values());
+	}
+
+	@Override
+	public void deleteSprite(int id) {
+		constructionSprites.remove(id);
 	}
 
 }

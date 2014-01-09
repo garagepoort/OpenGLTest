@@ -1,10 +1,13 @@
 package be.davidcorp.domain.sprite;
 
+import java.io.Serializable;
+
 import be.davidcorp.metric.Point;
 import be.davidcorp.metric.transfo.TranslateTransfo;
 
-public class HitBox {
+public class HitBox implements Serializable{
 
+	private static final long serialVersionUID = 876741359924492878L;
 	private Point downLeftPoint = new Point(0, 0, 0);
 	private Point downRightPoint = new Point(0, 0, 0);
 	private Point upperRightPoint = new Point(0, 0, 0);

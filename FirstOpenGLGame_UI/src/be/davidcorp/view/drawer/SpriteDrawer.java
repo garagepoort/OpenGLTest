@@ -67,7 +67,7 @@ public class SpriteDrawer {
 	
 	private static void bindTexture(SpriteDTO spriteDTO) {
 		try {
-			TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(spriteDTO.getTextureBunch().getCurrentTexture())).bind();
+			TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(spriteDTO.getTexture())).bind();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

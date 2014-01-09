@@ -34,7 +34,7 @@ public class EquipmentItemPanel extends Panel {
 				equipmentPanel.setEquipmentSubPanel(new EquipmentSubPanel(Mouse.getX(), Mouse.getY() - 64, 128, 64, new Color(0, 0, 0), itemDTO, getGamePanel()));
 			}
 		});
-		b2.setTexture(itemDTO.getTextureBunch().getCurrentTexture());
+		b2.setTexture(itemDTO.getTexture());
 		addComponent(b2, 0, 0);
 
 	}
