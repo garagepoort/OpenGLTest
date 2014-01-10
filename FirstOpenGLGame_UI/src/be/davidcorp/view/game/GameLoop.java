@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.PixelFormat;
@@ -19,10 +20,16 @@ import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.view.TranslationManager;
 import be.davidcorp.view.light.LightManager;
+import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.nulldevice.NullSoundDevice;
+import de.lessvoid.nifty.renderer.lwjgl.input.LwjglInputSystem;
+import de.lessvoid.nifty.renderer.lwjgl.render.LwjglRenderDevice;
+import de.lessvoid.nifty.tools.TimeProvider;
 import font.FontManager;
 
 public class GameLoop {
 
+	private Nifty nifty;
 	private long lastFrame;
 	private int fps;
 	private long lastFPS;
@@ -38,16 +45,16 @@ public class GameLoop {
 	private PlayerFacade playerFacade = new PlayerFacade();
 
 	private Thread gameThread;
-	
-	public GameLoop(GamePanel gamePanel, int width, int height, boolean onlyRender) throws IOException {
+
+	public GameLoop(GamePanel gamePanel, int width, int height,
+			boolean onlyRender) throws IOException {
 		this.onlyRender = onlyRender;
 		initialize(gamePanel, width, height);
 	}
-	public GameLoop(GamePanel gamePanel, int width, int height) throws IOException {
+	public GameLoop(GamePanel gamePanel, int width, int height)
+			throws IOException {
 		initialize(gamePanel, width, height);
 	}
-	
-
 
 	public static int getSecondsMovedInGame() {
 		return secondsMovedInGame;
@@ -59,7 +66,7 @@ public class GameLoop {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void start() {
 		gameThread = new Thread() {
 			public void run() {
@@ -72,12 +79,14 @@ public class GameLoop {
 					secondsMovedInGame = calculateSecondsMovedInGame();
 					lastFPS = getTime();
 
+					initializeNifty();
 					while (!Display.isCloseRequested()) {
 						secondsMovedInGame = calculateSecondsMovedInGame();
 
 						getInputFromPlayer();
 						updateGamefield();
 						playGamePanel.render();
+						renderNifty();
 
 						updateDisplay();
 					}
@@ -98,6 +107,18 @@ public class GameLoop {
 		gameThread.start();
 	}
 
+	private void initializeNifty() throws Exception {
+		LwjglInputSystem inputSystem = new LwjglInputSystem();
+		inputSystem.startup();
+		nifty = new Nifty(new LwjglRenderDevice(), new NullSoundDevice(), inputSystem, new TimeProvider());
+	}
+
+	private void renderNifty() {
+		int mouseX = Mouse.getX();
+		int mouseY = Display.getDisplayMode().getHeight() - Mouse.getY();
+		nifty.render(false);
+	}
+
 	private void ifGameNotPausedUpdateGamefield() {
 		if (!gamefieldFacade.isGamePaused()) {
 			gamefieldFacade.updateGameField(secondsMovedInGame);
@@ -107,19 +128,19 @@ public class GameLoop {
 	private void initializeDisplay() throws LWJGLException {
 		Display.setDisplayMode(new DisplayMode(800, 600));
 		Display.setResizable(false);
-		 Display.setFullscreen(false);
+		Display.setFullscreen(false);
 		Display.create(new PixelFormat(0, 0, 1));
 	}
 
 	private void updateGamefield() {
-		if(playerFacade.isPlayerAlive() && !onlyRender){
+		if (playerFacade.isPlayerAlive() && !onlyRender) {
 			ifGameNotPausedUpdateGamefield();
 		}
 		lightManager.traceAllLights();
 	}
-	
+
 	private void getInputFromPlayer() {
-		if(playerFacade.isPlayerAlive() && listenForInput){
+		if (playerFacade.isPlayerAlive() && listenForInput) {
 			playGamePanel.checkInput();
 		}
 	}
@@ -130,7 +151,6 @@ public class GameLoop {
 		glOrtho(0, WIDTH, 0, HEIGHT, 1, -1);
 		glMatrixMode(GL_MODELVIEW);
 	}
-
 
 	private int calculateSecondsMovedInGame() {
 		long time = getTime();
@@ -151,7 +171,7 @@ public class GameLoop {
 		}
 		fps++;
 	}
-	
+
 	private void initialize(GamePanel gamePanel, int width, int height) {
 		playGamePanel = gamePanel;
 		GameLoop.WIDTH = width;
@@ -159,7 +179,7 @@ public class GameLoop {
 		gamefieldFacade = new GameFieldFacade();
 		lightManager = new LightManager();
 	}
-	
+
 	public void setListenForInput(boolean listenForInput) {
 		this.listenForInput = listenForInput;
 	}
