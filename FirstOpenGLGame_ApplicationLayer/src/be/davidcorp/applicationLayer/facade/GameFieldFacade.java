@@ -23,6 +23,7 @@ import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.SpriteDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
 import be.davidcorp.component.ComponentType;
 import be.davidcorp.component.UsingComponent;
+import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
@@ -238,5 +239,9 @@ public class GameFieldFacade {
 	public boolean isDTOCollidingWithConstructionItem(SpriteDTO selectedSprite) {
 		Sprite sprite = SpriteDTOMapper.doAutoMappingForSpriteDTO(selectedSprite);
 		return getCurrentGameField().spriteAgainstAnyConstructionItem(sprite);
+	}
+
+	public boolean isGamefieldInitialized() {
+		return GameFieldManager.isGamefieldInitialized();
 	}
 }

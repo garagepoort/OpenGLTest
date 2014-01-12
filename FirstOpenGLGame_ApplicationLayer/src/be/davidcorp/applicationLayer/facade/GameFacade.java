@@ -26,7 +26,7 @@ public class GameFacade {
 			PlayerManager.loadPlayers(playerFile);
 
 			new GamefieldLoaderSaver().loadAllGamefieldsToRepository(gamefieldFile);
-			new GameFieldFacade().initializeGameFieldWithName("FirstDayOfInvasion");
+//			new GameFieldFacade().initializeGameFieldWithName("FirstDayOfInvasion");
 //			MissionManager.createFirstMission();
 		} catch (Exception e) {
 			throw new RuntimeException(e);

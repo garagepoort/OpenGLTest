@@ -1,5 +1,6 @@
 package be.davidcorp.view.game;
 
+import static be.davidcorp.view.TranslationManager.initializeBeginTranslation;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_PROJECTION;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
@@ -11,14 +12,12 @@ import java.io.IOException;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.PixelFormat;
 
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
-import be.davidcorp.view.TranslationManager;
 import be.davidcorp.view.light.LightManager;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.nulldevice.NullSoundDevice;
@@ -27,9 +26,10 @@ import de.lessvoid.nifty.renderer.lwjgl.render.LwjglRenderDevice;
 import de.lessvoid.nifty.tools.TimeProvider;
 import font.FontManager;
 
+@SuppressWarnings("deprecation")
 public class GameLoop {
 
-	private Nifty nifty;
+	public static Nifty nifty;
 	private long lastFrame;
 	private int fps;
 	private long lastFPS;
@@ -37,12 +37,12 @@ public class GameLoop {
 	private GameFieldFacade gamefieldFacade;
 	private LightManager lightManager;
 	private boolean onlyRender;
-	private boolean listenForInput = true;
 
 	private static int secondsMovedInGame;
 	public static int WIDTH;
 	public static int HEIGHT;
 	private PlayerFacade playerFacade = new PlayerFacade();
+	private LwjglInputSystem inputSystem = new LwjglInputSystem();
 
 	private Thread gameThread;
 
@@ -51,6 +51,7 @@ public class GameLoop {
 		this.onlyRender = onlyRender;
 		initialize(gamePanel, width, height);
 	}
+	
 	public GameLoop(GamePanel gamePanel, int width, int height)
 			throws IOException {
 		initialize(gamePanel, width, height);
@@ -68,25 +69,26 @@ public class GameLoop {
 	}
 
 	public void start() {
+
 		gameThread = new Thread() {
 			public void run() {
 				try {
 					initializeDisplay();
 					initOpenGL();
 					FontManager.load();
-					TranslationManager.initializeBeginTranslation();
+					if(gamefieldFacade.isGamefieldInitialized()) initializeBeginTranslation();
 
 					secondsMovedInGame = calculateSecondsMovedInGame();
 					lastFPS = getTime();
 
 					initializeNifty();
+					nifty.fromXml("niftyLayouts/startScreen.xml", "start");
 					while (!Display.isCloseRequested()) {
 						secondsMovedInGame = calculateSecondsMovedInGame();
 
-						getInputFromPlayer();
 						updateGamefield();
-						playGamePanel.render();
 						renderNifty();
+						getInputFromPlayer(inputSystem);
 
 						updateDisplay();
 					}
@@ -108,15 +110,21 @@ public class GameLoop {
 	}
 
 	private void initializeNifty() throws Exception {
-		LwjglInputSystem inputSystem = new LwjglInputSystem();
 		inputSystem.startup();
 		nifty = new Nifty(new LwjglRenderDevice(), new NullSoundDevice(), inputSystem, new TimeProvider());
+//		 nifty.setDebugOptionPanelColors(true);
 	}
 
 	private void renderNifty() {
-		int mouseX = Mouse.getX();
-		int mouseY = Display.getDisplayMode().getHeight() - Mouse.getY();
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, WIDTH, HEIGHT, 0, 1f, -1);
+		glMatrixMode(GL_MODELVIEW);
+
+		nifty.update();
 		nifty.render(false);
+		initOpenGL();
+		// glOrtho(0, WIDTH, 0, HEIGHT, 1, -1);
 	}
 
 	private void ifGameNotPausedUpdateGamefield() {
@@ -132,23 +140,26 @@ public class GameLoop {
 		Display.create(new PixelFormat(0, 0, 1));
 	}
 
-	private void updateGamefield() {
-		if (playerFacade.isPlayerAlive() && !onlyRender) {
-			ifGameNotPausedUpdateGamefield();
+	private void updateGamefield() throws IOException {
+		if (gamefieldFacade.isGamefieldInitialized()) {
+			if (playerFacade.isPlayerAlive() && !onlyRender) {
+				ifGameNotPausedUpdateGamefield();
+			}
+			lightManager.traceAllLights();
+			playGamePanel.render();
 		}
-		lightManager.traceAllLights();
 	}
 
-	private void getInputFromPlayer() {
-		if (playerFacade.isPlayerAlive() && listenForInput) {
-			playGamePanel.checkInput();
+	private void getInputFromPlayer(LwjglInputSystem inputSystem2) {
+		if (playerFacade.isPlayerAlive()) {
+			playGamePanel.checkInput(inputSystem);
 		}
 	}
 	private void initOpenGL() {
 		glViewport(0, 0, WIDTH, HEIGHT);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrtho(0, WIDTH, 0, HEIGHT, 1, -1);
+		glOrtho(0, WIDTH, 0, HEIGHT, 1f, -1);
 		glMatrixMode(GL_MODELVIEW);
 	}
 
@@ -180,7 +191,4 @@ public class GameLoop {
 		lightManager = new LightManager();
 	}
 
-	public void setListenForInput(boolean listenForInput) {
-		this.listenForInput = listenForInput;
-	}
 }

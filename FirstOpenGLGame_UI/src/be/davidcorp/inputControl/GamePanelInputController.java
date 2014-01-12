@@ -1,8 +1,13 @@
 package be.davidcorp.inputControl;
 
+import static be.davidcorp.view.game.GameLoop.nifty;
+
+import java.util.List;
+
 import org.lwjgl.input.Mouse;
 
 import be.davidcorp.WindDirection;
+import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.metric.Point;
@@ -10,12 +15,15 @@ import be.davidcorp.metric.Vector;
 import be.davidcorp.view.TranslationManager;
 import be.davidcorp.view.game.GameLoop;
 import be.davidcorp.view.game.PlayGamePanel;
+import be.davidcorp.view.ui.nifty.PickUpItemPopUp;
+import de.lessvoid.nifty.elements.Element;
 
 public class GamePanelInputController extends InputController {
 
 	private PlayerFacade playerFacade = new PlayerFacade();
 	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
 	private PlayGamePanel playGamePanel;
+	private Element createPopup;
 
 	public GamePanelInputController(PlayGamePanel panel) {
 		this.playGamePanel = panel;
@@ -42,12 +50,21 @@ public class GamePanelInputController extends InputController {
 
 	@Override
 	public void on_G_Key_pressed() {
-		playGamePanel.togglePickupPanel();
+		// playGamePanel.togglePickupPanel();
+		List<ItemDTO> itemsThatCanBePickedUpByPlayer = gameFieldFacade.getItemsThatCanBePickedUpByPlayer();
+		if(createPopup !=null){
+			nifty.closePopup(createPopup.getId());
+			createPopup=null;
+		}else if(!itemsThatCanBePickedUpByPlayer.isEmpty()){
+			PickUpItemPopUp.createPopUp(itemsThatCanBePickedUpByPlayer.get(0));
+			createPopup = nifty.createPopup("popupItem");
+			nifty.showPopup(nifty.getCurrentScreen(), createPopup.getId(), null);
+			System.out.println(nifty.getCurrentScreen().debugOutput());
+		}
 	}
-
 	@Override
 	public void on_O_Key_pressed() {
-		playGamePanel.toggleEquipmentPanel();
+		// pickUpItemPopup
 	}
 
 	@Override

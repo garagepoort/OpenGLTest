@@ -1,12 +1,9 @@
 package be.davidcorp.domain.sprite.organic.enemy;
 
-import static be.davidcorp.config.ImageLocationManager.getImageLocation;
 import static be.davidcorp.domain.sprite.SpriteType.SPIDER;
 import static be.davidcorp.domain.sprite.SpriteType.ZOMBIE;
-import be.davidcorp.config.ImageLocationManager;
 import be.davidcorp.domain.sprite.SpriteType;
 import be.davidcorp.domain.test.builder.EnemyBuilder;
-import be.davidcorp.texture.TextureBunch;
 
 public class EnemyFactory {
 

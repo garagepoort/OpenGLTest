@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import de.lessvoid.nifty.renderer.lwjgl.input.LwjglInputSystem;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.inputControl.InputController;
 import be.davidcorp.inputControl.MouseButton;
@@ -39,8 +40,8 @@ public class GamePanel extends Observable{
 		}
 	}
 
-	public void checkInput(){
-		inputController.checkInput();
+	public void checkInput(LwjglInputSystem inputSystem){
+		inputController.checkInput(inputSystem);
 	}
 
 	public void addPanel(Panel panel) {

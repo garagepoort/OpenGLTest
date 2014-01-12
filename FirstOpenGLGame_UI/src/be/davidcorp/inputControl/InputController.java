@@ -3,17 +3,21 @@ package be.davidcorp.inputControl;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import de.lessvoid.nifty.renderer.lwjgl.input.LwjglInputSystem;
+
 public class InputController {
 
 	protected boolean mousePushedDown;
-
-	public void checkInput(){
+	private LwjglInputSystem inputSystem;
+	
+	public void checkInput(LwjglInputSystem inputSystem){
+		this.inputSystem = inputSystem;
 		checkKeyboard();
 		checkMouse();
 	}
 
 	protected void checkMouse(){
-		while (Mouse.next()) {
+		if (inputSystem.hasNextMouseEvent()) {
 			if (!Mouse.isButtonDown(0)) {
 				on_MOUSELEFT_released();
 				mousePushedDown = false;
@@ -44,7 +48,7 @@ public class InputController {
 
 	protected void checkKeyboard() {
 		checkArrows();
-		while (Keyboard.next()) {
+		if (inputSystem.hasNextKeyboardEvent()) {
 			if (Keyboard.getEventKeyState()) {
 
 			} else {
