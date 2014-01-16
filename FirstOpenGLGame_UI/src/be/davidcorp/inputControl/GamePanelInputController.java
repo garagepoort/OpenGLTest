@@ -23,7 +23,7 @@ public class GamePanelInputController extends InputController {
 	private PlayerFacade playerFacade = new PlayerFacade();
 	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
 	private PlayGamePanel playGamePanel;
-	private Element createPopup;
+	private Element pickupItemPopup;
 
 	public GamePanelInputController(PlayGamePanel panel) {
 		this.playGamePanel = panel;
@@ -52,13 +52,13 @@ public class GamePanelInputController extends InputController {
 	public void on_G_Key_pressed() {
 		// playGamePanel.togglePickupPanel();
 		List<ItemDTO> itemsThatCanBePickedUpByPlayer = gameFieldFacade.getItemsThatCanBePickedUpByPlayer();
-		if(createPopup !=null){
-			nifty.closePopup(createPopup.getId());
-			createPopup=null;
+		if(pickupItemPopup !=null){
+			nifty.closePopup(pickupItemPopup.getId());
+			pickupItemPopup=null;
 		}else if(!itemsThatCanBePickedUpByPlayer.isEmpty()){
-			PickUpItemPopUp.createPopUp(itemsThatCanBePickedUpByPlayer.get(0));
-			createPopup = nifty.createPopup("popupItem");
-			nifty.showPopup(nifty.getCurrentScreen(), createPopup.getId(), null);
+			PickUpItemPopUp.createPopUp(itemsThatCanBePickedUpByPlayer);
+			pickupItemPopup = nifty.createPopup("popupItem");
+			nifty.showPopup(nifty.getCurrentScreen(), pickupItemPopup.getId(), null);
 			System.out.println(nifty.getCurrentScreen().debugOutput());
 		}
 	}
@@ -69,7 +69,16 @@ public class GamePanelInputController extends InputController {
 
 	@Override
 	public void on_I_Key_pressed() {
-		playGamePanel.toggleInventoryMenu();
+		List<ItemDTO> itemsThatCanBePickedUpByPlayer = playerFacade.getInventoryItems();
+		if(pickupItemPopup !=null){
+			nifty.closePopup(pickupItemPopup.getId());
+			pickupItemPopup=null;
+		}else if(!itemsThatCanBePickedUpByPlayer.isEmpty()){
+			PickUpItemPopUp.createPopUp(itemsThatCanBePickedUpByPlayer);
+			pickupItemPopup = nifty.createPopup("popupItem");
+			nifty.showPopup(nifty.getCurrentScreen(), pickupItemPopup.getId(), null);
+			System.out.println(nifty.getCurrentScreen().debugOutput());
+		}
 	}
 
 	@Override
@@ -128,15 +137,13 @@ public class GamePanelInputController extends InputController {
 
 	@Override
 	public void onMouseLeftPressed() {
-		boolean inPanel = playGamePanel.handlePanelsOnClick(Mouse.getX(), Mouse.getY(), MouseButton.LEFTBUTTON);
-		if (!inPanel && !gameFieldFacade.isGamePaused()) {
+		if (!gameFieldFacade.isGamePaused()) {
 			letPlayerAttackInDirectionOfVector();
 		}
 	}
 
 	@Override
 	public void onMouseRightPressed() {
-		playGamePanel.handlePanelsOnClick(Mouse.getX(), Mouse.getY(), MouseButton.RIGHTBUTTON);
 	}
 
 	private float getPlayerMoveSpeed() {

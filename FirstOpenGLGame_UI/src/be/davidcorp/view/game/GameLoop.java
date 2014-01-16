@@ -19,10 +19,16 @@ import org.lwjgl.opengl.PixelFormat;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.view.light.LightManager;
+import be.davidcorp.view.ui.nifty.GamePanelScreen;
+import be.davidcorp.view.ui.nifty.StartScreen;
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.builder.LayerBuilder;
+import de.lessvoid.nifty.builder.PanelBuilder;
+import de.lessvoid.nifty.builder.ScreenBuilder;
 import de.lessvoid.nifty.nulldevice.NullSoundDevice;
 import de.lessvoid.nifty.renderer.lwjgl.input.LwjglInputSystem;
 import de.lessvoid.nifty.renderer.lwjgl.render.LwjglRenderDevice;
+import de.lessvoid.nifty.screen.DefaultScreenController;
 import de.lessvoid.nifty.tools.TimeProvider;
 import font.FontManager;
 
@@ -82,7 +88,7 @@ public class GameLoop {
 					lastFPS = getTime();
 
 					initializeNifty();
-					nifty.fromXml("niftyLayouts/startScreen.xml", "start");
+					nifty.gotoScreen(StartScreen.KEY);
 					while (!Display.isCloseRequested()) {
 						secondsMovedInGame = calculateSecondsMovedInGame();
 
@@ -112,7 +118,66 @@ public class GameLoop {
 	private void initializeNifty() throws Exception {
 		inputSystem.startup();
 		nifty = new Nifty(new LwjglRenderDevice(), new NullSoundDevice(), inputSystem, new TimeProvider());
+		nifty.loadStyleFile("nifty-default-styles.xml");
+	    nifty.loadControlFile("nifty-default-controls.xml");
+		StartScreen.createStartScreen();
+		GamePanelScreen.createStartScreen();
 //		 nifty.setDebugOptionPanelColors(true);
+	}
+	
+	private void createScreen(){
+		nifty.addScreen("hud", new ScreenBuilder("hud") {{
+	        controller(new DefaultScreenController());
+	 
+	        layer(new LayerBuilder("background") {{
+	            childLayoutCenter();
+	            backgroundColor("#000f");
+	            // <!-- ... -->
+	        }});
+	 
+	        layer(new LayerBuilder("foreground") {{
+	            childLayoutHorizontal();
+	            backgroundColor("#0000");
+	 
+	            // panel added
+	            panel(new PanelBuilder("panel_left") {{
+	                childLayoutVertical();
+	                backgroundColor("#0f08");
+	                height("100%");
+	                width("80%");
+	                // <!-- spacer -->
+	            }});
+	 
+	            panel(new PanelBuilder("panel_right") {{
+	                childLayoutVertical();
+	                backgroundColor("#00f8");
+	                height("100%");
+	                width("20%");
+	 
+	                panel(new PanelBuilder("panel_top_right1") {{
+	                    childLayoutCenter();
+	                    backgroundColor("#00f8");
+	                    height("15%");
+	                    width("100%");
+	                }});
+	 
+	                panel(new PanelBuilder("panel_top_right2") {{
+	                    childLayoutCenter();
+	                    backgroundColor("#44f8");
+	                    height("15%");
+	                    width("100%");
+	                }});
+	 
+	                panel(new PanelBuilder("panel_bot_right") {{
+	                    childLayoutCenter();
+	                    valignCenter();
+	                    backgroundColor("#88f8");
+	                    height("70%");
+	                    width("100%");
+	                }});
+	            }}); // panel added
+	        }});
+	    }}.build(nifty));
 	}
 
 	private void renderNifty() {

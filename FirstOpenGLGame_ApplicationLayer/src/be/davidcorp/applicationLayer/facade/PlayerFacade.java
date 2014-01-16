@@ -2,6 +2,9 @@ package be.davidcorp.applicationLayer.facade;
 
 import static be.davidcorp.domain.game.GameFieldManager.getCurrentGameField;
 import static be.davidcorp.domain.sprite.organic.player.PlayerManager.getCurrentPlayer;
+
+import java.util.List;
+
 import be.davidcorp.WindDirection;
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
@@ -141,8 +144,8 @@ public class PlayerFacade {
 	}
 
 	
-	public void pickUpitem(ItemDTO itemDTO) {
-		Item item = itemRepository.getSprite(itemDTO.getId());
+	public void pickUpitem(int id) {
+		Item item = itemRepository.getSprite(id);
 		try {
 			GameFieldManager.getCurrentGameField().removeItemFromWorld(item.getID());
 			getCurrentPlayer().addItemToInventory(item);
@@ -200,6 +203,11 @@ public class PlayerFacade {
 
 	public String getTexture() {
 		return getCurrentPlayer().getTexture();
+	}
+
+	public List<ItemDTO> getInventoryItems() {
+		List<Item> items = getCurrentPlayer().getInventory().getItems();
+		return ItemDTOMapper.mapItemsToItemDTOs(items);
 	}
 
 }

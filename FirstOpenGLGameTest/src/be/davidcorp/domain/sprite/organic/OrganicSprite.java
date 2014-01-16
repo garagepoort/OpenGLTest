@@ -174,7 +174,7 @@ public abstract class OrganicSprite extends Sprite  {
 	
 	public void dropItem(Item item) {
 		setDropPositionOfItem(item);
-		inventory.dropItem(item);
+		inventory.removeItem(item);
 		equipment.unequipItem(item);
 	}
 

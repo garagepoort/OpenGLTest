@@ -1,9 +1,14 @@
 package be.davidcorp.domain.inventory;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
-import be.davidcorp.domain.exception.InventoryException;
 import be.davidcorp.domain.sprite.item.Item;
+import be.davidcorp.domain.sprite.item.ItemFactory;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 public class Inventory implements Serializable{
 
@@ -11,141 +16,106 @@ public class Inventory implements Serializable{
 	private int ID;
 	private int maxWeight = 1000;
 	private int currentWeight;
-	private Item[][] items = new Item[6][4];
 
+	private Map<Integer, Item> items = Maps.newHashMap();
+	
 	public Inventory() {
-	}
-
-	// public void switchItems(Item i1, Item i2){
-	// int rij1 = 0;
-	// int kolom1 = 0;
-	// int rij2 = 0;
-	// int kolom2 = 0;
-	// for(int i = 0; i<items.length;i++){
-	// for(int j = 0; j<items[0].length; j++){
-	// if(items[i][j] == i1){
-	// rij1=i;
-	// kolom1=j;
-	// }
-	// }
-	// }
-	// for(int i = 0; i<items.length;i++){
-	// for(int j = 0; j<items[0].length; j++){
-	// if(items[i][j] == i2){
-	// rij2=i;
-	// kolom2=j;
-	// }
-	// }
-	// }
-	// items[rij1][kolom1] = i2;
-	// items[rij2][kolom2] = i1;
-	// }
-
-	public void addItem(Item i, int row, int column)  {
-		if (row < 0 || row > items.length - 1 || column < 0 || column > items[0].length) {
-			throw new InventoryException("Index out of bounds");
-		}
-		if (currentWeight + i.getWeight() > maxWeight) {
-			throw new InventoryException("You can not carry anymore items");
-		}
-		if (containsItem(i)) {
-			throw new InventoryException("The inventory already contains this item.");
-		}
-		if (items[row][column] != null) {
-			throw new InventoryException("There is already an item at this position.");
-		}
-		this.currentWeight = currentWeight + i.getWeight();
-		items[row][column] = i;
+		Item item = ItemFactory.createHealthPotion(10, 10, 100);
+		Item item2 = ItemFactory.createHealthPotion(10, 10, 100);
+		addItem(item);
+		addItem(item2);
 	}
 
 	public void addItem(Item item)  {
-
-		if (currentWeight + item.getWeight() > maxWeight) {
-			throw new InventoryException("You can not carry anymore items");
-		}
-		if (containsItem(item)) {
-			throw new InventoryException("The inventory already contains this item.");
-		}
-		boolean add = false;
-		for (int i = 0; i < items.length && !add; i++) {
-			for (int j = 0; j < items[0].length && !add; j++) {
-				if (items[i][j] == null) {
-					items[i][j] = item;
-					add = true;
-				}
-			}
-		}
-		if (add) {
-			this.currentWeight = currentWeight + item.getWeight();
-		} else {
-			throw new InventoryException("Item can't be added. Inventory full");
-		}
-
+//		if (row < 0 || row > items.length - 1 || column < 0 || column > items[0].length) {
+//			throw new InventoryException("Index out of bounds");
+//		}
+//		if (currentWeight + i.getWeight() > maxWeight) {
+//			throw new InventoryException("You can not carry anymore items");
+//		}
+//		if (containsItem(i)) {
+//			throw new InventoryException("The inventory already contains this item.");
+//		}
+//		if (items[row][column] != null) {
+//			throw new InventoryException("There is already an item at this position.");
+//		}
+//		this.currentWeight = currentWeight + i.getWeight();
+//		items[row][column] = i;
+		items.put(item.getID(), item);
 	}
 
-	public void removeItem(int row, int column)  {
-		if (row < 0 || row > items.length - 1 || column < 0 || column > items[0].length) {
-			throw new InventoryException("Index out of bounds");
-		}
-		if (items[row][column] == null)
-			return;
+//	public void addItem(Item item)  {
+//
+//		if (currentWeight + item.getWeight() > maxWeight) {
+//			throw new InventoryException("You can not carry anymore items");
+//		}
+//		if (containsItem(item)) {
+//			throw new InventoryException("The inventory already contains this item.");
+//		}
+//		boolean add = false;
+//		for (int i = 0; i < items.length && !add; i++) {
+//			for (int j = 0; j < items[0].length && !add; j++) {
+//				if (items[i][j] == null) {
+//					items[i][j] = item;
+//					add = true;
+//				}
+//			}
+//		}
+//		if (add) {
+//			this.currentWeight = currentWeight + item.getWeight();
+//		} else {
+//			throw new InventoryException("Item can't be added. Inventory full");
+//		}
+//
+//	}
 
-		Item i = items[row][column];
-		this.currentWeight = currentWeight - i.getWeight();
-		items[row][column] = null;
+	public void removeItem(int id)  {
+//		if (row < 0 || row > items.length - 1 || column < 0 || column > items[0].length) {
+//			throw new InventoryException("Index out of bounds");
+//		}
+//		if (items[row][column] == null)
+//			return;
+//
+//		Item i = items[row][column];
+//		this.currentWeight = currentWeight - i.getWeight();
+//		items[row][column] = null;
+		items.remove(id);
 	}
 
-	public void removeItem(Item item) {
-		for (int i = 0; i < items.length; i++) {
-			for (int j = 0; j < items[0].length; j++) {
-				if (items[i][j] == item) {
-					items[i][j] = null;
-				}
-			}
-		}
+//	public void removeItem(Item item) {
+//		for (int i = 0; i < items.length; i++) {
+//			for (int j = 0; j < items[0].length; j++) {
+//				if (items[i][j] == item) {
+//					items[i][j] = null;
+//				}
+//			}
+//		}
+//	}
+
+	public Item getItem(int id)  {
+//		if (row < 0 || row > items.length - 1 || column < 0 || column > items[0].length) {
+//			throw new InventoryException("Index out of bounds");
+//		}
+//		return items[row][column];
+		return items.get(id);
 	}
 
-	public Item getItem(int row, int column)  {
-		if (row < 0 || row > items.length - 1 || column < 0 || column > items[0].length) {
-			throw new InventoryException("Index out of bounds");
-		}
-		return items[row][column];
-	}
-
-	public void removeDeadItems() {
-		for (int i = 0; i < items.length; i++) {
-			for (int j = 0; j < items[0].length; j++) {
-				if (items[i][j] != null && !items[i][j].isAlive()) {
-					items[i][j] = null;
-				}
-			}
-		}
-	}
-
-	public void dropItem(Item item) {
-		for (int i = 0; i < items.length; i++) {
-			for (int j = 0; j < items[0].length; j++) {
-				if (items[i][j] != null && items[i][j] == item) {
-					items[i][j] = null;
-				}
-			}
-		}
-	}
+//	public void removeDeadItems() {
+//		for (int i = 0; i < items.length; i++) {
+//			for (int j = 0; j < items[0].length; j++) {
+//				if (items[i][j] != null && !items[i][j].isAlive()) {
+//					items[i][j] = null;
+//				}
+//			}
+//		}
+//	}
 
 	public boolean containsItem(Item item) {
-		boolean contains = false;
-		for (int i = 0; i < items.length && !contains; i++) {
-			for (int j = 0; j < items[0].length && !contains; j++) {
-				if (items[i][j] == item) {
-					contains = true;
-				}
-			}
-		}
-		return contains;
+		return items.containsValue(item);
 	}
 
-	public Item[][] getItems() {
-		return items;
+	public List<Item> getItems() {
+		return Lists.newArrayList(items.values());
 	}
 
 	public int getID() {
@@ -154,6 +124,10 @@ public class Inventory implements Serializable{
 
 	public void setID(Integer iD) {
 		ID = iD;
+	}
+
+	public void removeItem(Item item) {
+		items.remove(item.getID());
 	}
 
 }

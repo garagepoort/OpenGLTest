@@ -76,8 +76,6 @@ public class GamePanelDrawer {
 		glDisable(GL_STENCIL_TEST);
 
 		PlayerDrawer.drawPlayer();
-		drawPanels(gamePanel);
-
 	}
 
 	private void drawLineOfSight(float x, float y, int lightCounter) {
@@ -206,12 +204,6 @@ public class GamePanelDrawer {
 		}
 		glPopMatrix();
 
-	}
-
-	private void drawPanels(GamePanel gamePanel){
-		for (Panel p : gamePanel.getPanels()) {
-			p.draw();
-		}
 	}
 
 	private void drawSpritesInWorld()  {

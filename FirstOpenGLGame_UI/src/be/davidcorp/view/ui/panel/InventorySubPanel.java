@@ -70,8 +70,8 @@ public class InventorySubPanel extends Panel {
 
 			@Override
 			public void onLeftClick(EventObject e) {
-				getGamePanel().addPanel(new ItemInfoPanel(200, 100, 400, 84, new Color(255, 0, 0), itemDTO));
-				setClosed(true);
+//				getGamePanel().addPanel(new ItemInfoPanel(200, 100, 400, 84, new Color(255, 0, 0), itemDTO));
+//				setClosed(true);
 			}
 		});
 	}

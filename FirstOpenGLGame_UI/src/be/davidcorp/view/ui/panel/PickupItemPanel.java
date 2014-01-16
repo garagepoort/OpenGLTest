@@ -34,7 +34,7 @@ public class PickupItemPanel extends Panel {
 			@Override
 			public void onLeftClick(EventObject e) {
 				new PlayerFacade().putItemInInventory(itemDTO);
-				playerFacade.pickUpitem(itemDTO);
+				playerFacade.pickUpitem(itemDTO.getId());
 				panel.getRemoveItems().add(itemDTO);
 				setClosed(true);
 				setClosed(true);

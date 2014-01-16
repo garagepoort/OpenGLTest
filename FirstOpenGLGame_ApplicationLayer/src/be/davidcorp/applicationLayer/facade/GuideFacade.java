@@ -11,6 +11,4 @@ public class GuideFacade {
 	public String getCurrentGuidance() {
 		return GameFieldManager.getCurrentGameField().getGuide().getCurrentGuidance();
 	}
-	
-	
 }
