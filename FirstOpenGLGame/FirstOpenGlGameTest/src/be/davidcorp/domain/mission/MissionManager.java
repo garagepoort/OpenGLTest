@@ -2,6 +2,8 @@ package be.davidcorp.domain.mission;
 
 import static be.davidcorp.domain.trigger.TriggerBuilder.aTrigger;
 import static be.davidcorp.domain.trigger.TriggerWhen.ONUSE;
+import be.davidcorp.database.repository.ConstructionSpriteRepository;
+import be.davidcorp.database.repository.LightRepository;
 import be.davidcorp.domain.mission.acceptionCriteria.AcceptationCriteria;
 import be.davidcorp.domain.mission.acceptionCriteria.AcceptationCriteriaHandler;
 import be.davidcorp.domain.mission.acceptionCriteria.FindHealthCriteria;
@@ -9,8 +11,6 @@ import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
 import be.davidcorp.domain.trigger.triggerableEvents.EndMissionEvent;
-import be.davidcorp.loaderSaver.repository.ConstructionSpriteRepository;
-import be.davidcorp.loaderSaver.repository.LightRepository;
 
 public class MissionManager {
 

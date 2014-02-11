@@ -23,6 +23,12 @@ import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.SpriteDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
 import be.davidcorp.component.ComponentType;
 import be.davidcorp.component.UsingComponent;
+import be.davidcorp.database.GamefieldLoaderSaver;
+import be.davidcorp.database.repository.ConstructionSpriteRepository;
+import be.davidcorp.database.repository.EnemyRepository;
+import be.davidcorp.database.repository.GamefieldRepository;
+import be.davidcorp.database.repository.ItemRepository;
+import be.davidcorp.database.repository.LightRepository;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.domain.sprite.Sprite;
@@ -32,12 +38,6 @@ import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
 import be.davidcorp.domain.utilities.PauseManager;
-import be.davidcorp.loaderSaver.GamefieldLoaderSaver;
-import be.davidcorp.loaderSaver.repository.ConstructionSpriteRepository;
-import be.davidcorp.loaderSaver.repository.EnemyRepository;
-import be.davidcorp.loaderSaver.repository.GamefieldRepository;
-import be.davidcorp.loaderSaver.repository.ItemRepository;
-import be.davidcorp.loaderSaver.repository.LightRepository;
 import be.davidcorp.metric.Point;
 
 public class GameFieldFacade {

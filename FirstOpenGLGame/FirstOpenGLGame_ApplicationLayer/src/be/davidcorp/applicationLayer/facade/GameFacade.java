@@ -8,12 +8,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import be.davidcorp.config.ConfigurationManager;
+import be.davidcorp.database.GamefieldLoaderSaver;
+import be.davidcorp.database.GamefieldSpriteLinkSaver;
+import be.davidcorp.database.filehandling.SpriteSerializer;
+import be.davidcorp.database.repository.DefaultSpriteRepository;
 import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
-import be.davidcorp.loaderSaver.GamefieldLoaderSaver;
-import be.davidcorp.loaderSaver.GamefieldSpriteLinkSaver;
-import be.davidcorp.loaderSaver.filehandling.SpriteSerializer;
-import be.davidcorp.loaderSaver.repository.DefaultSpriteRepository;
 
 public class GameFacade {
 
@@ -48,20 +48,14 @@ public class GameFacade {
 		
 		File file = new File("resources/saveFiles/" + gamefield.getName() + "/sprites.ser");
 		File gamefieldlinks = new File("resources/saveFiles/" + gamefield.getName() + "/gamefieldLinks.txt");
+		
 		emptyFile(file);
 		emptyFile(gamefieldlinks);
-		SpriteSerializer spriteSerializer = new SpriteSerializer(file);
+		
 		GamefieldSpriteLinkSaver gamefieldSpriteLinkSaver = new GamefieldSpriteLinkSaver(gamefieldlinks);
-		try {
-			gamefieldSpriteLinkSaver.saveSpritesFromGamefield(gamefield);
-			spriteSerializer.serializeSprites(new DefaultSpriteRepository().getAllSprites());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		// save the player.
-		// saves the spriteRepositories
-		// save the triggers.
-		// save the gamefield links.
+		gamefieldSpriteLinkSaver.saveSpritesFromGamefield(gamefield);
+		
+		new DefaultSpriteRepository().persistAllSprites();
 	}
 
 	private void emptyFile(File file){

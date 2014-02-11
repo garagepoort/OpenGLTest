@@ -4,10 +4,10 @@ import static be.davidcorp.domain.game.GameFieldManager.getCurrentGameField;
 import be.davidcorp.applicationLayer.dto.EnemyDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.OrganicSpriteDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
+import be.davidcorp.database.repository.EnemyRepository;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.sprite.organic.enemy.EnemyFactory;
-import be.davidcorp.loaderSaver.repository.EnemyRepository;
 
 public class EnemyFacade {
 	private EnemyRepository enemyRepository = new EnemyRepository();

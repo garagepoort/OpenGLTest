@@ -3,9 +3,9 @@ package be.davidcorp.applicationLayer.facade;
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ItemDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
+import be.davidcorp.database.repository.ItemRepository;
 import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.item.ItemFactory;
-import be.davidcorp.loaderSaver.repository.ItemRepository;
 
 public class PotionFacade {
 

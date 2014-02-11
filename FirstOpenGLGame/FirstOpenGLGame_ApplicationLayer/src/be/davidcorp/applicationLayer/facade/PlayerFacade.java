@@ -10,6 +10,7 @@ import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ItemDTOMapper;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.LightToLightDTOMapper;
+import be.davidcorp.database.repository.ItemRepository;
 import be.davidcorp.domain.exception.InventoryException;
 import be.davidcorp.domain.exception.SkillException;
 import be.davidcorp.domain.game.GameFieldManager;
@@ -18,7 +19,6 @@ import be.davidcorp.domain.sprite.organic.player.PlayerManager;
 import be.davidcorp.domain.utilities.PauseManager;
 import be.davidcorp.domain.utilities.sprite.SpriteMovingUtility;
 import be.davidcorp.domain.utilities.sprite.SpriteRotator;
-import be.davidcorp.loaderSaver.repository.ItemRepository;
 import be.davidcorp.metric.Point;
 import be.davidcorp.metric.Vector;
 

@@ -3,8 +3,8 @@ package be.davidcorp.applicationLayer.facade;
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ItemDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
+import be.davidcorp.database.repository.WeaponRepository;
 import be.davidcorp.domain.sprite.item.weapon.Pistol;
-import be.davidcorp.loaderSaver.repository.WeaponRepository;
 
 public class WeaponFacade {
 	private WeaponRepository  weaponRepository = new WeaponRepository();

@@ -1,8 +1,8 @@
 package be.davidcorp.domain.game;
 
+import be.davidcorp.database.GamefieldLoaderSaver;
+import be.davidcorp.database.repository.DefaultSpriteRepository;
 import be.davidcorp.domain.exception.GameFieldException;
-import be.davidcorp.loaderSaver.GamefieldLoaderSaver;
-import be.davidcorp.loaderSaver.repository.DefaultSpriteRepository;
 
 public class GameFieldManager {
 

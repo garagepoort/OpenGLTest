@@ -2,10 +2,10 @@ package be.davidcorp.domain.sprite;
 
 import static be.davidcorp.domain.sprite.SpriteType.SPRITESPAWNER;
 import static be.davidcorp.domain.sprite.SpriteType.ZOMBIE;
+import be.davidcorp.database.repository.EnemyRepository;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.sprite.organic.enemy.EnemyFactory;
-import be.davidcorp.loaderSaver.repository.EnemyRepository;
 
 public class SpriteSpawner extends Sprite{
 

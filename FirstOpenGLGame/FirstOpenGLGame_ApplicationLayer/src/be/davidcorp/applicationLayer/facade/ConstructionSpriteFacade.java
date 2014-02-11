@@ -5,9 +5,9 @@ import static be.davidcorp.domain.game.GameFieldManager.getCurrentGameField;
 import be.davidcorp.applicationLayer.dto.ConstructionSpriteDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ConstructionSpriteDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
+import be.davidcorp.database.repository.ConstructionSpriteRepository;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
-import be.davidcorp.loaderSaver.repository.ConstructionSpriteRepository;
 
 public class ConstructionSpriteFacade {
 

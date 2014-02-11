@@ -1,5 +1,6 @@
 package be.davidcorp.config;
 
+import static be.davidcorp.config.ConfigurationManager.Property.IMAGE_LOCATION_PROPERTY;
 import static java.io.File.separator;
 
 import java.io.FileInputStream;
@@ -16,7 +17,7 @@ public class ImageLocationManager {
 
 	public static void initializeProperties() {
 		try {
-			prop.load(new FileInputStream(ConfigurationManager.imageLocationPropertyFile));
+			prop.load(new FileInputStream(ConfigurationManager.getProperty(IMAGE_LOCATION_PROPERTY)));
 			baseDirectory = prop.getProperty(BASEDIR);
 		} catch (IOException ex) {
 			ex.printStackTrace();
