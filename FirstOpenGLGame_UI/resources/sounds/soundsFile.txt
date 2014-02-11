@@ -1,2 +1,0 @@
-fastfootsteps resources/sounds/FastFootSteps.wav
-door resources/sounds/creaking-door-2.wav

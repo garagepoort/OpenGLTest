@@ -1,1 +1,0 @@
-resources/playerfiles/garagepoort.txt
