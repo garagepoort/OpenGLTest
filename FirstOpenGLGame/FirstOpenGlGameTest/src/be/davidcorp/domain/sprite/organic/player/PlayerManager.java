@@ -5,26 +5,31 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
-
 public class PlayerManager {
 
 	private static HashMap<String, Player> players = new HashMap<>();
 	private static Player currentPlayer;
 
-	public static void loadPlayers(File file) throws IOException{
-		@SuppressWarnings("resource")
-		Scanner scanner = new Scanner(file);
+	public static void loadPlayers(File file) {
+		Scanner scanner = null;
+		try {
+			scanner = new Scanner(file);
 
-		while(scanner.hasNext()){
-			String path = scanner.next();
-			File f = new File(path);
-			Player p =loadPlayer(f);
-			players.put(p.getName(), p);
-			setCurrentPlayer(p);
+			while (scanner.hasNext()) {
+				String path = scanner.next();
+				File f = new File(path);
+				Player p = loadPlayer(f);
+				players.put(p.getName(), p);
+				setCurrentPlayer(p);
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}finally{
+			scanner.close();
 		}
 	}
-	
-	public static Player loadPlayer(File file) throws IOException{
+
+	public static Player loadPlayer(File file) throws IOException {
 		return new Player(200, 250);
 	}
 
@@ -43,7 +48,5 @@ public class PlayerManager {
 	public static void setCurrentPlayer(Player currentPlayer) {
 		PlayerManager.currentPlayer = currentPlayer;
 	}
-	
-	
 
 }

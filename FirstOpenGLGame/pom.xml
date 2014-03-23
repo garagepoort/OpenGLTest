@@ -49,8 +49,8 @@
 			<version>1.2.1</version>
 		</dependency>
 		<dependency>
-			<groupId>slick2d</groupId>
-			<artifactId>slick2d</artifactId>
+			<groupId>slick-util</groupId>
+			<artifactId>slick-util</artifactId>
 			<version>1.0</version>
 		</dependency>
 	</dependencies>

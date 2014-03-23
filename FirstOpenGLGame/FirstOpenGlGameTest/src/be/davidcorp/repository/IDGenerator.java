@@ -1,4 +1,4 @@
-package be.davidcorp.database.repository;
+package be.davidcorp.repository;
 
 import java.util.Map;
 import java.util.SortedSet;
@@ -9,7 +9,13 @@ import be.davidcorp.domain.game.Gamefield;
 public class IDGenerator {
 
 	public static int generateIdForSprites() {
-		SortedSet<Integer> keys = new TreeSet<Integer>(new DefaultSpriteRepository().getAllSpritesMap().keySet());
+		SortedSet<Integer> keys = new TreeSet<Integer>(DefaultSpriteRepository.getInstance().getAllSpritesMap().keySet());
+		if(keys.isEmpty()) return 1;
+		return keys.last()+1;
+	}
+	
+	public static int generateId() {
+		SortedSet<Integer> keys = new TreeSet<Integer>(DefaultSpriteRepository.getInstance().getAllSpritesMap().keySet());
 		if(keys.isEmpty()) return 1;
 		return keys.last()+1;
 	}

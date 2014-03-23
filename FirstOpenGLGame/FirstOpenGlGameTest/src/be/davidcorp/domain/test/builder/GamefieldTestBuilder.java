@@ -4,7 +4,9 @@ import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.List;
 
+import be.davidcorp.domain.game.DefaultGamefieldUpdater;
 import be.davidcorp.domain.game.Gamefield;
+import be.davidcorp.domain.game.GamefieldUpdater;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.light.Light;
@@ -20,10 +22,11 @@ public class GamefieldTestBuilder {
 	private List<Item> items = newArrayList();
 	private List<Light> lights = newArrayList();
 	private List<ConstructionSprite> constructionSprites = newArrayList();
+	private GamefieldUpdater gamefieldUpdater = new DefaultGamefieldUpdater();
 	private int id;
 
 	public Gamefield build(){
-		Gamefield gamefield = new Gamefield(name, width, height);
+		Gamefield gamefield = new Gamefield(name, width, height, gamefieldUpdater);
 		gamefield.setID(id);
 		for (Enemy enemy : enemies) {
 			gamefield.addEnemyToWorld(enemy);

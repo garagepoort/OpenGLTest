@@ -17,8 +17,6 @@ public class Guide {
 	private boolean guidanceOn = false;
 	
 	public void checkCollisionWithGuideArea(Sprite sprite, float secondsMovedInGame){
-
-
 		for(GuideArea area : areas){
 			if(area.isAlive() && area!=this.area){
 				if(SpriteCollisionChecker.doesCollisionExist(sprite, area)){

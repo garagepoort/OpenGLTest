@@ -12,13 +12,13 @@ import java.util.Map;
 import java.util.Scanner;
 
 import be.davidcorp.FileUtility;
-import be.davidcorp.database.repository.DefaultSpriteRepository;
-import be.davidcorp.database.repository.TriggerRepository;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.trigger.Trigger;
 import be.davidcorp.domain.trigger.TriggerWhen;
 import be.davidcorp.domain.trigger.triggerableEvents.TriggerableEvent;
 import be.davidcorp.domain.trigger.triggerableEvents.TriggerableEventType;
+import be.davidcorp.repository.DefaultSpriteRepository;
+import be.davidcorp.repository.TriggerRepository;
 
 public class TriggerLoader {
 
@@ -28,7 +28,7 @@ public class TriggerLoader {
 	private static final String ID = "ID";
 	private static final String TRIGGERWHEN = "TRIGGERWHEN";
 
-	private DefaultSpriteRepository defaultSpriteRepository = new DefaultSpriteRepository();
+	private DefaultSpriteRepository defaultSpriteRepository = DefaultSpriteRepository.getInstance();
 	private TriggerRepository triggerRepository = new TriggerRepository();
 	private FileUtility fileUtility = new FileUtility();
 

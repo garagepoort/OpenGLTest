@@ -16,6 +16,8 @@ public class TranslationManager {
 	private static float gameFieldXTranslation;
 	private static float gameFieldYTranslation;
 	
+	private TranslationManager(){}
+	
 	public static void initializeBeginTranslation(){
 		if (playerFacade.getX() < halfOfScreenWidth()) {
 			playerTranslationX = -(halfOfScreenWidth() - playerFacade.getX());

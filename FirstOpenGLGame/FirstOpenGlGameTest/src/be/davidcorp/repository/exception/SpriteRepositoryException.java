@@ -1,4 +1,4 @@
-package be.davidcorp.database.repository.exception;
+package be.davidcorp.repository.exception;
 
 public class SpriteRepositoryException extends RuntimeException{
 

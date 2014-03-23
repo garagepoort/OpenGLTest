@@ -14,8 +14,6 @@ import org.mockito.MockitoAnnotations;
 
 import be.davidcorp.FileUtility;
 import be.davidcorp.database.TriggerLoader;
-import be.davidcorp.database.repository.DefaultSpriteRepository;
-import be.davidcorp.database.repository.TriggerRepository;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.construction.ConstructionSpriteFactory;
@@ -24,6 +22,8 @@ import be.davidcorp.domain.trigger.Trigger;
 import be.davidcorp.domain.trigger.TriggerWhen;
 import be.davidcorp.domain.trigger.triggerableEvents.LightSwitchEvent;
 import be.davidcorp.domain.trigger.triggerableEvents.TriggerableEvent;
+import be.davidcorp.repository.DefaultSpriteRepository;
+import be.davidcorp.repository.TriggerRepository;
 
 
 public class TriggerLoaderTest {

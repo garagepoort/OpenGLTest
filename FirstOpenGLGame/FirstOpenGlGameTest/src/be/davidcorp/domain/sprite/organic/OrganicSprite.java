@@ -3,9 +3,7 @@ package be.davidcorp.domain.sprite.organic;
 import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import be.davidcorp.domain.attribute.Attribute;
 import be.davidcorp.domain.inventory.Equipment;
 import be.davidcorp.domain.inventory.Inventory;
 import be.davidcorp.domain.skill.Skill;
@@ -26,7 +24,7 @@ public abstract class OrganicSprite extends Sprite  {
 	private int stamina = 1000;
 	private int maxStamina = 1000;
 	private int staminaRegen;
-	private List<Attribute> attributes = newArrayList();
+//	private List<Attribute> attributes = newArrayList();
 	
 	public OrganicSprite(){
 		super();
@@ -55,11 +53,6 @@ public abstract class OrganicSprite extends Sprite  {
 			s.updateCooldown();
 		}
 	}
-
-//	@Override
-//	public void update(Observable o, Object arg) {
-//		setTextureBunch(TextureBunchFactory.createTextureBunch(this));
-//	}
 
 	public void setX(float x) {
 		super.setX(x);

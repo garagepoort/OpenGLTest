@@ -1,5 +1,6 @@
 package be.davidcorp.applicationLayer.facade;
 
+import static be.davidcorp.component.ComponentType.USING_COMPONENT;
 import static be.davidcorp.domain.game.GameFieldManager.getCurrentGameField;
 import static be.davidcorp.domain.game.GameFieldManager.setCurrentGameField;
 
@@ -21,16 +22,11 @@ import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.LightToLightDTOMappe
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.OrganicSpriteDTOMapper;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.SpriteDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
-import be.davidcorp.component.ComponentType;
 import be.davidcorp.component.UsingComponent;
 import be.davidcorp.database.GamefieldLoaderSaver;
-import be.davidcorp.database.repository.ConstructionSpriteRepository;
-import be.davidcorp.database.repository.EnemyRepository;
-import be.davidcorp.database.repository.GamefieldRepository;
-import be.davidcorp.database.repository.ItemRepository;
-import be.davidcorp.database.repository.LightRepository;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.game.Gamefield;
+import be.davidcorp.domain.game.GamefieldCreatorUpdater;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.item.Item;
@@ -39,14 +35,14 @@ import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
 import be.davidcorp.domain.utilities.PauseManager;
 import be.davidcorp.metric.Point;
+import be.davidcorp.repository.DefaultSpriteRepository;
+import be.davidcorp.repository.GamefieldRepository;
+import be.davidcorp.repository.SpriteRepository;
 
 public class GameFieldFacade {
 
 	private GamefieldRepository gamefieldRepository = new GamefieldRepository();
-	private EnemyRepository enemyRepository = new EnemyRepository();
-	private LightRepository lightRepository = new LightRepository();
-	private ItemRepository itemRepository = new ItemRepository();
-	private ConstructionSpriteRepository constructionSpriteRepository = new ConstructionSpriteRepository();
+	private SpriteRepository spriteRepository = DefaultSpriteRepository.getInstance();
 
 	public void togglePause() {
 		PauseManager.setGamePaused(!PauseManager.isGamePaused());
@@ -82,7 +78,7 @@ public class GameFieldFacade {
 	}
 
 	public void useInRangeOfPlayer() {
-		UsingComponent component = PlayerManager.getCurrentPlayer().getComponent(ComponentType.USING_COMPONENT);
+		UsingComponent component = PlayerManager.getCurrentPlayer().getComponent(USING_COMPONENT);
 		component.setUsing(true);
 		getCurrentGameField().checkOnUseTriggers();
 	}
@@ -136,18 +132,20 @@ public class GameFieldFacade {
 		return ItemDTOMapper.mapItemsToItemDTOs(getCurrentGameField().getGroundItems());
 	}
 
-	public void initializeGameField(GamefieldDTO gamefieldDTO) {
+	public void initializeGameField(GamefieldDTO gamefieldDTO, boolean creator) {
 		try {
 			Gamefield gamefield = gamefieldRepository.getGamefield(gamefieldDTO.getId());
+			if(creator) gamefield.setGamefieldUpdater(new GamefieldCreatorUpdater());
 			setCurrentGameField(gamefield);
 		} catch (Exception e) {
 			throw new ModelException(e);
 		}
 	}
 
-	public void initializeGameFieldWithName(String name) {
+	public void initializeGameFieldWithName(String name, boolean creator) {
 		try {
 			Gamefield field = gamefieldRepository.getGamefield(name);
+			if(creator) field.setGamefieldUpdater(new GamefieldCreatorUpdater());
 			setCurrentGameField(field);
 		} catch (Exception e) {
 			throw new ModelException(e);
@@ -165,7 +163,7 @@ public class GameFieldFacade {
 	}
 
 	public void addConstructionSpriteToWorld(int id) {
-		ConstructionSprite constructionSprite = constructionSpriteRepository.getSprite(id);
+		ConstructionSprite constructionSprite = (ConstructionSprite) spriteRepository.getSprite(id);
 		if(constructionSprite == null){
 			throw new ModelException("A constructionSprite with this id doesn't exist.");
 		}
@@ -173,7 +171,7 @@ public class GameFieldFacade {
 	}
 
 	public void addEnemyToWorld(int id)  {
-		Enemy enemy = enemyRepository.getSprite(id);
+		Enemy enemy = (Enemy) spriteRepository.getSprite(id);
 		if(enemy == null){
 			throw new ModelException("An enemy with this id doesn't exist.");
 		}
@@ -181,7 +179,7 @@ public class GameFieldFacade {
 	}
 
 	public void addLightToWorld(int id) {
-		Light light = lightRepository.getSprite(id);
+		Light light = (Light) spriteRepository.getSprite(id);
 		if(light == null){
 			throw new ModelException("A light with this id doesn't exist.");
 		}
@@ -189,7 +187,7 @@ public class GameFieldFacade {
 	}
 
 	public void addGroundItemToWorld(int id) {
-		Item item = itemRepository.getSprite(id);
+		Item item = (Item) spriteRepository.getSprite(id);
 		getCurrentGameField().addGroundItem(item);
 	}
 

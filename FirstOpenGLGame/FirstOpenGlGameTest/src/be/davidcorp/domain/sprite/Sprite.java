@@ -48,7 +48,6 @@ public abstract class Sprite extends Triggerable implements Serializable{
 
 	public Sprite(float x, float y, int width, int height) {
 		initializeSprite(x, y, width, height);
-		
 	}
 
 	public Sprite() {

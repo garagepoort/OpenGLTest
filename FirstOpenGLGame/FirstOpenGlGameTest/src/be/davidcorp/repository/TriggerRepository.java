@@ -1,4 +1,4 @@
-package be.davidcorp.database.repository;
+package be.davidcorp.repository;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

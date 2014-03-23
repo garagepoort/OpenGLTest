@@ -14,8 +14,8 @@ public class Inventory implements Serializable{
 
 	private static final long serialVersionUID = -138952561842418910L;
 	private int ID;
-	private int maxWeight = 1000;
-	private int currentWeight;
+//	private int maxWeight = 1000;
+//	private int currentWeight;
 
 	private Map<Integer, Item> items = Maps.newHashMap();
 	

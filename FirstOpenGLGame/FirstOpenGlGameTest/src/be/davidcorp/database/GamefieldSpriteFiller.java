@@ -5,14 +5,14 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import be.davidcorp.FileUtility;
-import be.davidcorp.database.repository.DefaultSpriteRepository;
-import be.davidcorp.database.repository.GamefieldRepository;
 import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
+import be.davidcorp.repository.DefaultSpriteRepository;
+import be.davidcorp.repository.GamefieldRepository;
 
 public class GamefieldSpriteFiller {
 
@@ -20,7 +20,7 @@ public class GamefieldSpriteFiller {
 	private static final String GAMEFIELD = "GAMEFIELD";
 	private Gamefield currentGamefield;
 	private GamefieldRepository gamefieldRepository = new GamefieldRepository();
-	private DefaultSpriteRepository defaultSpriteRepository = new DefaultSpriteRepository();
+	private DefaultSpriteRepository defaultSpriteRepository = DefaultSpriteRepository.getInstance();
 	private File file;
 	private FileUtility fileUtility;
 

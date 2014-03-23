@@ -1,12 +1,10 @@
 package be.davidcorp.domain.game;
 
 import static be.davidcorp.domain.game.GameFieldManager.getCurrentGameField;
-import static be.davidcorp.domain.sprite.construction.ConstructionSpriteFactory.createWallWithID;
 import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,64 +21,45 @@ import be.davidcorp.domain.trigger.TriggerWhen;
 import be.davidcorp.domain.utilities.PauseManager;
 import be.davidcorp.domain.utilities.sprite.SpriteCollisionChecker;
 import be.davidcorp.metric.Point;
-import be.davidcorp.system.HealthRegenerationSystem;
 import be.davidcorp.system.System;
-import be.davidcorp.system.TimeToLiveSystem;
 import be.davidcorp.texture.TextureBunch;
 
 public class Gamefield {
 	private Integer ID;
 	private String gamefieldName;
+	private GamefieldEnvironment environment;
 
-	private Map<Integer, Enemy> enemies = new ConcurrentHashMap<>();
-	private Map<Integer, Item> groundItems = new ConcurrentHashMap<>();
-	private Map<Integer, Ammo> worldAmmo = new ConcurrentHashMap<>();
-	private Map<Integer, ConstructionSprite> constructionSprites = new ConcurrentHashMap<>();
-	private Map<Integer, Light> lights = new ConcurrentHashMap<>();
-
-	private List<System> systems = newArrayList();
-	
-	private Guide guide = new Guide();
+	Guide guide = new Guide();
 
 	private boolean creationMode = false;
 
-	private float x = 0;
-	private float y = 0;
-	private int width = 64;
-	private int height = 64;
+	float x = 0;
+	float y = 0;
+	int width = 64;
+	int height = 64;
 
 	private TextureBunch textureBunch;
+	private GamefieldUpdater gamefieldUpdater;
 
 	public Gamefield(String name, int width, int height) {
+		this(name, width, height, new DefaultGamefieldUpdater());
+	}
+	
+	public Gamefield(String name, int width, int height, GamefieldUpdater gamefieldUpdater) {
+		this.gamefieldUpdater = gamefieldUpdater;
 		setWidth(width);
 		setHeight(height);
 		this.gamefieldName = name;
-		addSurroundingWalls();
-		addSystems();
+		environment = new GamefieldEnvironment(this, gamefieldUpdater);
 	}
-
-	private void addSystems() {
-		systems.add(new TimeToLiveSystem());
-		systems.add(new HealthRegenerationSystem());
-	}
-
-	private void addSurroundingWalls() {
-		int wallThickness = 10;
-		constructionSprites.put(-1, createWallWithID(-1, wallThickness, 0, width-wallThickness, wallThickness));
-		constructionSprites.put(-2, createWallWithID(-2, width-wallThickness, 0, wallThickness, height));
-		constructionSprites.put(-3, createWallWithID(-3, wallThickness, height-wallThickness, width-wallThickness, wallThickness));
-		constructionSprites.put(-4, createWallWithID(-4, 0, 0, wallThickness, height));
-	}
-
-	public void update(float secondsMovedInGame)  {
+	
+	public void update(float secondsMovedInGame) {
 		if (!PauseManager.isGamePaused()) {
 			if (!creationMode) {
-				// checkIfPlayerIsStandingOnSwitch();
-				updateAllTheSprites(secondsMovedInGame);
-				guide.checkCollisionWithGuideArea(PlayerManager.getCurrentPlayer(), secondsMovedInGame);
+				environment.updateGamefieldEnvironment(secondsMovedInGame);
 			}
 			PlayerManager.getCurrentPlayer().updateSprite(secondsMovedInGame);
-//			addSpritesToWorld();
+			// addSpritesToWorld();
 		}
 	}
 
@@ -113,75 +92,44 @@ public class Gamefield {
 		return false;
 	}
 
-	// UPDATES
-	private void updateAllTheSprites(float secondsMovedInGame){
-		
-		updateSpriteMap(enemies, secondsMovedInGame);
-		updateSpriteMap(constructionSprites, secondsMovedInGame);
-		updateSpriteMap(worldAmmo, secondsMovedInGame);
-		executeSystems(PlayerManager.getCurrentPlayer(), secondsMovedInGame);
-	}
-
-	@SuppressWarnings("rawtypes")
-	private void updateSpriteMap(Map<Integer, ? extends Sprite> sprites, float secondsMovedInGame) {
-		Iterator iterator = sprites.entrySet().iterator();
-		while (iterator.hasNext()) {
-			Map.Entry pairs = (Map.Entry) iterator.next();
-			Sprite sprite = (Sprite) pairs.getValue();
-			if (sprite.isAlive()) {
-				sprite.updateSprite(secondsMovedInGame);
-				executeSystems(sprite, secondsMovedInGame);
-			} else {
-				iterator.remove();
-			}
-
-		}
-	}
-
-	private void executeSystems(Sprite sprite, float secondsMovedInGame) {
-		for(System system : systems){
-			system.executeSystem(sprite, secondsMovedInGame);
-		}
-	}
-
 	public void addEnemyToWorld(Enemy enemy) {
-		enemies.put(enemy.getID(), enemy);
+		environment.addEnemyToWorld(enemy);
 	}
 
 	public void addAmmoToWorld(Ammo ammo) {
-		worldAmmo.put(ammo.getID(), ammo);
+		environment.addAmmoToWorld(ammo);
 	}
 
 	public void addLight(Light light) {
-		lights.put(light.getID(), light);
+		environment.addLight(light);
 	}
 
 	public void addConstructionItem(ConstructionSprite constructionSprite) {
-		constructionSprites.put(constructionSprite.getID(), constructionSprite);
+		environment.addConstructionItem(constructionSprite);
 	}
 
 	public void addGroundItem(Item groundItem) {
-		groundItems.put(groundItem.getID(), groundItem);
+		environment.addGroundItem(groundItem);
 	}
 
 	public List<Ammo> getAmmoInWorld() {
-		return Collections.unmodifiableList(newArrayList(worldAmmo.values()));
+		return environment.getAmmoInWorld();
 	}
 
 	public List<Enemy> getEnemiesInWorld() {
-		return Collections.unmodifiableList(newArrayList(enemies.values()));
+		return environment.getEnemiesInWorld();
 	}
 
 	public List<Item> getGroundItems() {
-		return Collections.unmodifiableList(newArrayList(groundItems.values()));
+		return environment.getGroundItems();
 	}
 
 	public List<ConstructionSprite> getConstructionItems() {
-		return Collections.unmodifiableList(newArrayList(constructionSprites.values()));
+		return environment.getConstructionItems();
 	}
 
 	public List<Light> getLightsFromWorld() {
-		return Collections.unmodifiableList(newArrayList(lights.values()));
+		return environment.getLightsFromWorld();
 	}
 
 	public Guide getGuide() {
@@ -193,15 +141,7 @@ public class Gamefield {
 	}
 
 	public void checkOnUseTriggers() {
-		for (ConstructionSprite constructionSprite : constructionSprites.values()) {
-			constructionSprite.checkTriggers(TriggerWhen.ONUSE, PlayerManager.getCurrentPlayer());
-		}
-		for (Light light : lights.values()) {
-			light.checkTriggers(TriggerWhen.ONUSE, PlayerManager.getCurrentPlayer());
-		}
-		for (Enemy enemy : enemies.values()) {
-			enemy.checkTriggers(TriggerWhen.ONUSE, PlayerManager.getCurrentPlayer());
-		}
+		environment.checkOnUseTriggers();
 	}
 
 	// private void checkIfPlayerIsStandingOnSwitch() {
@@ -215,13 +155,7 @@ public class Gamefield {
 	// }
 
 	public ArrayList<Item> getItemsThatCanBePickedUpByPlayer() {
-		ArrayList<Item> items = new ArrayList<>();
-		for (Item i : groundItems.values()) {
-			if (SpriteCollisionChecker.doesCollisionExist(i, PlayerManager.getCurrentPlayer())) {
-				items.add(i);
-			}
-		}
-		return items;
+		return environment.getItemsThatCanBePickedUpByPlayer();
 	}
 
 	// GAMEFIELD SPECIFIC
@@ -258,7 +192,7 @@ public class Gamefield {
 		return width;
 	}
 
-	public void setWidth(int width)  {
+	private void setWidth(int width) {
 		if (width < 1) {
 			throw new GameFieldException("The width must be 1 or greater");
 		}
@@ -269,7 +203,7 @@ public class Gamefield {
 		return height;
 	}
 
-	public void setHeight(int height)  {
+	private void setHeight(int height) {
 		if (height < 1) {
 			throw new GameFieldException("The height must be 1 or greater");
 		}
@@ -283,7 +217,7 @@ public class Gamefield {
 		return textureBunch.getCurrentTexture();
 	}
 
-	public void setTexture(String texture)  {
+	public void setTexture(String texture) {
 		if (getTextureBunch() == null) {
 			setTextureBunch(new TextureBunch());
 		}
@@ -298,12 +232,16 @@ public class Gamefield {
 		this.textureBunch = textureBunch;
 	}
 
+	public void setGamefieldUpdater(GamefieldUpdater gamefieldUpdater) {
+		this.gamefieldUpdater = gamefieldUpdater;
+	}
+	
 	public List<Sprite> getSpritesCollidingWithPoint(Point point) {
 		List<Sprite> sprites = new ArrayList<Sprite>();
-		sprites.addAll(findSpritesThatCollideWithPoint(point, getCurrentGameField().getConstructionItems()));
-		sprites.addAll(findSpritesThatCollideWithPoint(point, getCurrentGameField().getGroundItems()));
-		sprites.addAll(findSpritesThatCollideWithPoint(point, getCurrentGameField().getEnemiesInWorld()));
-		sprites.addAll(findSpritesThatCollideWithPoint(point, getCurrentGameField().getLightsFromWorld()));
+		sprites.addAll(findSpritesThatCollideWithPoint(point, getConstructionItems()));
+		sprites.addAll(findSpritesThatCollideWithPoint(point, getGroundItems()));
+		sprites.addAll(findSpritesThatCollideWithPoint(point, getEnemiesInWorld()));
+		sprites.addAll(findSpritesThatCollideWithPoint(point, getLightsFromWorld()));
 		return sprites;
 	}
 
@@ -311,28 +249,28 @@ public class Gamefield {
 		return gamefieldName;
 	}
 
-	public void updateConstructionSprite(ConstructionSprite constructionSprite)  {
+	public void updateConstructionSprite(ConstructionSprite constructionSprite) {
 		if (!constructionSprites.containsKey(constructionSprite.getID())) {
 			throw new GameFieldException("The gamefield does not contain this sprite: " + constructionSprite);
 		}
 		constructionSprites.put(constructionSprite.getID(), constructionSprite);
 	}
 
-	public void updateGroundItem(Item item)  {
+	public void updateGroundItem(Item item) {
 		if (!groundItems.containsKey(item.getID())) {
 			throw new GameFieldException("The gamefield does not contain this sprite: " + item);
 		}
 		groundItems.put(item.getID(), item);
 	}
-	
-	public void updateLight(Light light)  {
+
+	public void updateLight(Light light) {
 		if (!lights.containsKey(light.getID())) {
 			throw new GameFieldException("The gamefield does not contain this sprite: " + light);
 		}
 		lights.put(light.getID(), light);
 	}
 
-	public void updateEnemy(Enemy enemy)  {
+	public void updateEnemy(Enemy enemy) {
 		if (!enemies.containsKey(enemy.getID())) {
 			throw new GameFieldException("The gamefield does not contain this sprite: " + enemy);
 		}
@@ -355,7 +293,7 @@ public class Gamefield {
 	public void removeLightFromWorld(int id) {
 		lights.remove(id);
 	}
-	
+
 	public void removeItemFromWorld(int id) {
 		groundItems.remove(id);
 	}

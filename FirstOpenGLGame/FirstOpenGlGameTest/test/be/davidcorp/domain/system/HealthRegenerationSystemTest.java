@@ -28,4 +28,5 @@ public class HealthRegenerationSystemTest {
 		
 		assertThat(zombie.getHealthPoints()).isEqualTo(55);
 	}
+
 }

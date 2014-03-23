@@ -6,6 +6,8 @@ import be.davidcorp.domain.sprite.SpriteType;
 
 public class Gear extends Sprite{
 
+	private static final long serialVersionUID = -3053181169985878071L;
+
 	public Gear(float x, float y) {
 		super(x, y,64,64);
 		// TODO Auto-generated constructor stub

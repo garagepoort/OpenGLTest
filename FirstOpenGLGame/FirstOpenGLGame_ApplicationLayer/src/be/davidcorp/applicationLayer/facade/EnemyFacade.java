@@ -4,18 +4,18 @@ import static be.davidcorp.domain.game.GameFieldManager.getCurrentGameField;
 import be.davidcorp.applicationLayer.dto.EnemyDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.OrganicSpriteDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
-import be.davidcorp.database.repository.EnemyRepository;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.sprite.organic.enemy.EnemyFactory;
+import be.davidcorp.repository.DefaultSpriteRepository;
 
 public class EnemyFacade {
-	private EnemyRepository enemyRepository = new EnemyRepository();
+	private DefaultSpriteRepository spriteRepository = DefaultSpriteRepository.getInstance();
 
 	public EnemyDTO createZombie(float x, float y) {
 		try {
 			Enemy enemy = EnemyFactory.createZombie(x, y);
-			enemyRepository.createSprite(enemy);
+			spriteRepository.createSprite(enemy);
 			return OrganicSpriteDTOMapper.mapEnemyToEnemyDTO(enemy);
 		} catch (Exception e) {
 			throw new ModelException(e);
@@ -25,7 +25,7 @@ public class EnemyFacade {
 	public EnemyDTO createSpider(float x, float y) {
 		try {
 			Enemy spider = EnemyFactory.createSpider(x, y);
-			spider = enemyRepository.createSprite(spider);
+			spriteRepository.createSprite(spider);
 			return OrganicSpriteDTOMapper.mapEnemyToEnemyDTO(spider);
 		} catch (Exception e) {
 			throw new ModelException(e);
@@ -35,7 +35,7 @@ public class EnemyFacade {
 	public void updateEnemy(EnemyDTO enemyDTO){
 		try {
 			Enemy enemy = OrganicSpriteDTOMapper.mapEnemyDTOToEnemy(enemyDTO);
-			enemyRepository.updateSprite(enemy);
+			spriteRepository.updateSprite(enemy);
 			getCurrentGameField().updateEnemy(enemy);
 		} catch (Exception e) {
 			throw new ModelException(e);
@@ -43,7 +43,7 @@ public class EnemyFacade {
 	}
 
 	public void deleteEnemy(int id) {
-		enemyRepository.deleteSprite(id);
+		spriteRepository.deleteSprite(id);
 		GameFieldManager.getCurrentGameField().removeEnemyFromWorld(id);
 	}
 

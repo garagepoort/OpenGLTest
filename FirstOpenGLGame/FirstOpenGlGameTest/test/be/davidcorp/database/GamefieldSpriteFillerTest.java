@@ -13,14 +13,14 @@ import org.mockito.MockitoAnnotations;
 
 import be.davidcorp.FileUtility;
 import be.davidcorp.database.GamefieldSpriteFiller;
-import be.davidcorp.database.repository.DefaultSpriteRepository;
-import be.davidcorp.database.repository.GamefieldRepository;
 import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.domain.sprite.item.weapon.Pistol;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.test.builder.EnemyBuilder;
 import be.davidcorp.domain.test.builder.GamefieldTestBuilder;
 import be.davidcorp.domain.test.builder.PistolTestBuilder;
+import be.davidcorp.repository.DefaultSpriteRepository;
+import be.davidcorp.repository.GamefieldRepository;
 
 public class GamefieldSpriteFillerTest {
 	

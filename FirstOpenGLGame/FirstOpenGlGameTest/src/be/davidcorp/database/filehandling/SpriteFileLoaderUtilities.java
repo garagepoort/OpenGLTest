@@ -9,6 +9,8 @@ import be.davidcorp.database.GamefieldProperty;
 
 public class SpriteFileLoaderUtilities {
 
+	private SpriteFileLoaderUtilities(){}
+	
 	public static Map<GamefieldProperty, String> getGamefieldProperties(String gamefield) {
 		Map<GamefieldProperty, String> properties = new HashMap<GamefieldProperty, String>();
 		Scanner scanner = new Scanner(gamefield);

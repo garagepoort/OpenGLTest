@@ -1,4 +1,4 @@
-package be.davidcorp.database.repository;
+package be.davidcorp.repository;
 
 import static be.davidcorp.domain.trigger.TriggerBuilder.aTrigger;
 import static be.davidcorp.domain.trigger.TriggerWhen.ONLIGHTOFF;
@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import be.davidcorp.database.GamefieldProperty;
 import be.davidcorp.database.LoaderException;
 import be.davidcorp.database.filehandling.SpriteFileLoaderUtilities;
+import be.davidcorp.domain.game.DefaultGamefieldUpdater;
 import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
@@ -29,6 +30,7 @@ public class GamefieldRepository {
 
 	private static Map<Integer, Gamefield> gamefields = new ConcurrentHashMap<>();
 
+	@SuppressWarnings("unused")
 	private void addTestGamefield() {
 		Gamefield gamefield = new Gamefield("field", 2000, 2000);
 		gamefield.setID(6);

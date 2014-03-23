@@ -1,8 +1,8 @@
 package be.davidcorp.domain.game;
 
 import be.davidcorp.database.GamefieldLoaderSaver;
-import be.davidcorp.database.repository.DefaultSpriteRepository;
 import be.davidcorp.domain.exception.GameFieldException;
+import be.davidcorp.repository.DefaultSpriteRepository;
 
 public class GameFieldManager {
 
@@ -10,7 +10,7 @@ public class GameFieldManager {
 	
 	public static void setCurrentGameField(Gamefield field) {
 		gamefield = field;
-		new DefaultSpriteRepository().emptyAllRepositories();
+		DefaultSpriteRepository.getInstance().emptyRepository();
 		new GamefieldLoaderSaver().loadEntireField(gamefield.getName());
 	}
 

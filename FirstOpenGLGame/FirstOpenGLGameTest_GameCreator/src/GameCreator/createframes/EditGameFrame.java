@@ -153,7 +153,7 @@ public class EditGameFrame extends JFrame implements MouseListener{
 			@Override
 			public void run() {
 				try {
-					gameFieldFacade.initializeGameField(field);
+					gameFieldFacade.initializeGameField(field, true);
 					
 					GameCreatorPanel gamePanel = new GameCreatorPanel();
 					GameLoop gameLoop = new GameLoop(gamePanel, WIDTH, HEIGHT, true);

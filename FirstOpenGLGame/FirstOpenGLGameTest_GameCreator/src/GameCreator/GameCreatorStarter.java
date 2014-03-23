@@ -11,7 +11,7 @@ public class GameCreatorStarter {
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel(
 	            UIManager.getSystemLookAndFeelClassName());
-		new GameFacade().startApplication();
+		new GameFacade().startGameCreatorApplication();
 		new PlayerFacade().setSpeed(1);
 		new GameCreatorFrame();
 	}

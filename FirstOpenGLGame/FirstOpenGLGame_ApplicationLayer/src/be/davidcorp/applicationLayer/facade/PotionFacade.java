@@ -3,18 +3,19 @@ package be.davidcorp.applicationLayer.facade;
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ItemDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
-import be.davidcorp.database.repository.ItemRepository;
 import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.item.ItemFactory;
+import be.davidcorp.repository.DefaultSpriteRepository;
+import be.davidcorp.repository.SpriteRepository;
 
 public class PotionFacade {
 
-	private ItemRepository itemRepository = new ItemRepository();
+	private SpriteRepository spriteRepository = DefaultSpriteRepository.getInstance();
 	
 	public ItemDTO createHealthPotion(float x, float y)  {
 		try {
 			Item healthPotion = ItemFactory.createHealthPotion(x, y, 20);
-			itemRepository.createSprite(healthPotion);
+			spriteRepository.createSprite(healthPotion);
 			return ItemDTOMapper.mapItemToItemDTO(healthPotion);
 		} catch (Exception e) {
 			throw new ModelException(e);

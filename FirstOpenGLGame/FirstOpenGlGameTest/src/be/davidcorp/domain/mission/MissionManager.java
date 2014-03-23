@@ -2,28 +2,27 @@ package be.davidcorp.domain.mission;
 
 import static be.davidcorp.domain.trigger.TriggerBuilder.aTrigger;
 import static be.davidcorp.domain.trigger.TriggerWhen.ONUSE;
-import be.davidcorp.database.repository.ConstructionSpriteRepository;
-import be.davidcorp.database.repository.LightRepository;
 import be.davidcorp.domain.mission.acceptionCriteria.AcceptationCriteria;
 import be.davidcorp.domain.mission.acceptionCriteria.AcceptationCriteriaHandler;
-import be.davidcorp.domain.mission.acceptionCriteria.FindHealthCriteria;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
 import be.davidcorp.domain.trigger.triggerableEvents.EndMissionEvent;
+import be.davidcorp.repository.DefaultSpriteRepository;
+import be.davidcorp.repository.SpriteRepository;
 
 public class MissionManager {
 
 	//TODO david remove created mission
-	private static LightRepository lightRepository = new LightRepository();
+	private static SpriteRepository spriteRepository = DefaultSpriteRepository.getInstance();
 	
 	public static void createFirstMission(){
 		AcceptationCriteriaHandler acceptationCriteriaHandler = new AcceptationCriteriaHandler()
 			.withCriteria(new LightMissionAcceptationCriteria());
 		
 		Mission mission = new Mission("Turn the light on. (Press 'E' near the wall)", acceptationCriteriaHandler);
-		Mission healthMission = new Mission("Find 4 healthpotions", new AcceptationCriteriaHandler().withCriteria(new FindHealthCriteria()));
-		ConstructionSprite constructionSprite = new ConstructionSpriteRepository().getSprite(1);
+//		Mission healthMission = new Mission("Find 4 healthpotions", new AcceptationCriteriaHandler().withCriteria(new FindHealthCriteria()));
+		ConstructionSprite constructionSprite = (ConstructionSprite) spriteRepository.getSprite(1);
 		aTrigger()
 			.withID(8)
 			.triggeredWhen(ONUSE)
@@ -40,7 +39,7 @@ public class MissionManager {
 		
 		@Override
 		public boolean isCriteriaOK() {
-			Light sprite = lightRepository.getSprite(6);
+			Light sprite = (Light) spriteRepository.getSprite(6);
 			return sprite.isLightOn();
 		}
 	}

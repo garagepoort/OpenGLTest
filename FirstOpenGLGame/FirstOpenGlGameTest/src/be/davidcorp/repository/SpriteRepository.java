@@ -1,22 +1,22 @@
-package be.davidcorp.database.repository;
+package be.davidcorp.repository;
 
 import java.util.List;
 
 import be.davidcorp.domain.sprite.Sprite;
 
-public interface SpriteRepository<SPRITE extends Sprite> {
+public interface SpriteRepository {
 	
-	public SPRITE getSprite(int id);
+	public Sprite getSprite(int id);
 	
-	public SPRITE createSprite(SPRITE sprite);
+	public Sprite createSprite(Sprite sprite);
 
-	void updateSprite(SPRITE spriteToUpdate);
+	void updateSprite(Sprite spriteToUpdate);
 	
 	public void emptyRepository();
 	
 	public void deleteSprite(int id);
 
-	void loadSprites(List<SPRITE> sprites);
+	void loadSprites(List<Sprite> sprites);
 
-	List<SPRITE> getAllSprites();
+	List<Sprite> getAllSprites();
 }

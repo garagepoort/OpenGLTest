@@ -2,18 +2,12 @@ package be.davidcorp.domain.game;
 
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.SpriteType;
-import be.davidcorp.domain.sprite.organic.player.Player;
 import be.davidcorp.metric.Point;
 
-/**
- * 
- * @author david
- *
- * <p>A class that defines to which {@link Gamefield} should be switched if a Player stands on this {@link GameFieldSwitch}.
- * It also indicates the position this {@link Player} will have in the new {@link Gamefield}.<p>
- */
 public class GameFieldSwitch extends Sprite{
 
+	private static final long serialVersionUID = 2892558485334718857L;
+	
 	private String gameFieldName;
 	private Point spawnPoint;
 	

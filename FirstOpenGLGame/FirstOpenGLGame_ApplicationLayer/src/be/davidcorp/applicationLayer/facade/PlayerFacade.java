@@ -10,7 +10,6 @@ import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ItemDTOMapper;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.LightToLightDTOMapper;
-import be.davidcorp.database.repository.ItemRepository;
 import be.davidcorp.domain.exception.InventoryException;
 import be.davidcorp.domain.exception.SkillException;
 import be.davidcorp.domain.game.GameFieldManager;
@@ -21,10 +20,12 @@ import be.davidcorp.domain.utilities.sprite.SpriteMovingUtility;
 import be.davidcorp.domain.utilities.sprite.SpriteRotator;
 import be.davidcorp.metric.Point;
 import be.davidcorp.metric.Vector;
+import be.davidcorp.repository.DefaultSpriteRepository;
+import be.davidcorp.repository.SpriteRepository;
 
 public class PlayerFacade {
 
-	private ItemRepository itemRepository = new ItemRepository();
+	private SpriteRepository spriteRepository = DefaultSpriteRepository.getInstance();
 	
 	public void letPlayerAttackInDirection(Vector vector) {
 		getCurrentPlayer().useWeapon(vector);
@@ -80,7 +81,7 @@ public class PlayerFacade {
 
 	
 	public void dropItemFromEquipment(ItemDTO itemDTO) {
-		Item item = itemRepository.getSprite(itemDTO.getId());
+		Item item = (Item) spriteRepository.getSprite(itemDTO.getId());
 		item.setX(getCurrentPlayer().getX());
 		item.setY(getCurrentPlayer().getY());
 		getCurrentGameField().addGroundItem(item);
@@ -109,7 +110,7 @@ public class PlayerFacade {
 
 	public void putItemInInventory(ItemDTO itemDTO) {
 		try {
-			Item item = itemRepository.getSprite(itemDTO.getId());
+			Item item = (Item) spriteRepository.getSprite(itemDTO.getId());
 			getCurrentPlayer().addItemToInventory(item);
 		} catch (InventoryException e) {
 			e.printStackTrace();
@@ -145,7 +146,7 @@ public class PlayerFacade {
 
 	
 	public void pickUpitem(int id) {
-		Item item = itemRepository.getSprite(id);
+		Item item = (Item) spriteRepository.getSprite(id);
 		try {
 			GameFieldManager.getCurrentGameField().removeItemFromWorld(item.getID());
 			getCurrentPlayer().addItemToInventory(item);
@@ -176,14 +177,14 @@ public class PlayerFacade {
 
 	
 	public void dropItem(ItemDTO itemDTO) {
-		Item item = itemRepository.getSprite(itemDTO.getId());
+		Item item = (Item) spriteRepository.getSprite(itemDTO.getId());
 		getCurrentPlayer().dropItem(item);
 		getCurrentGameField().addGroundItem(item);
 	}
 
 	
 	public void useItem(ItemDTO itemDTO) {
-		Item item = itemRepository.getSprite(itemDTO.getId());
+		Item item = (Item) spriteRepository.getSprite(itemDTO.getId());
 		item.useItem(getCurrentPlayer());
 	}
 

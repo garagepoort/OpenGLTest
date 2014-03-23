@@ -31,17 +31,12 @@ import be.davidcorp.applicationLayer.facade.LightFacade;
 public class SelectedSpritePanel extends JFrame implements KeyListener, MouseListener{
 
 	private static final EnemyFacade enemyFacade = new EnemyFacade();
-
 	private static final LightFacade lightFacade = new LightFacade();
-
 	private static final ConstructionSpriteFacade constructionSpriteFacade = new ConstructionSpriteFacade();
-
 	private static final ItemFacade itemFacade = new ItemFacade();
-
 	private SpriteDTO sprite;
-	
 	public JPanel mainpanel = new JPanel();
-	
+
 	private JLabel classLabel;
 	private JLabel xLabel;
 	private JLabel yLabel;

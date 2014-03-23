@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 
 import be.davidcorp.FileUtility;
 import be.davidcorp.database.GamefieldLoaderSaver;
-import be.davidcorp.database.repository.GamefieldRepository;
+import be.davidcorp.repository.GamefieldRepository;
 
 public class GamefieldLoaderTest {
 

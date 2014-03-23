@@ -1,5 +1,6 @@
 package be.davidcorp.database.filehandling;
 
+import static be.davidcorp.config.ConfigurationManager.Property.SAVEFILE_BASEDIR;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.io.File.separator;
 
@@ -8,37 +9,23 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import be.davidcorp.config.ConfigurationManager;
-import be.davidcorp.config.ConfigurationManager.Property;
-import be.davidcorp.database.repository.ConstructionSpriteRepository;
-import be.davidcorp.database.repository.EnemyRepository;
-import be.davidcorp.database.repository.ItemRepository;
-import be.davidcorp.database.repository.LightRepository;
-import be.davidcorp.database.repository.MiscRepository;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.Sprite;
-import be.davidcorp.domain.sprite.SpriteType;
-import be.davidcorp.domain.sprite.construction.ConstructionSprite;
-import be.davidcorp.domain.sprite.item.Item;
-import be.davidcorp.domain.sprite.light.Light;
-import be.davidcorp.domain.sprite.organic.enemy.Enemy;
+import be.davidcorp.repository.DefaultSpriteRepository;
 
 import com.google.common.collect.Lists;
 
 public class SpriteSerializer {
 
+	private static final DefaultSpriteRepository SPRITE_REPOSITORY = DefaultSpriteRepository.getInstance();
 	private static final String SPRITES_SAVE_FILE = "sprites.ser";
 
 	private File file;
 
-	private ArrayList<Enemy> enemies = newArrayList();
-	private ArrayList<ConstructionSprite> constructionSprites = newArrayList();
-	private ArrayList<Item> items = newArrayList();
-	private ArrayList<Light> lights = newArrayList();
-	private ArrayList<Sprite> miscs = newArrayList();
+	private List<Sprite> sprites = newArrayList();
 
 	public SpriteSerializer() {
 		this.file = new File(createSaveFilePath());
@@ -86,34 +73,18 @@ public class SpriteSerializer {
 	}
 
 	private void fillRepositories() {
-		new EnemyRepository().loadSprites(enemies);
-		new ItemRepository().loadSprites(items);
-		new LightRepository().loadSprites(lights);
-		new MiscRepository().loadSprites(miscs);
-		new ConstructionSpriteRepository().loadSprites(constructionSprites);
+		SPRITE_REPOSITORY.loadSprites(sprites);
 	}
 
 	private void addSpriteToList(Sprite sprite) {
-		if (sprite instanceof Enemy) {
-			enemies.add((Enemy) sprite);
-		}
-		if (sprite instanceof ConstructionSprite) {
-			constructionSprites.add((ConstructionSprite) sprite);
-		}
-		if (sprite instanceof Item) {
-			items.add((Item) sprite);
-		}
-		if (sprite instanceof Light) {
-			lights.add((Light) sprite);
-		}
-		if (sprite.getType() == SpriteType.MISC) {
-			miscs.add(sprite);
-		}
+		sprites.add(sprite);
 	}
 
 	private String createSaveFilePath() {
 		String gamefieldName = GameFieldManager.getCurrentGameField().getName();
-		return ConfigurationManager.getProperty(Property.SAVEFILE_BASEDIR) + separator + gamefieldName + separator + SPRITES_SAVE_FILE;
+		String baseDirectory = ConfigurationManager.getProperty(SAVEFILE_BASEDIR);
+		
+		return baseDirectory + separator + gamefieldName + separator + SPRITES_SAVE_FILE;
 	}
 
 }

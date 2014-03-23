@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import be.davidcorp.FileUtility;
-import be.davidcorp.database.repository.DefaultSpriteRepository;
-import be.davidcorp.database.repository.GamefieldRepository;
 import be.davidcorp.domain.game.Gamefield;
+import be.davidcorp.repository.DefaultSpriteRepository;
+import be.davidcorp.repository.GamefieldRepository;
 
 public class GamefieldLoaderSaver {
 
@@ -43,7 +43,7 @@ public class GamefieldLoaderSaver {
 		}
 	}
 	
-	public void loadAllGamefieldsToRepository(File file) throws IOException {
+	public void loadAllGamefieldsToRepository(File file) {
 		Scanner scanner = null;
 		try {
 			scanner = new Scanner(fileUtility.getFileContent(file));
@@ -52,6 +52,8 @@ public class GamefieldLoaderSaver {
 				gamefieldStrings.add(createGamefieldString(scanner, builder));
 			}
 			gamefieldRepository.loadGamefields(gamefieldStrings);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		} finally {
 			if (scanner != null)
 				scanner.close();
@@ -61,7 +63,7 @@ public class GamefieldLoaderSaver {
 	public void loadEntireField(String name) {
 		File gamefieldSpriteLinksFile = new File("resources/saveFiles/" + name + "/gamefieldLinks.txt");
 		
-		new DefaultSpriteRepository().loadAllSpritesFromDatabase();
+		DefaultSpriteRepository.getInstance().loadAllSpritesFromDatabase();
 		new GamefieldSpriteFiller(gamefieldSpriteLinksFile).fillGamefields();
 	}
 	

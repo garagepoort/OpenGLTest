@@ -5,21 +5,22 @@ import be.davidcorp.applicationLayer.dto.color.ColorDTO;
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.LightToLightDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
-import be.davidcorp.database.repository.LightRepository;
 import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.metric.Point;
+import be.davidcorp.repository.DefaultSpriteRepository;
+import be.davidcorp.repository.SpriteRepository;
 
 public class LightFacade {
 
-	private LightRepository lightRepository = new LightRepository();
+	private SpriteRepository spriteRepository = DefaultSpriteRepository.getInstance();
 	
 	public LightDTO createLight(Point point, ColorDTO colorDTO, int radius, boolean lighton)  {
 		try {
 			Color color = new Color(colorDTO.getRed(), colorDTO.getGreen(), colorDTO.getBlue());
 			Light light = new Light(point.x, point.y, color, radius, lighton);
-			lightRepository.createSprite(light);
+			spriteRepository.createSprite(light);
 			new LightToLightDTOMapper();
 			return LightToLightDTOMapper.mapLightToDTO(light);
 		} catch (Exception e) {
@@ -28,14 +29,14 @@ public class LightFacade {
 	}
 
 	public void deleteLight(int id) {
-		lightRepository.deleteSprite(id);
+		spriteRepository.deleteSprite(id);
 		GameFieldManager.getCurrentGameField().removeLightFromWorld(id);
 	}
 
 	public void updateLight(LightDTO lightDTO) {
 		try {
 			Light light = LightToLightDTOMapper.mapLightDTOToLight(lightDTO);
-			lightRepository.updateSprite(light);
+			spriteRepository.updateSprite(light);
 			getCurrentGameField().updateLight(light);
 		} catch (Exception e) {
 			throw new ModelException(e);
