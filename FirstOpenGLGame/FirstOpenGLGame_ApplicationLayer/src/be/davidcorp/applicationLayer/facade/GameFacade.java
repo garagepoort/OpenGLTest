@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 import be.davidcorp.config.ConfigurationManager;
+import be.davidcorp.config.ImageLocationManager;
 import be.davidcorp.database.GamefieldLoaderSaver;
 import be.davidcorp.database.GamefieldSpriteLinkSaver;
 import be.davidcorp.domain.game.Gamefield;
@@ -22,7 +23,7 @@ public class GameFacade {
 	}
 
 	public void startGameCreatorApplication() {
-		gameFieldFacade.initializeGameFieldWithName("FirstDayOfInvasion", true);
+		loadResources();
 	}
 
 	public void startApplicationWithNewGamefield(String gamefieldName,
@@ -70,6 +71,7 @@ public class GameFacade {
 	
 	private void loadResources() {
 		ConfigurationManager.importProperties();
+		ImageLocationManager.importProperties();
 		File playerFile = new File("resources/playerfiles/AllPlayers.txt");
 		File gamefieldFile = new File("resources/saveFiles/gamefields.txt");
 

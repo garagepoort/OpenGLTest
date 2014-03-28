@@ -15,7 +15,7 @@ public class ImageLocationManager {
 	private static String baseDirectory;
 	private static Properties prop = new Properties();
 
-	public static void initializeProperties() {
+	public static void importProperties() {
 		try {
 			prop.load(new FileInputStream(ConfigurationManager.getProperty(IMAGE_LOCATION_PROPERTY)));
 			baseDirectory = prop.getProperty(BASEDIR);

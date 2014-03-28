@@ -6,6 +6,7 @@ import be.davidcorp.domain.attribute.Attribute;
 import be.davidcorp.domain.attribute.AttributeType;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.SpriteType;
+import be.davidcorp.domain.sprite.item.weapon.Pistol;
 import be.davidcorp.domain.sprite.organic.OrganicSprite;
 
 public class ItemFactory {
@@ -18,7 +19,6 @@ public class ItemFactory {
 			.withX(x)
 			.withY(y)
 			.build();
-//		item.setTextureBunch(new TextureBunch().withDefaultTexture(HEALTH_POTION_PNG));
 		return item;
 	}
 	
@@ -30,7 +30,6 @@ public class ItemFactory {
 		.withX(x)
 		.withY(y)
 		.build();
-//		item.setTextureBunch(new TextureBunch().withDefaultTexture(MANAPOTION_PNG));
 		return item;
 	}
 	
@@ -44,6 +43,11 @@ public class ItemFactory {
 			.build();
 //		item.setTextureBunch(new TextureBunch().withDefaultTexture(NECKLACE_PNG));
 		return item;
+	}
+	
+
+	public static Item createPistol(float x, float y) {
+		return new Pistol(x, y, 100);
 	}
 	
 	public static class HealthPotionUsableImplementation implements UsableImplementation, Serializable{

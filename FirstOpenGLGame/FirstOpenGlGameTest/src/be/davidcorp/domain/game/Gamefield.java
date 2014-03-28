@@ -1,13 +1,10 @@
 package be.davidcorp.domain.game;
 
-import static be.davidcorp.domain.game.GameFieldManager.getCurrentGameField;
 import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import be.davidcorp.domain.exception.GameFieldException;
 import be.davidcorp.domain.sprite.Sprite;
@@ -17,11 +14,9 @@ import be.davidcorp.domain.sprite.item.weapon.Ammo;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
-import be.davidcorp.domain.trigger.TriggerWhen;
 import be.davidcorp.domain.utilities.PauseManager;
 import be.davidcorp.domain.utilities.sprite.SpriteCollisionChecker;
 import be.davidcorp.metric.Point;
-import be.davidcorp.system.System;
 import be.davidcorp.texture.TextureBunch;
 
 public class Gamefield {
@@ -39,14 +34,12 @@ public class Gamefield {
 	int height = 64;
 
 	private TextureBunch textureBunch;
-	private GamefieldUpdater gamefieldUpdater;
 
 	public Gamefield(String name, int width, int height) {
 		this(name, width, height, new DefaultGamefieldUpdater());
 	}
 	
 	public Gamefield(String name, int width, int height, GamefieldUpdater gamefieldUpdater) {
-		this.gamefieldUpdater = gamefieldUpdater;
 		setWidth(width);
 		setHeight(height);
 		this.gamefieldName = name;
@@ -113,23 +106,23 @@ public class Gamefield {
 	}
 
 	public List<Ammo> getAmmoInWorld() {
-		return environment.getAmmoInWorld();
+		return Collections.unmodifiableList(newArrayList(environment.worldAmmo.values()));
 	}
 
 	public List<Enemy> getEnemiesInWorld() {
-		return environment.getEnemiesInWorld();
+		return Collections.unmodifiableList(newArrayList(environment.enemies.values()));
 	}
 
 	public List<Item> getGroundItems() {
-		return environment.getGroundItems();
+		return Collections.unmodifiableList(newArrayList(environment.groundItems.values()));
 	}
 
 	public List<ConstructionSprite> getConstructionItems() {
-		return environment.getConstructionItems();
+		return Collections.unmodifiableList(newArrayList(environment.constructionSprites.values()));
 	}
 
 	public List<Light> getLightsFromWorld() {
-		return environment.getLightsFromWorld();
+		return Collections.unmodifiableList(newArrayList(environment.lights.values()));
 	}
 
 	public Guide getGuide() {
@@ -233,7 +226,7 @@ public class Gamefield {
 	}
 
 	public void setGamefieldUpdater(GamefieldUpdater gamefieldUpdater) {
-		this.gamefieldUpdater = gamefieldUpdater;
+		environment.setGamefieldUpdater(gamefieldUpdater);
 	}
 	
 	public List<Sprite> getSpritesCollidingWithPoint(Point point) {
@@ -250,32 +243,21 @@ public class Gamefield {
 	}
 
 	public void updateConstructionSprite(ConstructionSprite constructionSprite) {
-		if (!constructionSprites.containsKey(constructionSprite.getID())) {
-			throw new GameFieldException("The gamefield does not contain this sprite: " + constructionSprite);
-		}
-		constructionSprites.put(constructionSprite.getID(), constructionSprite);
+		environment.updateConstructionSprite(constructionSprite);
 	}
 
 	public void updateGroundItem(Item item) {
-		if (!groundItems.containsKey(item.getID())) {
-			throw new GameFieldException("The gamefield does not contain this sprite: " + item);
-		}
-		groundItems.put(item.getID(), item);
+		environment.updateGroundItem(item);
 	}
 
 	public void updateLight(Light light) {
-		if (!lights.containsKey(light.getID())) {
-			throw new GameFieldException("The gamefield does not contain this sprite: " + light);
-		}
-		lights.put(light.getID(), light);
+		environment.updateLight(light);
 	}
 
 	public void updateEnemy(Enemy enemy) {
-		if (!enemies.containsKey(enemy.getID())) {
-			throw new GameFieldException("The gamefield does not contain this sprite: " + enemy);
-		}
-		enemies.put(enemy.getID(), enemy);
+		environment.updateEnemy(enemy);
 	}
+	
 	private List<Sprite> findSpritesThatCollideWithPoint(Point point, List<? extends Sprite> sprites) {
 		List<Sprite> result = newArrayList();
 		for (Sprite cs : sprites) {
@@ -287,18 +269,18 @@ public class Gamefield {
 	}
 
 	public void removeConstructionSpriteFromWorld(int id) {
-		constructionSprites.remove(id);
+		environment.removeConstructionSpriteFromWorld(id);
 	}
 
 	public void removeLightFromWorld(int id) {
-		lights.remove(id);
+		environment.removeLightFromWorld(id);
 	}
 
 	public void removeItemFromWorld(int id) {
-		groundItems.remove(id);
+		environment.removeItemFromWorld(id);
 	}
 	public void removeEnemyFromWorld(int id) {
-		enemies.remove(id);
+		environment.removeEnemyFromWorld(id);
 	}
 
 }

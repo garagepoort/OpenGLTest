@@ -23,16 +23,23 @@ public class ItemDTOMapper {
 		if (itemDTO == null) {
 			throw new MapperException("Not the right type: " + itemDTO);
 		}
-		Item item = null;
-		if(itemDTO.getType() == ItemType.HEALTHPOTION){
-			item = ItemFactory.createHealthPotion(0, 0, 20);
-		}
-		if(itemDTO.getType() == ItemType.HEALTNECKLACE){
-			item = ItemFactory.createHealthNecklace(0, 0, 20);
-		}
+		Item item = getItemFromType(itemDTO);
 		SpriteDTOMapper.mapSpriteDTOToSprite(item, itemDTO);
 		item.setInfoText(itemDTO.getInfoTekst());
 		return item;
+	}
+
+	private static Item getItemFromType(ItemDTO itemDTO) {
+		if(itemDTO.getType() == ItemType.HEALTHPOTION){
+			return ItemFactory.createHealthPotion(0, 0, 20);
+		}
+		if(itemDTO.getType() == ItemType.HEALTNECKLACE){
+			return ItemFactory.createHealthNecklace(0, 0, 20);
+		}
+		if(itemDTO.getType() == ItemType.PISTOL){
+			return ItemFactory.createPistol(0,0);
+		}
+		throw new MapperException("No item found for this: " + itemDTO.getType());
 	}
 
 	public static List<ItemDTO> mapItemsToItemDTOs(List<Item> list) {
