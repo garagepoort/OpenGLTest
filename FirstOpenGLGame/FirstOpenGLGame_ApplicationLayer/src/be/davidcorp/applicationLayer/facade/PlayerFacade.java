@@ -1,6 +1,5 @@
 package be.davidcorp.applicationLayer.facade;
 
-import static be.davidcorp.domain.game.GameFieldManager.getCurrentGameField;
 import static be.davidcorp.domain.sprite.organic.player.PlayerManager.getCurrentPlayer;
 
 import java.util.List;
@@ -12,7 +11,6 @@ import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ItemDTOMapper;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.LightToLightDTOMapper;
 import be.davidcorp.domain.exception.InventoryException;
 import be.davidcorp.domain.exception.SkillException;
-import be.davidcorp.domain.game.GameFieldManager;
 import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
 import be.davidcorp.domain.utilities.PauseManager;
@@ -84,7 +82,7 @@ public class PlayerFacade {
 		Item item = (Item) spriteRepository.getSprite(itemDTO.getId());
 		item.setX(getCurrentPlayer().getX());
 		item.setY(getCurrentPlayer().getY());
-		getCurrentGameField().addGroundItem(item);
+		item.setOnGround(true);
 		getCurrentPlayer().dropItem(item);
 		getCurrentPlayer().getEquipment().unequipItem(item);
 	}
@@ -148,7 +146,7 @@ public class PlayerFacade {
 	public void pickUpitem(int id) {
 		Item item = (Item) spriteRepository.getSprite(id);
 		try {
-			GameFieldManager.getCurrentGameField().removeItemFromWorld(item.getID());
+			item.setOnGround(false);
 			getCurrentPlayer().addItemToInventory(item);
 		} catch (InventoryException e) {
 			e.printStackTrace();
@@ -179,7 +177,7 @@ public class PlayerFacade {
 	public void dropItem(ItemDTO itemDTO) {
 		Item item = (Item) spriteRepository.getSprite(itemDTO.getId());
 		getCurrentPlayer().dropItem(item);
-		getCurrentGameField().addGroundItem(item);
+		item.setOnGround(true);
 	}
 
 	

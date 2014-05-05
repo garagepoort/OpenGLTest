@@ -4,8 +4,8 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.fest.assertions.Assertions.assertThat;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
@@ -34,13 +34,11 @@ public class SpriteSerializerTest {
 	private static final int Y = 11;
 	private static final int X = 10;
 	private static final int ATTACK_DAMAGE = 100;
-	private SpriteSerializer spriteSerializer;
 	private File file;
 
 	@Before
 	public void init(){
 		file = new File("resources/test/testfile.ser");
-		spriteSerializer = new SpriteSerializer(file);
 	}
 	
 	@After
@@ -54,8 +52,8 @@ public class SpriteSerializerTest {
 		Enemy sprite = aZombie();
 
 		//when
-		spriteSerializer.saveSprites(newArrayList(sprite));
-		List<Sprite> deserializeSprites = spriteSerializer.deserializeSprites();
+		SpriteSerializer.saveSpritesToFile(newArrayList(sprite),file);
+		List<Sprite> deserializeSprites = SpriteSerializer.deserializeSprites(new FileInputStream(file));
 		
 		//then
 		assertThat(deserializeSprites).hasSize(1);
@@ -77,22 +75,21 @@ public class SpriteSerializerTest {
 			.withAnotherTriggerable(light, lightSwitchEvent)
 			.build();
 		//when
-		spriteSerializer.saveSprites(newArrayList(wall));
-		List<Sprite> deserializeSprites = spriteSerializer.deserializeSprites();
+		SpriteSerializer.saveSpritesToFile(newArrayList(wall), file);;
+		List<Sprite> deserializeSprites = SpriteSerializer.deserializeSprites(new FileInputStream(file));
 		
 		//then
 		assertThat(deserializeSprites).hasSize(1);
 		ConstructionSprite wallResult = (ConstructionSprite) deserializeSprites.get(0);
-		
-		ArrayList<Trigger> allTriggersFromSprite2 = wallResult.getAllTriggers();
-		assertThat(allTriggersFromSprite2).hasSize(1);
-		
 		Trigger trigger = wallResult.getAllTriggers().get(0);
+		
+		
+		assertThat(wallResult.getAllTriggers()).hasSize(1);
 		assertThat(trigger.triggerWhen).isEqualTo(TriggerWhen.ONUSE);
 		assertThat(trigger.getSource()).isEqualTo(wallResult);
 	}
 
-	public void assertEnemiesAreEqual(Enemy sprite, Enemy sprite2) {
+	private void assertEnemiesAreEqual(Enemy sprite, Enemy sprite2) {
 		assertThat(sprite2.getID()).isEqualTo(sprite.getID());
 		assertThat(sprite2.getSpeed()).isEqualTo(sprite.getSpeed());
 		assertThat(sprite2.getX()).isEqualTo(sprite.getX());

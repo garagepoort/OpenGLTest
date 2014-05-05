@@ -16,6 +16,7 @@ public class Item extends Sprite implements Attributer {
 	private List<Attribute> attributes = Lists.newArrayList();
 	private OrganicSprite owner;
 	private UsableImplementation usableImplementation;
+	private boolean onGround =true;
 
 	public Item() {
 		super();
@@ -65,6 +66,14 @@ public class Item extends Sprite implements Attributer {
 	
 	public void addAttribute(Attribute attribute) {
 		attributes.add(attribute);
+	}
+	
+	public void setOnGround(boolean onGround) {
+		this.onGround = onGround;
+	}
+	
+	public boolean isOnGround() {
+		return onGround;
 	}
 
 	

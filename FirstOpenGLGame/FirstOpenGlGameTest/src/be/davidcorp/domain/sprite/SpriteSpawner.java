@@ -2,7 +2,7 @@ package be.davidcorp.domain.sprite;
 
 import static be.davidcorp.domain.sprite.SpriteType.SPRITESPAWNER;
 import static be.davidcorp.domain.sprite.SpriteType.ZOMBIE;
-import be.davidcorp.domain.game.GameFieldManager;
+import be.davidcorp.domain.game.CurrentGameFieldManager;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.sprite.organic.enemy.EnemyFactory;
 import be.davidcorp.repository.DefaultSpriteRepository;
@@ -17,7 +17,7 @@ public class SpriteSpawner extends Sprite{
 		if(spriteType == ZOMBIE){
 			Enemy createZombie = EnemyFactory.createZombie(getX(), getY());
 			createZombie = (Enemy) spriteRepository.createSprite(createZombie);
-			GameFieldManager.getCurrentGameField().addEnemyToWorld(createZombie);
+			CurrentGameFieldManager.getCurrentGameField().addSpriteToWorld(createZombie);
 		}
 	}
 	

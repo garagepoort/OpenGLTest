@@ -19,8 +19,17 @@ public class ConstructionSpriteDTOMapper {
 	
 	public static ConstructionSprite mapConstructionSpriteDTOToConstructionSprite(ConstructionSpriteDTO constructionSpriteDTO) {
 		ConstructionSprite constructionSprite = null;
-		if(constructionSpriteDTO.getConstructionSpriteType() == ConstructionType.WALL){
+		switch (constructionSpriteDTO.getConstructionSpriteType()) {
+		case WALL:
 			constructionSprite = ConstructionSpriteFactory.createWall(0, 0, 1, 1);
+			break;
+		case DESK:
+			constructionSpriteDTO.setHeight(128);
+			constructionSpriteDTO.setWidth(64);
+			constructionSprite = ConstructionSpriteFactory.createDesk(1, 1);
+			break;
+		default:
+			break;
 		}
 		mapConstructionSpriteDTO(constructionSprite, constructionSpriteDTO);
 		return constructionSprite;

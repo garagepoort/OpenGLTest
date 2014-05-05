@@ -1,6 +1,6 @@
 package be.davidcorp.domain.sprite.organic.enemy;
 
-import be.davidcorp.domain.game.GameFieldManager;
+import be.davidcorp.domain.game.CurrentGameFieldManager;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.organic.OrganicSprite;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
@@ -44,7 +44,7 @@ public class Enemy extends OrganicSprite {
 				attack(PlayerManager.getCurrentPlayer(), secondsMovedInGame);
 			} else {
 				SpriteMovingUtility.moveSpriteOnHisDirectionVector(this, getSpeed() * secondsMovedInGame);
-				if (GameFieldManager.getCurrentGameField().doesEnemyCollideWithAnyConstructionItem(this)) {
+				if (CurrentGameFieldManager.getCurrentGameField().doesEnemyCollideWithAnyConstructionItem(this)) {
 					setX(prevx);
 					setY(prevy);
 				}

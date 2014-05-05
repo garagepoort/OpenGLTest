@@ -23,22 +23,20 @@ public class GamefieldTestBuilder {
 	private List<Light> lights = newArrayList();
 	private List<ConstructionSprite> constructionSprites = newArrayList();
 	private GamefieldUpdater gamefieldUpdater = new DefaultGamefieldUpdater();
-	private int id;
 
 	public Gamefield build(){
 		Gamefield gamefield = new Gamefield(name, width, height, gamefieldUpdater);
-		gamefield.setID(id);
 		for (Enemy enemy : enemies) {
-			gamefield.addEnemyToWorld(enemy);
+			gamefield.addSpriteToWorld(enemy);
 		}
 		for (ConstructionSprite constructionSprite : constructionSprites) {
-			gamefield.addConstructionItem(constructionSprite);
+			gamefield.addSpriteToWorld(constructionSprite);
 		}
 		for (Light light : lights) {
-			gamefield.addLight(light);
+			gamefield.addSpriteToWorld(light);
 		}
 		for (Item item : items) {
-			gamefield.addGroundItem(item);
+			gamefield.addSpriteToWorld(item);
 		}
 		return gamefield;
 	}
@@ -68,8 +66,4 @@ public class GamefieldTestBuilder {
 		return this;
 	}
 
-	public GamefieldTestBuilder withID(int id) {
-		this.id = id;
-		return this;
-	}
 }

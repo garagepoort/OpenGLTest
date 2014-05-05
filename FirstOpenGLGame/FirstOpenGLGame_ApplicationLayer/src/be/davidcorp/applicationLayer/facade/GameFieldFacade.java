@@ -1,8 +1,9 @@
 package be.davidcorp.applicationLayer.facade;
 
 import static be.davidcorp.component.ComponentType.USING_COMPONENT;
-import static be.davidcorp.domain.game.GameFieldManager.getCurrentGameField;
-import static be.davidcorp.domain.game.GameFieldManager.setCurrentGameField;
+import static be.davidcorp.domain.game.CurrentGameFieldManager.getCurrentGameField;
+import static be.davidcorp.domain.game.CurrentGameFieldManager.loadGamefieldFromExistingGamefield;
+import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +11,9 @@ import java.util.List;
 import be.davidcorp.applicationLayer.dto.AmmoDTO;
 import be.davidcorp.applicationLayer.dto.ConstructionSpriteDTO;
 import be.davidcorp.applicationLayer.dto.EnemyDTO;
-import be.davidcorp.applicationLayer.dto.GamefieldDTO;
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.SpriteDTO;
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
-import be.davidcorp.applicationLayer.dto.mapper.gamefield.GamefieldToGamefieldDTOMapper;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.AmmoToAmmoDTOMapper;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ConstructionSpriteDTOMapper;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ItemDTOMapper;
@@ -23,25 +22,22 @@ import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.OrganicSpriteDTOMapp
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.SpriteDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
 import be.davidcorp.component.UsingComponent;
-import be.davidcorp.database.GamefieldLoaderSaver;
-import be.davidcorp.domain.game.GameFieldManager;
-import be.davidcorp.domain.game.Gamefield;
+import be.davidcorp.domain.game.CurrentGameFieldManager;
 import be.davidcorp.domain.game.GamefieldCreatorUpdater;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.item.Item;
+import be.davidcorp.domain.sprite.item.weapon.Ammo;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
 import be.davidcorp.domain.utilities.PauseManager;
 import be.davidcorp.metric.Point;
 import be.davidcorp.repository.DefaultSpriteRepository;
-import be.davidcorp.repository.GamefieldRepository;
 import be.davidcorp.repository.SpriteRepository;
 
 public class GameFieldFacade {
 
-	private GamefieldRepository gamefieldRepository = new GamefieldRepository();
 	private SpriteRepository spriteRepository = DefaultSpriteRepository.getInstance();
 
 	public void togglePause() {
@@ -62,15 +58,6 @@ public class GameFieldFacade {
 		} catch (Exception e) {
 			throw new ModelException(e);
 		}
-	}
-
-	public List<GamefieldDTO> getAllGamefields() {
-		List<GamefieldDTO> gamefieldDTOs = new ArrayList<GamefieldDTO>();
-		GamefieldToGamefieldDTOMapper gamefieldToGamefieldDTOMapper = new GamefieldToGamefieldDTOMapper();
-		for (Gamefield gamefield : gamefieldRepository.getAllGamefields()) {
-			gamefieldDTOs.add(gamefieldToGamefieldDTOMapper.mapToDTO(gamefield));
-		}
-		return gamefieldDTOs;
 	}
 
 	public boolean isGamePaused() {
@@ -97,9 +84,11 @@ public class GameFieldFacade {
 
 	public List<LightDTO> getLightsFromWorld() {
 		List<LightDTO> lights = new ArrayList<LightDTO>();
-		for (Light light : getCurrentGameField().getLightsFromWorld()) {
-			LightDTO dto = LightToLightDTOMapper.mapLightToDTO(light);
-			lights.add(dto);
+		for (Sprite sprite : getCurrentGameField().getSpritesInWorld()) {
+			if(sprite instanceof Light){
+				LightDTO dto = LightToLightDTOMapper.mapLightToDTO((Light) sprite);
+				lights.add(dto);
+			}
 		}
 		return lights;
 	}
@@ -113,11 +102,19 @@ public class GameFieldFacade {
 	}
 
 	public List<ConstructionSpriteDTO> getConstructionSpritesFromWorld()  {
-		return ConstructionSpriteDTOMapper.mapConstructionSpritesToDTOs(getCurrentGameField().getConstructionItems());
+		List<ConstructionSprite> constructionSprites = newArrayList();
+		for (Sprite sprite : getCurrentGameField().getSpritesInWorld()) {
+			if(sprite instanceof ConstructionSprite) constructionSprites.add((ConstructionSprite) sprite);
+		}
+		return ConstructionSpriteDTOMapper.mapConstructionSpritesToDTOs(constructionSprites);
 	}
 
 	public List<EnemyDTO> getEnemiesInWorld()  {
-		return OrganicSpriteDTOMapper.mapEnemiesToDTOs(getCurrentGameField().getEnemiesInWorld());
+		List<Enemy> enemies = newArrayList();
+		for (Sprite sprite : getCurrentGameField().getSpritesInWorld()) {
+			if(sprite instanceof Enemy) enemies.add((Enemy) sprite);
+		}
+		return OrganicSpriteDTOMapper.mapEnemiesToDTOs(enemies);
 	}
 
 	public List<SpriteDTO> getSpritesOnPointInGamefield(Point point)  {
@@ -125,83 +122,45 @@ public class GameFieldFacade {
 	}
 
 	public List<AmmoDTO> getAmmoInWorld() {
-		return new AmmoToAmmoDTOMapper().mapSpritesToDTO(getCurrentGameField().getAmmoInWorld());
+		List<Ammo> ammo = newArrayList();
+		for (Sprite sprite : getCurrentGameField().getSpritesInWorld()) {
+			if(sprite instanceof Ammo && ((Ammo) sprite).isOnGround() == false) ammo.add((Ammo) sprite);
+		}
+		return new AmmoToAmmoDTOMapper().mapSpritesToDTO(ammo);
 	}
 
 	public List<ItemDTO> getItemsOnGroundInWorld()  {
-		return ItemDTOMapper.mapItemsToItemDTOs(getCurrentGameField().getGroundItems());
+		List<Item> items = newArrayList();
+		for (Sprite sprite : getCurrentGameField().getSpritesInWorld()) {
+			if(sprite instanceof Item && ((Item) sprite).isOnGround()) items.add((Item) sprite);
+		}
+		return ItemDTOMapper.mapItemsToItemDTOs(items);
 	}
 
-	public void initializeGameField(GamefieldDTO gamefieldDTO, boolean creator) {
+	public void initializeGameField(String name, boolean creator) {
 		try {
-			Gamefield gamefield = gamefieldRepository.getGamefield(gamefieldDTO.getId());
-			if(creator) gamefield.setGamefieldUpdater(new GamefieldCreatorUpdater());
-			setCurrentGameField(gamefield);
+			loadGamefieldFromExistingGamefield(name);
+			if(creator) getCurrentGameField().setGamefieldUpdater(new GamefieldCreatorUpdater());
 		} catch (Exception e) {
 			throw new ModelException(e);
 		}
 	}
 
-	public void initializeGameFieldWithName(String name, boolean creator) {
-		try {
-			Gamefield field = gamefieldRepository.getGamefield(name);
-			if(creator) field.setGamefieldUpdater(new GamefieldCreatorUpdater());
-			setCurrentGameField(field);
-		} catch (Exception e) {
-			throw new ModelException(e);
+	public void addSpriteToWorld(int id){
+		Sprite sprite = spriteRepository.getSprite(id);
+		if(sprite == null){
+			throw new ModelException("A sprite with this id doesn't exist.");
 		}
+		getCurrentGameField().addSpriteToWorld(sprite);
 	}
-
-	public void createNewGamefield(String gamefieldName, int width, int height) {
-		try {
-			Gamefield createGamefield = gamefieldRepository.createGamefield(gamefieldName, width, height);
-			new GamefieldLoaderSaver().saveEntireField(createGamefield);
-			setCurrentGameField(createGamefield);
-		} catch (Exception e) {
-			throw new ModelException(e);
-		}
-	}
-
-	public void addConstructionSpriteToWorld(int id) {
-		ConstructionSprite constructionSprite = (ConstructionSprite) spriteRepository.getSprite(id);
-		if(constructionSprite == null){
-			throw new ModelException("A constructionSprite with this id doesn't exist.");
-		}
-		getCurrentGameField().addConstructionItem(constructionSprite);
-	}
-
-	public void addEnemyToWorld(int id)  {
-		Enemy enemy = (Enemy) spriteRepository.getSprite(id);
-		if(enemy == null){
-			throw new ModelException("An enemy with this id doesn't exist.");
-		}
-		getCurrentGameField().addEnemyToWorld(enemy);
-	}
-
-	public void addLightToWorld(int id) {
-		Light light = (Light) spriteRepository.getSprite(id);
-		if(light == null){
-			throw new ModelException("A light with this id doesn't exist.");
-		}
-		getCurrentGameField().addLight(light);
-	}
-
-	public void addGroundItemToWorld(int id) {
-		Item item = (Item) spriteRepository.getSprite(id);
-		getCurrentGameField().addGroundItem(item);
-	}
-
-	public GamefieldDTO getGamefieldWithName(String fieldName) {
-		Gamefield gamefield = gamefieldRepository.getGamefield(fieldName);
-		return new GamefieldToGamefieldDTOMapper().mapToDTO(gamefield);
-	}
-
+	
 	public boolean isDTOCollidingWithConstructionItem(SpriteDTO selectedSprite) {
 		Sprite sprite = SpriteDTOMapper.doAutoMappingForSpriteDTO(selectedSprite);
 		return getCurrentGameField().spriteAgainstAnyConstructionItem(sprite);
 	}
 
 	public boolean isGamefieldInitialized() {
-		return GameFieldManager.isGamefieldInitialized();
+		return CurrentGameFieldManager.isGamefieldInitialized();
 	}
+
 }

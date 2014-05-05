@@ -5,18 +5,18 @@ import static GameCreator.createframes.FrameFacade.openSelectedSpritePanel;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.zip.ZipFile;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JList;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 
-import GameCreator.createframes.EditGameFrame;
-import be.davidcorp.applicationLayer.dto.GamefieldDTO;
-import be.davidcorp.applicationLayer.facade.GameFieldFacade;
+import be.davidcorp.applicationLayer.facade.GamecreationFacade;
 
 @SuppressWarnings("serial")
 public class GameCreatorFrame extends JFrame implements MouseListener {
@@ -25,9 +25,10 @@ public class GameCreatorFrame extends JFrame implements MouseListener {
 	private JButton loadGameField;
 	private JTextField fieldNameTextField;
 	private JPanel mainPanel;
-	private JList<GamefieldDTO> list;
-	private JScrollPane listScroller;
-	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
+	private GamecreationFacade gamecreationFacade = new GamecreationFacade();
+	private JLabel saveLocationLabel = new JLabel("set save location");
+	private JButton chooseSaveLocationButton;
+	private File saveFileDirectory;
 
 	public GameCreatorFrame() {
 		setSize(new Dimension(800, 200));
@@ -43,60 +44,101 @@ public class GameCreatorFrame extends JFrame implements MouseListener {
 		revalidate();
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	private void createList() {
-		list = new JList(gameFieldFacade.getAllGamefields().toArray());
-		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		list.setVisibleRowCount(-1);
-		listScroller = new JScrollPane(list);
-		listScroller.setPreferredSize(new Dimension(250, 80));
-	}
-
 	private void initComponents() {
-		createList();
+		chooseSaveLocationButton = new JButton("Choose savelocation");
 		createGameField = new JButton("create new field");
 		loadGameField = new JButton("load gamefield");
 		fieldNameTextField = new JTextField();
 		fieldNameTextField.setPreferredSize(new Dimension(100, 20));
-
 		mainPanel = new JPanel();
 	}
 
 	private void addComponents() {
+		mainPanel.add(chooseSaveLocationButton);
+		mainPanel.add(saveLocationLabel);
 		mainPanel.add(createGameField);
 		mainPanel.add(loadGameField);
 		mainPanel.add(fieldNameTextField);
-		mainPanel.add(listScroller);
 	}
 
 	private void initHandlers() {
 		createGameField.addMouseListener(this);
 		loadGameField.addMouseListener(this);
+		chooseSaveLocationButton.addMouseListener(this);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == createGameField) {
-			setVisible(false);
-			openSelectedSpritePanel();
-			new EditGameFrame(fieldNameTextField.getText(), false);
+			if (saveFileDirectory != null) {
+				setVisible(false);
+				openSelectedSpritePanel();
+				ZipFile createGamefieldFile = gamecreationFacade.createAndSaveGamefieldToLocation(
+						fieldNameTextField.getText(),
+						saveFileDirectory.getAbsolutePath());
+				gamecreationFacade.loadCreatedGamefield(createGamefieldFile);
+				new EditGameFrame();
+			}
 		}
 		if (e.getSource() == loadGameField) {
+			ZipFile zipFile = openGamefieldMapFile();
+			gamecreationFacade.loadCreatedGamefield(zipFile);
 			setVisible(false);
 			openSelectedSpritePanel();
-			new EditGameFrame(list.getSelectedValue().getName(), true);
+			new EditGameFrame();
+		}
+		if (e.getSource() == chooseSaveLocationButton) {
+			chooseSaveDirectory();
 		}
 	}
+
+	private File chooseSaveDirectory() {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		int returnVal = fileChooser.showOpenDialog(this);
+
+		saveFileDirectory = null;
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			saveFileDirectory = fileChooser.getSelectedFile();
+			saveLocationLabel.setText(saveFileDirectory.getAbsolutePath());
+		}
+		return saveFileDirectory;
+	}
+
+	private ZipFile openGamefieldMapFile() {
+		JFileChooser loadEmp = new JFileChooser();// new dialog
+		File selectedFile;// needed*
+
+		if (loadEmp.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+			selectedFile = loadEmp.getSelectedFile();
+			if (selectedFile.canRead() && selectedFile.exists()) {
+				try {
+					return new ZipFile(selectedFile);
+				} catch (IOException e) {
+					ErrorHandler.handleError(this, e);
+				}
+			} else {
+				ErrorHandler.handleError(this, new RuntimeException(
+						"File cannot be opened"));
+			}
+		}
+		ErrorHandler.handleError(this, new RuntimeException(
+				"File cannot be opened"));
+		return null;
+	}
+
 	@Override
 	public void mouseEntered(MouseEvent e) {
 	}
+
 	@Override
 	public void mouseExited(MouseEvent e) {
 	}
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 	}
+
 	@Override
 	public void mouseReleased(MouseEvent e) {
 	}

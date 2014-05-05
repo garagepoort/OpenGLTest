@@ -3,7 +3,6 @@ package be.davidcorp.database;
 import org.junit.Before;
 import org.junit.Test;
 
-import be.davidcorp.database.GamefieldLoaderSaver;
 import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.item.Item;
@@ -30,9 +29,7 @@ public class GamefieldLoaderSaverTest {
 		//given
 		Gamefield gamefield = aGamefieldFullOfSprites();
 	
-		gamefieldLoaderSaver.saveEntireField(gamefield);
-		
-		
+//		gamefieldLoaderSaver.saveEntireField(gamefield);
 	}
 
 	private Gamefield aGamefieldFullOfSprites() {

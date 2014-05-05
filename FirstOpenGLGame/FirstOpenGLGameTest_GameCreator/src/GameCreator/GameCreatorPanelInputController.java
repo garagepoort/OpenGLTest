@@ -71,11 +71,6 @@ public class GameCreatorPanelInputController extends InputController {
 	}
 
 	@Override
-	public void on_MOUSELEFT_released() {
-//		 gameCreatorPanel.setSelectedSprite(null);
-	}
-
-	@Override
 	public void onDeletePressed() {
 		if (gameCreatorPanel.getSelectedSprite() != null) {
 			try {

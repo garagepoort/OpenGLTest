@@ -107,7 +107,7 @@ public class CreateLightDialog extends CreateDialog implements MouseListener {
 				ColorDTO color = new ColorDTO(255, 0, 0);
 				color = new ColorDTO(colorChooser.getColor().getRed(), colorChooser.getColor().getGreen(), colorChooser.getColor().getBlue());
 				lightDTO = lightFacade.createLight(new Point(parseFloat(fieldX.getText()), parseFloat(fieldY.getText()), 0), color, parseInt(fieldRadius.getText()), lighton);
-				gameFieldFacade.addLightToWorld(lightDTO.getId());
+				gameFieldFacade.addSpriteToWorld(lightDTO.getId());
 				
 //				closeCreateDialog(CreateLightDialog.this);
 				CreateLightDialog.this.dispose();

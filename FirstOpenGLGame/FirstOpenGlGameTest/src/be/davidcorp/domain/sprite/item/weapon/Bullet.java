@@ -8,6 +8,7 @@ public class Bullet extends Ammo {
 
 	public Bullet(float x, float y) {
 		super(x, y, 4, 4, 500);
+		setOnGround(false);
 		setSpeed(2f);
 		setSpeed(1f);
 		setDamage(5000);

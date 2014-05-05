@@ -76,7 +76,11 @@ public class GamefieldDrawer {
 	
 	public static void drawConstructionItems()  {
 		for (ConstructionSpriteDTO constructionSprite : fieldFacade.getConstructionSpritesFromWorld()) {
-			SpriteDrawer.drawSpriteWithoutTexture(constructionSprite);
+			if(constructionSprite.getTexture() == null){
+				SpriteDrawer.drawSpriteWithoutTexture(constructionSprite);
+			}else{
+				SpriteDrawer.drawSpriteWithTexture(constructionSprite);
+			}
 		}
 	}
 	

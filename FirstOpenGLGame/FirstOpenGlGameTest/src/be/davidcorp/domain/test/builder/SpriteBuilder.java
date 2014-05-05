@@ -22,6 +22,7 @@ public abstract class SpriteBuilder<SPRITE extends Sprite> {
 	private List<Component> components = newArrayList();
 	private boolean alive = true;
 	private Color color;
+	private boolean inWorld;
 	
 	protected abstract SPRITE createInstance();
 
@@ -43,6 +44,7 @@ public abstract class SpriteBuilder<SPRITE extends Sprite> {
 		sprite.setSpriteType(spriteType);
 		sprite.setAlive(alive);
 		sprite.setColor(color);
+		sprite.setInWorld(inWorld);
 		for(Component component : components){
 			sprite.addComponent(component);
 		}
@@ -105,6 +107,11 @@ public abstract class SpriteBuilder<SPRITE extends Sprite> {
 	
 	public SpriteBuilder<SPRITE> withComponent(Component component) {
 		components.add(component);
+		return this;
+	}
+	
+	public SpriteBuilder<SPRITE> withInWorld(boolean inWorld) {
+		this.inWorld=inWorld;
 		return this;
 	}
 }

@@ -7,7 +7,6 @@ public class GamefieldToGamefieldDTOMapper {
 
 	public GamefieldDTO mapToDTO(Gamefield gamefield){
 		GamefieldDTO gamefieldDTO = new GamefieldDTO();
-		gamefieldDTO.setId(gamefield.getID());
 		gamefieldDTO.setName(gamefield.getName());
 		gamefieldDTO.setX(gamefield.getX());
 		gamefieldDTO.setY(gamefield.getY());

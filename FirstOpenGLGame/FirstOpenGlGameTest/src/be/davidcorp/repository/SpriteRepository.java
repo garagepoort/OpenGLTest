@@ -1,6 +1,7 @@
 package be.davidcorp.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import be.davidcorp.domain.sprite.Sprite;
 
@@ -16,7 +17,8 @@ public interface SpriteRepository {
 	
 	public void deleteSprite(int id);
 
-	void loadSprites(List<Sprite> sprites);
-
 	List<Sprite> getAllSprites();
+
+	Map<Integer, Sprite> getAllSpritesMap();
+	
 }

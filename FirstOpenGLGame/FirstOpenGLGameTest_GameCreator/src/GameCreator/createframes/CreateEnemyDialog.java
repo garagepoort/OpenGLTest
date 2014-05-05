@@ -83,7 +83,7 @@ public class CreateEnemyDialog extends CreateDialog implements MouseListener {
 	public void mouseClicked(MouseEvent event) {
 		if (event.getSource() == createButton) {
 			try {
-				gameFieldFacade.addEnemyToWorld(createEnemy().getId());
+				gameFieldFacade.addSpriteToWorld(createEnemy().getId());
 //				closeCreateDialog(CreateEnemyDialog.this);
 				CreateEnemyDialog.this.dispose();
 			} catch (Exception e) {

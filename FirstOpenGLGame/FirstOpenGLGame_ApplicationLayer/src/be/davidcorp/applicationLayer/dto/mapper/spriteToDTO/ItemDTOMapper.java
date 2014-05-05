@@ -16,6 +16,7 @@ public class ItemDTOMapper {
 		ItemDTO itemDTO = new ItemDTO(itemType);
 		SpriteDTOMapper.mapSpriteToSpriteDTO(itemDTO, item);
 		itemDTO.setInfoText(item.getInfoText());
+		itemDTO.setOnGround(item.isOnGround());
 		return itemDTO;
 	}
 	
@@ -26,6 +27,7 @@ public class ItemDTOMapper {
 		Item item = getItemFromType(itemDTO);
 		SpriteDTOMapper.mapSpriteDTOToSprite(item, itemDTO);
 		item.setInfoText(itemDTO.getInfoTekst());
+		item.setOnGround(itemDTO.isOnGround());
 		return item;
 	}
 

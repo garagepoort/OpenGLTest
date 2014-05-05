@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.davidcorp.applicationLayer.dto.AmmoDTO;
+import be.davidcorp.applicationLayer.dto.mapper.ItemType;
 import be.davidcorp.domain.sprite.item.weapon.Ammo;
 
 public class AmmoToAmmoDTOMapper {
@@ -12,10 +13,12 @@ public class AmmoToAmmoDTOMapper {
 	protected void mapAmmo(AmmoDTO ammoDTO, Ammo ammo) {
 		SpriteDTOMapper.mapSpriteToSpriteDTO(ammoDTO, ammo);
 		ammoDTO.setDamage(ammo.getDamage());
+		ammoDTO.setOnGround(ammo.isOnGround());
 	}
 
 	public AmmoDTO mapSpriteToDTO(Ammo ammo) {
-		AmmoDTO ammoDTO = new AmmoDTO();
+		ItemType itemType = ItemType.valueOf(ammo.getType().toString());
+		AmmoDTO ammoDTO = new AmmoDTO(itemType);
 		mapAmmo(ammoDTO, ammo);
 		return ammoDTO;
 	}

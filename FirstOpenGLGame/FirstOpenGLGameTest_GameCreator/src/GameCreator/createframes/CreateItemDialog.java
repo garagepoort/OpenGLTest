@@ -105,7 +105,7 @@ public class CreateItemDialog extends CreateDialog implements MouseListener {
 				if (itemDTO == null) {
 					JOptionPane.showMessageDialog(getMainPanel(), "You have to select an item.");
 				} else {
-					gameFieldFacade.addGroundItemToWorld(itemDTO.getId());
+					gameFieldFacade.addSpriteToWorld(itemDTO.getId());
 					this.dispose();
 //					FrameFacade.closeCreateDialog(CreateItemDialog.this);
 				}

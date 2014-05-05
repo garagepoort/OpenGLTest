@@ -1,7 +1,8 @@
 package be.davidcorp.domain.sprite.item.weapon;
 
-import be.davidcorp.domain.game.GameFieldManager;
+import static be.davidcorp.domain.game.CurrentGameFieldManager.getCurrentGameField;
 import be.davidcorp.metric.Vector;
+import be.davidcorp.repository.DefaultSpriteRepository;
 
 public abstract class RangedWeapon extends Weapon {
 	private static final long serialVersionUID = -5999676273584667631L;
@@ -28,7 +29,8 @@ public abstract class RangedWeapon extends Weapon {
 		ammoInstance.setX(calculateAmmoStartPointX(ammoInstance));
 		ammoInstance.setY(calculateAmmoStartPointY());
 		ammoInstance.setDirectionVector(p);
-		GameFieldManager.getCurrentGameField().addAmmoToWorld(ammoInstance);
+		DefaultSpriteRepository.getInstance().createSprite(ammoInstance);
+		getCurrentGameField().addSpriteToWorld(ammoInstance);
 		ammoSize--;
 	}
 

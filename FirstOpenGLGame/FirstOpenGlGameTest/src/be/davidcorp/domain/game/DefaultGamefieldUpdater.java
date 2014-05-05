@@ -17,13 +17,10 @@ public class DefaultGamefieldUpdater implements GamefieldUpdater{
 	public void updateGamefield(GamefieldEnvironment gamefieldEnvironment, float secondsMovedInGame) {
 		this.environment = gamefieldEnvironment;
 		updateAllTheSprites(secondsMovedInGame);
-		
 	}
 	
 	private void updateAllTheSprites(float secondsMovedInGame) {
-		updateSpriteMap(newArrayList(environment.enemies.values()), secondsMovedInGame);
-		updateSpriteMap(newArrayList(environment.constructionSprites.values()), secondsMovedInGame);
-		updateSpriteMap(newArrayList(environment.worldAmmo.values()), secondsMovedInGame);
+		updateSpriteMap(newArrayList(environment.getSpritesInWorld()), secondsMovedInGame);
 		executeSystems(PlayerManager.getCurrentPlayer(), secondsMovedInGame);
 	}
 	

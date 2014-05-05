@@ -11,13 +11,13 @@ import javax.swing.JSplitPane;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 
-import be.davidcorp.applicationLayer.facade.GameFacade;
+import be.davidcorp.applicationLayer.facade.GameStarterFacade;
 
 @SuppressWarnings("serial")
 public class TestFrame extends JFrame{
 
 	public TestFrame() throws IOException, LWJGLException{
-		new GameFacade().startApplication();
+		new GameStarterFacade().startApplication();
 		GameLoop gameLoop = new GameLoop(new PlayGamePanel(),800, 600);
 		
 		Canvas canvas = new Canvas();

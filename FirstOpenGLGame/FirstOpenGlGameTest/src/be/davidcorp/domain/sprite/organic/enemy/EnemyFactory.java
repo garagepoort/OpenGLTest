@@ -20,6 +20,7 @@ public class EnemyFactory {
 			.withWidth(32)
 			.withHeight(32)
 			.withSpriteType(ZOMBIE)
+			.withInWorld(true)
 			.build();
 //		enemy.setTextureBunch(new TextureBunch().withDefaultTexture(getImageLocation(ZOMBIE)));
 		return enemy;
@@ -37,6 +38,7 @@ public class EnemyFactory {
 		.withMaxHealth(5000)
 		.withWidth(32)
 		.withHeight(32)
+		.withInWorld(true)
 		.withSpriteType(SPIDER)
 		.build();
 //		enemy.setTextureBunch(new TextureBunch().withDefaultTexture(ImageLocationManager.getImageLocation(SPIDER)));

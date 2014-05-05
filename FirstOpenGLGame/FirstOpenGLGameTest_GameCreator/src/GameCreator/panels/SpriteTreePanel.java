@@ -1,5 +1,6 @@
 package GameCreator.panels;
 
+import static be.davidcorp.applicationLayer.dto.mapper.ConstructionType.DESK;
 import static be.davidcorp.applicationLayer.dto.mapper.ConstructionType.WALL;
 
 import java.awt.event.MouseAdapter;
@@ -16,6 +17,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import GameCreator.createframes.CreateEnemyDialog;
 import GameCreator.createframes.CreateItemDialog;
+import GameCreator.createframes.CreatePropDialog;
 import GameCreator.createframes.CreateWallDialog;
 import be.davidcorp.applicationLayer.dto.mapper.ConstructionType;
 import be.davidcorp.applicationLayer.dto.mapper.EnemyType;
@@ -88,6 +90,10 @@ public class SpriteTreePanel extends JPanel implements TreeSelectionListener {
 				if (constructionType == WALL) {
 //					openCreateWallDialog();
 					new CreateWallDialog();
+				}
+				if (constructionType == DESK) {
+//					openCreateWallDialog();
+					new CreatePropDialog();
 				}
 			}
 			if (value instanceof EnemyType) {

@@ -1,99 +1,114 @@
 package be.davidcorp.database;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import static java.lang.Integer.parseInt;
 
-import be.davidcorp.FileUtility;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.Enumeration;
+import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipOutputStream;
+
+import be.davidcorp.database.filehandling.SpriteFileLoaderUtilities;
+import be.davidcorp.database.filehandling.SpriteSerializer;
+import be.davidcorp.database.filehandling.ZipFileWriter;
 import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.repository.DefaultSpriteRepository;
-import be.davidcorp.repository.GamefieldRepository;
 
 public class GamefieldLoaderSaver {
 
-	private FileUtility fileUtility = new FileUtility();
-	private GamefieldRepository gamefieldRepository = new GamefieldRepository();
-	private List<String> gamefieldStrings = new ArrayList<String>();
+	private static final String SAVEFILE_EXTENSION_ZIP = ".zip";
+	private static final DefaultSpriteRepository defaultSpriteRepository = DefaultSpriteRepository
+			.getInstance();
 
-	public void saveEntireField(Gamefield gamefield) {
-		createFilesIfNoneExisting(gamefield);
-//		new SpriteFileWriter(spritesFile).saveSprites(getAllGamefieldSprites(gamefield));
-//		new TriggerFileWriter(triggerLinksFile).saveTriggerLinks(getAllTriggerFromSprites(getAllGamefieldSprites(gamefield)));
-		// new TriggerLoader().loadTriggers(fileUtility.getFileContent(triggerLinksFile));
+	public static Gamefield loadEntireField(ZipFile zipFile) {
+		InputStream spritesFile = searchFile("sprites.ser", zipFile);
+		InputStream gamefieldFile = searchFile("gamefield.txt", zipFile);
+
+		Gamefield gamefield = loadGamefieldFromFile(gamefieldFile);
+		defaultSpriteRepository.loadAllSpritesFromStream(spritesFile);
+		return gamefield;
 	}
 
-	public void createFilesIfNoneExisting(Gamefield gamefield) {
-		File spritesFile = new File("resources/saveFiles/" + gamefield.getName() + "/sprites.txt");
-		File triggerLinksFile = new File("resources/saveFiles/" + gamefield.getName() + "/triggerLinks.txt");
-		File gamefieldLinksFile = new File("resources/saveFiles/" + gamefield.getName() + "/gamefieldLinks.txt");
-		
-		spritesFile.getParentFile().mkdirs();
-		triggerLinksFile.getParentFile().mkdirs();
-		gamefieldLinksFile.getParentFile().mkdirs();
-		
-		try {
-			spritesFile.createNewFile();
-			triggerLinksFile.createNewFile();
-			gamefieldLinksFile.createNewFile();
-			
-		} catch (IOException e) {
-			throw new RuntimeException("Something went wrong with the creation of the gamefield files");
-		}
-	}
-	
-	public void loadAllGamefieldsToRepository(File file) {
-		Scanner scanner = null;
-		try {
-			scanner = new Scanner(fileUtility.getFileContent(file));
-			while (scanner.hasNextLine()) {
-				StringBuilder builder = new StringBuilder();
-				gamefieldStrings.add(createGamefieldString(scanner, builder));
+	private static InputStream searchFile(String name, ZipFile zipFile) {
+		Enumeration<? extends ZipEntry> entries = zipFile.entries();
+		while (entries.hasMoreElements()) {
+			ZipEntry entry = entries.nextElement();
+			if (entry.getName().endsWith(name)) {
+				try {
+					return zipFile.getInputStream(entry);
+				} catch (IOException e1) {
+					throw new LoaderException(e1);
+				}
 			}
-			gamefieldRepository.loadGamefields(gamefieldStrings);
+		}
+		return null;
+	}
+
+	public static ZipFile saveCustomCreatedGamefieldToFile(Gamefield gamefield,
+			String filePath) {
+		try {
+			File spritesFile = new File("sprites.ser");
+			File gamefieldFile = saveGamefieldToFile(gamefield);
+			SpriteSerializer.saveSpritesToFile(
+					defaultSpriteRepository.getAllSprites(), spritesFile);
+
+			String completePath = filePath
+					+ File.separator + gamefield.getName()
+					+ SAVEFILE_EXTENSION_ZIP;
+			FileOutputStream fileOutputStream = new FileOutputStream(completePath);
+			ZipOutputStream zipOutputStream = new ZipOutputStream(
+					fileOutputStream);
+
+			ZipFileWriter.addToZipFile(spritesFile, zipOutputStream);
+			ZipFileWriter.addToZipFile(gamefieldFile, zipOutputStream);
+
+			zipOutputStream.close();
+			
+			return new ZipFile(completePath);
 		} catch (IOException e) {
+			throw new LoaderException(e);
+		}
+	}
+
+	private static Gamefield loadGamefieldFromFile(InputStream inputStream) {
+		try {
+			Map<GamefieldProperty, String> values = SpriteFileLoaderUtilities
+					.getGamefieldProperties(inputStream);
+
+			String name = values.get(GamefieldProperty.GAMEFIELDNAME);
+			int width = parseInt(values.get(GamefieldProperty.WIDTH));
+			int height = parseInt(values.get(GamefieldProperty.HEIGHT));
+
+			Gamefield gamefield = new Gamefield(name, width, height);
+
+			return gamefield;
+		} catch (Exception exception) {
+			throw new LoaderException(exception);
+		}
+	}
+
+	private static File saveGamefieldToFile(Gamefield gamefield) {
+		try {
+			File file = new File("gamefield.txt");
+			PrintWriter writer = new PrintWriter(file);
+
+			writer.write(GamefieldProperty.GAMEFIELDNAME + ":"
+					+ gamefield.getName() + "\n");
+			writer.write(GamefieldProperty.WIDTH + ":" + gamefield.getWidth()
+					+ "\n");
+			writer.write(GamefieldProperty.HEIGHT + ":" + gamefield.getHeight());
+
+			writer.close();
+			return file;
+		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
-		} finally {
-			if (scanner != null)
-				scanner.close();
 		}
 	}
 
-	public void loadEntireField(String name) {
-		File gamefieldSpriteLinksFile = new File("resources/saveFiles/" + name + "/gamefieldLinks.txt");
-		
-		DefaultSpriteRepository.getInstance().loadAllSpritesFromDatabase();
-		new GamefieldSpriteFiller(gamefieldSpriteLinksFile).fillGamefields();
-	}
-	
-	private String createGamefieldString(Scanner scanner, StringBuilder builder) {
-		while (scanner.hasNextLine()) {
-			String nextline = scanner.nextLine();
-			if (nextline.contains("END"))
-				break;
-			builder.append(nextline + "\n");
-		}
-		builder.setLength(builder.length() - 1);
-		return builder.toString();
-	}
-
-
-
-	
-	
-//	private List<Trigger> getAllTriggerFromSprites(List<Sprite> sprites) {
-//		List<Trigger> triggers = newArrayList();
-//		for (Sprite sprite : sprites) {
-//			triggers.addAll(sprite.getAllTriggers());
-//		}
-//		return triggers;
-//	}
-	
-	/*
-	 * For tests only
-	 */
-	protected void setFileUtility(FileUtility fileUtility) {
-		this.fileUtility = fileUtility;
-	}
 }

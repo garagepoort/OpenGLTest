@@ -2,7 +2,7 @@ package be.davidcorp.domain.utilities.sprite;
 
 import static be.davidcorp.domain.sprite.organic.player.PlayerManager.getCurrentPlayer;
 import be.davidcorp.WindDirection;
-import be.davidcorp.domain.game.GameFieldManager;
+import be.davidcorp.domain.game.CurrentGameFieldManager;
 import be.davidcorp.domain.sprite.Sprite;
 import be.davidcorp.metric.Point;
 import be.davidcorp.metric.Vector;
@@ -12,7 +12,7 @@ public class SpriteMovingUtility {
 	
 	public static void movePlayerInGameField(WindDirection direction, float distance){
 		getCurrentPlayer().move(direction, distance);
-		if (GameFieldManager.getCurrentGameField().doesPlayerCollideWithAnyConstructionItem() || playerAgainstBoundary()) {
+		if (CurrentGameFieldManager.getCurrentGameField().doesPlayerCollideWithAnyConstructionItem() || playerAgainstBoundary()) {
 			reverseMovement(direction, distance);
 		}
 	}
@@ -96,10 +96,10 @@ public class SpriteMovingUtility {
 	}
 
 	private static boolean playerAgainstUpperBoundary() {
-		return getCurrentPlayer().getY() >= GameFieldManager.getCurrentGameField().getHeight() - getCurrentPlayer().getHeight();
+		return getCurrentPlayer().getY() >= CurrentGameFieldManager.getCurrentGameField().getHeight() - getCurrentPlayer().getHeight();
 	}
 
 	private static boolean playerAgainstRightBoundary() {
-		return getCurrentPlayer().getX() >= GameFieldManager.getCurrentGameField().getWidth() - getCurrentPlayer().getWidth();
+		return getCurrentPlayer().getX() >= CurrentGameFieldManager.getCurrentGameField().getWidth() - getCurrentPlayer().getWidth();
 	}
 }

@@ -18,7 +18,11 @@ public class ConfigurationManager {
 	}
 
 	public static String getProperty(Property property){
-		return prop.getProperty(property.toString());
+		String value = prop.getProperty(property.toString());
+		if(value == null){
+			throw new RuntimeException("Property [" + property + "] can not be found. Are you sure you have configured it in application.properties file?");
+		}
+		return value;
 	}
 	
 	public static void main(String[] args){

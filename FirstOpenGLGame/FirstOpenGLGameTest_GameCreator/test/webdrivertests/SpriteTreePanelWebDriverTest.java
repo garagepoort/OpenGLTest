@@ -16,7 +16,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import GameCreator.createframes.FrameFacade;
 import GameCreator.panels.SpriteTreePanel;
 
 public class SpriteTreePanelWebDriverTest {

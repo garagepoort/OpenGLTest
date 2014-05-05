@@ -31,15 +31,14 @@ public class GameLoop {
 	private LightManager lightManager;
 	private boolean onlyRender;
 
-	private static int secondsMovedInGame;
+	private static int delta;
 	public static int WIDTH;
 	public static int HEIGHT;
 	private PlayerFacade playerFacade = new PlayerFacade();
 
 	private Thread gameThread;
 
-	public GameLoop(GamePanel gamePanel, int width, int height,
-			boolean onlyRender) throws IOException {
+	public GameLoop(GamePanel gamePanel, int width, int height, boolean onlyRender) throws IOException {
 		this.onlyRender = onlyRender;
 		initialize(gamePanel, width, height);
 	}
@@ -50,7 +49,7 @@ public class GameLoop {
 	}
 
 	public static int getSecondsMovedInGame() {
-		return secondsMovedInGame;
+		return delta;
 	}
 	public void stop() {
 		try {
@@ -70,15 +69,15 @@ public class GameLoop {
 					FontManager.load();
 					if(gamefieldFacade.isGamefieldInitialized()) initializeBeginTranslation();
 
-					secondsMovedInGame = calculateSecondsMovedInGame();
+					calculateDelta();
 					lastFPS = getTime();
 
 					while (!Display.isCloseRequested()) {
-						secondsMovedInGame = calculateSecondsMovedInGame();
+						delta = calculateDelta();
 
 						updateGamefield();
+						updateFPS();
 						getInputFromPlayer();
-
 						updateDisplay();
 					}
 
@@ -89,19 +88,12 @@ public class GameLoop {
 			}
 
 			public void updateDisplay() {
-				updateFPS(); // update FPS Counter
 				Display.update();
 				Display.sync(120); // cap fps to 60fps
 			}
 
 		};
 		gameThread.start();
-	}
-
-	private void ifGameNotPausedUpdateGamefield() {
-		if (!gamefieldFacade.isGamePaused()) {
-			gamefieldFacade.updateGameField(secondsMovedInGame);
-		}
 	}
 
 	private void initializeDisplay() throws LWJGLException {
@@ -121,6 +113,12 @@ public class GameLoop {
 		}
 	}
 
+	private void ifGameNotPausedUpdateGamefield() {
+		if (!gamefieldFacade.isGamePaused()) {
+			gamefieldFacade.updateGameField(delta);
+		}
+	}
+	
 	private void getInputFromPlayer() {
 		if (playerFacade.isPlayerAlive()) {
 			playGamePanel.checkInput();
@@ -134,7 +132,7 @@ public class GameLoop {
 		glMatrixMode(GL_MODELVIEW);
 	}
 
-	private int calculateSecondsMovedInGame() {
+	private int calculateDelta() {
 		long time = getTime();
 		int delta = (int) (time - lastFrame);
 		lastFrame = time;

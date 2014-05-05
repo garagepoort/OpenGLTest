@@ -18,17 +18,14 @@ public class GamefieldCreatorUpdater implements GamefieldUpdater{
 	}
 	
 	private void updateAllTheSprites(float secondsMovedInGame) {
-		updateSpriteMap(newArrayList(environment.enemies.values()), secondsMovedInGame);
-		updateSpriteMap(newArrayList(environment.constructionSprites.values()), secondsMovedInGame);
-		updateSpriteMap(newArrayList(environment.worldAmmo.values()), secondsMovedInGame);
+		updateSpriteMap(newArrayList(environment.getSpritesInWorld()), secondsMovedInGame);
 	}
 	
 	private void updateSpriteMap(List<? extends Sprite> sprites, float secondsMovedInGame) {
 		Iterator<? extends Sprite> iterator = sprites.iterator();
 		while (iterator.hasNext()) {
 			Sprite sprite = iterator.next();
-			if (sprite.isAlive()) {
-			} else {
+			if (!sprite.isAlive()) {
 				iterator.remove();
 			}
 		}

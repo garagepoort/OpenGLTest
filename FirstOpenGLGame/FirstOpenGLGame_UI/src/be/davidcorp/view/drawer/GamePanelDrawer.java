@@ -40,7 +40,6 @@ import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.view.TranslationManager;
 import be.davidcorp.view.game.GamePanel;
 import be.davidcorp.view.light.LightManager;
-import be.davidcorp.view.ui.panel.Panel;
 
 public class GamePanelDrawer {
 

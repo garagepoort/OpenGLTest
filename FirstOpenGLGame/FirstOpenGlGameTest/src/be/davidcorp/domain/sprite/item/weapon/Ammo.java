@@ -1,9 +1,11 @@
 package be.davidcorp.domain.sprite.item.weapon;
 
+import static be.davidcorp.domain.game.CurrentGameFieldManager.getCurrentGameField;
 import be.davidcorp.component.TimeToLiveComponent;
-import be.davidcorp.domain.game.GameFieldManager;
+import be.davidcorp.domain.game.CurrentGameFieldManager;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.Sprite;
+import be.davidcorp.domain.sprite.construction.ConstructionSprite;
 import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.utilities.sprite.SpriteCollisionChecker;
 import be.davidcorp.domain.utilities.sprite.SpriteMovingUtility;
@@ -31,14 +33,20 @@ public abstract class Ammo extends Item {
 	public void updateSprite(float secondsMovedInGame) {
 		super.updateSprite(secondsMovedInGame);
 		SpriteMovingUtility.moveSpriteOnHisDirectionVector(this, secondsMovedInGame * this.getSpeed());
-		for (int i = 0; i < GameFieldManager.getCurrentGameField().getConstructionItems().size() && isAlive(); i++) {
-			if (SpriteCollisionChecker.doesCollisionExist(this, GameFieldManager.getCurrentGameField().getConstructionItems().get(i))) {
-				hitSprite(GameFieldManager.getCurrentGameField().getConstructionItems().get(i));
+		
+		for (int i = 0; i < getCurrentGameField().getSpritesInWorld().size() && isAlive(); i++) {
+			Sprite sprite = getCurrentGameField().getSpritesInWorld().get(i);
+			if(sprite instanceof ConstructionSprite){
+				if (SpriteCollisionChecker.doesCollisionExist(this, sprite)) {
+					hitSprite(sprite);
+				}
 			}
 		}
-		for (int i = 0; i < GameFieldManager.getCurrentGameField().getEnemiesInWorld().size() && isAlive(); i++) {
-			if (SpriteCollisionChecker.doesCollisionExist(this, GameFieldManager.getCurrentGameField().getEnemiesInWorld().get(i))) {
-				hitSprite(GameFieldManager.getCurrentGameField().getEnemiesInWorld().get(i));
+		
+		for (int i = 0; i < CurrentGameFieldManager.getCurrentGameField().getSpritesInWorld().size() && isAlive(); i++) {
+			Sprite sprite = CurrentGameFieldManager.getCurrentGameField().getSpritesInWorld().get(i);
+			if (SpriteCollisionChecker.doesCollisionExist(this, sprite)) {
+				hitSprite(sprite);
 			}
 		}
 	}

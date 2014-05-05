@@ -1,4 +1,4 @@
-package GameCreator.createframes;
+package GameCreator;
 
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.NORTH;
@@ -9,24 +9,21 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.lwjgl.opengl.Display;
 
-import GameCreator.ErrorHandler;
-import GameCreator.GameCreatorPanel;
 import GameCreator.panels.SpriteTreePanel;
-import be.davidcorp.applicationLayer.dto.GamefieldDTO;
-import be.davidcorp.applicationLayer.facade.GameFacade;
-import be.davidcorp.applicationLayer.facade.GameFieldFacade;
+import be.davidcorp.applicationLayer.facade.GameStarterFacade;
 import be.davidcorp.view.game.GameLoop;
 
 @SuppressWarnings("serial")
@@ -34,26 +31,20 @@ public class EditGameFrame extends JFrame implements MouseListener{
 
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
+	private static final String EXTENSION = ".zip";
 	private JPanel mainPanel;
 	private JPanel buttonPanel;
 	private JButton saveButton;
 	private JButton loadButton;
-	private GamefieldDTO field;
 	private JCheckBox shadowsCheckBox;
 //	private SelectedSpritePanel selectedSpritePanel;
 	private JPanel openGLPanel;
 	
 	private JTextField testTextField = new JTextField("test");
 
-	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
 	private SpriteTreePanel spriteTreePanel;
 
-	public EditGameFrame(String fieldName, boolean loadingAnAlreadyExistingGamefield) {
-		if (!loadingAnAlreadyExistingGamefield) {
-			createNewGamefield(fieldName);
-		}
-		field = gameFieldFacade.getGamefieldWithName(fieldName);
-
+	public EditGameFrame() {
 		setLocationRelativeTo(null);
 		setSize(new Dimension(1000, 800));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,21 +54,13 @@ public class EditGameFrame extends JFrame implements MouseListener{
 		addComponents();
 		initHandlers();
 
-		createDisplay(field);
+		createDisplay();
 
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		splitPane.setLeftComponent(mainPanel);
 		splitPane.setRightComponent(spriteTreePanel);
 		getContentPane().add(splitPane);
 		revalidate();
-	}
-
-	private void createNewGamefield(String fieldName) {
-		try {
-			gameFieldFacade.createNewGamefield(fieldName, 1800, 1800);
-		} catch (Exception e) {
-			ErrorHandler.handleError(this, e);
-		}
 	}
 
 	private void initComponents() {
@@ -109,26 +92,44 @@ public class EditGameFrame extends JFrame implements MouseListener{
 	private void initHandlers() {
 		saveButton.addMouseListener(this);
 		loadButton.addMouseListener(this);
-		shadowsCheckBox.addChangeListener(new ChangeListener() {
-
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				field.setShadowsOn(shadowsCheckBox.isSelected());
-			}
-		});
+//		shadowsCheckBox.addChangeListener(new ChangeListener() {
+//
+//			@Override
+//			public void stateChanged(ChangeEvent arg0) {
+//				CurrentGameFieldManager.getCurrentGameField().setShadowsOn(shadowsCheckBox.isSelected());
+//			}
+//		});
 	}
-
-
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == saveButton) {
-			new GameFacade().saveTheGame();
+			saveFile();
 		}
 
 		// if (e.getSource() == loadButton) {
 		// loadGameField();
 		// createDisplay(field);
 		// }
+	}
+	
+	private int saveFile() {
+	    JFileChooser fileChooser = new JFileChooser();
+	    int status = fileChooser.showSaveDialog(this);
+
+	    if (status == JFileChooser.APPROVE_OPTION) {
+	        File selectedFile = fileChooser.getSelectedFile();
+	        try {
+	            String fileName = selectedFile.getCanonicalPath();
+	            if (!fileName.endsWith(EXTENSION)) {
+	            	new GameStarterFacade().saveCustomCreatedGamefield(fileName);
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return status;
 	}
 
 	@Override
@@ -147,14 +148,12 @@ public class EditGameFrame extends JFrame implements MouseListener{
 	public void mouseReleased(MouseEvent e) {
 	}
 
-	private void createDisplay(final GamefieldDTO field) {
+	private void createDisplay() {
 		Thread thread = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
 				try {
-					gameFieldFacade.initializeGameField(field, true);
-					
 					GameCreatorPanel gamePanel = new GameCreatorPanel();
 					GameLoop gameLoop = new GameLoop(gamePanel, WIDTH, HEIGHT, true);
 					

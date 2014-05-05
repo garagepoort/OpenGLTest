@@ -37,10 +37,11 @@ public abstract class Sprite extends Triggerable implements Serializable{
 	private int maxHealthPoints = 10000;
 	private float rotationAngle;
 	private boolean isMoving;
+	
+	private boolean inWorld;
 
 //	private transient TextureBunch textureBunch;
 	private transient Vector directionVector = new Vector(new Point(0, 0, 0), new Point(0, 300, 0));
-
 
 	private HitBox hitbox = new HitBox();
 
@@ -152,6 +153,14 @@ public abstract class Sprite extends Triggerable implements Serializable{
 	
 	public void setAlive(boolean alive) {
 		this.alive = alive;
+	}
+	
+	public void setInWorld(boolean inWorld) {
+		this.inWorld = inWorld;
+	}
+	
+	public boolean isInWorld() {
+		return inWorld;
 	}
 
 	public void kill() {
