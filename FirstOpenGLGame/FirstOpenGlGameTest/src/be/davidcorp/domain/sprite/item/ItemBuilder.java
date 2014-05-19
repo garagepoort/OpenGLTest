@@ -38,10 +38,11 @@ public class ItemBuilder extends SpriteBuilder<Item>{
 		this.infoTekst = info;
 		return this;
 	}
-	
+
 	@Override
 	protected Item createInstance() {
 		return new Item();
 	}
 
+	
 }

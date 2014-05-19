@@ -91,7 +91,7 @@ public class CreateItemDialog extends CreateDialog implements MouseListener {
 			try {
 				switch (itemType) {
 					case PISTOL :
-						itemDTO = weaponFacade.createPistol(Float.parseFloat(fieldX.getText()), Float.parseFloat(fieldY.getText()), 54);
+						itemDTO = weaponFacade.createPistol(Float.parseFloat(fieldX.getText()), Float.parseFloat(fieldY.getText()));
 						break;
 					case HEALTHPOTION :
 						itemDTO = potionFacade.createHealthPotion(Float.parseFloat(fieldX.getText()), Float.parseFloat(fieldY.getText()));

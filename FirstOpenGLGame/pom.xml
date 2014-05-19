@@ -72,9 +72,25 @@
 				<version>2.16</version>
 			</plugin>
 			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.8</version>
+				<configuration>
+					<message>Creating mvn repo</message>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>site</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>com.googlecode.mavennatives</groupId>
 				<artifactId>maven-nativedependencies-plugin</artifactId>
-				<version>0.0.7</version>
+				<version>0.0.6</version>
 				<executions>
 					<execution>
 						<id>unpacknatives</id>
@@ -84,32 +100,35 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<lifecycleMappingMetadata>
-						<pluginExecutions>
-							<pluginExecution>
-								<pluginExecutionFilter>
-									<groupId>com.googlecode.mavennatives</groupId>
-									<artifactId>maven-nativedependencies-plugin</artifactId>
-									<versionRange>0.0.7</versionRange>
-									<goals>
-										<goal>copy</goal>
-									</goals>
-								</pluginExecutionFilter>
-								<action>
-									<ignore />
-								</action>
-							</pluginExecution>
-						</pluginExecutions>
-					</lifecycleMappingMetadata>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+	<distributionManagement>
+      <snapshotRepository>
+          <id>staging.repo.snapshots</id>
+          <name>Staging Repository - Snapshots</name>
+          <url>${snapshotRepository}</url>
+      </snapshotRepository>
+      <repository>
+          <id>staging.repo.releases</id>
+          <name>Staging Repository - Releases</name>
+          <url>${repository}</url>
+      </repository>
+  </distributionManagement>
 	<repositories>
 		<repository>
-			<id>my-local-repo</id>
-			<url>file://${application-repository}</url>
+			<id>mavenrepo.snapshots</id>
+			<name>Github Maven Repository - Snapshots</name>
+			<url>https://raw.github.com/garagepoort/OpenGLTest_Snapshot_Repository/master/</url>
+		</repository>
+		<repository>
+			<id>mavenrepo.releases</id>
+			<name>Github Maven Repository - Releases</name>
+			<url>https://raw.github.com/garagepoort/OpenGLTest_Repository/master/</url>
 		</repository>
 	</repositories>
+	<properties>
+		<!-- github server corresponds to entry in ~/.m2/settings.xml -->
+		<github.global.server>github</github.global.server>
+	</properties>
 </project>

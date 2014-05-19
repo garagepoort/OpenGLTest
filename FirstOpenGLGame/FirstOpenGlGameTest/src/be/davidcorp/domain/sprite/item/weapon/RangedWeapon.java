@@ -4,7 +4,7 @@ import static be.davidcorp.domain.game.CurrentGameFieldManager.getCurrentGameFie
 import be.davidcorp.metric.Vector;
 import be.davidcorp.repository.DefaultSpriteRepository;
 
-public abstract class RangedWeapon extends Weapon {
+public class RangedWeapon extends Weapon {
 	private static final long serialVersionUID = -5999676273584667631L;
 	private int ammoSize;
 	private float startX;
@@ -21,11 +21,9 @@ public abstract class RangedWeapon extends Weapon {
 		this.ammoSize = aantalAmmo;
 	}
 
-	public abstract Ammo getAmmoInstance();
-
 	@Override
 	protected void attack(Vector p) {
-		Ammo ammoInstance = getAmmoInstance();
+		Ammo ammoInstance = new Bullet(getX(), getY());
 		ammoInstance.setX(calculateAmmoStartPointX(ammoInstance));
 		ammoInstance.setY(calculateAmmoStartPointY());
 		ammoInstance.setDirectionVector(p);
@@ -58,6 +56,5 @@ public abstract class RangedWeapon extends Weapon {
 	public WeaponType getWeaponType() {
 		return WeaponType.RANGED;
 	}
-
 
 }

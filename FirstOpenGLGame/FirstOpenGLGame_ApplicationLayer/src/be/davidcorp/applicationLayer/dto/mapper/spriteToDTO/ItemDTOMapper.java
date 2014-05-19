@@ -8,6 +8,7 @@ import be.davidcorp.applicationLayer.dto.mapper.ItemType;
 import be.davidcorp.applicationLayer.exception.MapperException;
 import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.item.ItemFactory;
+import be.davidcorp.domain.sprite.item.weapon.WeaponFactory;
 
 public class ItemDTOMapper {
 
@@ -39,7 +40,7 @@ public class ItemDTOMapper {
 			return ItemFactory.createHealthNecklace(0, 0, 20);
 		}
 		if(itemDTO.getType() == ItemType.PISTOL){
-			return ItemFactory.createPistol(0,0);
+			return WeaponFactory.createPistol(0,0);
 		}
 		throw new MapperException("No item found for this: " + itemDTO.getType());
 	}

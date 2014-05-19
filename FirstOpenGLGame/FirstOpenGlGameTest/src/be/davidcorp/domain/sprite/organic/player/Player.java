@@ -9,7 +9,8 @@ import be.davidcorp.component.HealthRegenerationComponent;
 import be.davidcorp.component.UsingComponent;
 import be.davidcorp.domain.mission.Mission;
 import be.davidcorp.domain.sprite.Color;
-import be.davidcorp.domain.sprite.item.weapon.Pistol;
+import be.davidcorp.domain.sprite.item.weapon.RangedWeapon;
+import be.davidcorp.domain.sprite.item.weapon.WeaponFactory;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.domain.sprite.organic.OrganicSprite;
 
@@ -26,17 +27,9 @@ public class Player extends OrganicSprite  {
 	public Player(float x, float y) throws  IOException {
 		super(x, y, 32, 32);
 		setSpriteType(PLAYER);
-		Pistol pistol = new Pistol(getX(), getY(), 100, this);
+		RangedWeapon pistol = WeaponFactory.createPistol(x, y);
 		setEquippedWeapon(pistol);
-
-//		TextureBunch bunch = new TextureBunch()
-//			.withDefaultTexture("resources/images/player/playerstanding.png")
-//			.withTextureAtSecond("resources/images/player/rightFoot.png", 1)
-//			.withTextureAtSecond("resources/images/player/leftFoot.png", 20)
-//			.withLastTextureTime(40);
-//		setTextureBunch(bunch);
 		setSpeed(0.05f);
-
 		flashLight = new Light(getCenter().x, getCenter().y, new Color(255, 246, 133), 150, false);
 		LineOfSight = new Light(getCenter().x, getCenter().y, new Color(255, 246, 133), 50, true);
 		addComponent(new HealthRegenerationComponent(5));

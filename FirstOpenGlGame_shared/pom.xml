@@ -29,6 +29,33 @@
           <target>1.7</target>
         </configuration>
       </plugin>
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.4.1</version>
+          <configuration>
+              <tagNameFormat>v@{project.version}</tagNameFormat>
+              <preparationGoals>clean verify</preparationGoals>
+              <goals>deploy</goals>
+              <useReleaseProfile>false</useReleaseProfile>
+          </configuration>
+      </plugin>
     </plugins>
   </build>
+  <distributionManagement>
+      <snapshotRepository>
+          <id>staging.repo.snapshots</id>
+          <name>Staging Repository - Snapshots</name>
+          <url>${snapshotRepository}</url>
+      </snapshotRepository>
+      <repository>
+          <id>staging.repo.releases</id>
+          <name>Staging Repository - Releases</name>
+          <url>${repository}</url>
+      </repository>
+  </distributionManagement>
+  <properties>
+      <!-- github server corresponds to entry in ~/.m2/settings.xml -->
+      <github.global.server>github</github.global.server>
+  </properties>
 </project>
