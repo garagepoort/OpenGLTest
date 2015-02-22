@@ -5,7 +5,8 @@ TerrariaTestGame/
 bl.gif
 classdiagram.gif
 db/
-desktop.ini
-sapceINvaders/
-unitils-3.3/
 repository/
+*.iml
+.idea
+target
+.DS_Store

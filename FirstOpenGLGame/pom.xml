@@ -7,8 +7,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
-		<module>FirstOpenGLGame_ApplicationLayer</module>
-		<module>FirstOpenGLGameTest</module>
+		<module>Application</module>
+		<module>Domain</module>
 		<module>FirstOpenGLGame_UI</module>
 		<module>FirstOpenGLGameTest_GameCreator</module>
 	</modules>
@@ -103,18 +103,6 @@
 			</plugin>
 		</plugins>
 	</build>
-	<distributionManagement>
-      <snapshotRepository>
-          <id>staging.repo.snapshots</id>
-          <name>Staging Repository - Snapshots</name>
-          <url>${snapshotRepository}</url>
-      </snapshotRepository>
-      <repository>
-          <id>staging.repo.releases</id>
-          <name>Staging Repository - Releases</name>
-          <url>${repository}</url>
-      </repository>
-  </distributionManagement>
 	<repositories>
 		<repository>
 			<id>mavenrepo.snapshots</id>
