@@ -4,6 +4,7 @@ import static be.davidcorp.domain.game.CurrentGameFieldManager.getCurrentGameFie
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.zip.ZipFile;
 
 import be.davidcorp.applicationLayer.exception.ModelException;
@@ -42,8 +43,8 @@ public class GameStarterFacade {
 	private void loadResources() {
 		ConfigurationManager.importProperties();
 		ImageLocationManager.importProperties();
-		File playerFile = new File("resources/playerfiles/AllPlayers.txt");
-
+		ClassLoader classLoader = getClass().getClassLoader();
+		File playerFile = new File(classLoader.getResource("playerfiles/AllPlayers.txt").getFile());
 		PlayerManager.loadPlayers(playerFile);
 	}
 	

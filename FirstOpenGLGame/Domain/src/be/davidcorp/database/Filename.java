@@ -4,7 +4,7 @@ public enum Filename {
 	SPRITES_FILE("sprites.ser"),
     GAMEFIELDLINKS_FILE("gamefieldLinks.txt"),
 	GAMEFIELD_FILE("gamefield.txt"),
-	SAVE_FILE_LOCATION("resources/saveFiles");
+	SAVE_FILE_LOCATION("saveFiles");
 	
     private Filename(final String text) {
         this.text = text;

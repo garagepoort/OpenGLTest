@@ -17,7 +17,9 @@ public class CurrentGameFieldManager {
 	private static Gamefield gamefield = null;
 	
 	public static void loadGamefieldFromExistingGamefield(String gamefieldName){
-		ZipFile zipFile= getMapFileFromGamefieldDir(new File(SAVE_FILE_LOCATION + pathSeparator + gamefieldName), gamefieldName);
+		ClassLoader classLoader = CurrentGameFieldManager.class.getClassLoader();
+		File file = new File(classLoader.getResource(SAVE_FILE_LOCATION + "/" + gamefieldName).getFile());
+		ZipFile zipFile= getMapFileFromGamefieldDir(file, gamefieldName);
 		gamefield = GamefieldLoaderSaver.loadEntireField(zipFile);
 	}
 	

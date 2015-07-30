@@ -12,8 +12,8 @@ import be.davidcorp.applicationLayer.facade.ConstructionSpriteFacade;
 import be.davidcorp.applicationLayer.facade.EnemyFacade;
 import be.davidcorp.applicationLayer.facade.ItemFacade;
 import be.davidcorp.applicationLayer.facade.LightFacade;
-import be.davidcorp.inputControl.InputController;
-import be.davidcorp.view.TranslationManager;
+import main.java.be.davidcorp.inputControl.InputController;
+import main.java.be.davidcorp.view.TranslationManager;
 
 public class GameCreatorPanelInputController extends InputController {
 
