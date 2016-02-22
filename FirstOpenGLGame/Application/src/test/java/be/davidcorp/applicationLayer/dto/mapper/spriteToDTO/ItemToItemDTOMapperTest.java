@@ -28,7 +28,7 @@ public class ItemToItemDTOMapperTest {
 	private static final Point DOWNRIGHTPOINT = new Point(1, 2, 3);
 	private static final Point UPPERRIGHTPOINT = new Point(1, 2, 3);
 
-	private static final String INFOTEKST = "test";
+	private static final String INFOTEKST = "";
 
 	@Test
 	public void givenAHealtPotion_whenAutoMapping_thenMapCorrectly() {
