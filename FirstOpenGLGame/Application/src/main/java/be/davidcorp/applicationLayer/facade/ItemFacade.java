@@ -1,16 +1,20 @@
 package be.davidcorp.applicationLayer.facade;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ItemDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
 import be.davidcorp.domain.sprite.item.Item;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
-import be.davidcorp.repository.DefaultSpriteRepository;
 import be.davidcorp.repository.SpriteRepository;
 
+@Named
 public class ItemFacade {
-	
-	private SpriteRepository spriteRepository = DefaultSpriteRepository.getInstance();
+
+	@Inject
+	private SpriteRepository spriteRepository;
 
 	public void useItem(ItemDTO itemDTO){
 		Item item = (Item) spriteRepository.getSprite(itemDTO.getId());

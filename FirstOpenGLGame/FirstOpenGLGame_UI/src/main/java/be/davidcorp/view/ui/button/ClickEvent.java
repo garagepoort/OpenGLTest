@@ -1,4 +1,4 @@
-package main.java.be.davidcorp.view.ui.button;
+package be.davidcorp.view.ui.button;
 
 import java.util.EventObject;
 

@@ -1,4 +1,4 @@
-package main.java.be.davidcorp.view.ui.panel;
+package be.davidcorp.view.ui.panel;
 
 import java.io.IOException;
 
@@ -7,8 +7,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-import main.java.be.davidcorp.view.game.PlayGamePanel;
-import main.java.be.davidcorp.view.ui.UIComponent;
+import be.davidcorp.view.game.PlayGamePanel;
+import be.davidcorp.view.ui.UIComponent;
 import main.java.font.TextDrawer;
 
 public class Panel extends UIComponent {

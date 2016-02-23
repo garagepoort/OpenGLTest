@@ -1,12 +1,12 @@
-package main.java.be.davidcorp.view.ui.panel;
+package be.davidcorp.view.ui.panel;
 
 import java.util.EventObject;
 import java.util.List;
 
-import main.java.be.davidcorp.inputControl.MouseButton;
-import main.java.be.davidcorp.view.game.PlayGamePanel;
-import main.java.be.davidcorp.view.ui.button.Button;
-import main.java.be.davidcorp.view.ui.button.ClickListener;
+import be.davidcorp.inputControl.MouseButton;
+import be.davidcorp.view.game.PlayGamePanel;
+import be.davidcorp.view.ui.button.Button;
+import be.davidcorp.view.ui.button.ClickListener;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 

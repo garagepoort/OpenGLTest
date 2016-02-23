@@ -1,4 +1,4 @@
-package main.java.be.davidcorp.view.game;
+package be.davidcorp.view.game;
 
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_PROJECTION;
@@ -9,8 +9,8 @@ import static org.lwjgl.opengl.GL11.glViewport;
 
 import java.io.IOException;
 
-import main.java.be.davidcorp.view.TranslationManager;
-import main.java.be.davidcorp.view.light.LightManager;
+import be.davidcorp.view.TranslationManager;
+import be.davidcorp.view.light.LightManager;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;

@@ -1,4 +1,4 @@
-package main.java.be.davidcorp.inputControl;
+package be.davidcorp.inputControl;
 
 public enum MouseButton {
 

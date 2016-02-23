@@ -4,6 +4,9 @@ import static be.davidcorp.domain.sprite.organic.player.PlayerManager.getCurrent
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import be.davidcorp.WindDirection;
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
@@ -18,12 +21,13 @@ import be.davidcorp.domain.utilities.sprite.SpriteMovingUtility;
 import be.davidcorp.domain.utilities.sprite.SpriteRotator;
 import be.davidcorp.metric.Point;
 import be.davidcorp.metric.Vector;
-import be.davidcorp.repository.DefaultSpriteRepository;
 import be.davidcorp.repository.SpriteRepository;
 
+@Named
 public class PlayerFacade {
 
-	private SpriteRepository spriteRepository = DefaultSpriteRepository.getInstance();
+	@Inject
+	private SpriteRepository spriteRepository;
 	
 	public void letPlayerAttackInDirection(Vector vector) {
 		getCurrentPlayer().useWeapon(vector);

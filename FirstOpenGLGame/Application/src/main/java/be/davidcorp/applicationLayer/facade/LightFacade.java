@@ -1,5 +1,8 @@
 package be.davidcorp.applicationLayer.facade;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import be.davidcorp.applicationLayer.dto.color.ColorDTO;
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.LightToLightDTOMapper;
@@ -7,12 +10,13 @@ import be.davidcorp.applicationLayer.exception.ModelException;
 import be.davidcorp.domain.sprite.Color;
 import be.davidcorp.domain.sprite.light.Light;
 import be.davidcorp.metric.Point;
-import be.davidcorp.repository.DefaultSpriteRepository;
 import be.davidcorp.repository.SpriteRepository;
 
+@Named
 public class LightFacade {
 
-	private SpriteRepository spriteRepository = DefaultSpriteRepository.getInstance();
+	@Inject
+	private SpriteRepository spriteRepository;
 	
 	public LightDTO createLight(Point point, ColorDTO colorDTO, int radius, boolean lighton)  {
 		try {

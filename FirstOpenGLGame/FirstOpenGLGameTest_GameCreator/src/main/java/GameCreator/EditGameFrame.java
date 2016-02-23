@@ -24,7 +24,7 @@ import org.lwjgl.opengl.Display;
 
 import GameCreator.panels.SpriteTreePanel;
 import be.davidcorp.applicationLayer.facade.GameStarterFacade;
-import main.java.be.davidcorp.view.game.GameLoop;
+import be.davidcorp.view.game.GameLoop;
 
 @SuppressWarnings("serial")
 public class EditGameFrame extends JFrame implements MouseListener{

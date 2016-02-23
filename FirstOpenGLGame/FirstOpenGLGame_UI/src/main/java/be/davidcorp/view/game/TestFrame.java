@@ -1,4 +1,4 @@
-package main.java.be.davidcorp.view.game;
+package be.davidcorp.view.game;
 
 import java.awt.Canvas;
 import java.awt.Dimension;

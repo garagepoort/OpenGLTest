@@ -1,4 +1,4 @@
-package main.java.be.davidcorp.view;
+package be.davidcorp.view;
 
 public class CameraManager {
 

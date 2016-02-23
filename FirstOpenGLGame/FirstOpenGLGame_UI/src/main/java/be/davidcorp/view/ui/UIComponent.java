@@ -1,15 +1,15 @@
-package main.java.be.davidcorp.view.ui;
+package be.davidcorp.view.ui;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import main.java.be.davidcorp.inputControl.MouseButton;
+import be.davidcorp.inputControl.MouseButton;
 import be.davidcorp.metric.Point;
 import be.davidcorp.texture.TextureBunch;
-import main.java.be.davidcorp.view.ui.button.ClickEvent;
-import main.java.be.davidcorp.view.ui.button.ClickListener;
-import main.java.be.davidcorp.view.ui.panel.UIComponentCollisionChecker;
+import be.davidcorp.view.ui.button.ClickEvent;
+import be.davidcorp.view.ui.button.ClickListener;
+import be.davidcorp.view.ui.panel.UIComponentCollisionChecker;
 
 public abstract class UIComponent {
 

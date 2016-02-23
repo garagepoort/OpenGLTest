@@ -1,9 +1,9 @@
-package main.java.be.davidcorp.view.game;
+package be.davidcorp.view.game;
 
 import java.io.IOException;
 
-import main.java.be.davidcorp.inputControl.GamePanelInputController;
-import main.java.be.davidcorp.view.drawer.PlayerDrawer;
+import be.davidcorp.inputControl.GamePanelInputController;
+import be.davidcorp.view.drawer.PlayerDrawer;
 
 public class PlayGamePanel extends GamePanel {
 

@@ -1,14 +1,19 @@
 package be.davidcorp.applicationLayer.facade;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import be.davidcorp.applicationLayer.dto.EnemyDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.OrganicSpriteDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
 import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.sprite.organic.enemy.EnemyFactory;
-import be.davidcorp.repository.DefaultSpriteRepository;
+import be.davidcorp.repository.SpriteRepository;
 
+@Named
 public class EnemyFacade {
-	private DefaultSpriteRepository spriteRepository = DefaultSpriteRepository.getInstance();
+	@Inject
+	private SpriteRepository spriteRepository;
 
 	public EnemyDTO createZombie(float x, float y) {
 		try {

@@ -1,4 +1,4 @@
-package main.java.be.davidcorp.inputControl;
+package be.davidcorp.inputControl;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;

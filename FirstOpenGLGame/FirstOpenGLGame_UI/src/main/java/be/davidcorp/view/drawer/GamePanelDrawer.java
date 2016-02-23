@@ -1,7 +1,7 @@
-package main.java.be.davidcorp.view.drawer;
+package be.davidcorp.view.drawer;
 
-import static main.java.be.davidcorp.view.game.GameLoop.HEIGHT;
-import static main.java.be.davidcorp.view.game.GameLoop.WIDTH;
+import static be.davidcorp.view.game.GameLoop.HEIGHT;
+import static be.davidcorp.view.game.GameLoop.WIDTH;
 import static org.lwjgl.opengl.GL11.GL_ALWAYS;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
@@ -30,9 +30,9 @@ import static org.lwjgl.opengl.GL11.glStencilOp;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
-import main.java.be.davidcorp.view.TranslationManager;
-import main.java.be.davidcorp.view.game.GamePanel;
-import main.java.be.davidcorp.view.light.LightManager;
+import be.davidcorp.view.TranslationManager;
+import be.davidcorp.view.game.GamePanel;
+import be.davidcorp.view.light.LightManager;
 import org.newdawn.slick.Color;
 
 import be.davidcorp.applicationLayer.dto.light.LightDTO;

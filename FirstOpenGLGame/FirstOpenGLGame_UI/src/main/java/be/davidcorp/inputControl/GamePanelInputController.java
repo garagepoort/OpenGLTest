@@ -1,9 +1,7 @@
-package main.java.be.davidcorp.inputControl;
+package be.davidcorp.inputControl;
 
 import java.util.List;
 
-import main.java.be.davidcorp.view.TranslationManager;
-import main.java.be.davidcorp.view.game.PlayGamePanel;
 import org.lwjgl.input.Mouse;
 
 import be.davidcorp.WindDirection;
@@ -12,7 +10,9 @@ import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.metric.Point;
 import be.davidcorp.metric.Vector;
-import main.java.be.davidcorp.view.game.GameLoop;
+import be.davidcorp.view.TranslationManager;
+import be.davidcorp.view.game.GameLoop;
+import be.davidcorp.view.game.PlayGamePanel;
 
 public class GamePanelInputController extends InputController {
 

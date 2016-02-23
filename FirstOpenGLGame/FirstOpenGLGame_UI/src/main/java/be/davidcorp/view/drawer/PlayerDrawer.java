@@ -1,7 +1,7 @@
-package main.java.be.davidcorp.view.drawer;
+package be.davidcorp.view.drawer;
 
-import static main.java.be.davidcorp.view.game.GameLoop.HEIGHT;
-import static main.java.be.davidcorp.view.game.GameLoop.WIDTH;
+import static be.davidcorp.view.game.GameLoop.HEIGHT;
+import static be.davidcorp.view.game.GameLoop.WIDTH;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_CURRENT_BIT;
 import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
@@ -28,8 +28,8 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.io.IOException;
 
-import main.java.be.davidcorp.view.TranslationManager;
-import main.java.be.davidcorp.view.light.LightManager;
+import be.davidcorp.view.TranslationManager;
+import be.davidcorp.view.light.LightManager;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;

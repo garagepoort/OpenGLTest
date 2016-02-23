@@ -1,4 +1,4 @@
-package main.java.be.davidcorp.view.drawer;
+package be.davidcorp.view.drawer;
 
 import static org.lwjgl.opengl.GL11.GL_CURRENT_BIT;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
@@ -17,7 +17,7 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-import main.java.be.davidcorp.view.game.GameLoop;
+import be.davidcorp.view.game.GameLoop;
 
 public class GameOverDrawer {
 

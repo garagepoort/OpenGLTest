@@ -1,4 +1,4 @@
-package main.java.be.davidcorp.view.drawer;
+package be.davidcorp.view.drawer;
 
 public class GuidePanelDrawer {
 

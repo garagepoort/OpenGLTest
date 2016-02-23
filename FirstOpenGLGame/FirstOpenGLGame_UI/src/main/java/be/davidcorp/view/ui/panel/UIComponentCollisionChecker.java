@@ -1,7 +1,7 @@
-package main.java.be.davidcorp.view.ui.panel;
+package be.davidcorp.view.ui.panel;
 
 import be.davidcorp.metric.Point;
-import main.java.be.davidcorp.view.ui.UIComponent;
+import be.davidcorp.view.ui.UIComponent;
 
 public class UIComponentCollisionChecker {
 

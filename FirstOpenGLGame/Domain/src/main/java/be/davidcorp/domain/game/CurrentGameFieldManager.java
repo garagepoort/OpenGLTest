@@ -1,7 +1,6 @@
 package be.davidcorp.domain.game;
 
 import static be.davidcorp.database.Filename.SAVE_FILE_LOCATION;
-import static java.io.File.pathSeparator;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package main.java.be.davidcorp.view.drawer;
+package be.davidcorp.view.drawer;
 
 import static org.lwjgl.opengl.GL11.GL_CURRENT_BIT;
 import static org.lwjgl.opengl.GL11.GL_POLYGON;

@@ -1,10 +1,10 @@
-package main.java.be.davidcorp.view;
+package be.davidcorp.view;
 
-import static main.java.be.davidcorp.view.game.GameLoop.HEIGHT;
-import static main.java.be.davidcorp.view.game.GameLoop.WIDTH;
+import static be.davidcorp.view.game.GameLoop.HEIGHT;
+import static be.davidcorp.view.game.GameLoop.WIDTH;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
-import main.java.be.davidcorp.view.game.GameLoop;
+import be.davidcorp.view.game.GameLoop;
 
 public class TranslationManager {
 

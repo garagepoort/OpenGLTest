@@ -1,16 +1,21 @@
 package be.davidcorp.applicationLayer.facade;
 
 import static be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ConstructionSpriteDTOMapper.mapConstructionSpriteDTOToConstructionSprite;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import be.davidcorp.applicationLayer.dto.ConstructionSpriteDTO;
 import be.davidcorp.applicationLayer.dto.mapper.spriteToDTO.ConstructionSpriteDTOMapper;
 import be.davidcorp.applicationLayer.exception.ModelException;
 import be.davidcorp.domain.sprite.construction.ConstructionSprite;
-import be.davidcorp.repository.DefaultSpriteRepository;
 import be.davidcorp.repository.SpriteRepository;
 
+@Named
 public class ConstructionSpriteFacade {
 
-	private SpriteRepository spriteRepository = DefaultSpriteRepository.getInstance();
+	@Inject
+	private SpriteRepository spriteRepository;
 	
 	public ConstructionSpriteDTO createConstructionSprite(ConstructionSpriteDTO constructionSpriteDTO) {
 		try {

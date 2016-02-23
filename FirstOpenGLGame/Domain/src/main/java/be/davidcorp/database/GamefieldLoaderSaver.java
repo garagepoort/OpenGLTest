@@ -19,12 +19,12 @@ import be.davidcorp.database.filehandling.SpriteSerializer;
 import be.davidcorp.database.filehandling.ZipFileWriter;
 import be.davidcorp.domain.game.Gamefield;
 import be.davidcorp.repository.DefaultSpriteRepository;
+import be.davidcorp.repository.SpriteRepository;
 
 public class GamefieldLoaderSaver {
 
 	private static final String SAVEFILE_EXTENSION_ZIP = ".zip";
-	private static final DefaultSpriteRepository defaultSpriteRepository = DefaultSpriteRepository
-			.getInstance();
+	private static final SpriteRepository defaultSpriteRepository = DefaultSpriteRepository.getInstance();
 
 	public static Gamefield loadEntireField(ZipFile zipFile) {
 		InputStream spritesFile = searchFile("sprites.ser", zipFile);

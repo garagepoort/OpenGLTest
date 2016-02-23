@@ -1,12 +1,12 @@
-package main.java.be.davidcorp.view.game;
+package be.davidcorp.view.game;
 
 import java.io.IOException;
 import java.util.Observable;
 
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
-import main.java.be.davidcorp.inputControl.InputController;
-import main.java.be.davidcorp.view.drawer.GameOverDrawer;
-import main.java.be.davidcorp.view.drawer.GamePanelDrawer;
+import be.davidcorp.inputControl.InputController;
+import be.davidcorp.view.drawer.GameOverDrawer;
+import be.davidcorp.view.drawer.GamePanelDrawer;
 
 public class GamePanel extends Observable{
 	

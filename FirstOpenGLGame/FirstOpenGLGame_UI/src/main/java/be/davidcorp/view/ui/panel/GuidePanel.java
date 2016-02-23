@@ -1,4 +1,4 @@
-package main.java.be.davidcorp.view.ui.panel;
+package be.davidcorp.view.ui.panel;
 
 import org.newdawn.slick.Color;
 

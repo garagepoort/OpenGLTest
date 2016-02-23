@@ -1,4 +1,4 @@
-package main.java.be.davidcorp.view.light;
+package be.davidcorp.view.light;
 
 import java.util.ArrayList;
 import java.util.Collections;

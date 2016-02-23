@@ -1,9 +1,9 @@
-package main.java.be.davidcorp.view.drawer;
+package be.davidcorp.view.drawer;
 
-import static main.java.be.davidcorp.view.TranslationManager.getGameFieldXTranslation;
-import static main.java.be.davidcorp.view.TranslationManager.getGameFieldYTranslation;
-import static main.java.be.davidcorp.view.game.GameLoop.HEIGHT;
-import static main.java.be.davidcorp.view.game.GameLoop.WIDTH;
+import static be.davidcorp.view.TranslationManager.getGameFieldXTranslation;
+import static be.davidcorp.view.TranslationManager.getGameFieldYTranslation;
+import static be.davidcorp.view.game.GameLoop.HEIGHT;
+import static be.davidcorp.view.game.GameLoop.WIDTH;
 import static org.lwjgl.opengl.GL11.GL_CURRENT_BIT;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;

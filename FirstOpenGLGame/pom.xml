@@ -12,6 +12,29 @@
 		<module>FirstOpenGLGame_UI</module>
 		<module>FirstOpenGLGameTest_GameCreator</module>
 	</modules>
+	<properties>
+		<version.org.springframework>4.2.4.RELEASE</version.org.springframework>
+		<version.org.junit>4.12</version.org.junit>
+		<version.org.mockito>1.10.19</version.org.mockito>
+		<version.org.assertj>3.1.0</version.org.assertj>
+	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<!--SPRING-->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${version.org.springframework}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${version.org.springframework}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.mockito</groupId>
@@ -49,21 +72,34 @@
 			<version>1.2.1</version>
 		</dependency>
 		<dependency>
-			<groupId>slick-util</groupId>
+			<groupId>com.ninjacave.slick</groupId>
 			<artifactId>slick-util</artifactId>
-			<version>1.0</version>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
 		</dependency>
 	</dependencies>
 	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<testSourceDirectory>test</testSourceDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -73,4 +109,11 @@
 			</plugin>
 		</plugins>
 	</build>
+	<repositories>
+		<repository>
+			<id>opengl-game-repo</id>
+			<name>data</name>
+			<url>file://${project.basedir}/repo</url>
+		</repository>
+	</repositories>
 </project>

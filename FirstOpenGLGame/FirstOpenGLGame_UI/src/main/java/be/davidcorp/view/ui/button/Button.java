@@ -1,8 +1,8 @@
-package main.java.be.davidcorp.view.ui.button;
+package be.davidcorp.view.ui.button;
 
 import java.io.IOException;
 
-import main.java.be.davidcorp.view.ui.UIComponent;
+import be.davidcorp.view.ui.UIComponent;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
