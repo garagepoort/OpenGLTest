@@ -9,7 +9,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import be.davidcorp.view.game.PlayGamePanel;
 import be.davidcorp.view.ui.UIComponent;
-import main.java.font.TextDrawer;
+import font.TextDrawer;
 
 public class Panel extends UIComponent {
 

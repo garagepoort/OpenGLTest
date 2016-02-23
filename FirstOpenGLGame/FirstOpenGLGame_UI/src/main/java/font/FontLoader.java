@@ -1,4 +1,4 @@
-package main.java.font;
+package font;
 
 import java.io.IOException;
 import java.util.HashMap;

@@ -5,13 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.lwjgl.LWJGLException;
 
 import be.davidcorp.applicationLayer.facade.GameStarterFacade;
 
 public class GameStarter {
 
-	public static void main(String[] args) throws LWJGLException, IOException {
+	public static void main(String[] args) throws IOException {
 		String[] natives = new String[] {
 				"glfw.dll",
 				"glfw32.dll",

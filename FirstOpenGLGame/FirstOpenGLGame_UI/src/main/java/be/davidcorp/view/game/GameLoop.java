@@ -1,7 +1,25 @@
 package be.davidcorp.view.game;
 
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_CORE_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
+import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
+import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
+import static org.lwjgl.glfw.GLFW.glfwInit;
+import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
+import static org.lwjgl.glfw.GLFW.glfwShowWindow;
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
+import static org.lwjgl.glfw.GLFW.glfwTerminate;
+import static org.lwjgl.glfw.GLFW.glfwWindowHint;
+import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
+import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_PROJECTION;
+import static org.lwjgl.opengl.GL11.GL_TRUE;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
@@ -9,17 +27,14 @@ import static org.lwjgl.opengl.GL11.glViewport;
 
 import java.io.IOException;
 
-import be.davidcorp.view.TranslationManager;
-import be.davidcorp.view.light.LightManager;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.Sys;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.PixelFormat;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.opengl.GL;
 
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
-import main.java.font.FontManager;
+import be.davidcorp.view.TranslationManager;
+import be.davidcorp.view.light.LightManager;
+import font.FontManager;
 
 public class GameLoop {
 
@@ -37,6 +52,8 @@ public class GameLoop {
 	private PlayerFacade playerFacade = new PlayerFacade();
 
 	private Thread gameThread;
+	private GLFWErrorCallback errorCallback;
+	private long window;
 
 	public GameLoop(GamePanel gamePanel, int width, int height, boolean onlyRender) throws IOException {
 		this.onlyRender = onlyRender;
@@ -66,13 +83,14 @@ public class GameLoop {
 				try {
 					initializeDisplay();
 					initOpenGL();
+					glfwShowWindow(window);
 					FontManager.load();
 					if(gamefieldFacade.isGamefieldInitialized()) TranslationManager.initializeBeginTranslation();
 
 					calculateDelta();
 					lastFPS = getTime();
 
-					while (!Display.isCloseRequested()) {
+					while (glfwWindowShouldClose(window) == GL_FALSE) {
 						delta = calculateDelta();
 
 						updateGamefield();
@@ -81,26 +99,37 @@ public class GameLoop {
 						updateDisplay();
 					}
 
-					Display.destroy();
+					glfwDestroyWindow(window);
+					glfwTerminate();
 				} catch (Exception e) {
 					throw new RuntimeException(e);
 				}
 			}
 
 			public void updateDisplay() {
-				Display.update();
-				Display.sync(120); // cap fps to 60fps
+				glfwPollEvents();
+				glfwSwapBuffers(window);
+//				Display.sync(120); // cap fps to 60fps
 			}
 
 		};
 		gameThread.start();
 	}
 
-	private void initializeDisplay() throws LWJGLException {
-		Display.setDisplayMode(new DisplayMode(800, 600));
-		Display.setResizable(false);
-		Display.setFullscreen(false);
-		Display.create(new PixelFormat(0, 0, 1));
+	private void initializeDisplay(){
+		glfwInit();
+		glfwSetErrorCallback(errorCallback = GLFWErrorCallback.createPrint(System.err));
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+
+		window = glfwCreateWindow(800, 600, "Zombicide", 0, 0);
+		if(window == 0) {
+			throw new RuntimeException("Failed to create window");
+		}
+		glfwMakeContextCurrent(window);
+		GL.createCapabilities();
 	}
 
 	private void updateGamefield() throws IOException {
@@ -140,12 +169,12 @@ public class GameLoop {
 	}
 
 	private long getTime() {
-		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+		return (long) (org.lwjgl.glfw.GLFW.glfwGetTime() * 1000);
 	}
 
 	private void updateFPS() {
 		if (getTime() - lastFPS > 1000) {
-			Display.setTitle("FPS: " + fps);
+//			Display.setTitle("FPS: " + fps);
 			fps = 0;
 			lastFPS += 1000;
 		}
