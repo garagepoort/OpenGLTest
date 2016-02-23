@@ -5,14 +5,14 @@ import java.util.EventObject;
 import java.util.Observable;
 import java.util.Observer;
 
-import be.davidcorp.inputControl.MouseButton;
-import be.davidcorp.view.game.PlayGamePanel;
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.applicationLayer.uiModels.EquipmentModel;
+import be.davidcorp.inputControl.MouseButton;
+import be.davidcorp.view.MousePosition;
+import be.davidcorp.view.game.PlayGamePanel;
 import be.davidcorp.view.ui.button.Button;
 import be.davidcorp.view.ui.button.ClickListener;
 
@@ -83,7 +83,7 @@ public class EquipmentPanel extends Panel implements Observer {
 			public void onRightClick(EventObject e) {
 				try {
 					itemButton.getComponents().clear();
-					itemButton.addComponent(new EquipmentSubPanel(Mouse.getX(), Mouse.getY() - 64, 128, 64, new Color(0, 0, 0), itemDTO, getGamePanel()), Mouse.getX(), Mouse.getY() - 64);
+					itemButton.addComponent(new EquipmentSubPanel(MousePosition.X, MousePosition.Y - 64, 128, 64, new Color(0, 0, 0), itemDTO, getGamePanel()), MousePosition.X, MousePosition.Y - 64);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

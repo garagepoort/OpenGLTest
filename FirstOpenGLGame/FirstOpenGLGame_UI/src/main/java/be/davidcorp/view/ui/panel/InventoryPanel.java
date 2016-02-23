@@ -3,17 +3,17 @@ package be.davidcorp.view.ui.panel;
 import java.util.EventObject;
 import java.util.List;
 
-import be.davidcorp.inputControl.MouseButton;
-import be.davidcorp.view.game.PlayGamePanel;
-import be.davidcorp.view.ui.button.Button;
-import be.davidcorp.view.ui.button.ClickListener;
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.dto.PlayerDTO;
 import be.davidcorp.applicationLayer.facade.InventoryFacade;
+import be.davidcorp.inputControl.MouseButton;
 import be.davidcorp.metric.Point;
+import be.davidcorp.view.MousePosition;
+import be.davidcorp.view.game.PlayGamePanel;
+import be.davidcorp.view.ui.button.Button;
+import be.davidcorp.view.ui.button.ClickListener;
 
 public class InventoryPanel extends Panel {
 
@@ -30,12 +30,12 @@ public class InventoryPanel extends Panel {
 	}
 
 	public void initButtons() {
-		if (UIComponentCollisionChecker.isPointInsidePanel(this, new Point(Mouse.getX(), Mouse.getY(), 0))) {
-			if (Mouse.isButtonDown(1)) {
-
-			} else if (Mouse.isButtonDown(0)) {
-				setInventorySubPanel(null);
-			}
+		if (UIComponentCollisionChecker.isPointInsidePanel(this, new Point(MousePosition.X, MousePosition.Y, 0))) {
+//			if (Mouse.isButtonDown(1)) {
+//
+//			} else if (Mouse.isButtonDown(0)) {
+//				setInventorySubPanel(null);
+//			}
 		}
 	}
 
@@ -89,7 +89,7 @@ public class InventoryPanel extends Panel {
 
 			@Override
 			public void onRightClick(EventObject e) {
-				setInventorySubPanel(new InventorySubPanel(Mouse.getX(), Mouse.getY(), 128, 64, new Color(0, 0, 0), itemDTO));
+				setInventorySubPanel(new InventorySubPanel(MousePosition.X, MousePosition.Y, 128, 64, new Color(0, 0, 0), itemDTO));
 			}
 
 			@Override

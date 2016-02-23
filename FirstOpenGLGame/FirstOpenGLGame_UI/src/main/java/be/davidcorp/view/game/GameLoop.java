@@ -2,36 +2,36 @@ package be.davidcorp.view.game;
 
 import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR;
 import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR;
+import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
 import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_CORE_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_FORWARD_COMPAT;
 import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_PROFILE;
 import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
+import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
 import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
 import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
 import static org.lwjgl.glfw.GLFW.glfwInit;
 import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetFramebufferSizeCallback;
 import static org.lwjgl.glfw.GLFW.glfwShowWindow;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.glfw.GLFW.glfwTerminate;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
-import static org.lwjgl.opengl.GL11.GL_FALSE;
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.GL_TRUE;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glOrtho;
-import static org.lwjgl.opengl.GL11.glViewport;
+import static org.lwjgl.opengl.GL30.glBindVertexArray;
+import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 import java.io.IOException;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 import org.lwjgl.opengl.GL;
 
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
+import be.davidcorp.view.FrameBuffer;
 import be.davidcorp.view.TranslationManager;
 import be.davidcorp.view.light.LightManager;
 import font.FontManager;
@@ -54,6 +54,8 @@ public class GameLoop {
 	private Thread gameThread;
 	private GLFWErrorCallback errorCallback;
 	private long window;
+	private GLFWFramebufferSizeCallback framebufferSizeCallback;
+	private FrameBuffer framebuffer = new FrameBuffer();
 
 	public GameLoop(GamePanel gamePanel, int width, int height, boolean onlyRender) throws IOException {
 		this.onlyRender = onlyRender;
@@ -68,61 +70,66 @@ public class GameLoop {
 	public static int getSecondsMovedInGame() {
 		return delta;
 	}
-	public void stop() {
+
+	public void start() {
 		try {
-			gameThread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			initializeDisplay();
+			initOpenGL();
+			initResizeCallback();
+			glfwShowWindow(window);
+			playGamePanel.registerInputCallbacks(window, framebuffer);
+			FontManager.load();
+			if(gamefieldFacade.isGamefieldInitialized()) TranslationManager.initializeBeginTranslation();
+
+			calculateDelta();
+			lastFPS = getTime();
+
+			while (glfwWindowShouldClose(window) == GLFW_FALSE) {
+				delta = calculateDelta();
+
+				updateGamefield();
+				updateFPS();
+				updateDisplay();
+			}
+
+			glfwDestroyWindow(window);
+			glfwTerminate();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 
-	public void start() {
+	private void updateDisplay() {
+		glfwPollEvents();
+		glfwSwapBuffers(window);
+		//				Display.sync(120); // cap fps to 60fps
+	}
 
-		gameThread = new Thread() {
-			public void run() {
-				try {
-					initializeDisplay();
-					initOpenGL();
-					glfwShowWindow(window);
-					FontManager.load();
-					if(gamefieldFacade.isGamefieldInitialized()) TranslationManager.initializeBeginTranslation();
+	private void initResizeCallback(){
+		glfwSetFramebufferSizeCallback(window, (framebufferSizeCallback = new GLFWFramebufferSizeCallback() {
 
-					calculateDelta();
-					lastFPS = getTime();
-
-					while (glfwWindowShouldClose(window) == GL_FALSE) {
-						delta = calculateDelta();
-
-						updateGamefield();
-						updateFPS();
-						getInputFromPlayer();
-						updateDisplay();
-					}
-
-					glfwDestroyWindow(window);
-					glfwTerminate();
-				} catch (Exception e) {
-					throw new RuntimeException(e);
-				}
+			@Override
+			public void invoke(long window, int width, int height) {
+				onResize(width, height);
 			}
 
-			public void updateDisplay() {
-				glfwPollEvents();
-				glfwSwapBuffers(window);
-//				Display.sync(120); // cap fps to 60fps
-			}
+		}));
+		onResize(WIDTH, HEIGHT);
+	}
 
-		};
-		gameThread.start();
+	private void onResize(int framebufferWidth, int framebufferHeight) {
+		framebuffer.width = framebufferWidth;
+		framebuffer.height = framebufferHeight;
 	}
 
 	private void initializeDisplay(){
 		glfwInit();
 		glfwSetErrorCallback(errorCallback = GLFWErrorCallback.createPrint(System.err));
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
 		window = glfwCreateWindow(800, 600, "Zombicide", 0, 0);
 		if(window == 0) {
@@ -147,18 +154,16 @@ public class GameLoop {
 			gamefieldFacade.updateGameField(delta);
 		}
 	}
-	
-	private void getInputFromPlayer() {
-		if (playerFacade.isPlayerAlive()) {
-			playGamePanel.checkInput();
-		}
-	}
+
 	private void initOpenGL() {
-		glViewport(0, 0, WIDTH, HEIGHT);
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(0, WIDTH, 0, HEIGHT, 1f, -1);
-		glMatrixMode(GL_MODELVIEW);
+//		glViewport(0, 0, WIDTH, HEIGHT);
+//		glMatrixMode(GL_PROJECTION);
+//		glLoadIdentity();
+//		glOrtho(0, WIDTH, 0, HEIGHT, 1f, -1);
+//		glMatrixMode(GL_MODELVIEW);
+
+		int vao = glGenVertexArrays();
+		glBindVertexArray(vao);
 	}
 
 	private int calculateDelta() {

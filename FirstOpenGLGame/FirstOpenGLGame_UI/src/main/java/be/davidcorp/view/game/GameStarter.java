@@ -5,12 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-
 import be.davidcorp.applicationLayer.facade.GameStarterFacade;
 
 public class GameStarter {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, NoSuchFieldException, IllegalAccessException {
+		String basePath = "natives/";
 		String[] natives = new String[] {
 				"glfw.dll",
 				"glfw32.dll",
@@ -25,13 +25,14 @@ public class GameStarter {
 				"liblwjgl.dylib",
 				"liblwjgl.so",
 				"liblwjgl32.so",
+				"libopenal.dylib",
 				"lwjgl.dll",
 				"lwjgl32.dll"
 		};
 		File tmpDir = new File(System.getProperty("java.io.tmpdir"));
 		byte[] buff = new byte[2048];
 		for(String file: natives) {
-			InputStream is = GameStarter.class.getResourceAsStream(file);
+			InputStream is = GameStarter.class.getClassLoader().getResourceAsStream(basePath + file);
 			File temp = new File(tmpDir, file);
 			try(FileOutputStream os = new FileOutputStream(temp)) {
 				int read;

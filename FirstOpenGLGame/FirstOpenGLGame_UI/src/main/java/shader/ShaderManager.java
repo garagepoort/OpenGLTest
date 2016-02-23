@@ -1,4 +1,5 @@
-package main.java.shader;
+package shader;
+
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.glAttachShader;
 import static org.lwjgl.opengl.GL20.glCompileShader;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import org.lwjgl.opengl.ARBFragmentShader;
 import org.lwjgl.opengl.ARBShaderObjects;
 import org.lwjgl.opengl.ARBVertexShader;
-import org.lwjgl.opengl.Display;
 
 public class ShaderManager {
 	
@@ -37,7 +37,7 @@ public class ShaderManager {
 			reader.close();
 		}catch(IOException e){
 			System.err.println("Vertex main.java.shader wasn't loaded properly.");
-			Display.destroy();
+//			Display.destroy();
 			System.exit(1);
 		}
 		
@@ -50,7 +50,7 @@ public class ShaderManager {
 			reader.close();
 		}catch(IOException e){
 			System.err.println("Fragment main.java.shader wasn't loaded properly.");
-			Display.destroy();
+//			Display.destroy();
 			System.exit(1);
 		}
 		

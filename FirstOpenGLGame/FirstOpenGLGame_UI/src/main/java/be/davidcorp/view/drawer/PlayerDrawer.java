@@ -28,9 +28,6 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.io.IOException;
 
-import be.davidcorp.view.TranslationManager;
-import be.davidcorp.view.light.LightManager;
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -38,6 +35,9 @@ import org.newdawn.slick.util.ResourceLoader;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.metric.Point;
 import be.davidcorp.metric.Vector;
+import be.davidcorp.view.MousePosition;
+import be.davidcorp.view.TranslationManager;
+import be.davidcorp.view.light.LightManager;
 
 public class PlayerDrawer {
 	private static PlayerFacade playerFacade = new PlayerFacade();
@@ -56,7 +56,7 @@ public class PlayerDrawer {
 
 	private static void lookInRightDirection(float x, float y) {
 		Point beginPointOfVector = new Point(x + playerFacade.getWidth() / 2, y + playerFacade.getHeight() / 2, 0);
-		Point EndPointOfVector = new Point(Mouse.getX(), Mouse.getY(), 0);
+		Point EndPointOfVector = new Point((float) MousePosition.X, (float) MousePosition.Y, 0);
 		Vector v = new Vector(beginPointOfVector, EndPointOfVector);
 		playerFacade.lookInDirection(v);
 	}

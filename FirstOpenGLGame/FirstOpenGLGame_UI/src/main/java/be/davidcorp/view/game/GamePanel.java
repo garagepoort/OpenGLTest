@@ -4,20 +4,16 @@ import java.io.IOException;
 import java.util.Observable;
 
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
-import be.davidcorp.inputControl.InputController;
+import be.davidcorp.view.FrameBuffer;
 import be.davidcorp.view.drawer.GameOverDrawer;
 import be.davidcorp.view.drawer.GamePanelDrawer;
 
-public class GamePanel extends Observable{
+public abstract class GamePanel extends Observable{
 	
 	private GamePanelDrawer gamePanelDrawer = new GamePanelDrawer();
-	private InputController inputController;
 
 	private PlayerFacade playerFacade = new PlayerFacade();
-	public void setInputController(InputController inputController) {
-		this.inputController = inputController;
-	}
-	
+
 	public void render() throws IOException {
 //		removeClosedPanels();
 		renderPanels();
@@ -32,13 +28,11 @@ public class GamePanel extends Observable{
 		}
 	}
 
-	public void checkInput(){
-		inputController.checkInput();
-	}
-
 	private void renderPanels() throws IOException {
 		gamePanelDrawer.drawGamePanel(this);
 	}
+
+	public abstract void registerInputCallbacks(long window, FrameBuffer frameBuffer);
 	
 	protected GamePanelDrawer getGamePanelDrawer() {
 		return gamePanelDrawer;

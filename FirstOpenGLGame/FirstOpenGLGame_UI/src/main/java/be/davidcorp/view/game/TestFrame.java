@@ -8,15 +8,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.Display;
 
 import be.davidcorp.applicationLayer.facade.GameStarterFacade;
 
 @SuppressWarnings("serial")
 public class TestFrame extends JFrame{
 
-	public TestFrame() throws IOException, LWJGLException{
+	public TestFrame() throws IOException {
 		new GameStarterFacade().startApplication();
 		GameLoop gameLoop = new GameLoop(new PlayGamePanel(),800, 600);
 		
@@ -24,7 +22,7 @@ public class TestFrame extends JFrame{
 		canvas.setFocusable(true);
 		canvas.setIgnoreRepaint(true);
 		
-		Display.setParent(canvas);
+//		Display.setParent(canvas);
 		
 		canvas.setSize(800, 600);
 		setSize(new Dimension(800, 600));
@@ -44,7 +42,7 @@ public class TestFrame extends JFrame{
 		this.add(jSplitPane);
 	}
 
-	public static void main(String[] args) throws IOException, LWJGLException{
+	public static void main(String[] args) throws IOException{
 		new TestFrame();
 	}
 }

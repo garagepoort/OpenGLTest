@@ -33,6 +33,7 @@ import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.ItemFacade;
 import be.davidcorp.applicationLayer.facade.LightFacade;
 import be.davidcorp.metric.Point;
+import be.davidcorp.view.FrameBuffer;
 import be.davidcorp.view.TranslationManager;
 import be.davidcorp.view.game.GamePanel;
 
@@ -47,7 +48,6 @@ public class GameCreatorPanel extends GamePanel {
 	private Point dragPoint;
 
 	public GameCreatorPanel() {
-		setInputController(new GameCreatorPanelInputController(this));
 	}
 
 	@Override
@@ -56,6 +56,11 @@ public class GameCreatorPanel extends GamePanel {
 		getGamePanelDrawer().setShadowsOn(false);
 
 		drawSelectedSprite();
+	}
+
+	@Override
+	public void registerInputCallbacks(long window, FrameBuffer framebuffer) {
+		new GameCreatorPanelInputController(this).registerInputCallbacks(window, framebuffer);
 	}
 
 	public void dragSelectedSprite(float pointX, float pointY) {

@@ -2,11 +2,11 @@ package be.davidcorp.view.ui.panel;
 
 import java.util.EventObject;
 
-import be.davidcorp.view.game.PlayGamePanel;
 import org.newdawn.slick.Color;
 
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
+import be.davidcorp.view.game.PlayGamePanel;
 import be.davidcorp.view.ui.button.Button;
 import be.davidcorp.view.ui.button.ClickListener;
 

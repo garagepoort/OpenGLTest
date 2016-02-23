@@ -2,14 +2,13 @@ package be.davidcorp.inputControl;
 
 import java.util.List;
 
-import org.lwjgl.input.Mouse;
-
 import be.davidcorp.WindDirection;
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.metric.Point;
 import be.davidcorp.metric.Vector;
+import be.davidcorp.view.MousePosition;
 import be.davidcorp.view.TranslationManager;
 import be.davidcorp.view.game.GameLoop;
 import be.davidcorp.view.game.PlayGamePanel;
@@ -146,8 +145,8 @@ public class GamePanelInputController extends InputController {
 	}
 
 	private void letPlayerAttackInDirectionOfVector() {
-		float ammoX = Mouse.getX() - TranslationManager.getGameFieldXTranslation();
-		float ammoY = Mouse.getY() - TranslationManager.getGameFieldYTranslation();
+		float ammoX = (float) (MousePosition.X - TranslationManager.getGameFieldXTranslation());
+		float ammoY = (float) (MousePosition.Y - TranslationManager.getGameFieldYTranslation());
 		Vector vector = new Vector(playerFacade.getCenter(), new Point(ammoX, ammoY, 0));
 		playerFacade.letPlayerAttackInDirection(vector);
 	}
