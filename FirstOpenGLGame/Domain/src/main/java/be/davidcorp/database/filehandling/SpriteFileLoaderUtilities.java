@@ -19,8 +19,7 @@ public class SpriteFileLoaderUtilities {
 			while (scanner.hasNextLine()) {
 				Scanner lineScanner = new Scanner(scanner.nextLine());
 				lineScanner.useDelimiter(":");
-				properties.put(GamefieldProperty.valueOf(lineScanner.next()),
-						lineScanner.next());
+				properties.put(GamefieldProperty.valueOf(lineScanner.next()), lineScanner.next());
 				lineScanner.close();
 			}
 			scanner.close();

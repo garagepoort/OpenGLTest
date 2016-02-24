@@ -30,14 +30,14 @@ import static org.lwjgl.opengl.GL11.glStencilOp;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
-import be.davidcorp.view.TranslationManager;
-import be.davidcorp.view.game.GamePanel;
-import be.davidcorp.view.light.LightManager;
 import org.newdawn.slick.Color;
 
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
 import be.davidcorp.applicationLayer.dto.light.LightTriangle;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
+import be.davidcorp.view.TranslationManager;
+import be.davidcorp.view.game.GamePanel;
+import be.davidcorp.view.light.LightManager;
 
 public class GamePanelDrawer {
 
@@ -190,7 +190,6 @@ public class GamePanelDrawer {
 	}
 
 	private void drawWorld()  {
-		glPushMatrix();
 		glTranslatef(TranslationManager.getGameFieldXTranslation(), TranslationManager.getGameFieldYTranslation(), 0);
 		BackgroundDrawer.drawBackgroundColor(new Color(0.2f, 0.2f, 0.2f));
 		GamefieldDrawer.drawConstructionItems();
@@ -199,8 +198,6 @@ public class GamePanelDrawer {
 		} else {
 			drawSpritesInWorld();
 		}
-		glPopMatrix();
-
 	}
 
 	private void drawSpritesInWorld()  {
