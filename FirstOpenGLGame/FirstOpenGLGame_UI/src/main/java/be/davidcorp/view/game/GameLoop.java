@@ -18,6 +18,8 @@ import static org.lwjgl.opengl.GL15.glGenBuffers;
 import static org.lwjgl.opengl.GL20.glDeleteProgram;
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glGetUniformLocation;
+import static org.lwjgl.opengl.GL20.glUniformMatrix4fv;
 import static org.lwjgl.opengl.GL20.glUseProgram;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
@@ -30,6 +32,10 @@ import java.nio.FloatBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
+
+import com.hackoeur.jglm.Mat4;
+import com.hackoeur.jglm.Matrices;
+import com.hackoeur.jglm.Vec3;
 
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
@@ -60,6 +66,8 @@ public class GameLoop {
 	private int VAO;
 	private int VBO;
 	private long window;
+	private int MvpLocation;
+	private FloatBuffer mvpMatrix;
 
 	public GameLoop(GamePanel gamePanel, int width, int height, boolean onlyRender) throws IOException {
 		this.onlyRender = onlyRender;
@@ -87,16 +95,21 @@ public class GameLoop {
 
 		int programId = shaderLoader.loadShaders("shaders/SimpleVertexShader.vertexshader", "shaders/SimpleFragmentShader.fragmentshader");
 
-		float[] g_vertex_buffer_data = {
-				-1.0f, -1.0f, 0.0f,
-				1.0f, -1.0f, 0.0f,
-				0.0f,  1.0f, 0.0f,
-		};
-		FloatBuffer fb = BufferUtils.createFloatBuffer(9);
-		fb.put(g_vertex_buffer_data).flip();
+		MvpLocation = glGetUniformLocation(programId, "mvp");
 
+		mvpMatrix = BufferUtils.createFloatBuffer(16);
+
+		Mat4 projection = Matrices.perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+		Mat4 view = Matrices.lookAt(new Vec3(4, 3, 3), new Vec3(0, 0, 0), new Vec3(0, 1, 0));
+		Mat4 model = new Mat4(1.0f);
+		Mat4 MVP = projection.multiply(view).multiply(model);
+
+		mvpMatrix.put(MVP.getBuffer());
+		mvpMatrix.flip();
+
+		FloatBuffer redTriangle = getRedTriangleBuffer();
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, fb, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, redTriangle, GL_STATIC_DRAW);
 
 		try {
 
@@ -109,6 +122,9 @@ public class GameLoop {
 			while (glfwWindowShouldClose(window) == GLFW_FALSE) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 				glUseProgram(programId);
+
+				glUniformMatrix4fv(MvpLocation, false, mvpMatrix);
+
 				delta = calculateDelta();
 //				updateGamefield();
 
@@ -138,6 +154,17 @@ public class GameLoop {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private FloatBuffer getRedTriangleBuffer() {
+		float[] g_vertex_buffer_data = {
+				-1.0f, -1.0f, 0.0f,
+				1.0f, -1.0f, 0.0f,
+				0.0f,  1.0f, 0.0f,
+		};
+		FloatBuffer fb = BufferUtils.createFloatBuffer(9);
+		fb.put(g_vertex_buffer_data).flip();
+		return fb;
 	}
 
 	private void initResizeCallback(){

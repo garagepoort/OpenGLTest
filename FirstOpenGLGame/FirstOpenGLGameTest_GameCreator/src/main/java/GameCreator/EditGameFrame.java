@@ -20,8 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
-import org.lwjgl.opengl.Display;
-
 import GameCreator.panels.SpriteTreePanel;
 import be.davidcorp.applicationLayer.facade.GameStarterFacade;
 import be.davidcorp.view.game.GameLoop;
@@ -161,7 +159,7 @@ public class EditGameFrame extends JFrame implements MouseListener{
 					canvas.setFocusable(true);
 					canvas.setIgnoreRepaint(true);
 					
-					Display.setParent(canvas);
+//					Display.setParent(canvas);
 					
 					canvas.setSize(WIDTH, HEIGHT);
 					openGLPanel.add(canvas);
