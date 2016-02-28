@@ -7,20 +7,10 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>FirstOpenGLGame_UI</artifactId>
-	<name>FirstOpenGLGame_UI</name>
-	<description>FirstOpenGLGame_UI</description>
+	<artifactId>GameEngine</artifactId>
+	<name>GameEngine</name>
+	<description>GameEngine</description>
 	<dependencies>
-		<dependency>
-			<groupId>be.davidcorp.FirstOpenGLGame</groupId>
-			<artifactId>FirstOpenGLGame_ApplicationLayer</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>be.davidcorp.FirstOpenGLGame</groupId>
-			<artifactId>GameEngine</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 		<dependency>
 			<groupId>org.lwjgl</groupId>
 			<artifactId>lwjgl</artifactId>

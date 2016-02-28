@@ -30,13 +30,13 @@ import static org.lwjgl.opengl.GL11.glStencilOp;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
-import org.newdawn.slick.Color;
-
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
 import be.davidcorp.applicationLayer.dto.light.LightTriangle;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
+import be.davidcorp.metric.transfo.TranslateTransfo;
 import be.davidcorp.view.TranslationManager;
 import be.davidcorp.view.game.GamePanel;
+import be.davidcorp.view.game.MVPManager;
 import be.davidcorp.view.light.LightManager;
 
 public class GamePanelDrawer {
@@ -190,8 +190,10 @@ public class GamePanelDrawer {
 	}
 
 	private void drawWorld()  {
-		glTranslatef(TranslationManager.getGameFieldXTranslation(), TranslationManager.getGameFieldYTranslation(), 0);
-		BackgroundDrawer.drawBackgroundColor(new Color(0.2f, 0.2f, 0.2f));
+//		glTranslatef(TranslationManager.getGameFieldXTranslation(), TranslationManager.getGameFieldYTranslation(), 0);
+		TranslateTransfo translateTransfo = new TranslateTransfo(TranslationManager.getGameFieldXTranslation(), TranslationManager.getGameFieldYTranslation(), 0);
+		MVPManager.getInstance().setTranslation(translateTransfo.mat);
+//		BackgroundDrawer.drawBackgroundColor(new Color(0.2f, 0.2f, 0.2f));
 		GamefieldDrawer.drawConstructionItems();
 		if (shadowsOn) {
 			GamefieldDrawer.drawGamefieldShadows();

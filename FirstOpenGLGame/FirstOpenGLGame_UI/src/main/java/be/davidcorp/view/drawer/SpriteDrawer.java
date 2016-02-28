@@ -23,10 +23,13 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 import be.davidcorp.applicationLayer.dto.SpriteDTO;
+import be.davidcorp.view.game.GlBufferManager;
 
 public class SpriteDrawer {
 
 	public static void drawSpriteWithoutTexture(SpriteDTO spriteDTO) {
+		GlBufferManager.getInstance().getVBO();
+
 		glDisable(GL_TEXTURE_2D);
 		glPushAttrib(GL_CURRENT_BIT);
 		{

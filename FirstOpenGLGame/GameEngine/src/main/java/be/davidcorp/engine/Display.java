@@ -1,4 +1,4 @@
-package be.davidcorp.view.game;
+package be.davidcorp.engine;
 
 import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR;
 import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR;
@@ -17,26 +17,20 @@ import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.glfw.GLFW.glfwTerminate;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_LESS;
+import static org.lwjgl.opengl.GL11.glDepthFunc;
+import static org.lwjgl.opengl.GL11.glEnable;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
-public class OpenGLSetupHelper {
+public class Display {
 
-	private long window;
-	private GLFWErrorCallback errorCallback;
-	private ShaderLoader shaderLoader = new ShaderLoader();
+	private static GLFWErrorCallback errorCallback;
+	private static long window;
 
-	public void updateDisplay(){
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-	}
-
-	public void stopOpenGl(){
-		glfwTerminate();
-	}
-
-	public long setUpDisplay(){
+	public static long setup(){
 		if(glfwInit() == 0)
 		{
 			throw new RuntimeException("failed to initialize opengl");
@@ -44,8 +38,8 @@ public class OpenGLSetupHelper {
 
 		glfwSetErrorCallback(errorCallback = GLFWErrorCallback.createPrint(System.err));
 		glfwWindowHint(GLFW_SAMPLES, 4);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE); // To make MacOS happy; should not be needed
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
@@ -56,10 +50,19 @@ public class OpenGLSetupHelper {
 		}
 		glfwMakeContextCurrent(window);
 		GL.createCapabilities();
+
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
 		return window;
 	}
 
-	public long getWindow() {
-		return window;
+	public static void updateDisplay(){
+		glfwSwapBuffers(window);
+		glfwPollEvents();
 	}
+
+	public static void stopOpenGl(){
+		glfwTerminate();
+	}
+
 }
