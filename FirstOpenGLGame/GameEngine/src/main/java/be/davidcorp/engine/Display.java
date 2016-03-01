@@ -14,23 +14,26 @@ import static org.lwjgl.glfw.GLFW.glfwInit;
 import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetFramebufferSizeCallback;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.glfw.GLFW.glfwTerminate;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
-import static org.lwjgl.opengl.GL11.GL_LESS;
-import static org.lwjgl.opengl.GL11.glDepthFunc;
-import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 import org.lwjgl.opengl.GL;
 
 public class Display {
 
 	private static GLFWErrorCallback errorCallback;
 	private static long window;
+	private static GLFWFramebufferSizeCallback framebufferSizeCallback;
+	private static FrameBuffer framebuffer;
 
-	public static long setup(){
+	public static long setup(int width, int height){
 		if(glfwInit() == 0)
 		{
 			throw new RuntimeException("failed to initialize opengl");
@@ -44,16 +47,30 @@ public class Display {
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
-		window = glfwCreateWindow(800, 600, "Zombicide", 0, 0);
+		window = glfwCreateWindow(width, height, "Zombicide", 0, 0);
 		if(window == 0) {
 			throw new RuntimeException("Failed to create window");
 		}
 		glfwMakeContextCurrent(window);
 		GL.createCapabilities();
-
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LESS);
 		return window;
+	}
+
+	private static void initResizeCallback(int width, int height){
+		glfwSetFramebufferSizeCallback(window, (framebufferSizeCallback = new GLFWFramebufferSizeCallback() {
+
+			@Override
+			public void invoke(long window, int width, int height) {
+				onResize(width, height);
+			}
+
+		}));
+		onResize(width, height);
+	}
+
+	private static void onResize(int framebufferWidth, int framebufferHeight) {
+		framebuffer.width = framebufferWidth;
+		framebuffer.height = framebufferHeight;
 	}
 
 	public static void updateDisplay(){
@@ -65,4 +82,7 @@ public class Display {
 		glfwTerminate();
 	}
 
+	public static void clear() {
+		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+	}
 }

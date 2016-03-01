@@ -57,7 +57,7 @@ public class GameLoop {
 	}
 
 	public void start() throws IOException {
-		window = Display.setup();
+		window = Display.setup(800, 600);
 		initResizeCallback();
 		shaderProgram = new StaticShaderProgram();
 

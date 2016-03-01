@@ -22,7 +22,7 @@ public abstract class ShaderProgram {
 
 	public ShaderProgram(String vertexFile, String fragmentFile) {
 		vertexShaderId = shaderLoader.loadShader(vertexFile, GL20.GL_VERTEX_SHADER);
-		fragmentShaderId = shaderLoader.loadShader(fragmentFile, GL20.GL_VERTEX_SHADER);
+		fragmentShaderId = shaderLoader.loadShader(fragmentFile, GL20.GL_FRAGMENT_SHADER);
 		programId = glCreateProgram();
 		glAttachShader(programId, vertexShaderId);
 		glAttachShader(programId, fragmentShaderId);
