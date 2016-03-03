@@ -1,7 +1,7 @@
 package be.davidcorp.domain.utilities.sprite;
 
 import be.davidcorp.domain.sprite.Sprite;
-import be.davidcorp.metric.transfo.ScaleTransfo;
+import be.davidcorp.transfo.ScaleTransfo;
 
 public class SpriteScaler {
 

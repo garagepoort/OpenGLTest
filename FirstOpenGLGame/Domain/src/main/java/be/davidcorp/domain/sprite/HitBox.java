@@ -3,7 +3,7 @@ package be.davidcorp.domain.sprite;
 import java.io.Serializable;
 
 import be.davidcorp.metric.Point;
-import be.davidcorp.metric.transfo.TranslateTransfo;
+import be.davidcorp.transfo.TranslateTransfo;
 
 public class HitBox implements Serializable{
 

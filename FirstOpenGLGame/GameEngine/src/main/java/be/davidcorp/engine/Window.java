@@ -34,6 +34,8 @@ public class Window {
 	private ShaderLoader shaderLoader = new ShaderLoader();
 	private VaoCreator vaoCreator = new VaoCreator();
 	private VboCreator vboCreator = new VboCreator();
+	private ColorBufferCreator colorBufferCreator = new ColorBufferCreator();
+
 	private ModelContainer modelContainer = new ModelContainer();
 	private ModelDrawer modelDrawer;
 
@@ -48,8 +50,8 @@ public class Window {
 		vaoCreator.initVao();
 		vboCreator.initVbo();
 		vboCreator.bindBuffer();
+		colorBufferCreator.initColorBuffer();
 
-		modelDrawer.drawTriangle(new Point(-1f,-1f,0f), new Point(1f,-1f,0f), new Point(0f,1f,0f));
 		int mvpId = glGetUniformLocation(programId, "MVP");
 
 		while (glfwWindowShouldClose(window) == GLFW_FALSE) {
@@ -57,22 +59,42 @@ public class Window {
 			useShaders(programId);
 			glUniformMatrix4fv(mvpId, false, createMvpMatrix());
 
+			gameLoop.execute(modelDrawer);
 			drawModels();
-			gameLoop.execute();
-
+			modelContainer.reset();
 			Display.updateDisplay();
+
 		}
 		Display.stopOpenGl();
 	}
 
 	private void drawModels(){
-		glEnableVertexAttribArray(0);
-		vboCreator.bindBuffer();
 
-		glVertexAttribPointer(0, 3, GL11.GL_FLOAT, false, 0, 0);
-
-		// Draw the triangle !
 		int totalNumberOfVertices = modelContainer.getModels().stream().mapToInt(Model::getNumberOfVertices).sum();
+		List<Float> vertices = modelsToVertices();
+		List<Float> colors = modelsToColors();
+
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+		{
+			vboCreator.bindBuffer();
+			glVertexAttribPointer(0, 3, GL11.GL_FLOAT, false, 0, 0);
+			glBufferData(GL_ARRAY_BUFFER, convertToFloatBuffer(vertices), GL_STATIC_DRAW);
+		}
+
+		colorBufferCreator.bindBuffer();
+		{
+			glVertexAttribPointer(1, 3, GL11.GL_FLOAT, false, 0, 0);
+			glBufferData(GL_ARRAY_BUFFER, convertToFloatBuffer(colors), GL_STATIC_DRAW);
+		}
+
+		glDrawArrays(GL_TRIANGLES, 0, totalNumberOfVertices);
+
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+	}
+
+	private List<Float> modelsToVertices() {
 		List<Float> vertices = new ArrayList<>();
 		for (Model model : modelContainer.getModels()) {
 			for (Point point : model.getPoints()) {
@@ -81,9 +103,20 @@ public class Window {
 				vertices.add(point.z);
 			}
 		}
-		glBufferData(GL_ARRAY_BUFFER, convertToFloatBuffer(vertices), GL_STATIC_DRAW);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-		glDisableVertexAttribArray(0);
+		return vertices;
+	}
+
+
+	private List<Float> modelsToColors() {
+		List<Float> colors = new ArrayList<>();
+		for (Model model : modelContainer.getModels()) {
+			for (Color color : model.getColors()) {
+				colors.add(color.getR());
+				colors.add(color.getG());
+				colors.add(color.getB());
+			}
+		}
+		return colors;
 	}
 
 	private static void useShaders(int programId) {
@@ -117,12 +150,30 @@ public class Window {
 		Iterator<Float> iterator = floats.iterator();
 		for (int i = 0; i < ret.length; i++)
 		{
-			ret[i] = iterator.next().intValue();
+			ret[i] = iterator.next().floatValue();
 		}
 		return ret;
 	}
 
 	public static void main(String[] args) throws IOException {
-		new Window(800, 600, new GameLoop());
+		class GameLogicExecutorImpl implements GameLogicExecutor {
+
+			@Override
+			public void executeGameLogic(int delta) {
+
+			}
+		}
+
+		class GameDrawerImpl implements GameDrawer {
+
+			@Override
+			public void draw(ModelDrawer modelDrawer) {
+				modelDrawer.drawRectangle(new Point(-1f,1f), new Point(-1f,-1f), new Point(1f,-1f), new Point(1f,1f), new Color(0f, 1f, 0.5f));
+				modelDrawer.drawRectangle(new Point(0f,2f), new Point(-2f,0f), new Point(0f,-2f), new Point(2f,0f), new Color(0f, 1f, 0.5f));
+			}
+		}
+
+		Window window = new Window(800, 600, new GameLoop(new GameLogicExecutorImpl(), new GameDrawerImpl()));
+//		window.getModelDrawer().drawRectangle(new Point(-1f,1f,0f), new Point(-1f,-1f,0f), new Point(1f,-1f,0f), new Point(1f,1f,0f), new Color(0f,  1f,  0.5f));
 	}
 }

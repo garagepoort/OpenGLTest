@@ -33,7 +33,7 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 import be.davidcorp.applicationLayer.dto.light.LightDTO;
 import be.davidcorp.applicationLayer.dto.light.LightTriangle;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
-import be.davidcorp.metric.transfo.TranslateTransfo;
+import be.davidcorp.transfo.TranslateTransfo;
 import be.davidcorp.view.TranslationManager;
 import be.davidcorp.view.game.GamePanel;
 import be.davidcorp.view.game.MVPManager;
