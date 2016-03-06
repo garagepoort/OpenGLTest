@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import be.davidcorp.inputControl.MouseButton;
+import be.davidcorp.engine.MouseButton;
 import be.davidcorp.metric.Point;
 import be.davidcorp.texture.TextureBunch;
 import be.davidcorp.view.ui.button.ClickEvent;

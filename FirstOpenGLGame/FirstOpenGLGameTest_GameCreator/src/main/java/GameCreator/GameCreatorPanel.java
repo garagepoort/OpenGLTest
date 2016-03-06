@@ -33,7 +33,6 @@ import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.ItemFacade;
 import be.davidcorp.applicationLayer.facade.LightFacade;
 import be.davidcorp.metric.Point;
-import be.davidcorp.view.FrameBuffer;
 import be.davidcorp.view.TranslationManager;
 import be.davidcorp.view.game.GamePanel;
 

@@ -8,9 +8,6 @@ import static com.google.common.collect.Lists.newArrayList;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import be.davidcorp.applicationLayer.dto.AmmoDTO;
 import be.davidcorp.applicationLayer.dto.ConstructionSpriteDTO;
 import be.davidcorp.applicationLayer.dto.EnemyDTO;
@@ -36,13 +33,21 @@ import be.davidcorp.domain.sprite.organic.enemy.Enemy;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
 import be.davidcorp.domain.utilities.PauseManager;
 import be.davidcorp.metric.Point;
+import be.davidcorp.repository.DefaultSpriteRepository;
 import be.davidcorp.repository.SpriteRepository;
 
-@Named
 public class GameFieldFacade {
 
-	@Inject
-	private SpriteRepository spriteRepository;
+	private static final GameFieldFacade instance = new GameFieldFacade();
+	private SpriteRepository spriteRepository = DefaultSpriteRepository.getInstance();
+
+	private GameFieldFacade() {
+	}
+
+	public static GameFieldFacade getInstance(){
+		return instance;
+	}
+
 
 	public void togglePause() {
 		PauseManager.setGamePaused(!PauseManager.isGamePaused());

@@ -7,6 +7,15 @@ public class FpsCalculator {
 	private int fps;
 	private int delta;
 
+	private static final FpsCalculator instance = new FpsCalculator();
+
+	private FpsCalculator() {
+	}
+
+	public static FpsCalculator getInstance() {
+		return instance;
+	}
+
 	public int calculateDelta() {
 		long time = getTime();
 		delta = (int) (time - lastFrame);

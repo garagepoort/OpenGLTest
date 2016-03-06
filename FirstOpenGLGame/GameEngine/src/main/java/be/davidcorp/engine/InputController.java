@@ -1,4 +1,4 @@
-package be.davidcorp.inputControl;
+package be.davidcorp.engine;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_0;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_1;
@@ -36,22 +36,16 @@ import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
-import be.davidcorp.view.FrameBuffer;
-import be.davidcorp.view.MousePosition;
-
 public class InputController {
 
 	protected boolean mousePushedDown;
 	private GLFWKeyCallback keyCallback;
 	private GLFWCursorPosCallback cursorPosCallback;
-	private FrameBuffer framebuffer;
 	private GLFWMouseButtonCallback mouseButtonCallback;
-
-	public void registerInputCallbacks(long window, FrameBuffer framebuffer) {
-		this.framebuffer = framebuffer;
-		checkKeyboard(window);
-		checkMouse(window);
-	}
+	private boolean LEFT_KEY_PRESSED;
+	private boolean RIGHT_KEY_PRESSED;
+	private boolean UP_KEY_PRESSED;
+	private boolean DOWN_KEY_PRESSED;
 
 	protected void checkMouse(long window) {
 		glfwSetMouseButtonCallback(window, (mouseButtonCallback = new GLFWMouseButtonCallback() {
@@ -81,7 +75,7 @@ public class InputController {
 			@Override
 			public void invoke(long window, double xpos, double ypos) {
 				MousePosition.X = (float) xpos;
-				MousePosition.Y = (float) (framebuffer.height - ypos);
+				MousePosition.Y = (float) (FrameBuffer.HEIGHT - ypos);
 				onMouseMoved();
 			}
 
@@ -93,18 +87,15 @@ public class InputController {
 
 			@Override
 			public void invoke(long window, int key, int scancode, int action, int mods) {
-				if (action == GLFW_RELEASE) {
-					checkArrows(key);
-					if (key == GLFW_KEY_SPACE) {
-						onSpaceKey();
-					}
-					if (key == GLFW_KEY_DELETE) {
-						onDeletePressed();
-					}
-					checkLetters(key);
-					checkNumberKeys(key);
-
+				checkArrows(action, key);
+				if (key == GLFW_KEY_SPACE) {
+					onSpaceKey();
 				}
+				if (key == GLFW_KEY_DELETE) {
+					onDeletePressed();
+				}
+				checkLetters(key);
+				checkNumberKeys(key);
 			}
 
 		}));
@@ -171,21 +162,25 @@ public class InputController {
 		}
 	}
 
-	private void checkArrows(int key) {
-		if (key == GLFW_KEY_LEFT || key == GLFW_KEY_Q) {
+	private void checkArrows(int action, int key) {
+		if (key == GLFW_KEY_LEFT || key == GLFW_KEY_Q || LEFT_KEY_PRESSED) {
 			on_LEFT_Key();
+			LEFT_KEY_PRESSED = action == GLFW_PRESS;
 		}
 
-		if (key == GLFW_KEY_RIGHT || key == GLFW_KEY_D) {
+		if (key == GLFW_KEY_RIGHT || key == GLFW_KEY_D || RIGHT_KEY_PRESSED) {
 			on_RIGHT_Key();
+			RIGHT_KEY_PRESSED = action == GLFW_PRESS;
 		}
 
-		if (key == GLFW_KEY_UP || key == GLFW_KEY_Z) {
+		if (key == GLFW_KEY_UP || key == GLFW_KEY_Z || UP_KEY_PRESSED) {
 			on_UP_Key();
+			UP_KEY_PRESSED = action == GLFW_PRESS;
 		}
 
-		if (key == GLFW_KEY_DOWN || key == GLFW_KEY_S) {
+		if (key == GLFW_KEY_DOWN || key == GLFW_KEY_S || DOWN_KEY_PRESSED) {
 			on_DOWN_Key();
+			DOWN_KEY_PRESSED = action == GLFW_PRESS;
 		}
 	}
 

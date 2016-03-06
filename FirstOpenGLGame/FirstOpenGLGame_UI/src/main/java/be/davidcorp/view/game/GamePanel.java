@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Observable;
 
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
-import be.davidcorp.view.FrameBuffer;
 import be.davidcorp.view.drawer.GameOverDrawer;
 import be.davidcorp.view.drawer.GamePanelDrawer;
 
@@ -32,8 +31,6 @@ public abstract class GamePanel extends Observable{
 		gamePanelDrawer.drawGamePanel(this);
 	}
 
-	public abstract void registerInputCallbacks(long window, FrameBuffer frameBuffer);
-	
 	protected GamePanelDrawer getGamePanelDrawer() {
 		return gamePanelDrawer;
 	}

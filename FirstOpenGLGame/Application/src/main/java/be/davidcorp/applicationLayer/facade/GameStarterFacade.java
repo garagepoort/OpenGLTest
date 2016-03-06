@@ -4,7 +4,6 @@ import static be.davidcorp.domain.game.CurrentGameFieldManager.getCurrentGameFie
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.zip.ZipFile;
 
 import be.davidcorp.applicationLayer.exception.ModelException;
@@ -16,6 +15,15 @@ import be.davidcorp.domain.game.CurrentGameFieldManager;
 import be.davidcorp.domain.sprite.organic.player.PlayerManager;
 
 public class GameStarterFacade {
+
+	private static final GameStarterFacade instance = new GameStarterFacade();
+
+	private GameStarterFacade() {
+	}
+
+	public static GameStarterFacade getInstance() {
+		return instance;
+	}
 
 	public void startApplication() {
 		loadResources();

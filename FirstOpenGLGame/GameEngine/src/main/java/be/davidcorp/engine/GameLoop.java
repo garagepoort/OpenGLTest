@@ -2,7 +2,7 @@ package be.davidcorp.engine;
 
 public class GameLoop {
 
-	private FpsCalculator fpsCalculator = new FpsCalculator();
+	private FpsCalculator fpsCalculator = FpsCalculator.getInstance();
 	private GameLogicExecutor gameLogicExecutor;
 	private GameDrawer gameDrawer;
 

@@ -1,5 +1,5 @@
 package be.davidcorp.engine;
 
 public class FrameBuffer {
-	public int width, height;
+	public static int WIDTH, HEIGHT;
 }

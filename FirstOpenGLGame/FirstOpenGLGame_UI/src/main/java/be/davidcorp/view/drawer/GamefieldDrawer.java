@@ -31,7 +31,7 @@ import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 
 public class GamefieldDrawer {
 
-	private static GameFieldFacade fieldFacade = new GameFieldFacade();
+	private static GameFieldFacade fieldFacade = GameFieldFacade.getInstance();
 	
 	public static void drawGameFieldBackground(){
 		glDepthMask(false);

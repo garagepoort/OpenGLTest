@@ -6,17 +6,18 @@ import be.davidcorp.WindDirection;
 import be.davidcorp.applicationLayer.dto.ItemDTO;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
+import be.davidcorp.engine.FpsCalculator;
+import be.davidcorp.engine.InputController;
+import be.davidcorp.engine.MousePosition;
 import be.davidcorp.metric.Point;
 import be.davidcorp.metric.Vector;
-import be.davidcorp.view.MousePosition;
 import be.davidcorp.view.TranslationManager;
-import be.davidcorp.view.game.GameLoop;
 import be.davidcorp.view.game.PlayGamePanel;
 
 public class GamePanelInputController extends InputController {
 
 	private PlayerFacade playerFacade = new PlayerFacade();
-	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
+	private GameFieldFacade gameFieldFacade = GameFieldFacade.getInstance();
 	private PlayGamePanel playGamePanel;
 
 	public GamePanelInputController(PlayGamePanel panel) {
@@ -141,7 +142,7 @@ public class GamePanelInputController extends InputController {
 	}
 
 	private float getPlayerMoveSpeed() {
-		return playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+		return playerFacade.getSpeed() * FpsCalculator.getInstance().getDelta();
 	}
 
 	private void letPlayerAttackInDirectionOfVector() {

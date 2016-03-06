@@ -25,11 +25,13 @@ import org.lwjgl.opengl.GL11;
 
 import com.hackoeur.jglm.Mat4;
 import com.hackoeur.jglm.Matrices;
-import com.hackoeur.jglm.Vec3;
 
 import be.davidcorp.metric.Point;
 
 public class Window {
+
+	private static final String VERTEX_SHADER = "shaders/SimpleVertexShader.vertexshader";
+	private static final String FRAGMENT_SHADER = "shaders/SimpleFragmentShader.fragmentshader";
 
 	private ShaderLoader shaderLoader = new ShaderLoader();
 	private VaoCreator vaoCreator = new VaoCreator();
@@ -38,14 +40,18 @@ public class Window {
 
 	private ModelContainer modelContainer = new ModelContainer();
 	private ModelDrawer modelDrawer;
+	private int width;
+	private int height;
 
-	public Window(int width, int height, GameLoop gameLoop) {
+	public Window(int width, int height, GameLoop gameLoop, InputController inputController) {
+		this.width = width;
+		this.height = height;
 		modelDrawer = new ModelDrawer(modelContainer);
 
 		NativeLoader.loadNatives();
 		long window = Display.setup(width, height);
 
-		int programId = shaderLoader.loadShaders("shaders/SimpleVertexShader.vertexshader", "shaders/SimpleFragmentShader.fragmentshader");
+		int programId = shaderLoader.loadShaders(VERTEX_SHADER, FRAGMENT_SHADER);
 
 		vaoCreator.initVao();
 		vboCreator.initVbo();
@@ -53,6 +59,9 @@ public class Window {
 		colorBufferCreator.initColorBuffer();
 
 		int mvpId = glGetUniformLocation(programId, "MVP");
+
+		InputRegister.registerKeyboardInput(window, inputController);
+		InputRegister.registerMouseInput(window, inputController);
 
 		while (glfwWindowShouldClose(window) == GLFW_FALSE) {
 			Display.clear();
@@ -62,8 +71,8 @@ public class Window {
 			gameLoop.execute(modelDrawer);
 			drawModels();
 			modelContainer.reset();
-			Display.updateDisplay();
 
+			Display.updateDisplay();
 		}
 		Display.stopOpenGl();
 	}
@@ -119,18 +128,17 @@ public class Window {
 		return colors;
 	}
 
-	private static void useShaders(int programId) {
+	private void useShaders(int programId) {
 		glUseProgram(programId);
 	}
 
-	private static FloatBuffer createMvpMatrix(){
+	private FloatBuffer createMvpMatrix(){
 		Mat4 model = new Mat4(1.0f);
 		FloatBuffer mvpMatrix = BufferUtils.createFloatBuffer(16);
 
-		//		Mat4 projectionMat = Matrices.ortho2d(projection.left, projection.right, projection.bottom, projection.top);
-		Mat4 projectionMat = Matrices.perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
-		Mat4 view = Matrices.lookAt(new Vec3(0, 0, 4), new Vec3(0, 0, 0), new Vec3(0, 1, 0));
-		Mat4 MVP = projectionMat.multiply(view).multiply(model);
+		Mat4 projectionMat = Matrices.ortho2d(0, width, 0, height);
+		Mat4 MVP = projectionMat;
+//		Mat4 MVP = projectionMat.multiply(view).multiply(model);
 
 		mvpMatrix.put(MVP.getBuffer());
 		mvpMatrix.flip();
@@ -155,6 +163,7 @@ public class Window {
 		return ret;
 	}
 
+
 	public static void main(String[] args) throws IOException {
 		class GameLogicExecutorImpl implements GameLogicExecutor {
 
@@ -162,6 +171,10 @@ public class Window {
 			public void executeGameLogic(int delta) {
 
 			}
+		}
+
+		class InputControllerImpl extends InputController {
+
 		}
 
 		class GameDrawerImpl implements GameDrawer {
@@ -173,7 +186,7 @@ public class Window {
 			}
 		}
 
-		Window window = new Window(800, 600, new GameLoop(new GameLogicExecutorImpl(), new GameDrawerImpl()));
+		Window window = new Window(800, 600, new GameLoop(new GameLogicExecutorImpl(), new GameDrawerImpl()), new InputControllerImpl());
 //		window.getModelDrawer().drawRectangle(new Point(-1f,1f,0f), new Point(-1f,-1f,0f), new Point(1f,-1f,0f), new Point(1f,1f,0f), new Color(0f,  1f,  0.5f));
 	}
 }

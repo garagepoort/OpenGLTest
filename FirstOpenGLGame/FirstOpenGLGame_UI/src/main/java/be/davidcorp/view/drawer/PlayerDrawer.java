@@ -33,9 +33,9 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
+import be.davidcorp.engine.MousePosition;
 import be.davidcorp.metric.Point;
 import be.davidcorp.metric.Vector;
-import be.davidcorp.view.MousePosition;
 import be.davidcorp.view.TranslationManager;
 import be.davidcorp.view.light.LightManager;
 

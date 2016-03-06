@@ -1,4 +1,4 @@
-package be.davidcorp.view;
+package be.davidcorp.engine;
 
 public class MousePosition {
 

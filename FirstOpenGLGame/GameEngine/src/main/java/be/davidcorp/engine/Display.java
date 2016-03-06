@@ -31,7 +31,6 @@ public class Display {
 	private static GLFWErrorCallback errorCallback;
 	private static long window;
 	private static GLFWFramebufferSizeCallback framebufferSizeCallback;
-	private static FrameBuffer framebuffer;
 
 	public static long setup(int width, int height){
 		if(glfwInit() == 0)
@@ -40,6 +39,7 @@ public class Display {
 		}
 
 		glfwSetErrorCallback(errorCallback = GLFWErrorCallback.createPrint(System.err));
+
 		glfwWindowHint(GLFW_SAMPLES, 4);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
@@ -53,6 +53,8 @@ public class Display {
 		}
 		glfwMakeContextCurrent(window);
 		GL.createCapabilities();
+
+		initResizeCallback(width, height);
 		return window;
 	}
 
@@ -69,8 +71,8 @@ public class Display {
 	}
 
 	private static void onResize(int framebufferWidth, int framebufferHeight) {
-		framebuffer.width = framebufferWidth;
-		framebuffer.height = framebufferHeight;
+		FrameBuffer.WIDTH = framebufferWidth;
+		FrameBuffer.WIDTH = framebufferHeight;
 	}
 
 	public static void updateDisplay(){

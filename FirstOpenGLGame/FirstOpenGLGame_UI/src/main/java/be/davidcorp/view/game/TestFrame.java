@@ -15,7 +15,7 @@ import be.davidcorp.applicationLayer.facade.GameStarterFacade;
 public class TestFrame extends JFrame{
 
 	public TestFrame() throws IOException {
-		new GameStarterFacade().startApplication();
+		GameStarterFacade.getInstance().startApplication();
 		GameLoop gameLoop = new GameLoop(new PlayGamePanel(),800, 600);
 		
 		Canvas canvas = new Canvas();

@@ -5,7 +5,7 @@ import java.util.EventObject;
 import org.newdawn.slick.Color;
 
 import be.davidcorp.applicationLayer.dto.ItemDTO;
-import be.davidcorp.view.MousePosition;
+import be.davidcorp.engine.MousePosition;
 import be.davidcorp.view.ui.button.Button;
 import be.davidcorp.view.ui.button.ClickListener;
 

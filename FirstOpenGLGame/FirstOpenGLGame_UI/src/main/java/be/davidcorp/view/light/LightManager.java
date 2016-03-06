@@ -15,7 +15,7 @@ import be.davidcorp.metric.Point;
 
 public class LightManager {
 	private PlayerFacade playerFacade = new PlayerFacade();
-	private GameFieldFacade gameFieldFacade = new GameFieldFacade();
+	private GameFieldFacade gameFieldFacade = GameFieldFacade.getInstance();
 
 	private static ArrayList<EndPoint> endpoints = new ArrayList<>();
 	private static ArrayList<Segment> segments = new ArrayList<>();

@@ -2,14 +2,16 @@ package be.davidcorp.view;
 
 import static be.davidcorp.view.game.GameLoop.HEIGHT;
 import static be.davidcorp.view.game.GameLoop.WIDTH;
+
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
+import be.davidcorp.engine.FpsCalculator;
 import be.davidcorp.view.game.GameLoop;
 
 public class TranslationManager {
 
 	private static PlayerFacade playerFacade = new PlayerFacade();
-	private static GameFieldFacade gameFieldFacade = new GameFieldFacade();
+	private static GameFieldFacade gameFieldFacade = GameFieldFacade.getInstance();
 
 	private static float playerTranslationX;
 	private static float playerTranslationY;
@@ -47,57 +49,57 @@ public class TranslationManager {
 
 	public static void initializeDownTranslation() {
 		if (gameFieldYTranslation >= 0 || playerTranslationY > 0) {
-			playerTranslationY -= playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+			playerTranslationY -= playerFacade.getSpeed() * FpsCalculator.getInstance().getDelta();
 		} else {
-			gameFieldYTranslation += playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+			gameFieldYTranslation += playerFacade.getSpeed() * FpsCalculator.getInstance().getDelta();
 		}
 	}
 	
 	public static void initializeRightTranslation() {
 		if (gameFieldXTranslation <= -gameFieldFacade.getWidthOfGamefield() + WIDTH || playerTranslationX < 0) {
-			playerTranslationX += playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+			playerTranslationX += playerFacade.getSpeed() * FpsCalculator.getInstance().getDelta();
 		} else {
-			gameFieldXTranslation -= playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+			gameFieldXTranslation -= playerFacade.getSpeed() * FpsCalculator.getInstance().getDelta();
 		}
 	}
 	
 	public static void initializeUpTranslation(){
 		if (gameFieldYTranslation <= -gameFieldFacade.getHeightOfGamefield() + HEIGHT || playerTranslationY < 0) {
-			playerTranslationY += playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+			playerTranslationY += playerFacade.getSpeed() * FpsCalculator.getInstance().getDelta();
 		} else {
-			gameFieldYTranslation -= playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+			gameFieldYTranslation -= playerFacade.getSpeed() * FpsCalculator.getInstance().getDelta();
 		}
 	}
 	
 	public static void initializeLeftTranslation(){
 		if (gameFieldXTranslation >= 0 || playerTranslationX <= 0) {
-			playerTranslationX -= playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+			playerTranslationX -= playerFacade.getSpeed() * FpsCalculator.getInstance().getDelta();
 		} else {
-			gameFieldXTranslation += playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+			gameFieldXTranslation += playerFacade.getSpeed() * FpsCalculator.getInstance().getDelta();
 		}
 	}
 	
 	public static void initializeDownTranslationForGameCreator() {
 		if (gameFieldYTranslation <0) {
-			gameFieldYTranslation += playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+			gameFieldYTranslation += playerFacade.getSpeed() * FpsCalculator.getInstance().getDelta();
 		}
 	}
 	
 	public static void initializeRightTranslationForGameCreator() {
 		if (gameFieldXTranslation > -gameFieldFacade.getWidthOfGamefield() + WIDTH) {
-			gameFieldXTranslation -= playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+			gameFieldXTranslation -= playerFacade.getSpeed() * FpsCalculator.getInstance().getDelta();
 		}
 	}
 	
 	public static void initializeUpTranslationForGameCreator(){
 		if (gameFieldYTranslation > -gameFieldFacade.getHeightOfGamefield() + HEIGHT) {
-			gameFieldYTranslation -= playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+			gameFieldYTranslation -= playerFacade.getSpeed() * FpsCalculator.getInstance().getDelta();
 		}
 	}
 	
 	public static void initializeLeftTranslationForGameCreator(){
 		if (gameFieldXTranslation < 0) {
-			gameFieldXTranslation += playerFacade.getSpeed() * GameLoop.getSecondsMovedInGame();
+			gameFieldXTranslation += playerFacade.getSpeed() * FpsCalculator.getInstance().getDelta();
 		}
 	}
 

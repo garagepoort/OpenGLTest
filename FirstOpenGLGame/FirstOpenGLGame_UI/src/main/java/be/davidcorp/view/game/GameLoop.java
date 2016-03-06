@@ -13,7 +13,7 @@ import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 import be.davidcorp.applicationLayer.facade.GameFieldFacade;
 import be.davidcorp.applicationLayer.facade.PlayerFacade;
 import be.davidcorp.engine.Display;
-import be.davidcorp.view.FrameBuffer;
+import be.davidcorp.engine.FrameBuffer;
 import be.davidcorp.view.light.LightManager;
 
 public class GameLoop {
@@ -115,8 +115,8 @@ public class GameLoop {
 		projection.right = framebufferWidth;
 		projection.bottom = 0;
 		projection.top = framebufferHeight;
-		framebuffer.width = framebufferWidth;
-		framebuffer.height = framebufferHeight;
+		FrameBuffer.WIDTH = framebufferWidth;
+		FrameBuffer.HEIGHT = framebufferHeight;
 		MVPManager.getInstance().setProjection(projection);
 	}
 
@@ -160,7 +160,7 @@ public class GameLoop {
 		playGamePanel = gamePanel;
 		GameLoop.WIDTH = width;
 		GameLoop.HEIGHT = height;
-		gamefieldFacade = new GameFieldFacade();
+		gamefieldFacade = GameFieldFacade.getInstance();
 		lightManager = new LightManager();
 	}
 

@@ -1,4 +1,4 @@
-package be.davidcorp.inputControl;
+package be.davidcorp.engine;
 
 public enum MouseButton {
 
